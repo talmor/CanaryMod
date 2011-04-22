@@ -40,11 +40,11 @@ public class OPlayerManager {
     }
 
     public void a(OEntityPlayerMP paramOEntityPlayerMP) {
-        int i = (int) paramOEntityPlayerMP.aK >> 4;
-        int j = (int) paramOEntityPlayerMP.aM >> 4;
+        int i = (int) paramOEntityPlayerMP.aL >> 4;
+        int j = (int) paramOEntityPlayerMP.aN >> 4;
 
-        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aK;
-        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aM;
+        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aL;
+        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aN;
 
         int k = 0;
         int m = 10;
@@ -97,11 +97,11 @@ public class OPlayerManager {
     }
 
     public void c(OEntityPlayerMP paramOEntityPlayerMP) {
-        int i = (int) paramOEntityPlayerMP.aK >> 4;
-        int j = (int) paramOEntityPlayerMP.aM >> 4;
+        int i = (int) paramOEntityPlayerMP.aL >> 4;
+        int j = (int) paramOEntityPlayerMP.aN >> 4;
 
-        double d1 = paramOEntityPlayerMP.d - paramOEntityPlayerMP.aK;
-        double d2 = paramOEntityPlayerMP.e - paramOEntityPlayerMP.aM;
+        double d1 = paramOEntityPlayerMP.d - paramOEntityPlayerMP.aL;
+        double d2 = paramOEntityPlayerMP.e - paramOEntityPlayerMP.aN;
         double d3 = d1 * d1 + d2 * d2;
         if (d3 < 64.0D)
             return;
@@ -132,8 +132,8 @@ public class OPlayerManager {
                     localOPlayerInstance.b(paramOEntityPlayerMP);
                 }
             }
-        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aK;
-        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aM;
+        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aL;
+        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aN;
     }
 
     public int b() {

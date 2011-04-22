@@ -44,60 +44,63 @@ public class OBlockFire extends OBlock {
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        int i = paramOWorld.a(paramInt1, paramInt2 - 1, paramInt3) == OBlock.bb.bl ? 1 : 0;
-
-        int j = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        if (j < 15) {
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, j + 1);
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
-        }
-        if ((i == 0) && (!g(paramOWorld, paramInt1, paramInt2, paramInt3))) {
-            if ((!paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3)) || (j > 3))
-                paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-            return;
-        }
-
-        if ((i == 0) && (!b((OIBlockAccess)paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) && (j == 15) && (paramRandom.nextInt(4) == 0)) {
+        boolean i = paramOWorld.a(paramInt1, paramInt2 - 1, paramInt3) == OBlock.bb.bl;
+        if(!i && paramOWorld.v() && (paramOWorld.q(paramInt1, paramInt2, paramInt3) || paramOWorld.q(paramInt1 - 1, paramInt2, paramInt3) || paramOWorld.q(paramInt1 + 1, paramInt2, paramInt3) || paramOWorld.q(paramInt1, paramInt2, paramInt3 - 1) || paramOWorld.q(paramInt1, paramInt2, paramInt3 + 1))) {
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-            return;
-        }
+        } else {
+            int j = paramOWorld.b(paramInt1, paramInt2, paramInt3);
+            if (j < 15) {
+                paramOWorld.c(paramInt1, paramInt2, paramInt3, j + 1);
+                paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
+            }
+            if (!i && (!g(paramOWorld, paramInt1, paramInt2, paramInt3))) {
+                if ((!paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3)) || (j > 3))
+                    paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
+                return;
+            }
 
-        if ((j % 2 == 0) && (j > 2)) {
-            a(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, 300, paramRandom);
-            a(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, 300, paramRandom);
-            a(paramOWorld, paramInt1, paramInt2 - 1, paramInt3, 250, paramRandom);
-            a(paramOWorld, paramInt1, paramInt2 + 1, paramInt3, 250, paramRandom);
-            a(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, 300, paramRandom);
-            a(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, 300, paramRandom);
+            if (!i && (!b((OIBlockAccess)paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) && (j == 15) && (paramRandom.nextInt(4) == 0)) {
+                paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
+                return;
+            }
 
-            for (int k = paramInt1 - 1; k <= paramInt1 + 1; k++)
-                for (int m = paramInt3 - 1; m <= paramInt3 + 1; m++)
-                    for (int n = paramInt2 - 1; n <= paramInt2 + 4; n++) {
-                        if ((k == paramInt1) && (n == paramInt2) && (m == paramInt3))
-                            continue;
-                        int i1 = 100;
-                        if (n > paramInt2 + 1)
-                            i1 += (n - (paramInt2 + 1)) * 100;
+            if ((j % 2 == 0) && (j > 2)) {
+                a(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, 300, paramRandom);
+                a(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, 300, paramRandom);
+                a(paramOWorld, paramInt1, paramInt2 - 1, paramInt3, 250, paramRandom);
+                a(paramOWorld, paramInt1, paramInt2 + 1, paramInt3, 250, paramRandom);
+                a(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, 300, paramRandom);
+                a(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, 300, paramRandom);
 
-                        int i2 = h(paramOWorld, k, n, m);
-                        if ((i2 > 0) && (paramRandom.nextInt(i1) <= i2)) {
-                            // CanaryMod: dynamic spreading of fire.{
-                            // avg call amount per placed block of fire ~ 4
-                            Block block = new Block(paramOWorld.a(k, n, m), k, n, m);
-                            block.setStatus(3);
-                            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null))
-                                paramOWorld.e(k, n, m, bl);
+                for (int k = paramInt1 - 1; k <= paramInt1 + 1; k++)
+                    for (int m = paramInt3 - 1; m <= paramInt3 + 1; m++)
+                        for (int n = paramInt2 - 1; n <= paramInt2 + 4; n++) {
+                            if ((k == paramInt1) && (n == paramInt2) && (m == paramInt3))
+                                continue;
+                            int i1 = 100;
+                            if (n > paramInt2 + 1)
+                                i1 += (n - (paramInt2 + 1)) * 100;
+
+                            int i2 = h(paramOWorld, k, n, m);
+                            if ((i2 > 0) && (paramRandom.nextInt(i1) <= i2)) {
+                                // CanaryMod: dynamic spreading of fire.{
+                                // avg call amount per placed block of fire ~ 4
+                                Block block = new Block(paramOWorld.a(k, n, m), k, n, m);
+                                block.setStatus(3);
+                                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null))
+                                    paramOWorld.e(k, n, m, bl);
+                            }
+
                         }
-
-                    }
-        }
-        if (j == 15) {
-            a(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, 1, paramRandom);
-            a(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, 1, paramRandom);
-            a(paramOWorld, paramInt1, paramInt2 - 1, paramInt3, 1, paramRandom);
-            a(paramOWorld, paramInt1, paramInt2 + 1, paramInt3, 1, paramRandom);
-            a(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, 1, paramRandom);
-            a(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, 1, paramRandom);
+            }
+            if (j == 15) {
+                a(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, 1, paramRandom);
+                a(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, 1, paramRandom);
+                a(paramOWorld, paramInt1, paramInt2 - 1, paramInt3, 1, paramRandom);
+                a(paramOWorld, paramInt1, paramInt2 + 1, paramInt3, 1, paramRandom);
+                a(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, 1, paramRandom);
+                a(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, 1, paramRandom);
+            }
         }
     }
 
@@ -105,7 +108,7 @@ public class OBlockFire extends OBlock {
         int i = b[paramOWorld.a(paramInt1, paramInt2, paramInt3)];
         if (paramRandom.nextInt(paramInt4) < i) {
             int j = paramOWorld.a(paramInt1, paramInt2, paramInt3) == OBlock.am.bl ? 1 : 0;
-            if (paramRandom.nextInt(2) == 0) {
+            if (paramRandom.nextInt(2) == 0 && !paramOWorld.q(paramInt1, paramInt2, paramInt3)) {
                 // CanaryMod: VERY SLOW dynamic spreading of fire.
                 Block block = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
                 block.setStatus(3);
@@ -154,7 +157,7 @@ public class OBlockFire extends OBlock {
     }
 
     @Override
-    public boolean d() {
+    public boolean n_() {
         return false;
     }
 

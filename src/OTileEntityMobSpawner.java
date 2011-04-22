@@ -20,15 +20,15 @@ public class OTileEntityMobSpawner extends OTileEntity {
     }
 
     @Override
-    public void i_() {
+    public void g_() {
         c = b;
 
         if (!a())
             return;
 
-        double d1 = e + d.k.nextFloat();
-        double d2 = f + d.k.nextFloat();
-        double d3 = g + d.k.nextFloat();
+        double d1 = e + d.m.nextFloat();
+        double d2 = f + d.m.nextFloat();
+        double d3 = g + d.m.nextFloat();
         d.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
         d.a("flame", d1, d2, d3, 0.0D, 0.0D, 0.0D);
 
@@ -59,35 +59,35 @@ public class OTileEntityMobSpawner extends OTileEntity {
             }
 
             if (localOEntityLiving != null) {
-                double d4 = e + (d.k.nextDouble() - d.k.nextDouble()) * 4.0D;
-                double d5 = f + d.k.nextInt(3) - 1;
-                double d6 = g + (d.k.nextDouble() - d.k.nextDouble()) * 4.0D;
+                double d4 = e + (d.m.nextDouble() - d.m.nextDouble()) * 4.0D;
+                double d5 = f + d.m.nextInt(3) - 1;
+                double d6 = g + (d.m.nextDouble() - d.m.nextDouble()) * 4.0D;
 
-                localOEntityLiving.c(d4, d5, d6, d.k.nextFloat() * 360.0F, 0.0F);
+                localOEntityLiving.c(d4, d5, d6, d.m.nextFloat() * 360.0F, 0.0F);
 
-                if (localOEntityLiving.b()) {
-                    ((OWorldServer) d).a(localOEntityLiving);
+                if (localOEntityLiving.d()) {
+                    ((OWorldServer) d).b(localOEntityLiving);
 
                     for (int m = 0; m < 20; m++) {
-                        d1 = e + 0.5D + (d.k.nextFloat() - 0.5D) * 2.0D;
-                        d2 = f + 0.5D + (d.k.nextFloat() - 0.5D) * 2.0D;
-                        d3 = g + 0.5D + (d.k.nextFloat() - 0.5D) * 2.0D;
+                        d1 = e + 0.5D + (d.m.nextFloat() - 0.5D) * 2.0D;
+                        d2 = f + 0.5D + (d.m.nextFloat() - 0.5D) * 2.0D;
+                        d3 = g + 0.5D + (d.m.nextFloat() - 0.5D) * 2.0D;
 
                         d.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
                         d.a("flame", d1, d2, d3, 0.0D, 0.0D, 0.0D);
                     }
 
-                    localOEntityLiving.L();
+                    localOEntityLiving.O();
                     c();
                 }
             }
         }
 
-        super.i_();
+        super.g_();
     }
 
     private void c() {
-        a = (200 + d.k.nextInt(600));
+        a = (200 + d.m.nextInt(600));
     }
 
     @Override

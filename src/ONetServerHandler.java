@@ -14,13 +14,14 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
     private OEntityPlayerMP e;
     private int             f;
     private int             g;
-    private boolean         h;
-    private double          i;
+    private int             h;
+    private boolean         i;
     private double          j;
     private double          k;
-    private boolean         l = true;
+    private double          l;
+    private boolean         m = true;
 
-    private Map             m = new HashMap();
+    private Map             n = new HashMap();
 
     public ONetServerHandler(MinecraftServer paramMinecraftServer, ONetworkManager paramONetworkManager, OEntityPlayerMP paramOEntityPlayerMP) {
         d = paramMinecraftServer;
@@ -56,7 +57,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
 
     
     public void a() {
-        h = false;
+        i = false;
         b.a();
         if (f - g > 20)
             b(new OPacket0KeepAlive());
@@ -77,40 +78,40 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
 
     @Override
     public void a(OPacket10Flying paramOPacket10Flying) {
-        h = true;
+        i = true;
         double d1;
-        if (!l) {
-            d1 = paramOPacket10Flying.b - j;
-            if ((paramOPacket10Flying.a == i) && (d1 * d1 < 0.01D) && (paramOPacket10Flying.c == k))
-                l = true;
+        if (!m) {
+            d1 = paramOPacket10Flying.b - k;
+            if ((paramOPacket10Flying.a == j) && (d1 * d1 < 0.01D) && (paramOPacket10Flying.c == l))
+                m = true;
         }
         // CanaryMod: Notice player movement
-        if (etc.floor(i) != etc.floor(getPlayer().getX()) || etc.floor(j) != etc.floor(getPlayer().getY()) || etc.floor(k) != etc.floor(getPlayer().getZ())) {
+        if (etc.floor(j) != etc.floor(getPlayer().getX()) || etc.floor(k) != etc.floor(getPlayer().getY()) || etc.floor(l) != etc.floor(getPlayer().getZ())) {
             Location from = new Location();
-            from.x = etc.floor(i);
-            from.y = etc.floor(j);
-            from.z = etc.floor(k);
+            from.x = etc.floor(j);
+            from.y = etc.floor(k);
+            from.z = etc.floor(l);
             from.rotX = getPlayer().getRotation();
             from.rotY = getPlayer().getPitch();
 
             Location to = new Location();
-            to.x = etc.floor(e.aK);
-            to.y = etc.floor(e.aL);
-            to.z = etc.floor(e.aM);
+            to.x = etc.floor(e.aL);
+            to.y = etc.floor(e.aM);
+            to.z = etc.floor(e.aN);
             to.rotX = getPlayer().getRotation();
             to.rotY = getPlayer().getPitch();
 
             OEntity.manager.callHook(PluginLoader.Hook.PLAYER_MOVE, getPlayer(), from, to);
         }
 
-        if (l) {
-            if (e.aF != null) {
-                float f1 = e.aQ;
-                float f2 = e.aR;
-                e.aF.h_();
-                double d2 = e.aK;
-                double d3 = e.aL;
-                double d4 = e.aM;
+        if (m) {
+            if (e.aG != null) {
+                float f1 = e.aR;
+                float f2 = e.aS;
+                e.aG.f();
+                double d2 = e.aL;
+                double d3 = e.aM;
+                double d4 = e.aN;
                 double d5 = 0.0D;
                 double d6 = 0.0D;
                 if (paramOPacket10Flying.i) {
@@ -122,37 +123,37 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
                     d6 = paramOPacket10Flying.c;
                 }
 
-                e.aV = paramOPacket10Flying.g;
+                e.aW = paramOPacket10Flying.g;
 
                 e.a(true);
                 e.c(d5, 0.0D, d6);
                 e.b(d2, d3, d4, f1, f2);
-                e.aN = d5;
-                e.aP = d6;
-                if (e.aF != null)
-                    d.e.b(e.aF, true);
-                if (e.aF != null)
-                    e.aF.h_();
+                e.aO = d5;
+                e.aQ = d6;
+                if (e.aG != null)
+                    d.e.b(e.aG, true);
+                if (e.aG != null)
+                    e.aG.f();
                 d.f.b(e);
-                i = e.aK;
                 j = e.aL;
                 k = e.aM;
-                d.e.f(e);
+                l = e.aN;
+                d.e.g(e);
 
                 return;
             }
 
-            d1 = e.aL;
-            i = e.aK;
+            d1 = e.aM;
             j = e.aL;
             k = e.aM;
+            l = e.aN;
 
-            double d2 = e.aK;
-            double d3 = e.aL;
-            double d4 = e.aM;
+            double d2 = e.aL;
+            double d3 = e.aM;
+            double d4 = e.aN;
 
-            float f3 = e.aQ;
-            float f4 = e.aR;
+            float f3 = e.aR;
+            float f4 = e.aS;
 
             if ((paramOPacket10Flying.h) && (paramOPacket10Flying.b == -999.0D) && (paramOPacket10Flying.d == -999.0D))
                 paramOPacket10Flying.h = false;
@@ -162,7 +163,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
                 d3 = paramOPacket10Flying.b;
                 d4 = paramOPacket10Flying.c;
                 double d6 = paramOPacket10Flying.d - paramOPacket10Flying.b;
-                if ((d6 > 1.65D) || (d6 < 0.1D)) {
+                if (!e.I() && (d6 > 1.65D) || (d6 < 0.1D)) {
                     a("Illegal stance");
                     a.warning(e.r + " had an illegal stance: " + d6);
                 }
@@ -173,41 +174,63 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
             }
 
             e.a(true);
-            e.bl = 0.0F;
-            e.b(i, j, k, f3, f4);
+            e.bn = 0.0F;
+            e.b(j, k, l, f3, f4);
 
-            double d6 = d2 - e.aK;
-            double d7 = d3 - e.aL;
-            double d8 = d4 - e.aM;
+            double d6 = d2 - e.aL;
+            double d7 = d3 - e.aM;
+            double d8 = d4 - e.aN;
 
-            float f5 = 0.0625F;
-            int n = d.e.a(e, e.aU.b().e(f5, f5, f5)).size() == 0 ? 1 : 0;
-
-            e.c(d6, d7, d8);
-            d6 = d2 - e.aK;
-            d7 = d3 - e.aL;
-            if ((d7 > -0.5D) || (d7 < 0.5D))
-                d7 = 0.0D;
-            d8 = d4 - e.aM;
-            double d9 = d6 * d6 + d7 * d7 + d8 * d8;
-            int i1 = 0;
-            if ((d9 > 0.0625D) && (!e.F())) {
-                i1 = 1;
-                a.warning(e.r + " moved wrongly!");
-                System.out.println("Got position " + d2 + ", " + d3 + ", " + d4);
-                System.out.println("Expected " + e.aK + ", " + e.aL + ", " + e.aM);
-            }
-            e.b(d2, d3, d4, f3, f4);
-
-            int i2 = d.e.a(e, e.aU.b().e(f5, f5, f5)).size() == 0 ? 1 : 0;
-            if ((n != 0) && ((i1 != 0) || (i2 == 0)) && (!e.F())) {
-                a(i, j, k, f3, f4);
+            // Don't worry, it's notchian code
+            double distance = d6 * d6 + d7 * d7 + d8 * d8;
+            if (distance > 100.0D) {
+                a.warning(e.r + " moved too quickly!");
+                a("You moved too quickly :( (Hacking?)");
                 return;
             }
 
-            e.aV = paramOPacket10Flying.g;
+            float f5 = 0.0625F;
+            boolean n = d.e.a(e, e.aV.b().e(f5, f5, f5)).isEmpty();
+
+            e.c(d6, d7, d8);
+            d6 = d2 - e.aL;
+            d7 = d3 - e.aM;
+            if ((d7 > -0.5D) || (d7 < 0.5D))
+                d7 = 0.0D;
+            d8 = d4 - e.aN;
+            boolean i1 = false;
+            if ((distance > 0.0625D) && (!e.I())) {
+                i1 = true;
+                a.warning(e.r + " moved wrongly!");
+                System.out.println("Got position " + d2 + ", " + d3 + ", " + d4);
+                System.out.println("Expected " + e.aL + ", " + e.aM + ", " + e.aN);
+            }
+            e.b(d2, d3, d4, f3, f4);
+
+            boolean i2 = d.e.a(e, e.aV.b().e(f5, f5, f5)).isEmpty();
+            if (n && (i1 || i2) && !e.I()) {
+                a(j, k, l, f3, f4);
+                return;
+            }
+            
+            OAxisAlignedBB var28 = e.aV.b().b((double) f5, (double) f5, (double) f5).a(0.0D, -0.55D, 0.0D);
+            if (!d.o && !d.e.b(var28)) {
+                if (d7 >= -0.03125D) {
+                    ++h;
+                    if (h > 80) {
+                        a.warning(e.r + " was kicked for floating too long!");
+                        a("Flying is not enabled on this server");
+                        return;
+                    }
+                }
+            } else {
+                this.h = 0;
+            }
+
+
+            e.aW = paramOPacket10Flying.g;
             d.f.b(e);
-            e.b(e.aL - d1, paramOPacket10Flying.g);
+            e.b(e.aM - d1, paramOPacket10Flying.g);
         }
     }
 
@@ -224,10 +247,10 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
             return;
 
         
-        l = false;
-        i = paramDouble1;
-        j = paramDouble2;
-        k = paramDouble3;
+        m = false;
+        j = paramDouble1;
+        k = paramDouble2;
+        l = paramDouble3;
         e.b(paramDouble1, paramDouble2, paramDouble3, paramFloat1, paramFloat2);
         e.a.b(new OPacket13PlayerLookMove(paramDouble1, paramDouble2 + 1.620000004768372D, paramDouble2, paramDouble3, paramFloat1, paramFloat2, false));
     }
@@ -238,11 +261,11 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
     @Override
     public void a(OPacket14BlockDig paramOPacket14BlockDig) {
         if (paramOPacket14BlockDig.e == 4) {
-            e.z();
+            e.C();
             return;
         }
         // CanaryMod: We allow admins and ops to dig!
-        boolean bool = d.e.v = d.f.h(e.r) || getPlayer().isAdmin();
+        boolean bool = d.e.x = d.f.h(e.r) || getPlayer().isAdmin();
         int n = 0;
         if (paramOPacket14BlockDig.e == 0)
             n = 1;
@@ -254,14 +277,14 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
         int i2 = paramOPacket14BlockDig.b;
         int i3 = paramOPacket14BlockDig.c;
         if (n != 0) {
-            double d1 = e.aK - (i1 + 0.5D);
-            double d2 = e.aL - (i2 + 0.5D);
-            double d3 = e.aM - (i3 + 0.5D);
+            double d1 = e.aL - (i1 + 0.5D);
+            double d2 = e.aM - (i2 + 0.5D);
+            double d3 = e.aN - (i3 + 0.5D);
             double d4 = d1 * d1 + d2 * d2 + d3 * d3;
             if (d4 > 36.0D)
                 return;
         }
-        OChunkCoordinates localOChunkCoordinates = d.e.m();
+        OChunkCoordinates localOChunkCoordinates = d.e.n();
         int i4 = (int) OMathHelper.e(i1 - localOChunkCoordinates.a);
         int i5 = (int) OMathHelper.e(i3 - localOChunkCoordinates.c);
         if (i4 > i5)
@@ -287,22 +310,26 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
                     e.c.a(i1, i2, i3);
             }
 
-        } else if (paramOPacket14BlockDig.e == 2)
-            e.c.b(i1, i2, i3);
-        else if (paramOPacket14BlockDig.e == 3) {
+        } else if (paramOPacket14BlockDig.e == 2) {
             // CanaryMod: Break block
+            Block block = etc.getServer().getBlockAt(i1, i2, i3);
+            block.setStatus(2); // Block broken
+            OEntity.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player, block);
+            e.c.b(i1, i2, i3);
+        }  else if (paramOPacket14BlockDig.e == 3) {
+            // CanaryMod: Send block update
             Block block = new Block(type, x, y, z);
-            block.setStatus(3);
+            block.setStatus(3); // Send update for block
             OEntity.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player, block);
 
-            double d5 = e.aK - (i1 + 0.5D);
-            double d6 = e.aL - (i2 + 0.5D);
-            double d7 = e.aM - (i3 + 0.5D);
+            double d5 = e.aL - (i1 + 0.5D);
+            double d6 = e.aM - (i2 + 0.5D);
+            double d7 = e.aN - (i3 + 0.5D);
             double d8 = d5 * d5 + d6 * d6 + d7 * d7;
             if (d8 < 256.0D)
                 e.a.b(new OPacket53BlockChange(i1, i2, i3, d.e));
         }
-        d.e.v = false;
+        d.e.x = false;
     }
 
     // CanaryMod: Store the blocks between blockPlaced packets
@@ -319,7 +346,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
         Block blockPlaced = null;
 
         // We allow admins and ops to build!
-        boolean bool = d.e.v = d.f.h(e.r) || getPlayer().isAdmin();
+        boolean bool = d.e.x = d.f.h(e.r) || getPlayer().isAdmin();
         if (paramOPacket15Place.d == 255) {
             // ITEM_USE -- if we have a lastRightClicked then it could be a
             // usable location
@@ -373,7 +400,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
             int i1 = paramOPacket15Place.b;
             int i2 = paramOPacket15Place.c;
             int i3 = paramOPacket15Place.d;
-            OChunkCoordinates localOChunkCoordinates = d.e.m();
+            OChunkCoordinates localOChunkCoordinates = d.e.n();
             // CanaryMod : Fix stupid buggy spawn protection.
             int i4 = (int) OMathHelper.e((i3 == 4 ? n - 1 : (i3 == 5 ? (n + 1) : n)) - localOChunkCoordinates.a);
             // CanaryMod : Fix stupid buggy spawn protection.
@@ -395,7 +422,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
             else {
                 // CanaryMod: No point sending the client to update the blocks, you
                 // weren't allowed to place!
-                d.e.v = false;
+                d.e.x = false;
                 return;
             }
 
@@ -430,7 +457,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
         if (!OItemStack.a(e.i.b(), paramOPacket15Place.e))
             b(new OPacket103(e.k.f, localOSlot.a, e.i.b()));
 
-        d.e.v = false;
+        d.e.x = false;
     }
 
     @Override
@@ -481,7 +508,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
             // CanaryMod: Swing the arm!
             OEntity.manager.callHook(PluginLoader.Hook.ARM_SWING, getPlayer());
 
-            e.m_();
+            e.k_();
         }
     }
 
@@ -493,7 +520,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
             e.e(false);
         else if (paramOPacket19.b == 3) {
             e.a(false, true, true);
-            l = false;
+            m = false;
         }
     }
 
@@ -510,7 +537,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
         b(new OPacket3Chat("§7" + paramString));
     }
 
-    public String c() {
+    public String d() {
         return e.r;
     }
 
@@ -527,7 +554,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
 
     @Override
     public void a(OPacket9 paramOPacket9) {
-        if (e.W > 0)
+        if (e.X > 0)
             return;
 
         e = d.f.d(e);
@@ -535,22 +562,22 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
 
     @Override
     public void a(OPacket101 paramOPacket101) {
-        e.w();
+        e.z();
     }
 
     @Override
     public void a(OPacket102 paramOPacket102) {
         if ((e.k.f == paramOPacket102.a) && (e.k.c(e))) {
-            OItemStack localOItemStack = e.k.a(paramOPacket102.b, paramOPacket102.c, e);
+            OItemStack localOItemStack = e.k.a(paramOPacket102.b, paramOPacket102.c, paramOPacket102.f, e);
 
             if (OItemStack.a(paramOPacket102.e, localOItemStack)) {
                 e.a.b(new OPacket106(paramOPacket102.a, paramOPacket102.d, true));
                 e.h = true;
                 e.k.a();
-                e.v();
+                e.y();
                 e.h = false;
             } else {
-                m.put(Integer.valueOf(e.k.f), Short.valueOf(paramOPacket102.d));
+                n.put(Integer.valueOf(e.k.f), Short.valueOf(paramOPacket102.d));
                 e.a.b(new OPacket106(paramOPacket102.a, paramOPacket102.d, false));
                 e.k.a(e, false);
 
@@ -564,7 +591,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
 
     @Override
     public void a(OPacket106 paramOPacket106) {
-        Short localShort = (Short) m.get(Integer.valueOf(e.k.f));
+        Short localShort = (Short) n.get(Integer.valueOf(e.k.f));
         if ((localShort != null) && (paramOPacket106.b == localShort.shortValue()) && (e.k.f == paramOPacket106.a) && (!e.k.c(e)))
             e.k.a(e, true);
     }
@@ -617,5 +644,10 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
                 d.e.g(n, i1, i2);
             }
         }
+    }
+
+    @Override
+    public boolean c() {
+        return true;
     }
 }

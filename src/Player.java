@@ -131,7 +131,8 @@ public class Player extends HumanEntity implements MessageReceiver {
 
     /**
      * Makes player use command.
-     * 
+     *
+     * TODO: redo this in the same way as the server commands.
      * @param command
      * 
      */
@@ -623,7 +624,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                 teleportTo(etc.getServer().getSpawnLocation());
             else if (cmd.equalsIgnoreCase("/setspawn")) {
                 // New system in beta 1.3: WorldInfo.
-                OWorldInfo info = etc.getMCServer().e.q;
+                OWorldInfo info = etc.getMCServer().e.s;
                 info.a((int) getX(), info.d(), (int) getZ());
 
                 log.info("Spawn position changed.");
@@ -1282,8 +1283,8 @@ public class Player extends HumanEntity implements MessageReceiver {
         OEntityPlayerMP player = getEntity();
 
         // If player is in vehicle - eject them before they are teleported.
-        if (player.aE != null)
-            player.b(player.aE);
+        if (player.aF != null)
+            player.b(player.aF);
         player.a.a(x, y, z, rotation, pitch);
     }
 

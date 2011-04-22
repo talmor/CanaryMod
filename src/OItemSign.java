@@ -37,7 +37,7 @@ public class OItemSign extends OItem {
             return false;
 
         if (paramInt4 == 1)
-            paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aD.bl, OMathHelper.b((paramOEntityPlayer.aQ + 180.0F) * 16.0F / 360.0F + 0.5D) & 0xF);
+            paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aD.bl, OMathHelper.b((paramOEntityPlayer.aR + 180.0F) * 16.0F / 360.0F + 0.5D) & 0xF);
         else
             paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aI.bl, paramInt4);
 

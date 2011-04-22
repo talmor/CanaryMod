@@ -25,7 +25,7 @@ public class OBlockFlowing extends OBlockFluids {
         int i = g(paramOWorld, paramInt1, paramInt2, paramInt3);
 
         int j = 1;
-        if ((bw == OMaterial.g) && (!paramOWorld.m.d))
+        if ((by == OMaterial.g) && (!paramOWorld.o.d))
             j = 2;
 
         int k = 1;
@@ -48,12 +48,12 @@ public class OBlockFlowing extends OBlockFluids {
                 else
                     n = i1 + 8;
             }
-            if ((a >= 2) && (bw == OMaterial.f))
+            if ((a >= 2) && (by == OMaterial.f))
                 if (paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3))
                     n = 0;
-                else if ((paramOWorld.c(paramInt1, paramInt2 - 1, paramInt3) == bw) && (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0))
+                else if ((paramOWorld.c(paramInt1, paramInt2 - 1, paramInt3) == by) && (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0))
                     n = 0;
-            if ((bw == OMaterial.g) && (i < 8) && (n < 8) && (n > i) && (paramRandom.nextInt(4) != 0)) {
+            if ((by == OMaterial.g) && (i < 8) && (n < 8) && (n > i) && (paramRandom.nextInt(4) != 0)) {
                 n = i;
                 k = 0;
             }
@@ -116,7 +116,7 @@ public class OBlockFlowing extends OBlockFluids {
         if (l(paramOWorld, paramInt1, paramInt2, paramInt3)) {
             int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
             if (i > 0)
-                if (bw == OMaterial.g)
+                if (by == OMaterial.g)
                     h(paramOWorld, paramInt1, paramInt2, paramInt3);
                 else
                     OBlock.m[i].a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
@@ -144,7 +144,7 @@ public class OBlockFlowing extends OBlockFluids {
 
             if (k(paramOWorld, k, m, n))
                 continue;
-            if ((paramOWorld.c(k, m, n) == bw) && (paramOWorld.b(k, m, n) == 0))
+            if ((paramOWorld.c(k, m, n) == by) && (paramOWorld.b(k, m, n) == 0))
                 continue;
             if (!k(paramOWorld, k, m - 1, n))
                 return paramInt4;
@@ -177,7 +177,7 @@ public class OBlockFlowing extends OBlockFluids {
                 m++;
             if (k(paramOWorld, j, k, m))
                 continue;
-            if ((paramOWorld.c(j, k, m) == bw) && (paramOWorld.b(j, k, m) == 0))
+            if ((paramOWorld.c(j, k, m) == by) && (paramOWorld.b(j, k, m) == 0))
                 continue;
             if (!k(paramOWorld, j, k - 1, m))
                 c[i] = 0;
@@ -204,7 +204,7 @@ public class OBlockFlowing extends OBlockFluids {
             return true;
         if (i == 0)
             return false;
-        OMaterial localOMaterial = OBlock.m[i].bw;
+        OMaterial localOMaterial = OBlock.m[i].by;
         return localOMaterial.a();
     }
 
@@ -230,7 +230,7 @@ public class OBlockFlowing extends OBlockFluids {
 
         
         OMaterial localOMaterial = paramOWorld.c(paramInt1, paramInt2, paramInt3);
-        if (localOMaterial == bw)
+        if (localOMaterial == by)
             return false;
         if (localOMaterial == OMaterial.g)
             return false;

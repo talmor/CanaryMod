@@ -22,7 +22,7 @@ public class Boat extends BaseVehicle {
      */
     public Boat(double x, double y, double z) {
         super(new OEntityBoat(etc.getMCServer().e, x, y, z));
-        etc.getMCServer().e.a(entity);
+        etc.getMCServer().e.b(entity);
     }
 
     /**

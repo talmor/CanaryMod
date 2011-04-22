@@ -208,7 +208,7 @@ public class OBlockButton extends OBlock {
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        if (paramOWorld.t)
+        if (paramOWorld.v)
             return;
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
         if ((i & 0x8) == 0)

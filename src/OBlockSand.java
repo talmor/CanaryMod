@@ -41,7 +41,7 @@ public class OBlockSand extends OBlock {
                     paramOWorld.e(paramInt1, paramInt2, paramInt3, bl);
             } else {
                 OEntityFallingSand localOEntityFallingSand = new OEntityFallingSand(paramOWorld, paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, bl);
-                paramOWorld.a(localOEntityFallingSand);
+                paramOWorld.b(localOEntityFallingSand);
             }
         }
     }
@@ -57,7 +57,7 @@ public class OBlockSand extends OBlock {
             return true;
         if (i == OBlock.ar.bl)
             return true;
-        OMaterial localOMaterial = OBlock.m[i].bw;
+        OMaterial localOMaterial = OBlock.m[i].by;
         if (localOMaterial == OMaterial.f)
             return true;
         return localOMaterial == OMaterial.g;

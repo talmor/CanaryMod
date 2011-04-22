@@ -64,11 +64,11 @@ public class OEntityTracker {
         
         if (paramInt1 > d)
             paramInt1 = d;
-        if (b.b(paramOEntity.aB))
+        if (b.b(paramOEntity.aC))
             throw new IllegalStateException("Entity is already tracked!");
         OEntityTrackerEntry localOEntityTrackerEntry = new OEntityTrackerEntry(paramOEntity, paramInt1, paramInt2, paramBoolean);
         a.add(localOEntityTrackerEntry);
-        b.a(paramOEntity.aB, localOEntityTrackerEntry);
+        b.a(paramOEntity.aC, localOEntityTrackerEntry);
         localOEntityTrackerEntry.b(c.e.d);
     }
 
@@ -79,7 +79,7 @@ public class OEntityTracker {
             for (OEntityTrackerEntry localOEntityTrackerEntry : a)
                 localOEntityTrackerEntry.a((OEntityPlayerMP) localObject);
         }
-        localObject = b.d(paramOEntity.aB);
+        localObject = b.d(paramOEntity.aC);
         if (localObject != null) {
             a.remove(localObject);
             ((OEntityTrackerEntry) localObject).a();
@@ -130,13 +130,13 @@ public class OEntityTracker {
 
     
     public void a(OEntity paramOEntity, OPacket paramOPacket) {
-        OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aB);
+        OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aC);
         if (localOEntityTrackerEntry != null)
             localOEntityTrackerEntry.a(paramOPacket);
     }
 
     public void b(OEntity paramOEntity, OPacket paramOPacket) {
-        OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aB);
+        OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aC);
         if (localOEntityTrackerEntry != null)
             localOEntityTrackerEntry.b(paramOPacket);
     }

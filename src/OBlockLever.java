@@ -35,7 +35,7 @@ public class OBlockLever extends OBlock {
         i &= 7;
 
         if ((paramInt4 == 1) && (paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3)))
-            i = 5 + paramOWorld.k.nextInt(2);
+            i = 5 + paramOWorld.m.nextInt(2);
         if ((paramInt4 == 2) && (paramOWorld.d(paramInt1, paramInt2, paramInt3 + 1)))
             i = 4;
         if ((paramInt4 == 3) && (paramOWorld.d(paramInt1, paramInt2, paramInt3 - 1)))
@@ -106,7 +106,7 @@ public class OBlockLever extends OBlock {
 
     @Override
     public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntityPlayer paramOEntityPlayer) {
-        if (paramOWorld.t)
+        if (paramOWorld.v)
             return true;
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
         int j = i & 0x7;

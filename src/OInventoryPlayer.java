@@ -29,7 +29,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
     }
 
     public int getContentsSize() {
-        return q_();
+        return a();
     }
 
     public String getName() {
@@ -61,7 +61,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
 
     private int c(OItemStack paramOItemStack) {
         for (int i = 0; i < a.length; i++)
-            if ((a[i] != null) && (a[i].c == paramOItemStack.c) && (a[i].c()) && (a[i].a < a[i].b()) && (a[i].a < r_()) && ((!a[i].e()) || (a[i].h() == paramOItemStack.h())))
+            if ((a[i] != null) && (a[i].c == paramOItemStack.c) && (a[i].c()) && (a[i].a < a[i].b()) && (a[i].a < d()) && ((!a[i].e()) || (a[i].h() == paramOItemStack.h())))
                 return i;
         return -1;
     }
@@ -88,8 +88,8 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
         int m = j;
         if (m > a[k].b() - a[k].a)
             m = a[k].b() - a[k].a;
-        if (m > r_() - a[k].a)
-            m = r_() - a[k].a;
+        if (m > d() - a[k].a)
+            m = d() - a[k].a;
 
         if (m == 0)
             return j;
@@ -210,7 +210,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
         }
     }
 
-    public int q_() {
+    public int a() {
         return a.length + 4;
     }
 
@@ -228,7 +228,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
         return "Inventory";
     }
 
-    public int r_() {
+    public int d() {
         return 64;
     }
 
@@ -240,7 +240,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
     }
 
     public boolean b(OBlock paramOBlock) {
-        if ((paramOBlock.bw != OMaterial.d) && (paramOBlock.bw != OMaterial.e) && (paramOBlock.bw != OMaterial.t) && (paramOBlock.bw != OMaterial.s))
+        if ((paramOBlock.by != OMaterial.d) && (paramOBlock.by != OMaterial.e) && (paramOBlock.by != OMaterial.t) && (paramOBlock.by != OMaterial.s))
             return true;
 
         OItemStack localOItemStack = c_(c);
@@ -309,7 +309,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (d.bb)
+        if (d.bd)
             return false;
         return paramOEntityPlayer.g(d) <= 64.0D;
     }

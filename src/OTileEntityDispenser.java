@@ -6,7 +6,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
     private Random       b    = new Random();
     private String       name = "Trap";
 
-    public int q_() {
+    public int a() {
         return 9;
     }
 
@@ -35,7 +35,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
     }
 
     public int getContentsSize() {
-        return q_();
+        return a();
     }
 
     public String getName() {
@@ -85,8 +85,8 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
 
     public void a(int paramInt, OItemStack paramOItemStack) {
         a[paramInt] = paramOItemStack;
-        if ((paramOItemStack != null) && (paramOItemStack.a > r_()))
-            paramOItemStack.a = r_();
+        if ((paramOItemStack != null) && (paramOItemStack.a > d()))
+            paramOItemStack.a = d();
         i();
     }
 
@@ -98,7 +98,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
     public void a(ONBTTagCompound paramONBTTagCompound) {
         super.a(paramONBTTagCompound);
         ONBTTagList localONBTTagList = paramONBTTagCompound.l("Items");
-        a = new OItemStack[q_()];
+        a = new OItemStack[a()];
         for (int i = 0; i < localONBTTagList.c(); i++) {
             ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) localONBTTagList.a(i);
             int j = localONBTTagCompound.c("Slot") & 0xFF;
@@ -123,7 +123,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
         paramONBTTagCompound.a("Items", localONBTTagList);
     }
 
-    public int r_() {
+    public int d() {
         return 64;
     }
 

@@ -38,6 +38,9 @@ public class Block {
         SandStone(24), // 
         NoteBlock(25), //
         Bed(26), //
+        PoweredRails(27), //
+        DetectorRails(28), //
+        Web(30), //
         Cloth(35), // 
         YellowFlower(37), // 
         RedRose(38), // 
@@ -95,7 +98,8 @@ public class Block {
         JackOLantern(91), // 
         Cake(92), //
         RedstoneRepeaterOff(93), //
-        RedstoneRepeaterOn(94);
+        RedstoneRepeaterOn(94), //
+        LockedChest(95);
 
         private int                       id;
         private static Map<Integer, Type> map;

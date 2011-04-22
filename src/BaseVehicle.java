@@ -25,7 +25,7 @@ public class BaseVehicle extends BaseEntity {
      * @return x-motion
      */
     public double getMotionX() {
-        return entity.aN;
+        return entity.aO;
     }
 
     /**
@@ -34,7 +34,7 @@ public class BaseVehicle extends BaseEntity {
      * @return y-motion
      */
     public double getMotionY() {
-        return entity.aO;
+        return entity.aP;
     }
 
     /**
@@ -43,7 +43,7 @@ public class BaseVehicle extends BaseEntity {
      * @return z-motion
      */
     public double getMotionZ() {
-        return entity.aP;
+        return entity.aQ;
     }
 
     /**
@@ -53,7 +53,7 @@ public class BaseVehicle extends BaseEntity {
      *            motion to set
      */
     public void setMotionX(double motion) {
-        entity.aN = motion;
+        entity.aO = motion;
     }
 
     /**
@@ -63,7 +63,7 @@ public class BaseVehicle extends BaseEntity {
      *            motion to set
      */
     public void setMotionY(double motion) {
-        entity.aO = motion;
+        entity.aP = motion;
     }
 
     /**
@@ -73,7 +73,7 @@ public class BaseVehicle extends BaseEntity {
      *            motion to set
      */
     public void setMotionZ(double motion) {
-        entity.aP = motion;
+        entity.aQ = motion;
     }
 
     /**
@@ -93,7 +93,7 @@ public class BaseVehicle extends BaseEntity {
      * Destroys this vehicle
      */
     public void destroy() {
-        entity.D();
+        entity.G();
     }
 
     /**
@@ -102,7 +102,7 @@ public class BaseVehicle extends BaseEntity {
      * @return true if unoccupied.
      */
     public boolean isEmpty() {
-        if (entity.aE == null)
+        if (entity.aF == null)
             return true;
         else
             return false;
@@ -115,9 +115,9 @@ public class BaseVehicle extends BaseEntity {
      * @return passenger
      */
     public Player getPassenger() {
-        if (entity.aE != null)
-            if (isPlayer(entity.aE))
-                return ((OEntityPlayerMP) entity.aE).getPlayer();
+        if (entity.aF != null)
+            if (isPlayer(entity.aF))
+                return ((OEntityPlayerMP) entity.aF).getPlayer();
 
         return null;
     }

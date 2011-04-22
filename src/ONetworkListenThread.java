@@ -34,18 +34,16 @@ public class ONetworkListenThread {
     }
 
     public ONetworkListenThread(MinecraftServer paramMinecraftServer, InetAddress paramInetAddress, int paramInt) {
-        c = paramMinecraftServer;
         try {
+            c = paramMinecraftServer;
             d = new ServerSocket(paramInt, 0, paramInetAddress);
+            d.setPerformancePreferences(0, 2, 1);
+            b = true;
+            e = new ONetworkAcceptThread(this, "Listen thread", paramMinecraftServer);
+            e.start();
         } catch (IOException ex) {
-            Logger.getLogger(ONetworkListenThread.class.getName()).log(Level.SEVERE, null, ex);
+            a.log(Level.SEVERE, null, ex);
         }
-        d.setPerformancePreferences(0, 2, 1);
-
-        b = true;
-        e = new ONetworkAcceptThread(this, "Listen thread", paramMinecraftServer);
-
-        e.start();
     }
 
     public void a(ONetServerHandler paramONetServerHandler) {

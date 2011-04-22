@@ -23,7 +23,7 @@ public class OBlockNote extends OBlockContainer {
     }
 
     public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntityPlayer paramOEntityPlayer) {
-        if (paramOWorld.t) {
+        if (paramOWorld.v) {
             return true;
         }
         OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.m(paramInt1, paramInt2, paramInt3);
@@ -33,7 +33,7 @@ public class OBlockNote extends OBlockContainer {
     }
 
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntityPlayer paramOEntityPlayer) {
-        if (paramOWorld.t) {
+        if (paramOWorld.v) {
             return;
         }
         OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.m(paramInt1, paramInt2, paramInt3);
@@ -47,6 +47,7 @@ public class OBlockNote extends OBlockContainer {
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5) {
         float f = (float) Math.pow(2.0D, (paramInt5 - 12) / 12.0D);
 
+        // CanaryMod: bd gets jarjar'd, reverse here
         String str = "harp";
         if (paramInt4 == 1) {
             str = "bd";

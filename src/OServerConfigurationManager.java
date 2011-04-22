@@ -58,7 +58,7 @@ public class OServerConfigurationManager {
     }
 
     public void a(OWorldServer paramOWorldServer) {
-        n = paramOWorldServer.o().d();
+        n = paramOWorldServer.p().d();
     }
 
     public int a() {
@@ -69,11 +69,11 @@ public class OServerConfigurationManager {
         b.add(paramOEntityPlayerMP);
         n.b(paramOEntityPlayerMP);
 
-        c.e.u.c((int) paramOEntityPlayerMP.aK >> 4, (int) paramOEntityPlayerMP.aM >> 4);
+        c.e.w.c((int) paramOEntityPlayerMP.aL >> 4, (int) paramOEntityPlayerMP.aN >> 4);
 
-        while (c.e.a(paramOEntityPlayerMP, paramOEntityPlayerMP.aU).size() != 0)
-            paramOEntityPlayerMP.a(paramOEntityPlayerMP.aK, paramOEntityPlayerMP.aL + 1.0D, paramOEntityPlayerMP.aM);
-        c.e.a(paramOEntityPlayerMP);
+        while (!c.e.a(paramOEntityPlayerMP, paramOEntityPlayerMP.aV).isEmpty())
+            paramOEntityPlayerMP.a(paramOEntityPlayerMP.aL, paramOEntityPlayerMP.aM + 1.0D, paramOEntityPlayerMP.aN);
+        c.e.b(paramOEntityPlayerMP);
         d.a(paramOEntityPlayerMP);
         // CanaryMod: Handle login (send MOTD and call hook)
         String[] motd = etc.getInstance().getMotd();
@@ -89,12 +89,12 @@ public class OServerConfigurationManager {
 
     public void c(OEntityPlayerMP paramOEntityPlayerMP) {
         n.a(paramOEntityPlayerMP);
-        c.e.d(paramOEntityPlayerMP);
+        c.e.e(paramOEntityPlayerMP);
         b.remove(paramOEntityPlayerMP);
         d.b(paramOEntityPlayerMP);
     }
 
-    public OEntityPlayerMP a(ONetLoginHandler paramONetLoginHandler, String paramString1, String paramString2) {
+    public OEntityPlayerMP a(ONetLoginHandler paramONetLoginHandler, String paramString1) {
         if (!etc.getLoader().isLoaded())
             paramONetLoginHandler.a("The server is not finished loading yet!");
 
@@ -190,12 +190,12 @@ public class OServerConfigurationManager {
         c.k.b(paramOEntityPlayerMP);
         d.b(paramOEntityPlayerMP);
         b.remove(paramOEntityPlayerMP);
-        c.e.e(paramOEntityPlayerMP);
+        c.e.f(paramOEntityPlayerMP);
 
-        OChunkCoordinates localOChunkCoordinates1 = paramOEntityPlayerMP.H();
+        OChunkCoordinates localOChunkCoordinates1 = paramOEntityPlayerMP.K();
         
         OEntityPlayerMP localOEntityPlayerMP = new OEntityPlayerMP(c, c.e, paramOEntityPlayerMP.r, new OItemInWorldManager(c.e));
-        localOEntityPlayerMP.aB = paramOEntityPlayerMP.aB;
+        localOEntityPlayerMP.aC = paramOEntityPlayerMP.aC;
         localOEntityPlayerMP.a = paramOEntityPlayerMP.a;
 
         if (localOChunkCoordinates1 != null) {
@@ -208,20 +208,20 @@ public class OServerConfigurationManager {
 
         }
 
-        c.e.u.c((int) localOEntityPlayerMP.aK >> 4, (int) localOEntityPlayerMP.aM >> 4);
+        c.e.w.c((int) localOEntityPlayerMP.aL >> 4, (int) localOEntityPlayerMP.aN >> 4);
 
-        while (c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.aU).size() != 0)
-            localOEntityPlayerMP.a(localOEntityPlayerMP.aK, localOEntityPlayerMP.aL + 1.0D, localOEntityPlayerMP.aM);
+        while (!c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.aV).isEmpty())
+            localOEntityPlayerMP.a(localOEntityPlayerMP.aL, localOEntityPlayerMP.aM + 1.0D, localOEntityPlayerMP.aN);
 
         localOEntityPlayerMP.a.b(new OPacket9());
-        localOEntityPlayerMP.a.a(localOEntityPlayerMP.aK, localOEntityPlayerMP.aL, localOEntityPlayerMP.aM, localOEntityPlayerMP.aQ, localOEntityPlayerMP.aR);
+        localOEntityPlayerMP.a.a(localOEntityPlayerMP.aL, localOEntityPlayerMP.aM, localOEntityPlayerMP.aN, localOEntityPlayerMP.aR, localOEntityPlayerMP.aS);
 
         d.a(localOEntityPlayerMP);
-        c.e.a(localOEntityPlayerMP);
+        c.e.b(localOEntityPlayerMP);
         b.add(localOEntityPlayerMP);
 
-        localOEntityPlayerMP.m();
-        localOEntityPlayerMP.t();
+        localOEntityPlayerMP.o();
+        localOEntityPlayerMP.w();
         return localOEntityPlayerMP;
     }
 
@@ -403,9 +403,9 @@ public class OServerConfigurationManager {
     public void a(double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, OPacket paramOPacket) {
         for (int i1 = 0; i1 < b.size(); i1++) {
             OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
-            double d1 = paramDouble1 - localOEntityPlayerMP.aK;
-            double d2 = paramDouble2 - localOEntityPlayerMP.aL;
-            double d3 = paramDouble3 - localOEntityPlayerMP.aM;
+            double d1 = paramDouble1 - localOEntityPlayerMP.aL;
+            double d2 = paramDouble2 - localOEntityPlayerMP.aM;
+            double d3 = paramDouble3 - localOEntityPlayerMP.aN;
             if (d1 * d1 + d2 * d2 + d3 * d3 < paramDouble4 * paramDouble4)
                 localOEntityPlayerMP.a.b(paramOPacket);
         }

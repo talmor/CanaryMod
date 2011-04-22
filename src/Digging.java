@@ -24,6 +24,8 @@ public class Digging extends OItemInWorldManager {
         a = player;
     }
 
+    // Drop block break lag fix here.
+
     /**
      * Called when a block is destroyed. We intercept it.
      * 

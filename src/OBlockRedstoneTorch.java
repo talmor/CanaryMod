@@ -16,7 +16,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
 
     private boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, boolean paramBoolean) {
         if (paramBoolean)
-            b.add(new ORedstoneUpdateInfo(paramInt1, paramInt2, paramInt3, paramOWorld.l()));
+            b.add(new ORedstoneUpdateInfo(paramInt1, paramInt2, paramInt3, paramOWorld.m()));
         int i = 0;
         for (int j = 0; j < b.size(); j++) {
             ORedstoneUpdateInfo localORedstoneUpdateInfo = (ORedstoneUpdateInfo) b.get(j);
@@ -102,7 +102,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         boolean bool = g(paramOWorld, paramInt1, paramInt2, paramInt3);
 
-        while ((b.size() > 0) && (paramOWorld.l() - ((ORedstoneUpdateInfo) b.get(0)).d > 100L))
+        while ((b.size() > 0) && (paramOWorld.m() - ((ORedstoneUpdateInfo) b.get(0)).d > 100L))
             b.remove(0);
 
         if (a) {
@@ -113,7 +113,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
                 int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[] { new Block(bl, paramInt1, paramInt2, paramInt3), 1, 0 });
                 if (current == 0)
                     if (a(paramOWorld, paramInt1, paramInt2, paramInt3, true)) {
-                        paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, "random.fizz", 0.5F, 2.6F + (paramOWorld.k.nextFloat() - paramOWorld.k.nextFloat()) * 0.8F);
+                        paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, "random.fizz", 0.5F, 2.6F + (paramOWorld.m.nextFloat() - paramOWorld.m.nextFloat()) * 0.8F);
                         for (int i = 0; i < 5; i++) {
                             double d1 = paramInt1 + paramRandom.nextDouble() * 0.6D + 0.2D;
                             double d2 = paramInt2 + paramRandom.nextDouble() * 0.6D + 0.2D;

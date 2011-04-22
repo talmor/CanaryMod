@@ -10,20 +10,22 @@ public class OItemRedstone extends OItem {
         Block blockClicked = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
         blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
 
-        if (paramInt4 == 0)
-            paramInt2--;
-        if (paramInt4 == 1)
-            paramInt2++;
-        if (paramInt4 == 2)
-            paramInt3--;
-        if (paramInt4 == 3)
-            paramInt3++;
-        if (paramInt4 == 4)
-            paramInt1--;
-        if (paramInt4 == 5)
-            paramInt1++;
-        if (!paramOWorld.e(paramInt1, paramInt2, paramInt3))
-            return false;
+        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) != OBlock.aS.bl) {
+            if (paramInt4 == 0)
+                paramInt2--;
+            if (paramInt4 == 1)
+                paramInt2++;
+            if (paramInt4 == 2)
+                paramInt3--;
+            if (paramInt4 == 3)
+                paramInt3++;
+            if (paramInt4 == 4)
+                paramInt1--;
+            if (paramInt4 == 5)
+                paramInt1++;
+            if (!paramOWorld.e(paramInt1, paramInt2, paramInt3))
+                return false;
+        }
         if (OBlock.av.a(paramOWorld, paramInt1, paramInt2, paramInt3)) {
             // CanaryMod: Redstone dust hook!
             Block blockPlaced = new Block(Block.Type.RedstoneWire.getType(), paramInt1, paramInt2, paramInt3);

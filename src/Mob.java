@@ -53,7 +53,7 @@ public class Mob extends LivingEntity {
         OWorld world = etc.getMCServer().e;
 
         entity.c(getX() + 0.5d, getY(), getZ() + 0.5d, getRotation(), 0f);
-        world.a(entity);
+        world.b(entity);
 
         if (rider != null) {
             OEntityLiving mob2 = rider.getMob();

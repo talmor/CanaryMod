@@ -33,7 +33,7 @@ public class OItemDoor extends OItem {
                 return false;
         }
 
-        int i = OMathHelper.b((paramOEntityPlayer.aQ + 180.0F) * 4.0F / 360.0F - 0.5D) & 0x3;
+        int i = OMathHelper.b((paramOEntityPlayer.aR + 180.0F) * 4.0F / 360.0F - 0.5D) & 0x3;
 
         int j = 0;
         int k = 0;

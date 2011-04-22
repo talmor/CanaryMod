@@ -87,10 +87,10 @@ public class OBlockRedstoneWire extends OBlock {
             j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[] { new Block(bl, paramInt1, paramInt2, paramInt3), i, j });
 
         if (i != j) {
-            paramOWorld.h = true;
+            paramOWorld.j = true;
             paramOWorld.c(paramInt1, paramInt2, paramInt3, j);
             paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
-            paramOWorld.h = false;
+            paramOWorld.j = false;
 
             for (k = 0; k < 4; k++) {
                 m = paramInt1;
@@ -152,7 +152,7 @@ public class OBlockRedstoneWire extends OBlock {
     @Override
     public void e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         super.e(paramOWorld, paramInt1, paramInt2, paramInt3);
-        if (paramOWorld.t)
+        if (paramOWorld.v)
             return;
 
         g(paramOWorld, paramInt1, paramInt2, paramInt3);
@@ -185,7 +185,7 @@ public class OBlockRedstoneWire extends OBlock {
     @Override
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         super.b(paramOWorld, paramInt1, paramInt2, paramInt3);
-        if (paramOWorld.t)
+        if (paramOWorld.v)
             return;
 
         paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bl);
@@ -226,7 +226,7 @@ public class OBlockRedstoneWire extends OBlock {
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (paramOWorld.t)
+        if (paramOWorld.v)
             return;
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
 

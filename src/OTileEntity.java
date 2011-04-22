@@ -32,7 +32,7 @@ public class OTileEntity {
         paramONBTTagCompound.a("z", g);
     }
 
-    public void i_() {
+    public void g_() {
     }
 
     public static OTileEntity c(ONBTTagCompound paramONBTTagCompound) {

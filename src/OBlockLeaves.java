@@ -23,18 +23,18 @@ public class OBlockLeaves extends OBlockLeavesBase {
                         int i1 = paramOWorld.a(paramInt1 + k, paramInt2 + m, paramInt3 + n);
                         if (i1 == OBlock.K.bl) {
                             int i2 = paramOWorld.b(paramInt1 + k, paramInt2 + m, paramInt3 + n);
-                            paramOWorld.d(paramInt1 + k, paramInt2 + m, paramInt3 + n, i2 | 0x4);
+                            paramOWorld.d(paramInt1 + k, paramInt2 + m, paramInt3 + n, i2 | 0x8);
                         }
                     }
     }
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        if (paramOWorld.t)
+        if (paramOWorld.v)
             return;
 
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        if ((i & 0x4) != 0) {
+        if ((i & 0x8) != 0) {
             int j = 4;
             int k = j + 1;
 
@@ -80,7 +80,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
             }
             int i2 = a[(i1 * n + i1 * m + i1)];
             if (i2 >= 0)
-                paramOWorld.c(paramInt1, paramInt2, paramInt3, i & 0xFFFFFFFB);
+                paramOWorld.c(paramInt1, paramInt2, paramInt3, i & -9);
             else
                 g(paramOWorld, paramInt1, paramInt2, paramInt3);
         }
@@ -97,12 +97,17 @@ public class OBlockLeaves extends OBlockLeavesBase {
 
     @Override
     public int a(Random paramRandom) {
-        return paramRandom.nextInt(16) == 0 ? 1 : 0;
+        return paramRandom.nextInt(20) == 0 ? 1 : 0;
     }
 
     @Override
     public int a(int paramInt, Random paramRandom) {
         return OBlock.y.bl;
+    }
+
+    @Override
+    protected int b(int var1) {
+        return var1 & 3;
     }
 
     @Override

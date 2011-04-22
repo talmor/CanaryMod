@@ -15,12 +15,12 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
     public Set                 g  = new HashSet();
 
-    private int                bE = -99999999;
-    private int                bF = 60;
+    private int                bF = -99999999;
+    private int                bG = 60;
 
-    private OItemStack[]       bG = { null, null, null, null, null };
+    private OItemStack[]       bH = { null, null, null, null, null };
 
-    private int                bH = 0;
+    private int                bI = 0;
     public boolean             h;
     // CanaryMod: Player storage
     private Player             player;
@@ -29,24 +29,24 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     public OEntityPlayerMP(MinecraftServer paramMinecraftServer, OWorld paramOWorld, String paramString, OItemInWorldManager paramOItemInWorldManager) {
         super(paramOWorld);
 
-        OChunkCoordinates localOChunkCoordinates = paramOWorld.m();
+        OChunkCoordinates localOChunkCoordinates = paramOWorld.n();
         int i = localOChunkCoordinates.a;
         int j = localOChunkCoordinates.c;
         int k = localOChunkCoordinates.b;
 
-        if (!paramOWorld.m.e) {
-            i += bq.nextInt(etc.getInstance().getSpawnProtectionSize() * 2 + 1) - etc.getInstance().getSpawnProtectionSize();
+        if (!paramOWorld.o.e) {
+            i += br.nextInt(etc.getInstance().getSpawnProtectionSize() * 2 + 1) - etc.getInstance().getSpawnProtectionSize();
             k = paramOWorld.e(i, j);
-            j += bq.nextInt(etc.getInstance().getSpawnProtectionSize() * 2 + 1) - etc.getInstance().getSpawnProtectionSize();
+            j += br.nextInt(etc.getInstance().getSpawnProtectionSize() * 2 + 1) - etc.getInstance().getSpawnProtectionSize();
         }
         c(i + 0.5D, k, j + 0.5D, 0.0F, 0.0F);
 
         b = paramMinecraftServer;
-        bm = 0.0F;
+        bo = 0.0F;
         paramOItemInWorldManager.a = this;
         r = paramString;
         c = paramOItemInWorldManager;
-        bc = 0.0F;
+        be = 0.0F;
 
         // CanaryMod: So we don't conflict with runecraft
         c = new Digging(paramOWorld, this);
@@ -74,7 +74,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         player.setUser(this);
     }
         
-    public void m() {
+    public void o() {
         // CanaryMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
         k.a((OICrafting) this);
@@ -82,32 +82,32 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     @Override
-    public OItemStack[] k_() {
-        return bG;
+    public OItemStack[] i_() {
+        return bH;
     }
 
     @Override
-    protected void l_() {
-        bc = 0.0F;
+    protected void j_() {
+        be = 0.0F;
     }
 
     @Override
-    public float q() {
+    public float s() {
         return 1.62F;
     }
 
     @Override
-    public void f_() {
+    public void p_() {
         c.a();
 
-        bF -= 1;
+        bG -= 1;
         k.a();
 
         for (int i = 0; i < 5; i++) {
             OItemStack localOItemStack = b_(i);
-            if (localOItemStack != bG[i]) {
-                b.k.a(this, new OPacket5PlayerInventory(aB, i, localOItemStack));
-                bG[i] = localOItemStack;
+            if (localOItemStack != bH[i]) {
+                b.k.a(this, new OPacket5PlayerInventory(aC, i, localOItemStack));
+                bH[i] = localOItemStack;
             }
         }
     }
@@ -127,7 +127,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
     @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
-        if (bF > 0)
+        if (bG > 0)
             return false;
 
         if (!b.n) {
@@ -143,12 +143,17 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     @Override
+    protected boolean t() {
+        return b.n;
+    }
+
+    @Override
     public void b(int paramInt) {
         super.b(paramInt);
     }
 
     public void a(boolean paramBoolean) {
-        super.f_();
+        super.p_();
 
         if ((paramBoolean) && (!f.isEmpty())) {
             OChunkCoordIntPair localOChunkCoordIntPair = (OChunkCoordIntPair) f.get(0);
@@ -170,16 +175,16 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         }
 
         // CanaryMod: Update the health
-        if (W != bE) {
+        if (X != bF) {
          // updates your health when it is changed.
             if (!etc.getInstance().isHealthEnabled()) {
-                W = 20;
-                af = false;
-            } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), bE, W))
-                W = bE;
+                X = 20;
+                ag = false;
+            } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), bF, X))
+                X = bF;
             else
-                a.b(new OPacket8(W));
-            bE = W;
+                a.b(new OPacket8(X));
+            bF = X;
 
         }
     }
@@ -199,24 +204,24 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     @Override
-    public void r() {
-        super.r();
+    public void u() {
+        super.u();
     }
 
     @Override
     public void b(OEntity paramOEntity, int paramInt) {
-        if (!paramOEntity.bb) {
+        if (!paramOEntity.bd) {
             if ((paramOEntity instanceof OEntityItem))
-                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aB, aB));
+                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aC, aC));
             if ((paramOEntity instanceof OEntityArrow))
-                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aB, aB));
+                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aC, aC));
         }
         super.b(paramOEntity, paramInt);
         k.a();
     }
 
     @Override
-    public void m_() {
+    public void k_() {
         if (!p) {
             q = -1;
             p = true;
@@ -224,7 +229,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         }
     }
 
-    public void t() {
+    public void w() {
     }
 
     @Override
@@ -237,17 +242,17 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
     @Override
     public void a(boolean paramBoolean1, boolean paramBoolean2, boolean paramBoolean3) {
-        if (F())
+        if (I())
             b.k.b(this, new OPacket18ArmAnimation(this, 3));
         super.a(paramBoolean1, paramBoolean2, paramBoolean3);
-        a.a(aK, aL, aM, aQ, aR);
+        a.a(aL, aM, aN, aR, aS);
     }
 
     @Override
     public void b(OEntity paramOEntity) {
         super.b(paramOEntity);
-        a.b(new OPacket39(this, aF));
-        a.a(aK, aL, aM, aQ, aR);
+        a.b(new OPacket39(this, aG));
+        a.a(aL, aM, aN, aR, aS);
     }
 
     @Override
@@ -258,16 +263,16 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         super.a(paramDouble, paramBoolean);
     }
 
-    private void Z() {
-        bH = (bH % 100 + 1);
+    private void af() {
+        bI = (bI % 100 + 1);
     }
 
     @Override
     public void b(int paramInt1, int paramInt2, int paramInt3) {
-        Z();
-        a.b(new OPacket100(bH, 1, "Crafting", 9));
-        k = new OCraftingInventoryWorkbenchCB(i, aG, paramInt1, paramInt2, paramInt3);
-        k.f = bH;
+        af();
+        a.b(new OPacket100(bI, 1, "Crafting", 9));
+        k = new OCraftingInventoryWorkbenchCB(i, aH, paramInt1, paramInt2, paramInt3);
+        k.f = bI;
         // CanaryMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
         k.a((OICrafting) this);
@@ -291,10 +296,10 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         if (inv != null)
             name = inv.getName();
 
-        Z();
-        a.b(new OPacket100(bH, 0, name, paramOIInventory.q_()));
+        af();
+        a.b(new OPacket100(bI, 0, name, paramOIInventory.a()));
         k = new OCraftingInventoryChestCB(i, paramOIInventory);
-        k.f = bH;
+        k.f = bI;
         // CanaryMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
         k.a((OICrafting) this);
@@ -313,10 +318,10 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
 
         
-        Z();
-        a.b(new OPacket100(bH, 2, name, paramOTileEntityFurnace.q_()));
+        af();
+        a.b(new OPacket100(bI, 2, name, paramOTileEntityFurnace.a()));
         k = new OCraftingInventoryFurnaceCB(i, paramOTileEntityFurnace);
-        k.f = bH;
+        k.f = bI;
         // CanaryMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
         k.a((OICrafting) this);
@@ -332,17 +337,17 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         if (dis != null)
             name = dis.getName();
 
-        Z();
-        a.b(new OPacket100(bH, 3, name, paramOTileEntityDispenser.q_()));
+        af();
+        a.b(new OPacket100(bI, 3, name, paramOTileEntityDispenser.a()));
         k = new OCraftingInventoryDispenserCB(i, paramOTileEntityDispenser);
-        k.f = bH;
+        k.f = bI;
         // CanaryMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
         k.a((OICrafting) this);
     }
 
     public void a(OCraftingInventoryCB paramOCraftingInventoryCB, int paramInt, OItemStack paramOItemStack) {
-        if ((paramOCraftingInventoryCB.a(paramInt) instanceof OSlotCrafting))
+        if ((paramOCraftingInventoryCB.b(paramInt) instanceof OSlotCrafting))
             return;
 
         if (h)
@@ -365,28 +370,41 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     @Override
-    public void u() {
+    public void x() {
         a.b(new OPacket101(k.f));
-        w();
+        z();
     }
 
-    public void v() {
+    public void y() {
         if (h)
             return;
         a.b(new OPacket103(-1, -1, i.j()));
     }
 
-    public void w() {
+    public void z() {
         k.a((OEntityPlayer)this);
         k = j;
     }
 
     public void a(float paramFloat1, float paramFloat2, boolean paramBoolean1, boolean paramBoolean2, float paramFloat3, float paramFloat4) {
-        au = paramFloat1;
-        av = paramFloat2;
-        ax = paramBoolean1;
+        av = paramFloat1;
+        aw = paramFloat2;
+        ay = paramBoolean1;
         e(paramBoolean2);
-        aR = paramFloat3;
-        aQ = paramFloat4;
+        aS = paramFloat3;
+        aR = paramFloat4;
+    }
+
+    public void a(OStatBasic var1, int var2) {
+        if (var1 != null) {
+            if (!var1.g) {
+                while (var2 > 100) {
+                    this.a.b((OPacket) (new OPacket200IncrementStatistic(var1.e, 100)));
+                    var2 -= 100;
+                }
+                this.a.b((OPacket) (new OPacket200IncrementStatistic(var1.e, var2)));
+            }
+
+        }
     }
 }

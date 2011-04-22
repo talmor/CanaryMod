@@ -19,16 +19,16 @@ public class OBlockStationary extends OBlockFluids {
 
     private void i(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        paramOWorld.h = true;
+        paramOWorld.j = true;
         paramOWorld.a(paramInt1, paramInt2, paramInt3, bl - 1, i);
         paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
         paramOWorld.c(paramInt1, paramInt2, paramInt3, bl - 1, b());
-        paramOWorld.h = false;
+        paramOWorld.j = false;
     }
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        if (bw == OMaterial.g) {
+        if (by == OMaterial.g) {
             int i = paramRandom.nextInt(3);
             // CanaryMod: prevent lava from putting something on fire.
             Block block = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
@@ -44,7 +44,7 @@ public class OBlockStationary extends OBlockFluids {
                             paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.ar.bl);
                             return;
                         }
-                    } else if (OBlock.m[k].bw.c())
+                    } else if (OBlock.m[k].by.c())
                         return;
                 }
         }

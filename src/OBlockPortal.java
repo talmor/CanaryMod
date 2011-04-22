@@ -63,11 +63,11 @@ public class OBlockPortal extends OBlockBreakable {
                     return false;
             }
 
-        paramOWorld.h = true;
+        paramOWorld.j = true;
         for (int k = 0; k < 2; k++)
             for (m = 0; m < 3; m++)
                 paramOWorld.e(paramInt1 + i * k, paramInt2 + m, paramInt3 + j * k, OBlock.be.bl);
-        paramOWorld.h = false;
+        paramOWorld.j = false;
 
         return true;
     }
@@ -124,9 +124,9 @@ public class OBlockPortal extends OBlockBreakable {
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntity paramOEntity) {
-        if (paramOWorld.t)
+        if (paramOWorld.v)
             return;
 
-        paramOEntity.W();
+        paramOEntity.ad();
     }
 }

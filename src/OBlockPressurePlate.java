@@ -53,7 +53,7 @@ public class OBlockPressurePlate extends OBlock {
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        if (paramOWorld.t)
+        if (paramOWorld.v)
             return;
         if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0)
             return;
@@ -63,7 +63,7 @@ public class OBlockPressurePlate extends OBlock {
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntity paramOEntity) {
-        if (paramOWorld.t)
+        if (paramOWorld.v)
             return;
 
         if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 1)

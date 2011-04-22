@@ -39,7 +39,10 @@ public class Item {
         Dispenser(23), //
         SandStone(24), //
         NoteBlock(25), //
-        BedBlock(26), // //
+        BedBlock(26), //
+        PoweredRails(27), //
+        DetectorRails(28), //
+        Web(30), //
         Cloth(35), //
         YellowFlower(37), //
         RedRose(38), //
@@ -200,6 +203,7 @@ public class Item {
         Cake(354), //
         Bed(355), //
         RedstoneRepeater(356), //
+        Cookie(357), //
         GoldRecord(2256), //
         GreenRecord(2257);
 
@@ -308,8 +312,7 @@ public class Item {
     public Item(OItemStack itemStack) {
         itemId = itemStack.c;
         amount = itemStack.a;
-        slot = itemStack.b;
-        damage = itemStack.g();
+        damage = itemStack.h();
         itemType = Type.fromId(itemId);
     }
 

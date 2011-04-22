@@ -28,7 +28,7 @@ public class OChunkProviderServer implements OIChunkProvider {
     }
 
     public void d(int paramInt1, int paramInt2) {
-        OChunkCoordinates localOChunkCoordinates = g.m();
+        OChunkCoordinates localOChunkCoordinates = g.n();
         int i = paramInt1 * 16 + 8 - localOChunkCoordinates.a;
         int j = paramInt2 * 16 + 8 - localOChunkCoordinates.c;
         int k = 128;
@@ -75,7 +75,7 @@ public class OChunkProviderServer implements OIChunkProvider {
         OChunk localOChunk = (OChunk) e.get(Integer.valueOf(OChunkCoordIntPair.a(paramInt1, paramInt2)));
 
         if (localOChunk == null) {
-            if (g.r)
+            if (g.t)
                 return c(paramInt1, paramInt2);
             return b;
         }
@@ -89,7 +89,7 @@ public class OChunkProviderServer implements OIChunkProvider {
         try {
             OChunk localOChunk = d.a(g, paramInt1, paramInt2);
             if (localOChunk != null)
-                localOChunk.r = g.l();
+                localOChunk.r = g.m();
             return localOChunk;
         } catch (Exception localException) {
             localException.printStackTrace();
@@ -110,7 +110,7 @@ public class OChunkProviderServer implements OIChunkProvider {
     private void b(OChunk paramOChunk) {
         if (d == null)
             return;
-        paramOChunk.r = g.l();
+        paramOChunk.r = g.m();
         d.a(g, paramOChunk);
     }
 
@@ -157,7 +157,7 @@ public class OChunkProviderServer implements OIChunkProvider {
     }
 
     public boolean a() {
-        if (!g.w) {
+        if (!g.y) {
             for (int i = 0; i < 100; i++)
                 if (!a.isEmpty()) {
                     Integer localInteger = (Integer) a.iterator().next();
@@ -180,6 +180,6 @@ public class OChunkProviderServer implements OIChunkProvider {
     }
 
     public boolean b() {
-        return !g.w;
+        return !g.y;
     }
 }

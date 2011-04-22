@@ -59,7 +59,7 @@ public class OExplosion {
                     d2 /= d4;
                     d3 /= d4;
 
-                    float f2 = f * (0.7F + i.k.nextFloat() * 0.6F);
+                    float f2 = f * (0.7F + i.m.nextFloat() * 0.6F);
                     d5 = b;
                     d6 = c;
                     d7 = d;
@@ -95,9 +95,9 @@ public class OExplosion {
             OEntity localOEntity = (OEntity) localList.get(i9);
             double d8 = localOEntity.e(b, c, d) / f;
             if (d8 <= 1.0D) {
-                d5 = localOEntity.aK - b;
-                d6 = localOEntity.aL - c;
-                d7 = localOEntity.aM - d;
+                d5 = localOEntity.aL - b;
+                d6 = localOEntity.aM - c;
+                d7 = localOEntity.aN - d;
 
                 double d9 = OMathHelper.a(d5 * d5 + d6 * d6 + d7 * d7);
 
@@ -105,7 +105,7 @@ public class OExplosion {
                 d6 /= d9;
                 d7 /= d9;
 
-                double d10 = i.a(localOVec3D, localOEntity.aU);
+                double d10 = i.a(localOVec3D, localOEntity.aV);
                 double d11 = (1.0D - d8) * d10;
                 // CanaryMod Damage hook: Explosions
                 int damage = (int) ((d11 * d11 + d11) / 2.0D * 8.0D * f + 1.0D);
@@ -114,9 +114,9 @@ public class OExplosion {
                     localOEntity.a(e, (int) ((d11 * d11 + d11) / 2.0D * 8.0D * f + 1.0D));
 
                 double d12 = d11;
-                localOEntity.aN += d5 * d12;
-                localOEntity.aO += d6 * d12;
-                localOEntity.aP += d7 * d12;
+                localOEntity.aO += d5 * d12;
+                localOEntity.aP += d6 * d12;
+                localOEntity.aQ += d7 * d12;
             }
         }
         f = f1;
@@ -137,49 +137,44 @@ public class OExplosion {
             }
     }
 
-    public void b() {
-        i.a(b, c, d, "random.explode", 4.0F, (1.0F + (i.k.nextFloat() - i.k.nextFloat()) * 0.2F) * 0.7F);
+    public void a(boolean var1) {
+        this.i.a(this.b, this.c, this.d, "random.explode", 4.0F, (1.0F + (this.i.m.nextFloat() - this.i.m.nextFloat()) * 0.2F) * 0.7F);
+        ArrayList var2 = new ArrayList();
+        var2.addAll(this.g);
 
-        ArrayList localArrayList = new ArrayList();
-        localArrayList.addAll(g);
-        for (int j = localArrayList.size() - 1; j >= 0; j--) {
-            OChunkPosition localOChunkPosition = (OChunkPosition) localArrayList.get(j);
-            int k = localOChunkPosition.a;
-            int m = localOChunkPosition.b;
-            int n = localOChunkPosition.c;
-
-            int i1 = i.a(k, m, n);
-
-            for (int i2 = 0; i2 < 1; i2++) {
-                double d1 = k + i.k.nextFloat();
-                double d2 = m + i.k.nextFloat();
-                double d3 = n + i.k.nextFloat();
-
-                double d4 = d1 - b;
-                double d5 = d2 - c;
-                double d6 = d3 - d;
-
-                double d7 = OMathHelper.a(d4 * d4 + d5 * d5 + d6 * d6);
-
-                d4 /= d7;
-                d5 /= d7;
-                d6 /= d7;
-
-                double d8 = 0.5D / (d7 / f + 0.1D);
-                d8 *= (i.k.nextFloat() * i.k.nextFloat() + 0.3F);
-                d4 *= d8;
-                d5 *= d8;
-                d6 *= d8;
-
-                i.a("explode", (d1 + b * 1.0D) / 2.0D, (d2 + c * 1.0D) / 2.0D, (d3 + d * 1.0D) / 2.0D, d4, d5, d6);
-                i.a("smoke", d1, d2, d3, d4, d5, d6);
+        for (int var3 = var2.size() - 1; var3 >= 0; --var3) {
+            OChunkPosition var4 = (OChunkPosition) var2.get(var3);
+            int var5 = var4.a;
+            int var6 = var4.b;
+            int var7 = var4.c;
+            int var8 = this.i.a(var5, var6, var7);
+            if (var1) {
+                double var9 = (double) ((float) var5 + this.i.m.nextFloat());
+                double var11 = (double) ((float) var6 + this.i.m.nextFloat());
+                double var13 = (double) ((float) var7 + this.i.m.nextFloat());
+                double var15 = var9 - this.b;
+                double var17 = var11 - this.c;
+                double var19 = var13 - this.d;
+                double var21 = (double) OMathHelper.a(var15 * var15 + var17 * var17 + var19 * var19);
+                var15 /= var21;
+                var17 /= var21;
+                var19 /= var21;
+                double var23 = 0.5D / (var21 / (double) this.f + 0.1D);
+                var23 *= (double) (this.i.m.nextFloat() * this.i.m.nextFloat() + 0.3F);
+                var15 *= var23;
+                var17 *= var23;
+                var19 *= var23;
+                this.i.a("explode", (var9 + this.b * 1.0D) / 2.0D, (var11 + this.c * 1.0D) / 2.0D, (var13 + this.d * 1.0D) / 2.0D, var15, var17, var19);
+                this.i.a("smoke", var9, var11, var13, var15, var17, var19);
             }
 
-            if (i1 > 0) {
-                OBlock.m[i1].a(i, k, m, n, i.b(k, m, n), 0.3F);
-                i.e(k, m, n, 0);
-                OBlock.m[i1].c(i, k, m, n);
+            if (var8 > 0) {
+                OBlock.m[var8].a(this.i, var5, var6, var7, this.i.b(var5, var6, var7), 0.3F);
+                this.i.e(var5, var6, var7, 0);
+                OBlock.m[var8].c(this.i, var5, var6, var7);
             }
         }
+
     }
+
 }

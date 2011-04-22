@@ -65,7 +65,7 @@ public class Minecart extends BaseVehicle {
      */
     public Minecart(double x, double y, double z, Type type) {
         super(new OEntityMinecart(etc.getMCServer().e, x, y, z, type.getType()));
-        etc.getMCServer().e.a(entity);
+        etc.getMCServer().e.b(entity);
     }
 
     /**

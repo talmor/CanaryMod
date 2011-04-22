@@ -25,23 +25,23 @@ public class OItemHoe extends OItem {
             }
 
             OBlock localOBlock = OBlock.aA;
-            paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bu.c(), (localOBlock.bu.a() + 1.0F) / 2.0F, localOBlock.bu.b() * 0.8F);
+            paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bw.c(), (localOBlock.bw.a() + 1.0F) / 2.0F, localOBlock.bw.b() * 0.8F);
 
-            if (paramOWorld.t)
+            if (paramOWorld.v)
                 return true;
             paramOWorld.e(paramInt1, paramInt2, paramInt3, localOBlock.bl);
             paramOItemStack.a(1, paramOEntityPlayer);
 
-            if ((paramOWorld.k.nextInt(8) == 0) && (i == OBlock.u.bl)) {
+            if ((paramOWorld.m.nextInt(8) == 0) && (i == OBlock.u.bl)) {
                 int j = 1;
                 for (int k = 0; k < j; k++) {
                     float f1 = 0.7F;
-                    float f2 = paramOWorld.k.nextFloat() * f1 + (1.0F - f1) * 0.5F;
+                    float f2 = paramOWorld.m.nextFloat() * f1 + (1.0F - f1) * 0.5F;
                     float f3 = 1.2F;
-                    float f4 = paramOWorld.k.nextFloat() * f1 + (1.0F - f1) * 0.5F;
+                    float f4 = paramOWorld.m.nextFloat() * f1 + (1.0F - f1) * 0.5F;
                     OEntityItem localOEntityItem = new OEntityItem(paramOWorld, paramInt1 + f2, paramInt2 + f3, paramInt3 + f4, new OItemStack(OItem.Q));
                     localOEntityItem.c = 10;
-                    paramOWorld.a(localOEntityItem);
+                    paramOWorld.b(localOEntityItem);
                 }
             }
 
