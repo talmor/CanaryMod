@@ -167,6 +167,11 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
                     a("Illegal stance");
                     a.warning(e.r + " had an illegal stance: " + d6);
                 }
+                
+                if (Math.abs(paramOPacket10Flying.a) > 3.2E7D || Math.abs(paramOPacket10Flying.c) > 3.2E7D) {
+                    this.a("Illegal position");
+                    return;
+                }
             }
             if (paramOPacket10Flying.i) {
                 f3 = paramOPacket10Flying.e;
@@ -199,6 +204,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
                 d7 = 0.0D;
             d8 = d4 - e.aN;
             boolean i1 = false;
+            distance = d6 * d6 + d7 * d7 + d8 * d8;
             if ((distance > 0.0625D) && (!e.I())) {
                 i1 = true;
                 a.warning(e.r + " moved wrongly!");

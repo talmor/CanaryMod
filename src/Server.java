@@ -103,7 +103,7 @@ public class Server {
      * @return time server time
      */
     public long getTime() {
-        return server.e.l();
+        return server.e.m();
     }
 
     /**
@@ -162,12 +162,12 @@ public class Server {
         Player lastPlayer = null;
         name = name.toLowerCase();
 
-        for (Object player : server.f.b) {
-            String playerName = ((OEntityPlayerMP) player).r;
+        for (OEntityPlayerMP player : server.f.b) {
+            String playerName = player.r;
 
             if (playerName.toLowerCase().equals(name)) {
                 // Perfect match found
-                lastPlayer = ((OEntityPlayerMP) player).getPlayer();
+                lastPlayer = player.getPlayer();
                 break;
             }
             if (playerName.toLowerCase().indexOf(name.toLowerCase()) != -1) {
@@ -175,7 +175,7 @@ public class Server {
                 if (lastPlayer != null)
                     // Found multiple
                     return null;
-                lastPlayer = ((OEntityPlayerMP) player).getPlayer();
+                lastPlayer = player.getPlayer();
             }
         }
 
@@ -200,8 +200,8 @@ public class Server {
      */
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
-        for (Object o : server.f.b)
-            toRet.add(((OEntityPlayerMP) o).getPlayer());
+        for (OEntityPlayerMP oepmp : server.f.b)
+            toRet.add(oepmp.getPlayer());
         return toRet;
     }
 
@@ -314,7 +314,7 @@ public class Server {
      */
     public Location getSpawnLocation() {
         // More structure ftw
-        OWorldInfo info = server.e.q;
+        OWorldInfo info = server.e.s;
         Location spawn = new Location();
         spawn.x = (info.c() + 0.5D);
         spawn.y = server.e.e(info.c(), info.e()) + 1.5D;
@@ -543,13 +543,13 @@ public class Server {
      * @param quantity
      */
     public void dropItem(double x, double y, double z, int itemId, int quantity) {
-        double d1 = server.e.k.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d2 = server.e.k.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d3 = server.e.k.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d1 = server.e.m.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d2 = server.e.m.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d3 = server.e.m.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
-        OEntityItem localgl = new OEntityItem(server.e, x + d1, y + d2, z + d3, new OItemStack(itemId, quantity, 0));
-        localgl.c = 10;
-        server.e.a(localgl);
+        OEntityItem oei = new OEntityItem(server.e, x + d1, y + d2, z + d3, new OItemStack(itemId, quantity, 0));
+        oei.c = 10;
+        server.e.b(oei);
     }
 
     /**
@@ -633,7 +633,7 @@ public class Server {
      * @return true if the chunk is loaded
      */
     public boolean isChunkLoaded(int x, int y, int z) {
-        return server.e.u.a(x >> 4, z >> 4);
+        return server.e.w.a(x >> 4, z >> 4);
     }
 
     /**
@@ -672,7 +672,7 @@ public class Server {
      *            a chunk z-coordinate
      */
     public void loadChunk(int x, int z) {
-        server.e.u.d(x, z);
+        server.e.w.d(x, z);
     }
 
     /**
