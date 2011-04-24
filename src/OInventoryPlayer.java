@@ -51,7 +51,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
         return 9;
     }
 
-    
+
     private int d(int paramInt) {
         for (int i = 0; i < a.length; i++)
             if ((a[i] != null) && (a[i].c == paramInt))

@@ -63,6 +63,7 @@ public abstract class OEntityLiving extends OEntity {
 
     public OEntityLiving(OWorld paramOWorld) {
         super(paramOWorld);
+        X = 10;
         aE = true;
 
         F = ((float) (Math.random() + 1.0D) * 0.01F);
@@ -133,7 +134,7 @@ public abstract class OEntityLiving extends OEntity {
                     float f1 = br.nextFloat() - br.nextFloat();
                     float f2 = br.nextFloat() - br.nextFloat();
                     float f3 = br.nextFloat() - br.nextFloat();
-                    aH.a("bubble", aL + f1, aK + f2, aN + f3, aO, aP, aQ);
+                    aH.a("bubble", aL + f1, aM + f2, aN + f3, aO, aP, aQ);
                 }
                 // CanaryMod Damage hook: Drowning
                 if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.WATER, null, entity, 2))
@@ -379,6 +380,10 @@ public abstract class OEntityLiving extends OEntity {
     public void a(OEntity paramOEntity) {
         if ((S >= 0) && (paramOEntity != null))
             paramOEntity.c(this, S);
+
+        if (paramOEntity != null)
+            paramOEntity.a(this);
+
         ag = true;
 
         if (!aH.v)
@@ -439,7 +444,7 @@ public abstract class OEntityLiving extends OEntity {
             aQ *= 0.5D;
             aP -= 0.02D;
 
-            if ((aX) && (b(aO, aP + 0.6000000238418579D - aM + d1, aR)))
+            if ((aX) && (b(aO, aP + 0.6000000238418579D - aM + d1, aQ)))
                 aP = 0.300000011920929D;
         } else {
             float f1 = 0.91F;
@@ -645,7 +650,7 @@ public abstract class OEntityLiving extends OEntity {
     }
 
     protected int v() {
-        return 10;
+        return 40;
     }
 
     public void a(OEntity paramOEntity, float paramFloat1, float paramFloat2) {
@@ -662,7 +667,7 @@ public abstract class OEntityLiving extends OEntity {
         double d4 = OMathHelper.a(d1 * d1 + d2 * d2);
 
         float f1 = (float) (Math.atan2(d2, d1) * 180.0D / 3.141592741012573D) - 90.0F;
-        float f2 = (float) (Math.atan2(d3, d4) * 180.0D / 3.141592741012573D);
+        float f2 = (float) (-(Math.atan2(d3, d4) * 180.0D / 3.141592741012573D));
         aS = (-b(aS, f2, paramFloat2));
         aR = b(aR, f1, paramFloat1);
     }
@@ -692,7 +697,7 @@ public abstract class OEntityLiving extends OEntity {
     }
 
     public boolean d() {
-        return (aH.a(aV)) && (aH.a(this, aV).size() == 0) && (!aH.b(aV));
+        return (aH.a(aV)) && (aH.a(this, aV).size() == 0) && (!aH.c(aV));
     }
 
     @Override

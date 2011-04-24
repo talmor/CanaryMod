@@ -407,6 +407,6 @@ rule op OItemInWorldManager
 rule oq OPacket255KickDisconnect
 rule or OBlockStep
 rule os OItemFood
-rule ot Entity_XK
+rule ot OEntityWeatherEffect
 rule ou OSlotCrafting
 rule ov OChunkCoordIntPair 

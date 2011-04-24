@@ -251,7 +251,7 @@ public abstract class OEntity {
 
         if (i) {
             double d6 = 0.05D;
-            while ((paramDouble1 != 0.0D) && (aH.a(this, aV.c(paramDouble1, -1.0D, 0.0D)).size() == 0)) {
+            while ((paramDouble1 != 0.0D) && (aH.a(this, aV.c(paramDouble1, -1.0D, 0.0D)).isEmpty())) {
                 if ((paramDouble1 < d6) && (paramDouble1 >= -d6))
                     paramDouble1 = 0.0D;
                 else if (paramDouble1 > 0.0D)
@@ -260,7 +260,7 @@ public abstract class OEntity {
                     paramDouble1 += d6;
                 d3 = paramDouble1;
             }
-            while ((paramDouble3 != 0.0D) && (aH.a(this, aV.c(0.0D, -1.0D, paramDouble3)).size() == 0)) {
+            while ((paramDouble3 != 0.0D) && (aH.a(this, aV.c(0.0D, -1.0D, paramDouble3)).isEmpty())) {
                 if ((paramDouble3 < d6) && (paramDouble3 >= -d6))
                     paramDouble3 = 0.0D;
                 else if (paramDouble3 > 0.0D)
@@ -363,7 +363,7 @@ public abstract class OEntity {
         if ((n()) && !i) {
             bi = (float) (bi + OMathHelper.a(d7 * d7 + d8 * d8) * 0.6D);
             int i1 = OMathHelper.b(aL);
-            int i2 = OMathHelper.b(aM - 0.2000000029802322D - be);
+            int i2 = OMathHelper.b(aM - 0.2D - be);
             int m = OMathHelper.b(aN);
             int n = aH.a(i1, i2, m);
             if ((bi > b) && (n > 0)) {
@@ -397,7 +397,7 @@ public abstract class OEntity {
         bn *= 0.4F;
 
         boolean bool = Y();
-        if (aH.c(aV)) {
+        if (aH.d(aV)) {
             a(1);
             if (!bool) {
                 bu += 1;
@@ -840,6 +840,7 @@ public abstract class OEntity {
         else
             bA.b(0, Byte.valueOf((byte) (i & ~(1 << paramInt))));
     }
+
     public void a(OEntityLightningBolt var1) {
         this.a(5);
         ++this.bu;

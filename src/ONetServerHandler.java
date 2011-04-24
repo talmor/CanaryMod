@@ -166,6 +166,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
                 if (!e.I() && (d6 > 1.65D) || (d6 < 0.1D)) {
                     a("Illegal stance");
                     a.warning(e.r + " had an illegal stance: " + d6);
+                    return;
                 }
                 
                 if (Math.abs(paramOPacket10Flying.a) > 3.2E7D || Math.abs(paramOPacket10Flying.c) > 3.2E7D) {
@@ -214,7 +215,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
             e.b(d2, d3, d4, f3, f4);
 
             boolean i2 = d.e.a(e, e.aV.b().e(f5, f5, f5)).isEmpty();
-            if (n && (i1 || i2) && !e.I()) {
+            if (n && (i1 || !i2) && !e.I()) {
                 a(j, k, l, f3, f4);
                 return;
             }
@@ -322,7 +323,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
             block.setStatus(2); // Block broken
             OEntity.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player, block);
             e.c.b(i1, i2, i3);
-        }  else if (paramOPacket14BlockDig.e == 3) {
+        } else if (paramOPacket14BlockDig.e == 3) {
             // CanaryMod: Send block update
             Block block = new Block(type, x, y, z);
             block.setStatus(3); // Send update for block

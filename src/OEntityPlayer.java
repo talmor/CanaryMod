@@ -18,7 +18,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public double               w;
     public double               x;
     public double               y;
-    private boolean             z;
+    protected boolean           z;
     private OChunkCoordinates   a;
     private int                 b;
     public float                A;
@@ -192,7 +192,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         super.a(paramOEntity);
         b(0.2F, 0.2F);
         a(aL, aM, aN);
-        aO = 0.1D;
+        aP = 0.1D;
 
         if (r.equals("Notch"))
             a(new OItemStack(OItem.h, 1), true);
@@ -243,16 +243,16 @@ public abstract class OEntityPlayer extends OEntityLiving {
             localOEntityItem.aP = 0.2D;
         } else {
             f1 = 0.3F;
-            localOEntityItem.aO = (-OMathHelper.a(aQ / 180.0F * 3.141593F) * OMathHelper.b(aR / 180.0F * 3.141593F) * f1);
-            localOEntityItem.aQ = (OMathHelper.b(aQ / 180.0F * 3.141593F) * OMathHelper.b(aR / 180.0F * 3.141593F) * f1);
-            localOEntityItem.aP = (-OMathHelper.a(aR / 180.0F * 3.141593F) * f1 + 0.1F);
+            localOEntityItem.aO = (-OMathHelper.a(aR / 180.0F * 3.141593F) * OMathHelper.b(aS / 180.0F * 3.141593F) * f1);
+            localOEntityItem.aQ = (OMathHelper.b(aR / 180.0F * 3.141593F) * OMathHelper.b(aS / 180.0F * 3.141593F) * f1);
+            localOEntityItem.aP = (-OMathHelper.a(aS / 180.0F * 3.141593F) * f1 + 0.1F);
             f1 = 0.02F;
 
             f2 = br.nextFloat() * 3.141593F * 2.0F;
             f1 *= br.nextFloat();
-            localOEntityItem.aN += Math.cos(f2) * f1;
-            localOEntityItem.aO += (br.nextFloat() - br.nextFloat()) * 0.1F;
-            localOEntityItem.aP += Math.sin(f2) * f1;
+            localOEntityItem.aO += Math.cos(f2) * f1;
+            localOEntityItem.aP += (br.nextFloat() - br.nextFloat()) * 0.1F;
+            localOEntityItem.aQ += Math.sin(f2) * f1;
         }
 
         if (!(Boolean) manager.callHook(PluginLoader.Hook.ITEM_DROP, ((OEntityPlayerMP) this).getPlayer(), new Item(paramOItemStack))){
@@ -265,7 +265,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
     }
 
     protected void a(OEntityItem paramOEntityItem) {
-        aH.a(paramOEntityItem);
+        aH.b(paramOEntityItem);
     }
 
     public float a(OBlock paramOBlock) {
@@ -284,7 +284,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
     @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
-        super.b(paramONBTTagCompound);
+        super.a(paramONBTTagCompound);
         ONBTTagList localONBTTagList = paramONBTTagCompound.l("Inventory");
         i.b(localONBTTagList);
         s = paramONBTTagCompound.e("Dimension");
@@ -302,7 +302,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
     @Override
     public void b(ONBTTagCompound paramONBTTagCompound) {
-        super.a(paramONBTTagCompound);
+        super.b(paramONBTTagCompound);
         paramONBTTagCompound.a("Inventory", i.a(new ONBTTagList()));
         paramONBTTagCompound.a("Dimension", s);
         paramONBTTagCompound.a("Sleeping", z);
@@ -451,7 +451,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
             paramOEntity.a(this, i1);
             OItemStack localOItemStack = D();
             if ((localOItemStack != null) && ((paramOEntity instanceof OEntityLiving))) {
-                localOItemStack.a((OEntityLiving) paramOEntity);
+                localOItemStack.a((OEntityLiving) paramOEntity, this);
                 if (localOItemStack.a <= 0) {
                     localOItemStack.a(this);
                     E();
@@ -565,7 +565,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
         z = false;
         if ((!aH.v) && (paramBoolean2))
-            aH.e();
+            aH.r();
         if (paramBoolean1)
             b = 0;
         else
@@ -670,7 +670,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
         }
     }
 
-    private void h(double var1, double var3, double var5) {if (this.aG != null) {
+    private void h(double var1, double var3, double var5) {
+        if (this.aG != null) {
             int var7 = Math.round(OMathHelper.a(var1 * var1 + var3 * var3 + var5 * var5) * 100.0F);
             if (var7 > 0) {
                 if (this.aG instanceof OEntityMinecart) {
