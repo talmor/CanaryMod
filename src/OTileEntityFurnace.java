@@ -206,7 +206,7 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
         if (i == OItem.aw.bd)
             return 20000;
 
-        if (i == OBlock.A.bl)
+        if (i == OBlock.y.bl)
             return 100;
 
         return 0;

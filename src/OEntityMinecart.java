@@ -161,7 +161,7 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
                     localOEntityItem.aO = ((float) br.nextGaussian() * f4);
                     localOEntityItem.aP= ((float) br.nextGaussian() * f4 + 0.2F);
                     localOEntityItem.aQ = ((float) br.nextGaussian() * f4);
-                    aH.a(localOEntityItem);
+                    aH.b(localOEntityItem);
                 }
             }
         }
@@ -215,7 +215,7 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         // CanaryMod: Change of the cart
         manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, i1, i2, i3);
 
-        if (OBlockMinecartTrack.g(this.aH, i1, i2 - 1, i3))
+        if (OBlockRail.g(this.aH, i1, i2 - 1, i3))
             i2--;
 
         double d5 = 0.4D;
@@ -223,7 +223,7 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
 
         double d4 = 0.0078125D;
         int var15 = aH.a(i1, i2, i3);
-        if (OBlockMinecartTrack.c(var15)) {
+        if (OBlockRail.c(var15)) {
             OVec3D localOVec3D1 = g(aL, aM, aN);
             int i5 = aH.b(i1, i2, i3);
             aM = i2;
@@ -234,7 +234,7 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
                 var19 = !var18;
             }
             
-            if (((OBlockMinecartTrack) OBlock.m[var15]).d()) {
+            if (((OBlockRail) OBlock.m[var15]).d()) {
                 i5 &= 7;
             }
 
@@ -267,6 +267,19 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
 
             aO = (d10 * d6 / d8);
             aQ = (d10 * d7 / d8);
+            
+            if (var19) {
+                double d11 = Math.sqrt(aO * aO + aQ * aQ);
+                if (d11 < 0.03D) {
+                    aO *= 0.0D;
+                    aP *= 0.0D;
+                    aQ *= 0.0D;
+                } else {
+                    aO *= 0.5D;
+                    aP *= 0.0D;
+                    aQ *= 0.5D;
+                }
+            }
 
             double d11 = 0.0D;
             double d12 = i1 + 0.5D + arrayOfInt[0][0] * 0.5D;
@@ -381,6 +394,26 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
                     }
                 }
             }
+            if (var18) {
+                double d21 = Math.sqrt(aO * aO + aQ * aQ);
+                if (d21 > 0.01D) {
+                    double d22 = 0.04D;
+                    aO += aO / d21 * d22;
+                    aQ += aQ / d21 * d22;
+                } else if (i5 == 1) {
+                    if (aH.d(i1 - 1, i2, i3)) {
+                        aO = 0.02D;
+                    } else if (aH.d(i1 + 1, i2, i3)) {
+                        aO = -0.02D;
+                    }
+                } else if (i5 == 0) {
+                    if (aH.d(i1, i2, i3 - 1)) {
+                        aQ = 0.02D;
+                    } else if (aH.d(i1, i2, i3 + 1)) {
+                        aQ = -0.02D;
+                    }
+                }
+            }
         } else {
             if (aO < -d5)
                 aO = (-d5);
@@ -450,15 +483,15 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         // CanaryMod: Change of the cart
         manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, i1, i2, i3);
 
-        if (OBlockMinecartTrack.g(aH, i1, i2 - 1, i3))
+        if (OBlockRail.g(aH, i1, i2 - 1, i3))
             i2--;
 
         int var10 = aH.a(i1, i2, i3);
-        if (OBlockMinecartTrack.c(var10)) {
+        if (OBlockRail.c(var10)) {
             int i4 = aH.b(i1, i2, i3);
             paramDouble2 = i2;
 
-            if (((OBlockMinecartTrack) OBlock.m[var10]).d()) {
+            if (((OBlockRail) OBlock.m[var10]).d()) {
                 i4 &= 7;
             }
 

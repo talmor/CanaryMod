@@ -59,6 +59,7 @@ public class etc {
     private String[]                      monsters            = new String[] {};
     private String[]                      waterAnimals        = new String[] {};
     private int                           mobSpawnRate        = 100;
+    private boolean                       spawnWolves         = true;
 
     private boolean                       mobReload           = false;
     private List<OSpawnListEntry>         animalsList, monsterList, waterAnimalsList;
@@ -167,6 +168,7 @@ public class etc {
             if (animals.length == 1 && (animals[0].equals(" ") || animals[0].equals("")))
                 animals = new String[] {};
             validateMobGroup(animals, "natural-animals", new String[] { "Sheep", "Pig", "Chicken", "Cow", "Wolf" });
+            spawnWolves = properties.getBoolean("spawn-wolves", true);
 
             monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper,Slime").split(",");
             if (monsters.length == 1 && (monsters[0].equals(" ") || monsters[0].equals("")))
@@ -960,19 +962,19 @@ public class etc {
         return monsters;
     }
 
-    public List getMonstersClass(OMobSpawnerBase biomeSpawner) {
+    public List getMonstersClass(OBiomeGenBase biomeSpawner) {
         if (mobReload)
             reloadMonsterClass();
         return monsterList;
     }
 
-    public List getAnimalsClass(OMobSpawnerBase biomeSpawner) {
+    public List getAnimalsClass(OBiomeGenBase biomeGen) {
         if (mobReload)
             reloadMonsterClass();
 
         // Wolfies also like to spawn
         ArrayList toRet = new ArrayList(animalsList); // Create a copy.
-        if ((biomeSpawner instanceof OMobSpawnerTaiga) || (biomeSpawner instanceof OMobSpawnerForest)) {
+        if (spawnWolves && ((biomeGen instanceof OBiomeGenTaiga) || (biomeGen instanceof OBiomeGenForest))) {
             OSpawnListEntry wolfEntry = OSpawnListEntry.getSpawnListEntry(OEntityWolf.class);
             if (!toRet.contains(wolfEntry))
                 toRet.add(wolfEntry);
@@ -981,7 +983,7 @@ public class etc {
         return toRet;
     }
 
-    public List getWaterAnimalsClass(OMobSpawnerBase biomeSpawner) {
+    public List getWaterAnimalsClass(OBiomeGenBase biomeSpawner) {
         if (mobReload)
             reloadMonsterClass();
         return waterAnimalsList;

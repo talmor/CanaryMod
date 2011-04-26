@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class OBlockFlowing extends OBlockFluids {
+public class OBlockFlowing extends OBlockFluid {
     int       a = 0;
 
     boolean[] b = new boolean[4];

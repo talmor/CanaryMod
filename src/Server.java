@@ -213,7 +213,7 @@ public class Server {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b)
-            if (o instanceof OEntityMobs || o instanceof OEntityGhast)
+            if (o instanceof OEntityMob || o instanceof OEntityGhast)
                 toRet.add(new Mob((OEntityLiving) o));
         return toRet;
     }
@@ -226,7 +226,7 @@ public class Server {
     public List<Mob> getAnimalList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b)
-            if (o instanceof OEntityAnimals)
+            if (o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
         return toRet;
     }
@@ -265,7 +265,7 @@ public class Server {
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
         for (Object o : server.e.b)
-            if (o instanceof OEntityMobs || o instanceof OEntityGhast || o instanceof OEntityAnimals)
+            if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
             else if (o instanceof OEntityMinecart)
                 toRet.add(((OEntityMinecart) o).cart);
@@ -285,7 +285,7 @@ public class Server {
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
         for (Object o : server.e.b)
-            if (o instanceof OEntityMobs || o instanceof OEntityGhast || o instanceof OEntityAnimals)
+            if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
             else if (o instanceof OEntityPlayerMP)
                 toRet.add(((OEntityPlayerMP) o).getPlayer());

@@ -174,11 +174,11 @@ public class BaseEntity {
      * @return true if mob
      */
     public boolean isMob() {
-        return entity instanceof OIMobs;
+        return entity instanceof OIMob;
     }
 
     public static boolean isMob(OEntity entity) {
-        return entity instanceof OIMobs;
+        return entity instanceof OIMob;
     }
 
     /**

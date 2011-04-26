@@ -226,7 +226,7 @@ public abstract class OEntity {
         List localList = aH.a(this, localOAxisAlignedBB);
         if (localList.size() > 0)
             return false;
-        return !aH.b(localOAxisAlignedBB);
+        return !aH.c(localOAxisAlignedBB);
     }
 
     public void c(double paramDouble1, double paramDouble2, double paramDouble3) {
@@ -442,15 +442,15 @@ public abstract class OEntity {
     }
 
     public boolean Y() {
-        return aH.a(aV.b(0.0D, -0.4000000059604645D, 0.0D), OMaterial.f, this);
+        return bw || aH.q(OMathHelper.b(aL), OMathHelper.b(aM), OMathHelper.b(aN));
     }
 
     public boolean Z() {
-        return this.bw;
+        return bw;
     }
 
     public boolean f_() {
-        return this.aH.a(this.aV.b(0.0D, -0.4000000059604645D, 0.0D), OMaterial.f, this);
+        return aH.a(this.aV.b(0.0D, -0.4000000059604645D, 0.0D), OMaterial.f, this);
     }
 
     public boolean a(OMaterial paramOMaterial) {
@@ -460,7 +460,7 @@ public abstract class OEntity {
         int k = OMathHelper.b(aN);
         int m = aH.a(i, j, k);
         if ((m != 0) && (OBlock.m[m].by == paramOMaterial)) {
-            float f1 = OBlockFluids.c(aH.b(i, j, k)) - 0.1111111F;
+            float f1 = OBlockFluid.c(aH.b(i, j, k)) - 0.1111111F;
             float f2 = j + 1 - f1;
             return d1 < f2;
         }
@@ -632,12 +632,12 @@ public abstract class OEntity {
         paramONBTTagCompound.a("Motion", a(new double[] { aO, aP, aQ }));
         paramONBTTagCompound.a("Rotation", a(new float[] { aR, aS }));
 
-        paramONBTTagCompound.a("FallDistance", bi);
+        paramONBTTagCompound.a("FallDistance", bj);
         paramONBTTagCompound.a("Fire", (short) bu);
         paramONBTTagCompound.a("Air", (short) by);
         paramONBTTagCompound.a("OnGround", aW);
 
-        a(paramONBTTagCompound);
+        b(paramONBTTagCompound);
     }
 
     public void e(ONBTTagCompound paramONBTTagCompound) {
@@ -707,7 +707,7 @@ public abstract class OEntity {
     public OEntityItem a(OItemStack paramOItemStack, float paramFloat) {
         OEntityItem localOEntityItem = new OEntityItem(aH, aL, aM + paramFloat, aN, paramOItemStack);
         localOEntityItem.c = 10;
-        aH.a(localOEntityItem);
+        aH.b(localOEntityItem);
         return localOEntityItem;
     }
 

@@ -11,7 +11,7 @@ public class OWorldServer extends OWorld {
     public boolean              x = false;
     public boolean              y;
     private MinecraftServer     z;
-    private OMCHashTable        A = new OMCHashTable();
+    private OMCHash             A = new OMCHash();
 
     public OWorldServer(MinecraftServer paramMinecraftServer, OISaveHandler paramOISaveHandler, String paramString, int paramInt, long paramLong) {
         super(paramOISaveHandler, paramString, paramLong, OWorldProvider.a(paramInt));
@@ -20,7 +20,7 @@ public class OWorldServer extends OWorld {
 
     @Override
     public void a(OEntity paramOEntity, boolean paramBoolean) {
-        if ((!z.m) && (((paramOEntity instanceof OEntityAnimals)) || ((paramOEntity instanceof OEntityWaterMob))))
+        if ((!z.m) && (((paramOEntity instanceof OEntityAnimal)) || ((paramOEntity instanceof OEntityWaterMob))))
             paramOEntity.G();
         if ((paramOEntity.aF == null) || (!(paramOEntity.aF instanceof OEntityPlayer)))
             super.a(paramOEntity, paramBoolean);
@@ -84,7 +84,7 @@ public class OWorldServer extends OWorld {
 
     @Override
     public void a(OEntity paramOEntity, byte paramByte) {
-        OPacket38 localOPacket38 = new OPacket38(paramOEntity.aC, paramByte);
+        OPacket38EntityStatus localOPacket38 = new OPacket38EntityStatus(paramOEntity.aC, paramByte);
         z.k.b(paramOEntity, localOPacket38);
     }
 
@@ -94,14 +94,14 @@ public class OWorldServer extends OWorld {
         localOExplosion.a = paramBoolean;
         localOExplosion.a();
         localOExplosion.a(false);
-        z.f.a(paramDouble1, paramDouble2, paramDouble3, 64.0D, new OPacket60(paramDouble1, paramDouble2, paramDouble3, paramFloat, localOExplosion.g));
+        z.f.a(paramDouble1, paramDouble2, paramDouble3, 64.0D, new OPacket60Explosion(paramDouble1, paramDouble2, paramDouble3, paramFloat, localOExplosion.g));
         return localOExplosion;
     }
 
     @Override
     public void d(int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5) {
         super.d(paramInt1, paramInt2, paramInt3, paramInt4, paramInt5);
-        z.f.a(paramInt1, paramInt2, paramInt3, 64.0D, new OPacket54(paramInt1, paramInt2, paramInt3, paramInt4, paramInt5));
+        z.f.a(paramInt1, paramInt2, paramInt3, 64.0D, new OPacket54PlayNoteBlock(paramInt1, paramInt2, paramInt3, paramInt4, paramInt5));
     }
 
     public void w() {
@@ -114,9 +114,9 @@ public class OWorldServer extends OWorld {
         super.i();
         if (var1 != this.v()) {
             if (var1) {
-                this.z.f.a((OPacket) (new OPacket70(2)));
+                this.z.f.a((OPacket) (new OPacket70Bed(2)));
             } else {
-                this.z.f.a((OPacket) (new OPacket70(1)));
+                this.z.f.a((OPacket) (new OPacket70Bed(1)));
             }
         }
     }

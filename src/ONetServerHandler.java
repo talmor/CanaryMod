@@ -72,7 +72,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
     }
 
     @Override
-    public void a(OPacket27 paramOPacket27) {
+    public void a(OPacket27Position paramOPacket27) {
         e.a(paramOPacket27.c(), paramOPacket27.e(), paramOPacket27.g(), paramOPacket27.h(), paramOPacket27.d(), paramOPacket27.f());
     }
 
@@ -462,7 +462,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
         e.h = false;
 
         if (!OItemStack.a(e.i.b(), paramOPacket15Place.e))
-            b(new OPacket103(e.k.f, localOSlot.a, e.i.b()));
+            b(new OPacket103SetSlot(e.k.f, localOSlot.a, e.i.b()));
 
         d.e.x = false;
     }
@@ -510,7 +510,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
     }
 
     @Override
-    public void a(OPacket18ArmAnimation paramOPacket18ArmAnimation) {
+    public void a(OPacket18Animation paramOPacket18ArmAnimation) {
         if (paramOPacket18ArmAnimation.b == 1) {
             // CanaryMod: Swing the arm!
             OEntity.manager.callHook(PluginLoader.Hook.ARM_SWING, getPlayer());
@@ -520,7 +520,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
     }
 
     @Override
-    public void a(OPacket19 paramOPacket19) {
+    public void a(OPacket19EntityAction paramOPacket19) {
         if (paramOPacket19.b == 1)
             e.e(true);
         else if (paramOPacket19.b == 2)
@@ -549,7 +549,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
     }
 
     @Override
-    public void a(OPacket7 paramOPacket7) {
+    public void a(OPacket7UseEntity paramOPacket7) {
         OEntity localOEntity = d.e.a(paramOPacket7.b);
 
         if ((localOEntity != null) && (e.e(localOEntity)) && (e.f(localOEntity) < 4.0F))
@@ -560,7 +560,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
     }
 
     @Override
-    public void a(OPacket9 paramOPacket9) {
+    public void a(OPacket9Respawn paramOPacket9) {
         if (e.X > 0)
             return;
 
@@ -568,24 +568,24 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
     }
 
     @Override
-    public void a(OPacket101 paramOPacket101) {
+    public void a(OPacket101CloseWindow paramOPacket101) {
         e.z();
     }
 
     @Override
-    public void a(OPacket102 paramOPacket102) {
+    public void a(OPacket102WindowClick paramOPacket102) {
         if ((e.k.f == paramOPacket102.a) && (e.k.c(e))) {
             OItemStack localOItemStack = e.k.a(paramOPacket102.b, paramOPacket102.c, paramOPacket102.f, e);
 
             if (OItemStack.a(paramOPacket102.e, localOItemStack)) {
-                e.a.b(new OPacket106(paramOPacket102.a, paramOPacket102.d, true));
+                e.a.b(new OPacket106Transaction(paramOPacket102.a, paramOPacket102.d, true));
                 e.h = true;
                 e.k.a();
                 e.y();
                 e.h = false;
             } else {
                 n.put(Integer.valueOf(e.k.f), Short.valueOf(paramOPacket102.d));
-                e.a.b(new OPacket106(paramOPacket102.a, paramOPacket102.d, false));
+                e.a.b(new OPacket106Transaction(paramOPacket102.a, paramOPacket102.d, false));
                 e.k.a(e, false);
 
                 ArrayList localArrayList = new ArrayList();
@@ -597,14 +597,14 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
     }
 
     @Override
-    public void a(OPacket106 paramOPacket106) {
+    public void a(OPacket106Transaction paramOPacket106) {
         Short localShort = (Short) n.get(Integer.valueOf(e.k.f));
         if ((localShort != null) && (paramOPacket106.b == localShort.shortValue()) && (e.k.f == paramOPacket106.a) && (!e.k.c(e)))
             e.k.a(e, true);
     }
 
     @Override
-    public void a(OPacket130 paramOPacket130) {
+    public void a(OPacket130UpdateSign paramOPacket130) {
         if (d.e.f(paramOPacket130.a, paramOPacket130.b, paramOPacket130.c)) {
             OTileEntity localOTileEntity = d.e.m(paramOPacket130.a, paramOPacket130.b, paramOPacket130.c);
 
@@ -625,7 +625,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
                 // } else {
 
                     for (i2 = 0; i2 < paramOPacket130.d[n].length(); i2++)
-                        if (OFontAllowedCharacters.a.indexOf(paramOPacket130.d[n].charAt(i2)) < 0)
+                        if (OChatAllowedCharacters.a.indexOf(paramOPacket130.d[n].charAt(i2)) < 0)
                             i1 = 0;
                 if (i1 == 0)
                     paramOPacket130.d[n] = "!?";

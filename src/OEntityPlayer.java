@@ -2,8 +2,8 @@ import java.util.List;
 
 public abstract class OEntityPlayer extends OEntityLiving {
     public OInventoryPlayer     i = new OInventoryPlayer(this);
-    public OCraftingInventoryCB j;
-    public OCraftingInventoryCB k;
+    public OContainer           j;
+    public OContainer           k;
     public byte                 l = 0;
     public int                  m = 0;
     public float                n;
@@ -37,7 +37,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public OEntityPlayer(OWorld paramOWorld) {
         super(paramOWorld);
 
-        j = new OCraftingInventoryPlayerCB(i, !paramOWorld.v);
+        j = new OContainerPlayer(i, !paramOWorld.v);
 
         k = j;
 
@@ -342,7 +342,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         if (I())
             a(true, true, false);
 
-        if (((paramOEntity instanceof OEntityMobs)) || ((paramOEntity instanceof OEntityArrow))) {
+        if (((paramOEntity instanceof OEntityMob)) || ((paramOEntity instanceof OEntityArrow))) {
             if (aH.l == 0)
                 paramInt = 0;
             if (aH.l == 1)
@@ -615,11 +615,11 @@ public abstract class OEntityPlayer extends OEntityLiving {
             c = null;
     }
 
-    public void a(OStatBasic var1) {
+    public void a(OStatBase var1) {
         a(var1, 1);
     }
 
-    public void a(OStatBasic paramOStatBasic, int paramInt) {
+    public void a(OStatBase paramOStatBasic, int paramInt) {
     }
 
     @Override
@@ -679,7 +679,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
                     if (this.d == null) {
                         this.d = new OChunkCoordinates(OMathHelper.b(this.aL), OMathHelper.b(this.aM), OMathHelper.b(this.aN));
                     } else if (this.d.a(OMathHelper.b(this.aL), OMathHelper.b(this.aM), OMathHelper.b(this.aN)) >= 1000.0D) {
-                        this.a((OStatBasic) OAchievementList.q, 1);
+                        this.a((OStatBase) OAchievementList.q, 1);
                     }
                 } else if (this.aG instanceof OEntityBoat) {
                     this.a(OStatList.s, var7);
@@ -698,8 +698,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
     }
     
     public void a(OEntityLiving var1) {
-        if (var1 instanceof OEntityMobs) {
-            this.a((OStatBasic) OAchievementList.s);
+        if (var1 instanceof OEntityMob) {
+            this.a((OStatBase) OAchievementList.s);
         }
     }
 

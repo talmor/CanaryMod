@@ -12,7 +12,7 @@ public class OItemMinecart extends OItem {
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
 
-        if (OBlockMinecartTrack.c(i)) {
+        if (OBlockRail.c(i)) {
             if (!paramOWorld.v) {
                 // CanaryMod: placing of a mine cart
                 Block block = new Block(i, paramInt1, paramInt2, paramInt3);

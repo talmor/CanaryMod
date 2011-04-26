@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class OBlockStationary extends OBlockFluids {
+public class OBlockStationary extends OBlockFluid {
 
     protected OBlockStationary(int paramInt, OMaterial paramOMaterial) {
         super(paramInt, paramOMaterial);

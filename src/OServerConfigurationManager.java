@@ -204,7 +204,7 @@ public class OServerConfigurationManager {
                 localOEntityPlayerMP.c(localOChunkCoordinates2.a + 0.5F, localOChunkCoordinates2.b + 0.1F, localOChunkCoordinates2.c + 0.5F, 0.0F, 0.0F);
                 localOEntityPlayerMP.a(localOChunkCoordinates1);
             } else
-                localOEntityPlayerMP.a.b(new OPacket70(0));
+                localOEntityPlayerMP.a.b(new OPacket70Bed(0));
 
         }
 
@@ -213,7 +213,7 @@ public class OServerConfigurationManager {
         while (!c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.aV).isEmpty())
             localOEntityPlayerMP.a(localOEntityPlayerMP.aL, localOEntityPlayerMP.aM + 1.0D, localOEntityPlayerMP.aN);
 
-        localOEntityPlayerMP.a.b(new OPacket9());
+        localOEntityPlayerMP.a.b(new OPacket9Respawn());
         localOEntityPlayerMP.a.a(localOEntityPlayerMP.aL, localOEntityPlayerMP.aM, localOEntityPlayerMP.aN, localOEntityPlayerMP.aR, localOEntityPlayerMP.aS);
 
         d.a(localOEntityPlayerMP);

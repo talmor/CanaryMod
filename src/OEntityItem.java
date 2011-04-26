@@ -188,10 +188,10 @@ public class OEntityItem extends OEntity {
             Item item = new Item(a.c, i);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, ((OEntityPlayerMP) paramOEntityPlayer).getPlayer(), item)) {
                 if (this.a.c == OBlock.J.bl)
-                    paramOEntityPlayer.a((OStatBasic) OAchievementList.g);
+                    paramOEntityPlayer.a((OStatBase) OAchievementList.g);
 
                 if (this.a.c == OItem.aD.bd)
-                    paramOEntityPlayer.a((OStatBasic) OAchievementList.t);
+                    paramOEntityPlayer.a((OStatBase) OAchievementList.t);
 
                 this.aH.a(this, "random.pop", 0.2F, ((this.br.nextFloat() - this.br.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 paramOEntityPlayer.b(this, i);

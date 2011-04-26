@@ -61,12 +61,12 @@ public class OEntityList {
         a(OEntityPainting.class, "Painting", 9);
 
         a(OEntityLiving.class, "Mob", 48);
-        a(OEntityMobs.class, "Monster", 49);
+        a(OEntityMob.class, "Monster", 49);
 
         a(OEntityCreeper.class, "Creeper", 50);
         a(OEntitySkeleton.class, "Skeleton", 51);
         a(OEntitySpider.class, "Spider", 52);
-        a(OEntityZombieSimple.class, "Giant", 53);
+        a(OEntityGiantZombie.class, "Giant", 53);
         a(OEntityZombie.class, "Zombie", 54);
         a(OEntitySlime.class, "Slime", 55);
         a(OEntityGhast.class, "Ghast", 56);

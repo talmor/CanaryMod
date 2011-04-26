@@ -13,7 +13,7 @@ public class OEntityTracker {
 
     
     private Set<OEntityTrackerEntry>             a = new HashSet();
-    private OMCHashTable    b = new OMCHashTable();
+    private OMCHash         b = new OMCHash();
     private MinecraftServer c;
     private int             d;
 

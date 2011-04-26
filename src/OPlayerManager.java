@@ -6,7 +6,7 @@ import net.minecraft.server.MinecraftServer;
 public class OPlayerManager {
 
     private List<OEntityPlayerMP> a = new ArrayList();
-    private OMCHashTable2         b = new OMCHashTable2();
+    private OPlayerHash         b = new OPlayerHash();
     private List<OPlayerInstance> c = new ArrayList();
     private MinecraftServer       d;
     private final int[][]         e = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
@@ -145,7 +145,7 @@ public class OPlayerManager {
         return jh1.d;
     }
 
-    static OMCHashTable2 b(OPlayerManager jh1) {
+    static OPlayerHash b(OPlayerManager jh1) {
         return jh1.b;
     }
 

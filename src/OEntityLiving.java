@@ -568,7 +568,7 @@ public abstract class OEntityLiving extends OEntity {
                 L();
 
         av *= 0.98F;
-        aq *= 0.98F;
+        aw *= 0.98F;
         ax *= 0.9F;
         a(av, aw);
 

@@ -183,7 +183,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), bF, X))
                 X = bF;
             else
-                a.b(new OPacket8(X));
+                a.b(new OPacket8UpdateHealth(X));
             bF = X;
 
         }
@@ -225,7 +225,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         if (!p) {
             q = -1;
             p = true;
-            b.k.a(this, new OPacket18ArmAnimation(this, 1));
+            b.k.a(this, new OPacket18Animation(this, 1));
         }
     }
 
@@ -243,7 +243,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     @Override
     public void a(boolean paramBoolean1, boolean paramBoolean2, boolean paramBoolean3) {
         if (I())
-            b.k.b(this, new OPacket18ArmAnimation(this, 3));
+            b.k.b(this, new OPacket18Animation(this, 3));
         super.a(paramBoolean1, paramBoolean2, paramBoolean3);
         a.a(aL, aM, aN, aR, aS);
     }
@@ -251,7 +251,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     @Override
     public void b(OEntity paramOEntity) {
         super.b(paramOEntity);
-        a.b(new OPacket39(this, aG));
+        a.b(new OPacket39AttachEntity(this, aG));
         a.a(aL, aM, aN, aR, aS);
     }
 
@@ -270,8 +270,8 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     @Override
     public void b(int paramInt1, int paramInt2, int paramInt3) {
         af();
-        a.b(new OPacket100(bI, 1, "Crafting", 9));
-        k = new OCraftingInventoryWorkbenchCB(i, aH, paramInt1, paramInt2, paramInt3);
+        a.b(new OPacket100OpenWindow(bI, 1, "Crafting", 9));
+        k = new OContainerWorkbench(i, aH, paramInt1, paramInt2, paramInt3);
         k.f = bI;
         // CanaryMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
@@ -297,8 +297,8 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             name = inv.getName();
 
         af();
-        a.b(new OPacket100(bI, 0, name, paramOIInventory.a()));
-        k = new OCraftingInventoryChestCB(i, paramOIInventory);
+        a.b(new OPacket100OpenWindow(bI, 0, name, paramOIInventory.a()));
+        k = new OContainerChest(i, paramOIInventory);
         k.f = bI;
         // CanaryMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
@@ -319,8 +319,8 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
         
         af();
-        a.b(new OPacket100(bI, 2, name, paramOTileEntityFurnace.a()));
-        k = new OCraftingInventoryFurnaceCB(i, paramOTileEntityFurnace);
+        a.b(new OPacket100OpenWindow(bI, 2, name, paramOTileEntityFurnace.a()));
+        k = new OContainerFurnace(i, paramOTileEntityFurnace);
         k.f = bI;
         // CanaryMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
@@ -338,31 +338,31 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             name = dis.getName();
 
         af();
-        a.b(new OPacket100(bI, 3, name, paramOTileEntityDispenser.a()));
-        k = new OCraftingInventoryDispenserCB(i, paramOTileEntityDispenser);
+        a.b(new OPacket100OpenWindow(bI, 3, name, paramOTileEntityDispenser.a()));
+        k = new OContainerDispenser(i, paramOTileEntityDispenser);
         k.f = bI;
         // CanaryMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
         k.a((OICrafting) this);
     }
 
-    public void a(OCraftingInventoryCB paramOCraftingInventoryCB, int paramInt, OItemStack paramOItemStack) {
+    public void a(OContainer paramOCraftingInventoryCB, int paramInt, OItemStack paramOItemStack) {
         if ((paramOCraftingInventoryCB.b(paramInt) instanceof OSlotCrafting))
             return;
 
         if (h)
             return;
 
-        a.b(new OPacket103(paramOCraftingInventoryCB.f, paramInt, paramOItemStack));
+        a.b(new OPacket103SetSlot(paramOCraftingInventoryCB.f, paramInt, paramOItemStack));
     }
 
-    public void a(OCraftingInventoryCB paramOCraftingInventoryCB, List paramList) {
-        a.b(new OPacket104(paramOCraftingInventoryCB.f, paramList));
-        a.b(new OPacket103(-1, -1, i.j()));
+    public void a(OContainer paramOCraftingInventoryCB, List paramList) {
+        a.b(new OPacket104WindowItems(paramOCraftingInventoryCB.f, paramList));
+        a.b(new OPacket103SetSlot(-1, -1, i.j()));
     }
 
-    public void a(OCraftingInventoryCB paramOCraftingInventoryCB, int paramInt1, int paramInt2) {
-        a.b(new OPacket105(paramOCraftingInventoryCB.f, paramInt1, paramInt2));
+    public void a(OContainer paramOCraftingInventoryCB, int paramInt1, int paramInt2) {
+        a.b(new OPacket105UpdateProgressbar(paramOCraftingInventoryCB.f, paramInt1, paramInt2));
     }
 
     @Override
@@ -371,14 +371,14 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
     @Override
     public void x() {
-        a.b(new OPacket101(k.f));
+        a.b(new OPacket101CloseWindow(k.f));
         z();
     }
 
     public void y() {
         if (h)
             return;
-        a.b(new OPacket103(-1, -1, i.j()));
+        a.b(new OPacket103SetSlot(-1, -1, i.j()));
     }
 
     public void z() {
@@ -395,7 +395,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         aR = paramFloat4;
     }
 
-    public void a(OStatBasic var1, int var2) {
+    public void a(OStatBase var1, int var2) {
         if (var1 != null) {
             if (!var1.g) {
                 while (var2 > 100) {
