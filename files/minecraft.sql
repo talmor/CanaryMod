@@ -121,7 +121,7 @@ INSERT INTO `items` VALUES
 ('redstonerepeateron', 94),('lockedchest', 95),('ironshovel',256),('ironspade',256),('ironpickaxe',257),
 ('ironpick',257),('ironaxe',258),('flintandsteel',259),('lighter',259),('apple',260),('bow',261),
 ('arrow',262),('coal',263),('diamond',264),('ironbar',265),('goldbar',266),('ironsword',267),
-('woodsword',268),('woodshovel',269),('woodspade',269),('woodpickaxe',270),('wodpick',270),
+('woodsword',268),('woodshovel',269),('woodspade',269),('woodpickaxe',270),('woodpick',270),
 ('woodaxe',271),('stonesword',272),('stoneshovel',273),('stonespade',273),('stonepickaxe',274),
 ('stonepick',274),('stoneaxe',275),('diamondsword',276),('diamondshovel',277),('diamondspade',277),
 ('diamondpickaxe',278),('diamondpick',278),('diamondaxe',279),('stick',280),('bowl',281),
@@ -138,8 +138,8 @@ INSERT INTO `items` VALUES
 ('irondoor',330),('redstonedust',331),('snowball',332),('boat',333),('leather',334),('milkbucket',335),
 ('brick',336),('clay',337),('reed',338),('paper',339),('book',340),('slimeorb',341),('storageminecart',342),
 ('poweredminecart',343),('eggs',344),('compass',345),('fishingrod',346),('watch',347),('lightstonedust',348),
-('lightdust',348),('rawfish',349),('fish',349),('cookefish',350),('dye', 351), ('bone', 352), ('sugar', 353), 
-('cake', 354),('bed', 355), ('redstonerepeater', 356),('cookie', 357),('cookedfish',350),('goldrecord',2256),('greenrecord',2257);
+('lightdust',348),('rawfish',349),('fish',349),('cookedfish',350),('dye', 351), ('bone', 352), ('sugar', 353), 
+('cake', 354),('bed', 355), ('redstonerepeater', 356),('cookie', 357),('goldrecord',2256),('greenrecord',2257);
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
