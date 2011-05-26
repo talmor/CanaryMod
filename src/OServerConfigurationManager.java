@@ -95,6 +95,7 @@ public class OServerConfigurationManager {
     }
 
     public OEntityPlayerMP a(ONetLoginHandler paramONetLoginHandler, String paramString1) {
+        // TODO: add reasons, expire tempbans
         if (!etc.getLoader().isLoaded())
             paramONetLoginHandler.a("The server is not finished loading yet!");
 

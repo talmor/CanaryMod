@@ -1,5 +1,4 @@
-
-DO NOT RUN Minecraft_Servero.jar. DO NOT. IT WILL NOT WORK.
+To get started, unzip all files into one directory and start the server using the provided .bat/.sh files
 
 Edit the newly created files accordingly.
 

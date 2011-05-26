@@ -26,8 +26,11 @@ public class ServerConsoleCommands {
      * @param cmd
      */
     public void add(String name, BaseCommand cmd) {
-        if (name != null && cmd != null)
+        if (name != null && cmd != null) {
+            if (!commands.containsValue(cmd))
+                etc.getInstance().addCommand("/" + name, cmd.tooltip);
             commands.put(name, cmd);
+        }
     }
 
     /**

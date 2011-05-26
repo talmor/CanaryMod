@@ -577,4 +577,49 @@ public class PluginListener {
         return false;
     }
 
+    /**
+     * Called when a wolf is being tamed
+     * @param player
+     *            Player who is tries to tame the wolf
+     * @param wolf
+     *            Wolf being tamed
+     * @return Whether the taming should succeed (ALLOW_ACTION),
+     *            fail (PREVENT_ACTION), or do random as always (DEFAULT_ACTION)
+     */
+    public PluginLoader.HookResult onTame(Player player, Mob wolf) {
+        return PluginLoader.HookResult.DEFAULT_ACTION;
+    }
+
+    /**
+     * Called when lightning strikes an entity
+     *
+     * @param entity
+     *            The entity that's being struck
+     * @return true if you want to cancel the lightning striking this entity
+     */
+    public boolean onLightningStrike(BaseEntity entity) {
+        return false;
+    }
+
+    /**
+     * Called when the weather changes (rain/snow)
+     *
+     * @param newValue
+     *            The new weather value
+     * @return true to prevent the weather from changing
+     */
+    public boolean onWeatherChange(boolean newValue) {
+        return false;
+    }
+
+    /**
+     * Called when the thunder changes (NOT when lightning strikes)
+     *
+     * @param newValue
+     *            The new thunder value
+     * @return true to prevent the thunder from changing
+     */
+    public boolean onThunderChange(boolean newValue) {
+        return false;
+    }
 }

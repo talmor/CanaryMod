@@ -26,11 +26,11 @@ import java.util.logging.Logger;
  * 
  */
 public class DeadLockDetector extends Thread {
-    private static Logger      _log       = Logger.getLogger("Minecraft");
+    private static final Logger _log       = Logger.getLogger("Minecraft");
 
-    private static final int   _sleepTime = 5 * 1000;
+    private static final int    _sleepTime = 5 * 1000;
 
-    private final ThreadMXBean tmx;
+    private final ThreadMXBean  tmx;
 
     public DeadLockDetector() {
         super("DeadLockDetector");

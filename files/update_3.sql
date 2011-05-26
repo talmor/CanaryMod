@@ -1,1 +1,0 @@
-ALTER TABLE `users` ADD COLUMN `ip` VARCHAR(128) DEFAULT ''  AFTER `ignoresrestrictions`;

@@ -35,7 +35,7 @@ public abstract class BaseCommand {
     }
 
     public void onBadSyntax(MessageReceiver caller, String[] parameters) {
-        if (errorMessage != "")
+        if (!errorMessage.isEmpty())
             caller.notify(errorMessage);
     }
 

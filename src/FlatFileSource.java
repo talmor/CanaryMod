@@ -257,7 +257,7 @@ public class FlatFileSource extends DataSource {
                         String line = scanner.nextLine();
                         if (line.startsWith("#") || line.equals(""))
                             continue;
-                        String[] split = line.split(":");
+                        String[] split = line.split("[^\\\\]:");
                         if (split.length < 4)
                             continue;
 
@@ -270,7 +270,7 @@ public class FlatFileSource extends DataSource {
                             loc.rotY = Float.parseFloat(split[5]);
                         }
                         Warp warp = new Warp();
-                        warp.Name = split[0];
+                        warp.Name = split[0].replace("\\:", ":");
                         warp.Location = loc;
                         if (split.length >= 7)
                             warp.Group = split[6];
@@ -837,7 +837,7 @@ public class FlatFileSource extends DataSource {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(warpLoc, true));
             StringBuilder builder = new StringBuilder();
-            builder.append(warp.Name);
+            builder.append(warp.Name.replace(":", "\\:"));
             builder.append(":");
             builder.append(warp.Location.x);
             builder.append(":");
@@ -879,11 +879,11 @@ public class FlatFileSource extends DataSource {
             StringBuilder toWrite = new StringBuilder();
             String line = "";
             while ((line = reader.readLine()) != null)
-                if (!line.split(":")[0].equalsIgnoreCase(warp.Name))
+                if (!line.split("[^\\\\]:")[0].equalsIgnoreCase(warp.Name))
                     toWrite.append(line).append("\r\n");
                 else {
                     StringBuilder builder = new StringBuilder();
-                    builder.append(warp.Name);
+                    builder.append(warp.Name.replace(":", "\\:"));
                     builder.append(":");
                     builder.append(warp.Location.x);
                     builder.append(":");

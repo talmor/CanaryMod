@@ -206,6 +206,15 @@ public class Server {
     }
 
     /**
+     * Returns a string with comma-seperated player names
+     *
+     * @return list of player names
+     */
+    public String getPlayerNames() {
+        return server.f.c();
+    }
+
+    /**
      * Returns the list of mobs in all open chunks.
      * 
      * @return list of mobs
@@ -316,8 +325,8 @@ public class Server {
         // More structure ftw
         OWorldInfo info = server.e.s;
         Location spawn = new Location();
-        spawn.x = (info.c() + 0.5D);
-        spawn.y = server.e.e(info.c(), info.e()) + 1.5D;
+        spawn.x = info.c() + 0.5D;
+        spawn.y = info.d();
         spawn.z = info.e() + 0.5D;
         spawn.rotX = 0.0F;
         spawn.rotY = 0.0F;
@@ -725,5 +734,87 @@ public class Server {
      */
     public boolean isBlockIndirectlyPowered(int x, int y, int z) {
         return server.e.p(x, y, z);
+    }
+
+    /**
+     * Set the thunder state
+     * @param thundering whether it should thunder
+     */
+    public void setThundering(boolean thundering) {
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.THUNDER_CHANGE, thundering))
+            return;
+        server.e.s.a(thundering);
+        
+        // Thanks to Bukkit for figuring out these numbers
+        if (thundering) {
+            setThunderTime(server.e.m.nextInt(12000) + 3600);
+        } else {
+            setThunderTime(server.e.m.nextInt(168000) + 12000);
+        }
+    }
+
+    /**
+     * Set the thunder ticks.
+     * @param ticks ticks of thunder
+     */
+    public void setThunderTime(int ticks) {
+        server.e.s.b(ticks);
+    }
+
+    /**
+     * Sets the rain state.
+     * @param raining whether it should rain
+     */
+    public void setRaining(boolean raining) {
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.WEATHER_CHANGE, raining))
+            return;
+        server.e.s.b(raining);
+        
+        // Thanks to Bukkit for figuring out these numbers
+        if (raining) {
+            setRainTime(server.e.m.nextInt(12000) + 3600);
+        } else {
+            setRainTime(server.e.m.nextInt(168000) + 12000);
+        }
+    }
+
+    /**
+     * Sets the rain ticks.
+     * @param ticks ticks of rain
+     */
+    public void setRainTime(int ticks) {
+        server.e.s.c(ticks);
+    }
+
+    /**
+     * Returns whether it's thundering
+     * @return whether it's thundering
+     */
+    public boolean isThundering() {
+        return server.e.s.j();
+    }
+
+    /**
+     * Returns the number of ticks to go till the end of the thunder
+     * @return the thunder ticks
+     */
+    public int getThunderTime() {
+        return server.e.s.k();
+    }
+
+    /**
+     * Returns whether it's raining
+     * @return whether it's raining
+     */
+    public boolean isRaining() {
+        return server.e.s.l();
+    }
+
+    /**
+     * Returns the number of ticks to go till the end of the rain
+     * @return the rain ticks
+     */
+    public int getRainTime() {
+        return server.e.s.m();
     }
 }

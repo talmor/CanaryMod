@@ -52,7 +52,16 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
      * @param msg
      */
     public void msg(String msg) {
-        b(new OPacket3Chat(msg));
+        if (msg.length() >= 119) {
+            String cutMsg = msg.substring(0, 118);
+            int finalCut = cutMsg.lastIndexOf(" ");
+            String subCut = cutMsg.substring(0, finalCut);
+            String newMsg = msg.substring(finalCut + 1);
+            b(new OPacket3Chat(subCut));
+            msg(newMsg);
+        } else {
+            b(new OPacket3Chat(msg));
+        }
     }
 
     
@@ -221,12 +230,13 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
             }
             
             OAxisAlignedBB var28 = e.aV.b().b((double) f5, (double) f5, (double) f5).a(0.0D, -0.55D, 0.0D);
-            if (!d.o && !d.e.b(var28)) {
+            if (!(d.o || d.e.b(var28) || d.f.h(e.r) || getPlayer().ignoreRestrictions())) {
                 if (d7 >= -0.03125D) {
                     ++h;
                     if (h > 80) {
                         a.warning(e.r + " was kicked for floating too long!");
                         a("Flying is not enabled on this server");
+                        h = 0;
                         return;
                     }
                 }

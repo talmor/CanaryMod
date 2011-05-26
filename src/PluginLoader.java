@@ -188,6 +188,22 @@ public class PluginLoader {
          */
         LEAF_DECAY,
         /**
+         * Calls onTame
+         */
+        TAME,
+        /**
+         * Calls onLightningStrike
+         */
+        LIGHTNING_STRIKE,
+        /**
+         * Calls onWeatherChange
+         */
+        WEATHER_CHANGE,
+        /**
+         * Calls onThunderChange
+         */
+        THUNDER_CHANGE,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -251,7 +267,11 @@ public class PluginLoader {
         /**
          * Damage caused by suffocating(1)
          */
-        SUFFOCATION
+        SUFFOCATION,
+        /**
+         * Damage caused by lightning (5)
+         */
+        LIGHTNING
     }
 
     private static final Logger                  log             = Logger.getLogger("Minecraft");
@@ -469,6 +489,7 @@ public class PluginLoader {
                 toRet = parameters[2];
                 break;
             case LIQUID_DESTROY:
+            case TAME:
                 toRet = HookResult.DEFAULT_ACTION;
                 break;
             default:
@@ -640,6 +661,23 @@ public class PluginLoader {
                                 break;
                             case LEAF_DECAY:
                                 if (listener.onLeafDecay((Block) parameters[0]))
+                                    toRet = true;
+                                break;
+                            case TAME:
+                                ret = listener.onTame((Player) parameters[0], (Mob) parameters[1]);
+                                if (ret != HookResult.DEFAULT_ACTION && (HookResult) toRet == HookResult.DEFAULT_ACTION)
+                                    toRet = ret;
+                                break;
+                            case LIGHTNING_STRIKE:
+                                if (listener.onLightningStrike((BaseEntity) parameters[0]))
+                                    toRet = true;
+                                break;
+                            case WEATHER_CHANGE:
+                                if (listener.onWeatherChange((Boolean) parameters[0]))
+                                    toRet = true;
+                                break;
+                            case THUNDER_CHANGE:
+                                if (listener.onThunderChange((Boolean) parameters[0]))
                                     toRet = true;
                                 break;
                         }

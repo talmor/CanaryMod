@@ -42,7 +42,11 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `groups` WRITE;
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
-INSERT INTO `groups` VALUES (1,'default','f','/help,/sethome,/home,/spawn,/me,/msg,/kit,/playerlist,/warp,/motd,/compass,/tell,/m,/who','',1,0,1,0),(2,'vip','a','','default',0,0,1,0),(3,'mods','b','/ban,/kick,/item,/tp,/tphere,/s,/i,/give','vip',0,0,1,1),(4,'admins','c','*','mods',0,1,1,1);
+INSERT INTO `groups` VALUES 
+(1,'default','f','/help,/sethome,/home,/spawn,/me,/msg,/kit,/playerlist,/warp,/motd,/compass,/tell,/m,/who','',1,0,1,0),
+(2,'vip','a','','default',0,0,1,0),
+(3,'mods','b','/ban,/kick,/item,/tp,/tphere,/s,/i,/give','vip',0,0,1,1),
+(4,'admins','c','*','mods',0,1,1,1);
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,10 +103,10 @@ INSERT INTO `items` VALUES
 ('cobble',4),('wood',5),('sapling',6),('adminium',7),('bedrock',7),('water',8),
 ('stillwater',9),('lava',10),('stilllava',11),('slava',11),('sand',12),('gravel',13),
 ('goldore',14),('ironore',15),('coalore',16),('tree',17),('log',17),('leaves',18),
-('sponge',19),('glass',20),('lapislazuliore', 21), ('lapislazuliblock', 22), 
-('dispenser', 23), ('sandstone', 24), ('noteblock', 25), ('cloth',35),('flower',37),
-('rose',38),('brownmushroom',39),
-('redmushroom',40),('gold',41),('goldblock',41),('iron',42),('ironblock',42),
+('sponge',19),('glass',20),('lapislazuliore', 21), ('lapislazuliblock', 22),
+('dispenser', 23), ('sandstone', 24), ('noteblock', 25), ('bedblock', 26), 
+('poweredrail', 27),('detectorrail', 28),('web', 30), ('cloth',35),('flower',37),('rose',38),
+('brownmushroom',39),('redmushroom',40),('gold',41),('goldblock',41),('iron',42),('ironblock',42),
 ('doublestair',43),('stair',44),('step',44),('brickblock',45),('brickwall',45),
 ('tnt',46),('bookshelf',47),('mossycobblestone',48),('mossy',48),('obsidian',49),
 ('torch',50),('fire',51),('mobspawner',52),('woodstairs',53),('chest',54),('redstonewire',55),
@@ -113,7 +117,8 @@ INSERT INTO `items` VALUES
 ('redstoneore',73),('redstoneorealt',74),('redstonetorchoff',75),('redstonetorchon',76),('button',77),
 ('snow',78),('ice',79),('snowblock',80),('cactus',81),('clayblock',82),('reedblock',83),('jukebox',84),
 ('fence',85),('pumpkin',86),('netherstone',87),('slowsand',88),('lightstone',89),('portal',90),
-('jackolantern',91),('jacko',91),('cakeblock', 92),('ironshovel',256),('ironspade',256),('ironpickaxe',257),
+('jackolantern',91),('jacko',91),('cakeblock', 92),('redstonerepeateroff', 93),
+('redstonerepeateron', 94),('lockedchest', 95),('ironshovel',256),('ironspade',256),('ironpickaxe',257),
 ('ironpick',257),('ironaxe',258),('flintandsteel',259),('lighter',259),('apple',260),('bow',261),
 ('arrow',262),('coal',263),('diamond',264),('ironbar',265),('goldbar',266),('ironsword',267),
 ('woodsword',268),('woodshovel',269),('woodspade',269),('woodpickaxe',270),('wodpick',270),
@@ -134,7 +139,7 @@ INSERT INTO `items` VALUES
 ('brick',336),('clay',337),('reed',338),('paper',339),('book',340),('slimeorb',341),('storageminecart',342),
 ('poweredminecart',343),('eggs',344),('compass',345),('fishingrod',346),('watch',347),('lightstonedust',348),
 ('lightdust',348),('rawfish',349),('fish',349),('cookefish',350),('dye', 351), ('bone', 352), ('sugar', 353), 
-('cake', 354),('cookedfish',350),('goldrecord',2256),('greenrecord',2257);
+('cake', 354),('bed', 355), ('redstonerepeater', 356),('cookie', 357),('cookedfish',350),('goldrecord',2256),('greenrecord',2257);
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 

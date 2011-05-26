@@ -73,4 +73,11 @@
 		<delete dir="${build}" />
 		<delete dir="${dist}" />
 	</target>
+        <target name="javadoc" description="Generate javadocs">
+            <javadoc author="true" charset="UTF-8" classpathref="classpath" destdir="docs" docencoding="UTF-8" failonerror="true" use="true" useexternalfile="true" version="true">
+            <fileset dir="${src}">
+                <filename name="**/*.java"/>
+            </fileset>
+        </javadoc>
+        </target>
 </project>

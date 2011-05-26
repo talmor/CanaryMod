@@ -842,6 +842,8 @@ public abstract class OEntity {
     }
 
     public void a(OEntityLightningBolt var1) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.LIGHTNING, null, entity, 5))
+            return;
         this.a(5);
         ++this.bu;
         if (this.bu == 0)

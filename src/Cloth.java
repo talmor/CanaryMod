@@ -7,7 +7,7 @@ import java.util.Map;
  */
 public class Cloth {
     public enum Color {
-        WHITE("white", 0), //
+        WHITE("White", 0), //
         ORANGE("Orange", 1), //
         MAGENTA("Magenta", 2), //
         LIGHT_BLUE("Light Blue", 3), //
@@ -45,6 +45,8 @@ public class Cloth {
 
             colors[data] = color;
             colorMap.put(color.getName().toLowerCase(), color);
+            colorMap.put(color.getName().toLowerCase().replace(" ", ""), color);
+            colorMap.put(color.getName().toLowerCase().replace(" ", "-"), color);
         }
 
         public static Color getColor(int data) {
@@ -55,7 +57,7 @@ public class Cloth {
         }
 
         public static Color getColor(String name) {
-            return colorMap.get(name);
+            return colorMap.get(name.toLowerCase());
         }
 
         public int getData() {
