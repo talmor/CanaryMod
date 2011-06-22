@@ -2,14 +2,14 @@ public class OItemFlintAndSteel extends OItem {
 
     public OItemFlintAndSteel(int paramInt) {
         super(paramInt);
-        be = 1;
+        bf = 1;
         d(64);
     }
 
     @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // CanaryMod: Store block data clicked
-        Block blockClicked = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+        Block blockClicked = new Block(paramOWorld.world, paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
         blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
 
         if (paramInt4 == 0)
@@ -29,7 +29,7 @@ public class OItemFlintAndSteel extends OItem {
 
         if (i == 0) {
             // CanaryMod: Hook to control ignites AND ligther use
-            Block blockPlaced = new Block(Block.Type.Fire.getType(), paramInt1, paramInt2, paramInt3);
+            Block blockPlaced = new Block(paramOWorld.world, Block.Type.Fire.getType(), paramInt1, paramInt2, paramInt3);
             Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
 
             Boolean preventLighter = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramOItemStack));
@@ -40,7 +40,7 @@ public class OItemFlintAndSteel extends OItem {
                 return false;
             else {
                 paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "fire.ignite", 1.0F, b.nextFloat() * 0.4F + 0.8F);
-                paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.ar.bl);
+                paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.as.bn);
             }
         }
 

@@ -926,7 +926,14 @@ public class etc {
     public List getMonstersClass(OBiomeGenBase biomeSpawner) {
         if (mobReload)
             reloadMonsterClass();
-        return monsterList;
+
+        ArrayList toRet = new ArrayList(monsterList);
+        if (biomeSpawner instanceof OBiomeGenHell) {
+            toRet.clear();
+            toRet.add(OSpawnListEntry.getSpawnListEntry(OEntityGhast.class));
+            toRet.add(OSpawnListEntry.getSpawnListEntry(OEntityPigZombie.class));
+        }
+        return toRet;
     }
 
     public List getAnimalsClass(OBiomeGenBase biomeGen) {

@@ -8,7 +8,7 @@ public class StorageMinecart extends ItemArray<OEntityMinecart> {
     /**
      * Creates an interface for storage of powered and storage carts.
      * 
-     * @param jo
+     * @param cart
      */
     public StorageMinecart(OEntityMinecart cart) {
         super(cart);

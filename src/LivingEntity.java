@@ -35,7 +35,7 @@ public class LivingEntity extends BaseEntity {
      * @return health
      */
     public int getHealth() {
-        return getEntity().X;
+        return getEntity().ab;
     }
 
     /**
@@ -45,7 +45,7 @@ public class LivingEntity extends BaseEntity {
      *            amount of health to increase the players health with.
      */
     public void increaseHealth(int health) {
-        getEntity().c(health);
+        getEntity().b(health);
     }
 
     /**
@@ -58,7 +58,7 @@ public class LivingEntity extends BaseEntity {
             health = -1;
         if (health > 20)
             health = 20;
-        getEntity().X = health;
+        getEntity().ab = health;
     }
 
     /**
@@ -67,7 +67,7 @@ public class LivingEntity extends BaseEntity {
      * @return
      */
     public int getDeathTicks() {
-        return getEntity().ac;
+        return getEntity().ag;
     }
 
     /**
@@ -76,7 +76,7 @@ public class LivingEntity extends BaseEntity {
      * @param ticks
      */
     public void setDeathTicks(int ticks) {
-        getEntity().ac = ticks;
+        getEntity().ag = ticks;
     }
 
     /**
@@ -86,7 +86,7 @@ public class LivingEntity extends BaseEntity {
      * @return
      */
     public int getBaseNoDamageTicks() {
-        return getEntity().D;
+        return getEntity().H;
     }
 
     /**
@@ -96,7 +96,7 @@ public class LivingEntity extends BaseEntity {
      * @param ticks
      */
     public void setBaseNoDamageTicks(int ticks) {
-        getEntity().D = ticks;
+        getEntity().H = ticks;
     }
 
     /**
@@ -105,7 +105,7 @@ public class LivingEntity extends BaseEntity {
      * @return
      */
     public int getLastDamage() {
-        return getEntity().at;
+        return getEntity().ax;
     }
 
     /**
@@ -115,6 +115,6 @@ public class LivingEntity extends BaseEntity {
      * @param amount
      */
     public void setLastDamage(int amount) {
-        getEntity().at = amount;
+        getEntity().ax = amount;
     }
 }

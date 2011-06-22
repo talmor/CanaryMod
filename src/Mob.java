@@ -21,7 +21,7 @@ public class Mob extends LivingEntity {
      *            name of mob
      */
     public Mob(String mob) {
-        this((OEntityLiving) OEntityList.a(mob, etc.getMCServer().e));
+        this((OEntityLiving) OEntityList.a(mob, etc.getMCServer().a(0)));
     }
 
     /**
@@ -50,7 +50,7 @@ public class Mob extends LivingEntity {
      * @param rider
      */
     public void spawn(Mob rider) {
-        OWorld world = etc.getMCServer().e;
+        OWorld world = etc.getMCServer().a(0);
 
         entity.c(getX() + 0.5d, getY(), getZ() + 0.5d, getRotation(), 0f);
         world.b(entity);
@@ -106,7 +106,7 @@ public class Mob extends LivingEntity {
     public static boolean isValid(String mob) {
         if (mob == null)
             return false;
-        OEntity c = OEntityList.a(mob, etc.getMCServer().e);
+        OEntity c = OEntityList.a(mob, etc.getMCServer().a(0));
         return c instanceof OIMob || c instanceof OIAnimals;
     }
 }

@@ -6,7 +6,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
     int[]       a;
 
     protected OBlockLeaves(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, OMaterial.h, false);
+        super(paramInt1, paramInt2, OMaterial.i, false);
         c = paramInt2;
         a(true);
     }
@@ -21,7 +21,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
                 for (int m = -i; m <= i; m++)
                     for (int n = -i; n <= i; n++) {
                         int i1 = paramOWorld.a(paramInt1 + k, paramInt2 + m, paramInt3 + n);
-                        if (i1 == OBlock.K.bl) {
+                        if (i1 == OBlock.L.bn) {
                             int i2 = paramOWorld.b(paramInt1 + k, paramInt2 + m, paramInt3 + n);
                             paramOWorld.d(paramInt1 + k, paramInt2 + m, paramInt3 + n, i2 | 0x8);
                         }
@@ -30,7 +30,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        if (paramOWorld.v)
+        if (paramOWorld.B)
             return;
 
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
@@ -52,9 +52,9 @@ public class OBlockLeaves extends OBlockLeavesBase {
                     for (i3 = -j; i3 <= j; i3++)
                         for (i4 = -j; i4 <= j; i4++) {
                             i5 = paramOWorld.a(paramInt1 + i2, paramInt2 + i3, paramInt3 + i4);
-                            if (i5 == OBlock.J.bl)
+                            if (i5 == OBlock.K.bn)
                                 a[((i2 + i1) * n + (i3 + i1) * m + (i4 + i1))] = 0;
-                            else if (i5 == OBlock.K.bl)
+                            else if (i5 == OBlock.L.bn)
                                 a[((i2 + i1) * n + (i3 + i1) * m + (i4 + i1))] = -2;
                             else
                                 a[((i2 + i1) * n + (i3 + i1) * m + (i4 + i1))] = -1;
@@ -80,7 +80,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
             }
             int i2 = a[(i1 * n + i1 * m + i1)];
             if (i2 >= 0)
-                paramOWorld.c(paramInt1, paramInt2, paramInt3, i & -9);
+                paramOWorld.d(paramInt1, paramInt2, paramInt3, i & -9);
             else
                 g(paramOWorld, paramInt1, paramInt2, paramInt3);
         }
@@ -88,9 +88,10 @@ public class OBlockLeaves extends OBlockLeavesBase {
 
     private void g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         // CanaryMod: stop leaves from decaying
-        Block block = new Block(etc.getServer().getBlockIdAt(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+        World world = paramOWorld.world;
+        Block block = new Block(world, world.getBlockIdAt(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.LEAF_DECAY, block)) {
-            a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+            b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
         }
     }
@@ -102,7 +103,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
 
     @Override
     public int a(int paramInt, Random paramRandom) {
-        return OBlock.y.bl;
+        return OBlock.z.bn;
     }
 
     @Override
@@ -118,8 +119,8 @@ public class OBlockLeaves extends OBlockLeavesBase {
     @Override
     public int a(int paramInt1, int paramInt2) {
         if ((paramInt2 & 0x3) == 1)
-            return bk + 80;
-        return bk;
+            return bm + 80;
+        return bm;
     }
 
     @Override

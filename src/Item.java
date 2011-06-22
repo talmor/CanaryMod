@@ -204,6 +204,7 @@ public class Item {
         Bed(355), //
         RedstoneRepeater(356), //
         Cookie(357), //
+        Map(358), //
         GoldRecord(2256), //
         GreenRecord(2257);
 
@@ -295,6 +296,7 @@ public class Item {
      * @param itemId
      * @param amount
      * @param slot
+     * @param damage 
      */
     public Item(int itemId, int amount, int slot, int damage) {
         this.itemId = itemId;

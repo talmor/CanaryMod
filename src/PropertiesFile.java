@@ -174,6 +174,7 @@ public final class PropertiesFile {
      * @param key
      *            The <code>key</code> we will retrieve the property from, if no
      *            <code>key</code> is found default to "" or empty.
+     * @return
      */
     public String getString(String key) {
         if (containsKey(key))
@@ -230,6 +231,7 @@ public final class PropertiesFile {
      * @param key
      *            The <code>key</code> we will retrieve the property from, if no
      *            <code>key</code> is found default to 0
+     * @return
      */
     public int getInt(String key) {
         if (containsKey(key))
@@ -285,6 +287,7 @@ public final class PropertiesFile {
      * @param key
      *            The <code>key</code> we will retrieve the property from, if no
      *            <code>key</code> is found default to 0.0
+     * @return
      */
     public double getDouble(String key) {
         if (containsKey(key))
@@ -339,6 +342,7 @@ public final class PropertiesFile {
      * @param key
      *            The <code>key</code> we will retrieve the property from, if no
      *            <code>key</code> is found default to 0L
+     * @return
      */
     public long getLong(String key) {
         if (containsKey(key))
@@ -393,6 +397,7 @@ public final class PropertiesFile {
      * @param key
      *            The <code>key</code> we will retrieve the property from, if no
      *            <code>key</code> is found default to false
+     * @return Boolean value
      */
     public boolean getBoolean(String key) {
         if (containsKey(key))

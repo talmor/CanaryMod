@@ -79,7 +79,6 @@ public class PlayerCommands {
     public BaseCommand getCommand(String command) {
         return commands.get(command);
     }
-    
     @Command
     public static final BaseCommand help = new BaseCommand("[Page|Pattern] - Shows a list of commands. 7 per page.") {
 
@@ -153,7 +152,7 @@ public class PlayerCommands {
         }
     };
     @Command({"tell", "msg", "m"})
-    public static final BaseCommand tell = new BaseCommand("[Player] [Message] - Sends a message to player", "Correct usage is: /msg [player] [message]", 3, 3) {
+    public static final BaseCommand tell = new BaseCommand("[Player] [Message] - Sends a message to player", "Correct usage is: /msg [player] [message]", 3) {
 
         @Override
         void execute(MessageReceiver caller, String[] split) {
@@ -236,7 +235,7 @@ public class PlayerCommands {
         }
     };
     @Command
-    public static final BaseCommand tp = new BaseCommand("[Player] - Teleports to player.", "Correct usage is: /tp [player]", 1) {
+    public static final BaseCommand tp = new BaseCommand("[Player] - Teleports to player.", "Correct usage is: /tp [player]", 2) {
 
         @Override
         void execute(MessageReceiver caller, String[] split) {
@@ -244,9 +243,31 @@ public class PlayerCommands {
                 return;
 
             Player player = etc.getServer().matchPlayer(split[1]);
+            if (!player.getWorld().equals(((Player) caller).getWorld()))
+                if (((Player) caller).canIgnoreRestrictions()) {
+                    if (player != null) {
+                        if (caller.equals(player)) {
+                            caller.notify("You can't do that...");
+                            return;
+                        }
+                        log.info(caller.getName() + " shifted worlds and teleported to " + player.getName());
+
+                        caller.notify("You feel the world shifting...");
+                        ((Player) caller).switchWorlds();
+                        caller.notify("The worlds suddenly snap back.");
+                        if (!((Player) caller).getWorld().equals(player.getWorld())) {
+                            caller.notify("The veil between worlds is still too strong.");
+                            return;
+                        }
+                    }
+                } else {
+
+                    caller.notify("That player is in another world.");
+                    return;
+                }
 
             if (player != null) {
-                if (caller.getName().equalsIgnoreCase(player.getName())) {
+                if (caller.equals(player)) {
                     caller.notify("You're already here!");
                     return;
                 }
@@ -258,7 +279,7 @@ public class PlayerCommands {
         }
     };
     @Command({"tphere", "s"})
-    public static final BaseCommand tphere = new BaseCommand("[Player] - Teleports the player to you", "Correct usage is: /tphere [player]", 1) {
+    public static final BaseCommand tphere = new BaseCommand("[Player] - Teleports the player to you", "Correct usage is: /tphere [player]", 2) {
 
         @Override
         void execute(MessageReceiver caller, String[] split) {
@@ -266,9 +287,30 @@ public class PlayerCommands {
                 return;
 
             Player player = etc.getServer().matchPlayer(split[1]);
+            if (!player.getWorld().equals(((Player) caller).getWorld()))
+                if (((Player) caller).canIgnoreRestrictions()) {
+                    if (player != null) {
+                        if (caller.equals(player)) {
+                            caller.notify("You can't do that...");
+                            return;
+                        }
+                        log.info(caller.getName() + " caused the worlds to shift around " + player.getName());
+
+                        player.notify("You feel the world shifting...");
+                        player.switchWorlds();
+                        if (!player.getWorld().equals(((Player) caller).getWorld())) {
+                            player.notify("The veil between worlds keeps you in your place.");
+                            return;
+                        }
+                    }
+                } else {
+
+                    caller.notify("That player is in another world.");
+                    return;
+                }
 
             if (player != null) {
-                if (caller.getName().equalsIgnoreCase(player.getName())) {
+                if (caller.equals(player)) {
                     caller.notify("Wow look at that! You teleported yourself to yourself!");
                     return;
                 }
@@ -408,10 +450,10 @@ public class PlayerCommands {
                 Item i = c.getItem();
 
                 int amount = Integer.parseInt(split[amountIndex]);
-                if (amount <= 0 && (!(caller instanceof Player) || ((Player) caller).isAdmin()))
+                if (amount <= 0 && ((caller instanceof Player) && !((Player) caller).isAdmin()))
                     amount = 1;
 
-                if (amount > 64 && (!(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()))
+                if (amount > 64 && ((caller instanceof Player) && !((Player) caller).canIgnoreRestrictions()))
                     amount = 64;
                 if (amount > 1024)
                     amount = 1024; // 16 stacks worth. More than enough.
@@ -421,7 +463,7 @@ public class PlayerCommands {
                     return;
 
                 Player toGive = (Player) caller;
-                if ((!(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()))
+                if ((!(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()) && split.length > amountIndex + 2)
                     toGive = etc.getServer().matchPlayer(split[amountIndex + 1]);
 
                 if (toGive == null) {
@@ -605,7 +647,7 @@ public class PlayerCommands {
 
         @Override
         void execute(MessageReceiver caller, String[] split) {
-            if (caller instanceof Player && !((Player) caller).isMuted()) {
+            if (caller instanceof Player && ((Player) caller).isMuted()) {
                 caller.notify("You are currently muted.");
                 return;
             }
@@ -632,6 +674,10 @@ public class PlayerCommands {
 
             if (player == null) {
                 caller.notify("Could not find player.");
+                return;
+            }
+            if ((player.getWorld().getType().getId()) != 0) {
+                caller.notify("You cannot set a home in the Nether, mortal.");
                 return;
             }
 
@@ -665,8 +711,22 @@ public class PlayerCommands {
                 caller.notify("Could not find player.");
                 return;
             }
+            if (toMove.getWorld().getType().getId() != 0)
+                if (toMove.canIgnoreRestrictions()) {
+                    toMove.sendMessage("§4You feel the worlds start to shift...");
+                    int derp = toMove.getWorld().getType().getId();
+                    toMove.switchWorlds();
+                    toMove.sendMessage("§4The worlds suddenly snap back into focus.");
+                    if (derp == toMove.getWorld().getType().getId()) {
+                        toMove.sendMessage("§4The veil is still too strong.");
+                        return;
+                    }
+                } else {
+                    toMove.sendMessage("§4The veil between the worlds keeps you bound to the Nether...");
+                    return;
+                }
 
-            toMove.teleportTo(etc.getServer().getSpawnLocation());
+            toMove.teleportTo(toMove.getWorld().getSpawnLocation());
 
         }
     };
@@ -689,7 +749,12 @@ public class PlayerCommands {
                 return;
             }
 
-            OWorldInfo info = etc.getMCServer().e.s;
+            if ((player.getWorld().getType().getId()) != 0) {
+                caller.notify("You cannot set the spawn point in the Nether, mortal.");
+                return;
+            }
+
+            OWorldInfo info = player.getWorld().getWorld().x;
             info.a((int) player.getX(), (int) player.getY(), (int) player.getZ());
 
             log.info("Spawn position changed.");
@@ -714,12 +779,28 @@ public class PlayerCommands {
             else
                 home = etc.getDataSource().getHome(caller.getName());
 
+            if (player.getWorld().getType() != World.Type.NORMAL)
+                if (player.canIgnoreRestrictions()) {
+                    player.notify("You feel the worlds start to shift...");
+                    World derp = player.getWorld();
+                    player.switchWorlds();
+                    player.notify("The worlds suddenly come back into focus.");
+                    if (derp.equals(player.getWorld())) {
+                        player.notify("The veil is still too strong.");
+                        return;
+                    }
+                } else {
+                    player.notify("The veil between the worlds keeps you in the Nether...");
+                    return;
+                }
+
             if (home != null)
                 player.teleportTo(home.Location);
             else if (split.length > 1 && player.isAdmin())
                 caller.notify("That player home does not exist");
             else
-                player.teleportTo(etc.getServer().getSpawnLocation());
+                player.teleportTo(player.getWorld().getSpawnLocation());
+
         }
     };
     @Command
@@ -737,7 +818,7 @@ public class PlayerCommands {
                     onBadSyntax(caller, split);
                     return;
                 }
-            else if (caller instanceof Player)
+            else if (!(caller instanceof Player))
                 return;
             else
                 toWarp = (Player) caller;
@@ -749,6 +830,21 @@ public class PlayerCommands {
                     if ((caller instanceof Player) && !((Player) caller).isInGroup(warp.Group) && !warp.Group.equals(""))
                         caller.notify("Warp not found.");
                     else {
+                        if (toWarp.getWorld().getType() != World.Type.NORMAL)
+                            if (toWarp.canIgnoreRestrictions()) {
+                                toWarp.notify("You feel the worlds start to shift...");
+                                World derp = toWarp.getWorld();
+                                toWarp.switchWorlds();
+                                toWarp.notify("The worlds suddenly snap back into focus...");
+                                if (derp.equals(toWarp.getWorld())) {
+                                    toWarp.notify("The veil is still too strong.");
+                                    return;
+                                }
+                            } else {
+                                toWarp.sendMessage("The veil between the worlds keeps you in the Nether...");
+                                return;
+                            }
+
                         toWarp.teleportTo(warp.Location);
                         toWarp.sendMessage(Colors.Rose + "Woosh!");
                     }
@@ -783,10 +879,6 @@ public class PlayerCommands {
             if (!(caller instanceof Player))
                 return;
 
-            /*if (split[1].contains(":")) {
-            caller.notify("You can't set a warp with \":\" in its name");
-            return;
-            }*/
             Warp warp = new Warp();
             warp.Name = split[1];
             warp.Location = ((Player) caller).getLocation();
@@ -824,20 +916,26 @@ public class PlayerCommands {
 
         @Override
         void execute(MessageReceiver caller, String[] split) {
+            World world;
+            if (caller instanceof Player)
+                world = ((Player) caller).getWorld();
+            else
+                world = etc.getServer().getMCServer().a(0).world;
+
             if (split.length == 2)
                 if (split[1].equalsIgnoreCase("day"))
-                    etc.getServer().setRelativeTime(0);
+                    world.setRelativeTime(0);
                 else if (split[1].equalsIgnoreCase("night"))
-                    etc.getServer().setRelativeTime(13000);
+                    world.setRelativeTime(13000);
                 else if (split[1].equalsIgnoreCase("check"))
-                    caller.notify("The time is " + etc.getServer().getRelativeTime() + "! (RAW: " + etc.getServer().getTime() + ")");
+                    caller.notify("The time is " + world.getRelativeTime() + "! (RAW: " + world.getTime() + ")");
                 else if (split[1].matches("\\d+"))
-                    etc.getServer().setRelativeTime(Long.parseLong(split[1]));
+                    world.setRelativeTime(Long.parseLong(split[1]));
                 else
                     caller.notify("Please enter numbers, not letters.");
             else if (split[1].equalsIgnoreCase("raw"))
                 if (split[2].matches("\\d+"))
-                    etc.getServer().setTime(Long.parseLong(split[2]));
+                    world.setTime(Long.parseLong(split[2]));
                 else
                     caller.notify("Please enter numbers, not letters.");
         }
@@ -895,6 +993,10 @@ public class PlayerCommands {
 
             if (!Mob.isValid(split[1])) {
                 caller.notify("Invalid mob. Name has to start with a capital like so: Pig");
+                return;
+            }
+            if (p.getWorld().getType().getId() != 0) {
+                caller.notify("That creature's soul cannot be cast here.");
                 return;
             }
 
@@ -976,7 +1078,7 @@ public class PlayerCommands {
             HitBlox hb = new HitBlox((Player) caller);
             Block block = hb.getTargetBlock();
             if (block != null && block.getType() == 52) { // mob spawner
-                MobSpawner ms = (MobSpawner) etc.getServer().getComplexBlock(block.getX(), block.getY(), block.getZ());
+                MobSpawner ms = (MobSpawner) ((Player) caller).getWorld().getComplexBlock(block.getX(), block.getY(), block.getZ());
                 if (ms != null)
                     ms.setSpawn(split[1]);
             } else
@@ -986,9 +1088,9 @@ public class PlayerCommands {
     /*@Command
     public static final BaseCommand weather = new BaseCommand("[on|off]", null, 1) {
 
-        @Override
-        void execute(MessageReceiver caller, String[] parameters) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
+    @Override
+    void execute(MessageReceiver caller, String[] parameters) {
+    throw new UnsupportedOperationException("Not supported yet.");
+    }
     }*/
 }

@@ -2,6 +2,7 @@
  * ItemArray.java - Interface to jh[] so I don't have to copy+paste this a bunch
  * of times
  * 
+ * @param <C> The container of the items
  * @author James
  */
 public abstract class ItemArray<C extends Container<OItemStack>> {

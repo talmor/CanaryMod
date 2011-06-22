@@ -12,7 +12,7 @@ public class OBlockFlowing extends OBlockFluid {
 
     private void i(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        paramOWorld.a(paramInt1, paramInt2, paramInt3, bl + 1, i);
+        paramOWorld.a(paramInt1, paramInt2, paramInt3, bn + 1, i);
         paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
         paramOWorld.g(paramInt1, paramInt2, paramInt3);
     }
@@ -20,12 +20,13 @@ public class OBlockFlowing extends OBlockFluid {
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         // CanaryMod: Store originating block
-        Block blockFrom = new Block(bl, paramInt1, paramInt2, paramInt3);
+        World world = paramOWorld.world;
+        Block blockFrom = new Block(world, bn, paramInt1, paramInt2, paramInt3);
 
         int i = g(paramOWorld, paramInt1, paramInt2, paramInt3);
 
         int j = 1;
-        if ((by == OMaterial.g) && (!paramOWorld.o.d))
+        if ((bA == OMaterial.h) && (!paramOWorld.t.d))
             j = 2;
 
         int k = 1;
@@ -33,10 +34,10 @@ public class OBlockFlowing extends OBlockFluid {
         if (i > 0) {
             int m = -100;
             a = 0;
-            m = e(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, m);
-            m = e(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, m);
-            m = e(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, m);
-            m = e(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, m);
+            m = f(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, m);
+            m = f(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, m);
+            m = f(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, m);
+            m = f(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, m);
 
             n = m + j;
             if ((n >= 8) || (m < 0))
@@ -48,12 +49,12 @@ public class OBlockFlowing extends OBlockFluid {
                 else
                     n = i1 + 8;
             }
-            if ((a >= 2) && (by == OMaterial.f))
+            if ((a >= 2) && (bA == OMaterial.g))
                 if (paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3))
                     n = 0;
-                else if ((paramOWorld.c(paramInt1, paramInt2 - 1, paramInt3) == by) && (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0))
+                else if ((paramOWorld.c(paramInt1, paramInt2 - 1, paramInt3) == bA) && (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0))
                     n = 0;
-            if ((by == OMaterial.g) && (i < 8) && (n < 8) && (n > i) && (paramRandom.nextInt(4) != 0)) {
+            if ((bA == OMaterial.h) && (i < 8) && (n < 8) && (n > i) && (paramRandom.nextInt(4) != 0)) {
                 n = i;
                 k = 0;
             }
@@ -64,8 +65,8 @@ public class OBlockFlowing extends OBlockFluid {
                     paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
                 else {
                     paramOWorld.c(paramInt1, paramInt2, paramInt3, i);
-                    paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
-                    paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
+                    paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
+                    paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
                 }
             } else if (k != 0)
                 i(paramOWorld, paramInt1, paramInt2, paramInt3);
@@ -73,12 +74,12 @@ public class OBlockFlowing extends OBlockFluid {
             i(paramOWorld, paramInt1, paramInt2, paramInt3);
         if (l(paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) {
             // CanaryMod: downwards flow.
-            Block blockTo = new Block(0, paramInt1, paramInt2 - 1, paramInt3);
+            Block blockTo = new Block(world, 0, paramInt1, paramInt2 - 1, paramInt3);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
                 if (i >= 8)
-                    paramOWorld.b(paramInt1, paramInt2 - 1, paramInt3, bl, i);
+                    paramOWorld.b(paramInt1, paramInt2 - 1, paramInt3, bn, i);
                 else
-                    paramOWorld.b(paramInt1, paramInt2 - 1, paramInt3, bl, i + 8);
+                    paramOWorld.b(paramInt1, paramInt2 - 1, paramInt3, bn, i + 8);
 
         } else if ((i >= 0) && ((i == 0) || (k(paramOWorld, paramInt1, paramInt2 - 1, paramInt3)))) {
             boolean[] arrayOfBoolean = j(paramOWorld, paramInt1, paramInt2, paramInt3);
@@ -89,38 +90,38 @@ public class OBlockFlowing extends OBlockFluid {
                 return;
             // CanaryMod: sidewards flow.
             if (arrayOfBoolean[0]) {
-                Block blockTo = new Block(0, paramInt1 - 1, paramInt2, paramInt3);
+                Block blockTo = new Block(world, 0, paramInt1 - 1, paramInt2, paramInt3);
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-                    f(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, n);
+                    g(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, n);
             }
             if (arrayOfBoolean[1]) {
-                Block blockTo = new Block(0, paramInt1 + 1, paramInt2, paramInt3);
+                Block blockTo = new Block(world, 0, paramInt1 + 1, paramInt2, paramInt3);
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-                    f(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, n);
+                    g(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, n);
             }
             if (arrayOfBoolean[2]) {
-                Block blockTo = new Block(0, paramInt1, paramInt2, paramInt3 - 1);
+                Block blockTo = new Block(world, 0, paramInt1, paramInt2, paramInt3 - 1);
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-                    f(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, n);
+                    g(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, n);
             }
             if (arrayOfBoolean[3]) {
-                Block blockTo = new Block(0, paramInt1, paramInt2, paramInt3 + 1);
+                Block blockTo = new Block(world, 0, paramInt1, paramInt2, paramInt3 + 1);
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-                    f(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, n);
+                    g(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, n);
             }
 
         }
     }
 
-    private void f(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    private void g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (l(paramOWorld, paramInt1, paramInt2, paramInt3)) {
             int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
             if (i > 0)
-                if (by == OMaterial.g)
+                if (bA == OMaterial.h)
                     h(paramOWorld, paramInt1, paramInt2, paramInt3);
                 else
-                    OBlock.m[i].a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
-            paramOWorld.b(paramInt1, paramInt2, paramInt3, bl, paramInt4);
+                    OBlock.m[i].b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+            paramOWorld.b(paramInt1, paramInt2, paramInt3, bn, paramInt4);
         }
     }
 
@@ -144,7 +145,7 @@ public class OBlockFlowing extends OBlockFluid {
 
             if (k(paramOWorld, k, m, n))
                 continue;
-            if ((paramOWorld.c(k, m, n) == by) && (paramOWorld.b(k, m, n) == 0))
+            if ((paramOWorld.c(k, m, n) == bA) && (paramOWorld.b(k, m, n) == 0))
                 continue;
             if (!k(paramOWorld, k, m - 1, n))
                 return paramInt4;
@@ -177,7 +178,7 @@ public class OBlockFlowing extends OBlockFluid {
                 m++;
             if (k(paramOWorld, j, k, m))
                 continue;
-            if ((paramOWorld.c(j, k, m) == by) && (paramOWorld.b(j, k, m) == 0))
+            if ((paramOWorld.c(j, k, m) == bA) && (paramOWorld.b(j, k, m) == 0))
                 continue;
             if (!k(paramOWorld, j, k - 1, m))
                 c[i] = 0;
@@ -200,15 +201,15 @@ public class OBlockFlowing extends OBlockFluid {
 
     private boolean k(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
-        if ((i == OBlock.aE.bl) || (i == OBlock.aL.bl) || (i == OBlock.aD.bl) || (i == OBlock.aF.bl) || (i == OBlock.aX.bl))
+        if ((i == OBlock.aF.bn) || (i == OBlock.aM.bn) || (i == OBlock.aE.bn) || (i == OBlock.aG.bn) || (i == OBlock.aY.bn))
             return true;
         if (i == 0)
             return false;
-        OMaterial localOMaterial = OBlock.m[i].by;
+        OMaterial localOMaterial = OBlock.m[i].bA;
         return localOMaterial.a();
     }
 
-    protected int e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    protected int f(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         int i = g(paramOWorld, paramInt1, paramInt2, paramInt3);
         if (i < 0)
             return paramInt4;
@@ -221,8 +222,8 @@ public class OBlockFlowing extends OBlockFluid {
 
     private boolean l(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         // CanaryMod: See if this liquid can destroy this block.
-        Block block = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
-        PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, bl, block);
+        Block block = new Block(paramOWorld.world, paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+        PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, bn, block);
         if (ret == PluginLoader.HookResult.PREVENT_ACTION)
             return false;
         else if (ret == PluginLoader.HookResult.ALLOW_ACTION)
@@ -230,9 +231,9 @@ public class OBlockFlowing extends OBlockFluid {
 
         
         OMaterial localOMaterial = paramOWorld.c(paramInt1, paramInt2, paramInt3);
-        if (localOMaterial == by)
+        if (localOMaterial == bA)
             return false;
-        if (localOMaterial == OMaterial.g)
+        if (localOMaterial == OMaterial.h)
             return false;
         return !k(paramOWorld, paramInt1, paramInt2, paramInt3);
     }
@@ -240,7 +241,7 @@ public class OBlockFlowing extends OBlockFluid {
     @Override
     public void e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         super.e(paramOWorld, paramInt1, paramInt2, paramInt3);
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == bl)
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
+        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == bn)
+            paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
     }
 }

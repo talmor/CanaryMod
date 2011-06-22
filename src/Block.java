@@ -41,6 +41,8 @@ public class Block {
         PoweredRails(27), //
         DetectorRails(28), //
         Web(30), //
+        TallGrass(31), //
+        DeadShrub(32), //
         Cloth(35), // 
         YellowFlower(37), // 
         RedRose(38), // 
@@ -99,7 +101,8 @@ public class Block {
         Cake(92), //
         RedstoneRepeaterOff(93), //
         RedstoneRepeaterOn(94), //
-        LockedChest(95);
+        LockedChest(95), //
+        Trapdoor(96);
 
         private int                       id;
         private static Map<Integer, Type> map;
@@ -179,6 +182,7 @@ public class Block {
     private Face faceClicked;
     public Type  blockType;
     private int  status, data;
+    private World world;
 
     /**
      * Create a block with no type, x, y or z.
@@ -206,15 +210,27 @@ public class Block {
      * @param z
      */
     public Block(int type, int x, int y, int z) {
-        this.type = type;
-        blockType = Type.fromId(type);
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this(type, x, y, z, 0);
     }
 
     /**
-     * Creates a block of specified type and specified x, y and z
+     * Creates a block of specified type and specified world, x, y and z
+     *
+     * @param world
+     *            The world the block is in.
+     * @param type
+     *            Type of block
+     * @param x
+     * @param y
+     * @param z
+     */
+    public Block(World world, int type, int x, int y, int z) {
+        this(type, x, y, z);
+        this.world = world;
+    }
+
+    /**
+     * Creates a block of specified type and specified x, y, z and data
      * 
      * @param type
      *            Type of block
@@ -230,6 +246,22 @@ public class Block {
         this.y = y;
         this.z = z;
         this.data = data;
+    }
+
+    /**
+     * Creates a block of specified type and specified world, x, y, z and data
+     *
+     * @param type
+     *            Type of block
+     * @param x
+     * @param y
+     * @param z
+     * @param data
+     * @param world
+     */
+    public Block(World world, int type, int x, int y, int z, int data) {
+        this(type, x, y, z, data);
+        this.world = world;
     }
 
     /**
@@ -409,10 +441,26 @@ public class Block {
     }
 
     /**
+     * Returns this block's world
+     * @return world
+     */
+    public World getWorld() {
+        return world;
+    }
+
+    /**
+     * Sets this block's world
+     * @param world The new world
+     */
+    public void setWorld(World world) {
+        this.world = world;
+    }
+
+    /**
      * Updates this block to the server.
      */
     public void update() {
-        etc.getServer().setBlock(this);
+        world.setBlock(this);
     }
 
     /**
@@ -449,8 +497,8 @@ public class Block {
      * refreshing the data with the current actual values
      */
     public void refresh() {
-        type = etc.getServer().getBlockIdAt(x, y, z);
-        data = etc.getServer().getBlockData(x, y, z);
+        type = world.getBlockIdAt(x, y, z);
+        data = world.getBlockData(x, y, z);
         status = 0;
     }
 
@@ -467,7 +515,7 @@ public class Block {
      * @return Block at the requested location
      */
     public Block getRelative(int x, int y, int z) {
-        return etc.getServer().getBlockAt(getX() + x, getY() + y, getZ() + z);
+        return world.getBlockAt(getX() + x, getY() + y, getZ() + z);
     }
 
     /**
@@ -476,7 +524,7 @@ public class Block {
      * @return true if the block is being powered
      */
     public boolean isPowered() {
-        return etc.getServer().isBlockPowered(this);
+        return world.isBlockPowered(this);
     }
 
     /**
@@ -485,7 +533,7 @@ public class Block {
      * @return true if the block is being indirectly powered
      */
     public boolean isIndirectlyPowered() {
-        return etc.getServer().isBlockIndirectlyPowered(this);
+        return world.isBlockIndirectlyPowered(this);
     }
 
     /**

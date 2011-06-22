@@ -110,7 +110,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (d.m(e, f, g) != this)
+        if (d.n(e, f, g) != this)
             return false;
         return paramOEntityPlayer.d(e + 0.5D, f + 0.5D, g + 0.5D) <= 64.0D;
     }

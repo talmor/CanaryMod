@@ -5,17 +5,27 @@ import net.minecraft.server.MinecraftServer;
 
 public class OPlayerManager {
 
-    private List<OEntityPlayerMP> a = new ArrayList();
+    public List<OEntityPlayerMP> a = new ArrayList();
     private OPlayerHash         b = new OPlayerHash();
     private List<OPlayerInstance> c = new ArrayList();
     private MinecraftServer       d;
-    private final int[][]         e = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
+    private int e;
+    private int f;
+    private final int[][]         g = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
 
-    public OPlayerManager(MinecraftServer paramMinecraftServer) {
+    public OPlayerManager(MinecraftServer paramMinecraftServer, int paramInt1, int paramInt2) {
+        if (paramInt2 > 15) throw new IllegalArgumentException("Too big view radius!");
+        if (paramInt2 < 3) throw new IllegalArgumentException("Too small view radius!");
+        f = paramInt2;
         d = paramMinecraftServer;
+        e = paramInt1;
     }
 
-    public void a() {
+    public OWorldServer a() {
+        return d.a(e);
+    }
+
+    public void b() {
         for (int i = 0; i < c.size(); i++)
             c.get(i).a();
         c.clear();
@@ -40,14 +50,14 @@ public class OPlayerManager {
     }
 
     public void a(OEntityPlayerMP paramOEntityPlayerMP) {
-        int i = (int) paramOEntityPlayerMP.aL >> 4;
-        int j = (int) paramOEntityPlayerMP.aN >> 4;
+        int i = (int) paramOEntityPlayerMP.aP >> 4;
+        int j = (int) paramOEntityPlayerMP.aR >> 4;
 
-        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aL;
-        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aN;
+        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aP;
+        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aR;
 
         int k = 0;
-        int m = 10;
+        int m = f;
         int n = 0;
         int i1 = 0;
 
@@ -55,7 +65,7 @@ public class OPlayerManager {
 
         for (int i2 = 1; i2 <= m * 2; i2++)
             for (int i3 = 0; i3 < 2; i3++) {
-                int[] arrayOfInt = e[(k++ % 4)];
+                int[] arrayOfInt = g[(k++ % 4)];
 
                 for (int i4 = 0; i4 < i2; i4++) {
                     n += arrayOfInt[0];
@@ -66,8 +76,8 @@ public class OPlayerManager {
 
         k %= 4;
         for (int i2 = 0; i2 < m * 2; i2++) {
-            n += e[k][0];
-            i1 += e[k][1];
+            n += g[k][0];
+            i1 += g[k][1];
             a(i + n, j + i1, true).a(paramOEntityPlayerMP);
         }
 
@@ -78,8 +88,8 @@ public class OPlayerManager {
         int i = (int) paramOEntityPlayerMP.d >> 4;
         int j = (int) paramOEntityPlayerMP.e >> 4;
 
-        for (int k = i - 10; k <= i + 10; k++)
-            for (int m = j - 10; m <= j + 10; m++) {
+        for (int k = i - f; k <= i + f; k++)
+            for (int m = j - f; m <= j + f; m++) {
                 OPlayerInstance localOPlayerInstance = a(k, m, false);
                 if (localOPlayerInstance == null)
                     continue;
@@ -91,17 +101,17 @@ public class OPlayerManager {
     private boolean a(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         int i = paramInt1 - paramInt3;
         int j = paramInt2 - paramInt4;
-        if ((i < -10) || (i > 10))
+        if ((i < -f) || (i > f))
             return false;
-        return (j >= -10) && (j <= 10);
+        return (j >= -f) && (j <= f);
     }
 
     public void c(OEntityPlayerMP paramOEntityPlayerMP) {
-        int i = (int) paramOEntityPlayerMP.aL >> 4;
-        int j = (int) paramOEntityPlayerMP.aN >> 4;
+        int i = (int) paramOEntityPlayerMP.aP >> 4;
+        int j = (int) paramOEntityPlayerMP.aR >> 4;
 
-        double d1 = paramOEntityPlayerMP.d - paramOEntityPlayerMP.aL;
-        double d2 = paramOEntityPlayerMP.e - paramOEntityPlayerMP.aN;
+        double d1 = paramOEntityPlayerMP.d - paramOEntityPlayerMP.aP;
+        double d2 = paramOEntityPlayerMP.e - paramOEntityPlayerMP.aR;
         double d3 = d1 * d1 + d2 * d2;
         if (d3 < 64.0D)
             return;
@@ -115,14 +125,14 @@ public class OPlayerManager {
             return;
 
         //CanaryMod speed up teleporting.
-        if (n > 10 || n < -10 || i1 > 10 || i1 < -10) {
+        if (n > f || n < -f || i1 > f || i1 < -f) {
             b(paramOEntityPlayerMP);
             a(paramOEntityPlayerMP);
             return;
         }
 
-        for (int i2 = i - 10; i2 <= i + 10; i2++)
-            for (int i3 = j - 10; i3 <= j + 10; i3++) {
+        for (int i2 = i - f; i2 <= i + f; i2++)
+            for (int i3 = j - f; i3 <= j + f; i3++) {
                 if (!a(i2, i3, k, m))
                     a(i2, i3, true).a(paramOEntityPlayerMP);
                 if (!a(i2 - n, i3 - i1, i, j)) {
@@ -132,24 +142,20 @@ public class OPlayerManager {
                     localOPlayerInstance.b(paramOEntityPlayerMP);
                 }
             }
-        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aL;
-        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aN;
+        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aP;
+        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aR;
     }
 
-    public int b() {
-        return 144;
+    public int c() {
+        return f * 16 - 16;
     }
 
     // CanaryMod: OPlayerInstance calls these statically
-    static MinecraftServer a(OPlayerManager jh1) {
-        return jh1.d;
-    }
-
-    static OPlayerHash b(OPlayerManager jh1) {
+    static OPlayerHash a(OPlayerManager jh1) {
         return jh1.b;
     }
 
-    static List c(OPlayerManager jh1) {
+    static List b(OPlayerManager jh1) {
         return jh1.c;
     }
 
@@ -159,10 +165,10 @@ public class OPlayerManager {
         int chunkx = globalx >> 4;
         int chunkz = globalz >> 4;
         // Get the chunk
-        OPlayerInstance localat = a(chunkx, chunkz, false);
+        OPlayerInstance localOPlayerInstance = a(chunkx, chunkz, false);
         // if chunk != null, send packet
-        if (localat != null)
-            localat.a(packetToSend);
+        if (localOPlayerInstance != null)
+            localOPlayerInstance.a(packetToSend);
     }
     // end CanaryMod
 }

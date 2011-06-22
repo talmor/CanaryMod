@@ -10,7 +10,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
     @Override
     public int a(int paramInt1, int paramInt2) {
         if (paramInt1 == 1)
-            return OBlock.av.a(paramInt1, paramInt2);
+            return OBlock.aw.a(paramInt1, paramInt2);
         return super.a(paramInt1, paramInt2);
     }
 
@@ -36,7 +36,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
     }
 
     @Override
-    public int b() {
+    public int c() {
         return 2;
     }
 
@@ -45,29 +45,29 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0)
             super.e(paramOWorld, paramInt1, paramInt2, paramInt3);
         if (a) {
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
-            paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bl);
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bl);
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bl);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bl);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bl);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
+            paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bn);
+            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
+            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
         }
     }
 
     @Override
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         if (a) {
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
-            paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bl);
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bl);
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bl);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bl);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bl);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
+            paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bn);
+            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
+            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
         }
     }
 
     @Override
-    public boolean b(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean a(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (!a)
             return false;
 
@@ -107,13 +107,13 @@ public class OBlockRedstoneTorch extends OBlockTorch {
 
         if (a) {
             if (bool) {
-                paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aP.bl, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+                paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aQ.bn, paramOWorld.b(paramInt1, paramInt2, paramInt3));
 
                 // CanaryMod: Allow redstone torches to provide power
-                int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[] { new Block(bl, paramInt1, paramInt2, paramInt3), 1, 0 });
+                int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), 1, 0);
                 if (current == 0)
                     if (a(paramOWorld, paramInt1, paramInt2, paramInt3, true)) {
-                        paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, "random.fizz", 0.5F, 2.6F + (paramOWorld.m.nextFloat() - paramOWorld.m.nextFloat()) * 0.8F);
+                        paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, "random.fizz", 0.5F, 2.6F + (paramOWorld.r.nextFloat() - paramOWorld.r.nextFloat()) * 0.8F);
                         for (int i = 0; i < 5; i++) {
                             double d1 = paramInt1 + paramRandom.nextDouble() * 0.6D + 0.2D;
                             double d2 = paramInt2 + paramRandom.nextDouble() * 0.6D + 0.2D;
@@ -125,33 +125,33 @@ public class OBlockRedstoneTorch extends OBlockTorch {
             }
         } else if ((!bool) && (!a(paramOWorld, paramInt1, paramInt2, paramInt3, false))) {
             // CanaryMod: Allow redstone torches to provide power
-            int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[] { new Block(bl, paramInt1, paramInt2, paramInt3), 0, 1 });
+            int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), 0, 1);
             if (current > 0)
-                paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aQ.bl, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+                paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aR.bn, paramOWorld.b(paramInt1, paramInt2, paramInt3));
         }
     }
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         super.a(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-        paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
+        paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
     }
 
     @Override
     public boolean c(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (paramInt4 == 0)
             // CanaryMod: forced downcast!
-            return b((OIBlockAccess) paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
+            return a((OIBlockAccess) paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
         return false;
     }
 
     @Override
     public int a(int paramInt, Random paramRandom) {
-        return OBlock.aQ.bl;
+        return OBlock.aR.bn;
     }
 
     @Override
-    public boolean c() {
+    public boolean d() {
         return true;
     }
 }

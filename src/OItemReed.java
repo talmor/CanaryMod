@@ -4,16 +4,16 @@ public class OItemReed extends OItem {
 
     public OItemReed(int paramInt, OBlock paramOBlock) {
         super(paramInt);
-        a = paramOBlock.bl;
+        a = paramOBlock.bn;
     }
 
     @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // CanaryMod: Store blockClicked
         int clicked = paramOWorld.a(paramInt1, paramInt2, paramInt3);
-        Block blockClicked = new Block(clicked, paramInt1, paramInt2, paramInt3);
+        Block blockClicked = new Block(paramOWorld.world, clicked, paramInt1, paramInt2, paramInt3);
 
-        if (clicked == OBlock.aS.bl)
+        if (clicked == OBlock.aT.bn)
             paramInt4 = 0;
         else {
             if (paramInt4 == 0)
@@ -33,9 +33,9 @@ public class OItemReed extends OItem {
         if (paramOItemStack.a == 0)
             return false;
 
-        if (paramOWorld.a(a, paramInt1, paramInt2, paramInt3, false)) {
+        if (paramOWorld.a(a, paramInt1, paramInt2, paramInt3, false, paramInt4)) {
             // CanaryMod: Reed placement
-            Block blockPlaced = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+            Block blockPlaced = new Block(paramOWorld.world, paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
             blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
             Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
 
@@ -46,7 +46,7 @@ public class OItemReed extends OItem {
             if (paramOWorld.e(paramInt1, paramInt2, paramInt3, a)) {
                 OBlock.m[a].d(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
                 OBlock.m[a].a(paramOWorld, paramInt1, paramInt2, paramInt3, (OEntityLiving) paramOEntityPlayer);
-                paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bw.c(), (localOBlock.bw.a() + 1.0F) / 2.0F, localOBlock.bw.b() * 0.8F);
+                paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.by.c(), (localOBlock.by.a() + 1.0F) / 2.0F, localOBlock.by.b() * 0.8F);
                 paramOItemStack.a -= 1;
             }
 

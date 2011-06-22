@@ -24,183 +24,183 @@ public class PluginLoader {
     public enum Hook {
 
         /**
-         * Calls onLoginChecks
+         * Calls {@link PluginListener#onLoginChecks(java.lang.String) }
          */
         LOGINCHECK,
         /**
-         * Calls onLogin
+         * Calls {@link PluginListener#onLogin(Player) }
          */
         LOGIN,
         /**
-         * Calls onChat
+         * Calls {@link PluginListener#onChat(Player, java.lang.String) }
          */
         CHAT,
         /**
-         * Calls onCommand
+         * Calls {@link PluginListener#onCommand(Player, java.lang.String[]) }
          */
         COMMAND,
         /**
-         * Calls onConsoleCommand
+         * Calls {@link PluginListener#onConsoleCommand(java.lang.String[]) }
          */
         SERVERCOMMAND,
         /**
-         * Calls onBan
+         * Calls {@link PluginListener#onBan(Player, Player, java.lang.String) }
          */
         BAN,
         /**
-         * Calls onIpBan
+         * Calls {@link PluginListener#onIpBan(Player, Player, java.lang.String) }
          */
         IPBAN,
         /**
-         * Calls onKick
+         * Calls {@link PluginListener#onKick(Player, Player, java.lang.String) }
          */
         KICK,
         /**
-         * Calls onBlockCreate
+         * Calls {@link PluginListener#onBlockCreate(Player, Block, Block, int) }
          */
         BLOCK_CREATED,
         /**
-         * Calls onBlockDestroy
+         * Calls {@link PluginListener#onBlockDestroy(Player, Block) }
          */
         BLOCK_DESTROYED,
         /**
-         * Calls onDisconnect
+         * Calls {@link PluginListener#onDisconnect(Player) }
          */
         DISCONNECT,
         /**
-         * Calls onPlayerMove
+         * Calls {@link PluginListener#onPlayerMove(Player, Location, Location) }
          */
         PLAYER_MOVE,
         /**
-         * Calls onArmSwing
+         * Calls {@link PluginListener#onArmSwing(Player) }
          */
         ARM_SWING,
         /**
-         * Calls onItemDrop
+         * Calls {@link PluginListener#onItemDrop(Player, Item) }
          */
         ITEM_DROP,
         /**
-         * Calls onItemPickUp
+         * Calls {@link PluginListener#onItemDrop(Player, Item) }
          */
         ITEM_PICK_UP,
         /**
-         * Calls onTeleport
+         * Calls {@link PluginListener#onTeleport(Player, Location, Location) }
          */
         TELEPORT,
         /**
-         * Calls onBlockBreak
+         * Calls {@link PluginListener#onBlockBreak(Player, Block) }
          */
         BLOCK_BROKEN,
         /**
-         * Calls onIgnite
+         * Calls {@link PluginListener#onIgnite(Block, Player) }
          */
         IGNITE,
         /**
-         * Calls onFlow
+         * Calls {@link PluginListener#onFlow(Block, Block) }
          */
         FLOW,
         /**
-         * Calls onExplode
+         * Calls {@link PluginListener#onExplode(Block) }
          */
         EXPLODE,
         /**
-         * Calls onMobSpawn
+         * Calls {@link PluginListener#onMobSpawn(Mob) }
          */
         MOB_SPAWN,
         /**
-         * Calls onDamage
+         * Calls {@link PluginListener#onDamage(PluginLoader.DamageType, BaseEntity, BaseEntity, int) }
          */
         DAMAGE,
         /**
-         * Calls onHealthChange
+         * Calls {@link PluginListener#onHealthChange(Player, int, int) }
          */
         HEALTH_CHANGE,
         /**
-         * Calls onRedstoneChange
+         * Calls {@link PluginListener#onRedstoneChange(Block, int, int) }
          */
         REDSTONE_CHANGE,
         /**
-         * Calls onBlockPhysics
+         * Calls {@link PluginListener#onBlockPhysics(Block, boolean) }
          */
         BLOCK_PHYSICS,
         /**
-         * Calls onVehicleCreate
+         * Calls {@link PluginListener#onVehicleCreate(BaseVehicle) }
          */
         VEHICLE_CREATE,
         /**
-         * Calls onVehicleUpdate
+         * Calls {@link PluginListener#onVehicleUpdate(BaseVehicle) }
          */
         VEHICLE_UPDATE,
         /**
-         * Calls onVehicleDamage
+         * Calls {@link PluginListener#onVehicleDamage(BaseVehicle, BaseEntity, int) }
          */
         VEHICLE_DAMAGE,
         /**
-         * Calls onVehicleCollision
+         * Calls {@link PluginListener#onVehicleCollision(BaseVehicle, BaseEntity) }
          */
         VEHICLE_COLLISION,
         /**
-         * Calls onVehicleDestroyed
+         * Calls {@link PluginListener#onVehicleDestroyed(BaseVehicle) }
          */
         VEHICLE_DESTROYED,
         /**
-         * Calls onVehicleEntered
+         * Calls {@link PluginListener#onVehicleEnter(BaseVehicle, HumanEntity) }
          */
         VEHICLE_ENTERED,
         /**
-         * Calls onVehiclePositionChange
+         * Calls {@link PluginListener#onVehiclePositionChange(BaseVehicle, int, int, int) }
          */
         VEHICLE_POSITIONCHANGE,
         /**
-         * Calls onItemUse
+         * Calls {@link PluginListener#onItemUse(Player, Block, Block, Item) }
          */
         ITEM_USE,
         /**
-         * Calls onBlockPlace
+         * Calls {@link PluginListener#onBlockPlace(Player, Block, Block, Item) }
          */
         BLOCK_PLACE,
         /**
-         * Calls onBlockRightClicked
+         * Calls {@link PluginListener#onBlockRightClicked(Player, Block, Item) }
          */
         BLOCK_RIGHTCLICKED,
         /**
-         * Calls onLiquidDestroy
+         * Calls {@link PluginListener#onLiquidDestroy(PluginLoader.HookResult, int, Block) }
          */
         LIQUID_DESTROY,
         /**
-         * Calls onAttack
+         * Calls {@link PluginListener#onAttack(LivingEntity, LivingEntity, java.lang.Integer) }
          */
         ATTACK,
         /**
-         * Calls onOpenInventory
+         * Calls {@link PluginListener#onOpenInventory(Player, Inventory) }
          */
         OPEN_INVENTORY,
         /**
-         * Calls onSignShow
+         * Calls {@link PluginListener#onSignShow(Player, Sign) }
          */
         SIGN_SHOW,
         /**
-         * Calls onSignChange
+         * Calls {@link PluginListener#onSignChange(Player, Sign) }
          */
         SIGN_CHANGE,
         /**
-         * Calls onLeafDecay
+         * Calls {@link PluginListener#onLeafDecay(Block) }
          */
         LEAF_DECAY,
         /**
-         * Calls onTame
+         * Calls {@link PluginListener#onTame(Player, Mob) }
          */
         TAME,
         /**
-         * Calls onLightningStrike
+         * Calls {@link PluginListener#onLightningStrike(BaseEntity) }
          */
         LIGHTNING_STRIKE,
         /**
-         * Calls onWeatherChange
+         * Calls {@link PluginListener#onWeatherChange(boolean) }
          */
         WEATHER_CHANGE,
         /**
-         * Calls onThunderChange
+         * Calls {@link PluginListener#onThunderChange(boolean) }
          */
         THUNDER_CHANGE,
         /**
@@ -580,8 +580,8 @@ public class PluginLoader {
                                 break;
                             case IGNITE:
                                 if (listener.onIgnite((Block) parameters[0], (parameters[1] == null ? null : (Player) parameters[1])))
-                                    toRet = true;
-                                break;
+                                        toRet = true;
+                               break;
                             case EXPLODE:
                                 if (listener.onExplode((Block) parameters[0]))
                                     toRet = true;
@@ -603,7 +603,7 @@ public class PluginLoader {
                                 break;
                             case BLOCK_PHYSICS:
                                 if (listener.onBlockPhysics((Block) parameters[0], (Boolean) parameters[1]))
-                                    toRet = true;
+                                        toRet = true;
                                 break;
                             case VEHICLE_CREATE:
                                 listener.onVehicleCreate((BaseVehicle) parameters[0]);
@@ -640,7 +640,7 @@ public class PluginLoader {
                                     toRet = true;
                                 break;
                             case LIQUID_DESTROY:
-                                HookResult ret = listener.onLiquidDestroy((HookResult) toRet, (Integer) parameters[0], (Block) parameters[1]);
+                                HookResult ret = listener.onLiquidDestroy((HookResult) toRet, (Integer) parameters[0], (Block) parameters [1]);
                                 if (ret != HookResult.DEFAULT_ACTION && (HookResult) toRet == HookResult.DEFAULT_ACTION)
                                     toRet = ret;
                                 break;
@@ -673,11 +673,11 @@ public class PluginLoader {
                                     toRet = true;
                                 break;
                             case WEATHER_CHANGE:
-                                if (listener.onWeatherChange((Boolean) parameters[0]))
+                                if (listener.onWeatherChange(server.getDefaultWorld(), (Boolean) parameters[0]))
                                     toRet = true;
                                 break;
                             case THUNDER_CHANGE:
-                                if (listener.onThunderChange((Boolean) parameters[0]))
+                                if (listener.onThunderChange(server.getDefaultWorld(), (Boolean) parameters[0]))
                                     toRet = true;
                                 break;
                         }

@@ -72,11 +72,8 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
         int i = -1;
         int j = 1;
         for (int k = 0; k < a.length; k++)
-            if ((a[k] != null) && (b.nextInt(j) == 0)) {
+            if ((a[k] != null) && (b.nextInt(j++) == 0))
                 i = k;
-
-                j++;
-            }
 
         if (i >= 0)
             return a(i, 1);
@@ -128,7 +125,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (d.m(e, f, g) != this)
+        if (d.n(e, f, g) != this)
             return false;
         return paramOEntityPlayer.d(e + 0.5D, f + 0.5D, g + 0.5D) <= 64.0D;
     }

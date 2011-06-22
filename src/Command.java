@@ -12,6 +12,9 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target(FIELD)
 public @interface Command {
-    /** The command names */
+    /** 
+     * The command names
+     * @return value
+     */
     String[] value() default "";
 }

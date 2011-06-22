@@ -7,32 +7,44 @@ public class DoubleChest extends ItemArray<OInventoryLargeChest> implements Comp
         block = chest.getChestBlock();
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String value) {
         name = value;
     }
 
+    @Override
     public int getX() {
         return block.getX();
     }
 
+    @Override
     public int getY() {
         return block.getY();
     }
 
+    @Override
     public int getZ() {
         return block.getZ();
     }
 
+    @Override
     public void update() {
         container.i();
     }
 
+    @Override
     public Block getBlock() {
         return block;
+    }
+
+    @Override
+    public World getWorld() {
+        return block.getWorld();
     }
 
 }

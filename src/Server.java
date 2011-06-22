@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,6 +6,9 @@ import net.minecraft.server.MinecraftServer;
 
 /**
  * Server.java - Interface to server stuff
+ *
+ * As of Canary b8, a lot of methods have been deprecated because they were
+ * dimension-related. Please use the appropriate {@link World} functions instead.
  * 
  * @author James
  */
@@ -99,18 +103,22 @@ public class Server {
 
     /**
      * Returns actual server time (-2^63 to 2^63-1)
-     * 
+     *
+     * @deprecated Use {@link World#getTime()} instead.
      * @return time server time
      */
+    @Deprecated
     public long getTime() {
-        return server.e.m();
+        return server.a(0).m();
     }
 
     /**
      * Returns current server time (0-24000)
-     * 
+     *
+     * @deprecated use {@link World#getRelativeTime() } instead.
      * @return time server time
      */
+    @Deprecated
     public long getRelativeTime() {
         long time = (getTime() % 24000);
         // Java modulus is stupid.
@@ -121,20 +129,24 @@ public class Server {
 
     /**
      * Sets the actual server time
-     * 
+     *
+     * @deprecated Use {@link World#setTime(long)} instead.
      * @param time
      *            time (-2^63 to 2^63-1)
      */
+    @Deprecated
     public void setTime(long time) {
-        server.e.a(time);
+        server.a(0).a(time);
     }
 
     /**
      * Sets the current server time
-     * 
+     *
+     * @deprecated Use {@link World#setRelativeTime(long) } instead.
      * @param time
      *            time (0-24000)
      */
+    @Deprecated
     public void setRelativeTime(long time) {
         long margin = (time - getTime()) % 24000;
         // Java modulus is stupid.
@@ -216,12 +228,14 @@ public class Server {
 
     /**
      * Returns the list of mobs in all open chunks.
-     * 
+     *
+     * @deprecated Use {@link World#getMobList() } instead.
      * @return list of mobs
      */
+    @Deprecated
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
-        for (Object o : server.e.b)
+        for (Object o : server.a(0).b)
             if (o instanceof OEntityMob || o instanceof OEntityGhast)
                 toRet.add(new Mob((OEntityLiving) o));
         return toRet;
@@ -229,12 +243,14 @@ public class Server {
 
     /**
      * Returns the list of animals in all open chunks.
-     * 
+     *
+     * @deprecated Use {@link World#getAnimalList() } instead.
      * @return list of animals
      */
+    @Deprecated
     public List<Mob> getAnimalList() {
         List<Mob> toRet = new ArrayList<Mob>();
-        for (Object o : server.e.b)
+        for (Object o : server.a(0).b)
             if (o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
         return toRet;
@@ -242,12 +258,14 @@ public class Server {
 
     /**
      * Returns the list of minecarts in all open chunks.
-     * 
+     *
+     * @deprecated Use {@link World#getMinecartList() } instead.
      * @return list of minecarts
      */
+    @Deprecated
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
-        for (Object o : server.e.b)
+        for (Object o : server.a(0).b)
             if (o instanceof OEntityMinecart)
                 toRet.add(((OEntityMinecart) o).cart);
         return toRet;
@@ -255,12 +273,14 @@ public class Server {
 
     /**
      * Returns the list of boats in all open chunks.
-     * 
+     *
+     * @deprecated Use {@link World#getBoatList() } instead.
      * @return list of boats
      */
+    @Deprecated
     public List<Boat> getBoatList() {
         List<Boat> toRet = new ArrayList<Boat>();
-        for (Object o : server.e.b)
+        for (Object o : server.a(0).b)
             if (o instanceof OEntityBoat)
                 toRet.add(((OEntityBoat) o).boat);
         return toRet;
@@ -268,12 +288,14 @@ public class Server {
 
     /**
      * Returns the list of all entities in the server in open chunks.
-     * 
+     *
+     * @deprecated Use {@link World#getEntityList() } instead.
      * @return list of entities
      */
+    @Deprecated
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
-        for (Object o : server.e.b)
+        for (Object o : server.a(0).b)
             if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
             else if (o instanceof OEntityMinecart)
@@ -288,12 +310,14 @@ public class Server {
     /**
      * Returns the list of all living entities (players, animals, mobs) in open
      * chunks.
-     * 
+     *
+     * @deprecated Use {@link World#getLivingEntityList() } instead.
      * @return list of living entities
      */
+    @Deprecated
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
-        for (Object o : server.e.b)
+        for (Object o : server.a(0).b)
             if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
             else if (o instanceof OEntityPlayerMP)
@@ -303,12 +327,14 @@ public class Server {
 
     /**
      * Returns the list of vehicles in open chunks.
-     * 
+     *
+     * @deprecated Use {@link World#getVehicleEntityList() } instead.
      * @return list of vehicles
      */
+    @Deprecated
     public List<BaseVehicle> getVehicleEntityList() {
         List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
-        for (Object o : server.e.b)
+        for (Object o : server.a(0).b)
             if (o instanceof OEntityMinecart)
                 toRet.add(((OEntityMinecart) o).cart);
             else if (o instanceof OEntityBoat)
@@ -318,15 +344,17 @@ public class Server {
 
     /**
      * Get the global spawn location
-     * 
+     *
+     * @deprecated Use {@link World#getSpawnLocation() } instead
      * @return Location object for spawn
      */
+    @Deprecated
     public Location getSpawnLocation() {
         // More structure ftw
-        OWorldInfo info = server.e.s;
+        OWorldInfo info = server.a(0).x;
         Location spawn = new Location();
         spawn.x = info.c() + 0.5D;
-        spawn.y = info.d();
+        spawn.y = getMCServer().a(0).f(info.c(), info.e());
         spawn.z = info.e() + 0.5D;
         spawn.rotX = 0.0F;
         spawn.rotY = 0.0F;
@@ -335,29 +363,34 @@ public class Server {
 
     /**
      * Sets the block
-     * 
+     *
+     * @deprecated Use {@link World#setBlock(Block) } instead.
      * @param block
      * @return
      */
+    @Deprecated
     public boolean setBlock(Block block) {
         return setBlockAt(block.getType(), block.getX(), block.getY(), block.getZ()) && setBlockData(block.getX(), block.getY(), block.getZ(), block.getData());
     }
 
     /**
      * Returns the block at the specified location
-     * 
+     *
+     * @deprecated Use {@link World#getBlockAt(int, int, int) } instead.
      * @param x
      * @param y
      * @param z
      * @return block
      */
+    @Deprecated
     public Block getBlockAt(int x, int y, int z) {
         return new Block(getBlockIdAt(x, y, z), x, y, z, getBlockData(x, y, z));
     }
 
     /**
      * Returns the block data at the specified coordinates
-     * 
+     *
+     * @deprecated Use {@link World#getBlockData(int, int, int)} instead.
      * @param x
      *            x
      * @param y
@@ -366,13 +399,15 @@ public class Server {
      *            z
      * @return block data
      */
+    @Deprecated
     public int getBlockData(int x, int y, int z) {
-        return server.e.b(x, y, z);
+        return server.a(0).b(x, y, z);
     }
 
     /**
      * Sets the block data at the specified coordinates
-     * 
+     *
+     * @deprecated Use {@link World#setBlockData(int, int, int, int) } instead.
      * @param x
      *            x
      * @param y
@@ -383,9 +418,10 @@ public class Server {
      *            data
      * @return true if it was successful
      */
+    @Deprecated
     public boolean setBlockData(int x, int y, int z, int data) {
-        boolean toRet = server.e.d(x, y, z, data);
-        etc.getMCServer().f.a(new OPacket53BlockChange(x, y, z, etc.getMCServer().e));
+        boolean toRet = server.a(0).d(x, y, z, data);
+        etc.getMCServer().f.a(new OPacket53BlockChange(x, y, z, etc.getMCServer().a(0)));
         ComplexBlock block = getComplexBlock(x, y, z);
         if (block != null)
             block.update();
@@ -394,48 +430,56 @@ public class Server {
 
     /**
      * Sets the block type at the specified location
-     * 
+     *
+     * @deprecated Use {@link World#setBlockAt(int, int, int, int) } instead.
      * @param blockType
      * @param x
      * @param y
      * @param z
      * @return true if successful
      */
+    @Deprecated
     public boolean setBlockAt(int blockType, int x, int y, int z) {
-        return server.e.e(x, y, z, blockType);
+        return server.a(0).e(x, y, z, blockType);
     }
 
     /**
      * Returns the highest block Y
-     * 
+     *
+     * @deprecated Use {@link World#getHighestBlockY(int, int) } instead.
      * @param x
      * @param z
      * @return highest block altitude
      */
+    @Deprecated
     public int getHighestBlockY(int x, int z) {
-        return server.e.e(x, z);
+        return server.a(0).e(x, z);
     }
 
     /**
      * Returns the block type at the specified location
-     * 
+     *
+     * @deprecated Use {@link World#getBlockIdAt(int, int, int) } instead.
      * @param x
      * @param y
      * @param z
      * @return block type
      */
+    @Deprecated
     public int getBlockIdAt(int x, int y, int z) {
-        return server.e.a(x, y, z);
+        return server.a(0).a(x, y, z);
     }
 
     /**
      * Returns the complex block at the specified location. Null if there's no
      * complex block there. This will also find complex-blocks spanning multiple
      * spaces, such as double chests.
-     * 
+     *
+     * @deprecated Use {@link World#getComplexBlock(Block) } instead.
      * @param block
      * @return complex block
      */
+    @Deprecated
     public ComplexBlock getComplexBlock(Block block) {
         return getComplexBlock(block.getX(), block.getY(), block.getZ());
     }
@@ -444,7 +488,8 @@ public class Server {
      * Returns the complex block at the specified location. Null if there's no
      * complex block there. This will also find complex-blocks spanning multiple
      * spaces, such as double chests.
-     * 
+     *
+     * @deprecated Use {@link World#getComplexBlock(int, int, int) } instead.
      * @param x
      *            x
      * @param y
@@ -453,6 +498,7 @@ public class Server {
      *            z
      * @return complex block
      */
+    @Deprecated
     public ComplexBlock getComplexBlock(int x, int y, int z) {
         ComplexBlock result = getOnlyComplexBlock(x, y, z);
 
@@ -473,10 +519,12 @@ public class Server {
     /**
      * Returns the only complex block at the specified location. Null if there's
      * no complex block there.
-     * 
+     *
+     * @deprecated Use {@link World#getOnlyComplexBlock(Block) } instead.
      * @param block
      * @return complex block
      */
+    @Deprecated
     public ComplexBlock getOnlyComplexBlock(Block block) {
         return getOnlyComplexBlock(block.getX(), block.getY(), block.getZ());
     }
@@ -484,7 +532,8 @@ public class Server {
     /**
      * Returns the complex block at the specified location. Null if there's no
      * complex block there.
-     * 
+     *
+     * @deprecated Use {@link World#getOnlyComplexBlock(int, int, int)} instead.
      * @param x
      *            x
      * @param y
@@ -493,8 +542,9 @@ public class Server {
      *            z
      * @return complex block
      */
+    @Deprecated
     public ComplexBlock getOnlyComplexBlock(int x, int y, int z) {
-        OTileEntity localav = server.e.m(x, y, z);
+        OTileEntity localav = server.a(0).n(x, y, z);
         if (localav != null)
             if (localav instanceof OTileEntityChest)
                 return new Chest((OTileEntityChest) localav);
@@ -511,69 +561,84 @@ public class Server {
 
     /**
      * Drops an item at the specified location
-     * 
+     *
+     * @deprecated Use {@link World#dropItem(Location, int) } instead.
      * @param loc
      * @param itemId
      */
+    @Deprecated
     public void dropItem(Location loc, int itemId) {
         dropItem(loc.x, loc.y, loc.z, itemId, 1);
     }
 
     /**
      * Drops an item at the specified location
-     * 
+     *
+     * @deprecated Use {@link World#dropItem(double, double, double, int)}
+     * instead.
      * @param x
      * @param y
      * @param z
      * @param itemId
      */
+    @Deprecated
     public void dropItem(double x, double y, double z, int itemId) {
         dropItem(x, y, z, itemId, 1);
     }
 
     /**
      * Drops an item with desired quantity at the specified location
-     * 
+     *
+     * @deprecated Use {@link World#dropItem(Location, int, int) } instead.
      * @param loc
      * @param itemId
      * @param quantity
      */
+    @Deprecated
     public void dropItem(Location loc, int itemId, int quantity) {
         dropItem(loc.x, loc.y, loc.z, itemId, quantity);
     }
 
     /**
      * Drops an item with desired quantity at the specified location
-     * 
+     *
+     * @deprecated Use {@link World#dropItem(double, double, double, int, int) }
+     * instead.
      * @param x
      * @param y
      * @param z
      * @param itemId
      * @param quantity
      */
+    @Deprecated
     public void dropItem(double x, double y, double z, int itemId, int quantity) {
-        double d1 = server.e.m.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d2 = server.e.m.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d3 = server.e.m.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        OWorldServer ows = server.a(0);
+        double d1 = ows.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d2 = ows.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d3 = ows.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
-        OEntityItem oei = new OEntityItem(server.e, x + d1, y + d2, z + d3, new OItemStack(itemId, quantity, 0));
+        OEntityItem oei = new OEntityItem(ows, x + d1, y + d2, z + d3, new OItemStack(itemId, quantity, 0));
         oei.c = 10;
-        server.e.b(oei);
+        ows.b(oei);
     }
 
     /**
      * Forces the server to update the physics for blocks around the given block
-     * 
+     *
+     * @deprecated Use {@link World#updateBlockPhysics(Block) } instead.
      * @param block
      *            the block that changed
      */
+    @Deprecated
     public void updateBlockPhysics(Block block) {
         updateBlockPhysics(block.getX(), block.getY(), block.getZ(), block.getData());
     }
 
     /**
      * Forces the server to update the physics for blocks around the given block
-     * 
+     *
+     * @deprecated Use {@link World#updateBlockPhysics(int, int, int, int) }
+     * instead.
      * @param x
      *            the X coordinate of the block
      * @param y
@@ -583,8 +648,9 @@ public class Server {
      * @param data
      *            the new data for the block
      */
+    @Deprecated
     public void updateBlockPhysics(int x, int y, int z, int data) {
-        server.e.c(x, y, z, data);
+        server.a(0).c(x, y, z, data);
     }
 
     /**
@@ -620,11 +686,13 @@ public class Server {
     /**
      * Checks to see whether or not the chunk containing the given block is
      * loaded into memory.
-     * 
+     *
+     * @deprecated Use {@link World#isChunkLoaded(Block) } instead.
      * @param block
      *            the Block to check
      * @return true if the chunk is loaded
      */
+    @Deprecated
     public boolean isChunkLoaded(Block block) {
         return isChunkLoaded(block.getX(), block.getY(), block.getZ());
     }
@@ -632,7 +700,8 @@ public class Server {
     /**
      * Checks to see whether or not the chunk containing the given block
      * coordinates is loaded into memory.
-     * 
+     *
+     * @deprecated Use {@link World#isChunkLoaded(int, int, int) } instead.
      * @param x
      *            a block x-coordinate
      * @param y
@@ -641,17 +710,20 @@ public class Server {
      *            a block z-coordinate
      * @return true if the chunk is loaded
      */
+    @Deprecated
     public boolean isChunkLoaded(int x, int y, int z) {
-        return server.e.w.a(x >> 4, z >> 4);
+        return server.a(0).C.a(x >> 4, z >> 4);
     }
 
     /**
      * Loads the chunk containing the given block. If the chunk does not exist,
      * it will be generated.
-     * 
+     *
+     * @deprecated Use {@link World#loadChunk(Block) } instead.
      * @param block
      *            the Block to check
      */
+    @Deprecated
     public void loadChunk(Block block) {
         loadChunk(block.getX(), block.getY(), block.getZ());
     }
@@ -659,7 +731,8 @@ public class Server {
     /**
      * Loads the chunk containing the given block coordinates. If the chunk does
      * not exist, it will be generated.
-     * 
+     *
+     * @deprecated Use {@link World#loadChunk(int, int, int) } instead.
      * @param x
      *            a block x-coordinate
      * @param y
@@ -667,6 +740,7 @@ public class Server {
      * @param z
      *            a block z-coordinate
      */
+    @Deprecated
     public void loadChunk(int x, int y, int z) {
         loadChunk(x >> 4, z >> 4);
     }
@@ -674,30 +748,35 @@ public class Server {
     /**
      * Loads the chunk containing the given chunk coordinates. If the chunk does
      * not exist, it will be generated.
-     * 
+     *
+     * @deprecated Use {@link World#loadChunk(int, int) } instead.
      * @param x
      *            a chunk x-coordinate
      * @param z
      *            a chunk z-coordinate
      */
+    @Deprecated
     public void loadChunk(int x, int z) {
-        server.e.w.d(x, z);
+        server.a(0).C.c(x, z);
     }
 
     /**
      * Checks if the provided block is being powered through redstone
-     * 
+     *
+     * @deprecated Use {@link World#isBlockPowered(Block) } instead.
      * @param block
      *            Block to check
      * @return true if the block is being powered
      */
+    @Deprecated
     public boolean isBlockPowered(Block block) {
         return isBlockPowered(block.getX(), block.getY(), block.getZ());
     }
 
     /**
      * Checks if the provided block is being powered through redstone
-     * 
+     *
+     * @deprecated Use {@link World#isBlockPowered(int, int, int) } instead.
      * @param x
      *            a block x-coordinate
      * @param y
@@ -706,24 +785,29 @@ public class Server {
      *            a block z-coordinate
      * @return true if the block is being powered
      */
+    @Deprecated
     public boolean isBlockPowered(int x, int y, int z) {
-        return server.e.o(x, y, z);
+        return server.a(0).q(x, y, z);
     }
 
     /**
      * Checks if the provided block is being indirectly powered through redstone
-     * 
+     *
+     * @deprecated Use {@link World#isBlockIndirectlyPowered(Block) } instead.
      * @param block
      *            Block to check
      * @return true if the block is being indirectly powered
      */
+    @Deprecated
     public boolean isBlockIndirectlyPowered(Block block) {
         return isBlockIndirectlyPowered(block.getX(), block.getY(), block.getZ());
     }
 
     /**
      * Checks if the provided block is being indirectly powered through redstone
-     * 
+     *
+     * @deprecated Use {@link World#isBlockIndirectlyPowered(int, int, int) }
+     * instead.
      * @param x
      *            a block x-coordinate
      * @param y
@@ -732,89 +816,135 @@ public class Server {
      *            a block z-coordinate
      * @return true if the block is being indirectly powered
      */
+    @Deprecated
     public boolean isBlockIndirectlyPowered(int x, int y, int z) {
-        return server.e.p(x, y, z);
+        return server.a(0).r(x, y, z);
     }
 
     /**
      * Set the thunder state
+     *
+     * @deprecated Use {@link World#setThundering(boolean) } instead;
      * @param thundering whether it should thunder
      */
+    @Deprecated
     public void setThundering(boolean thundering) {
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.THUNDER_CHANGE, thundering))
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.THUNDER_CHANGE, getDefaultWorld(), thundering))
             return;
-        server.e.s.a(thundering);
-        
+
+        OWorldServer ows = server.a(0);
+        ows.x.a(thundering);
+
         // Thanks to Bukkit for figuring out these numbers
-        if (thundering) {
-            setThunderTime(server.e.m.nextInt(12000) + 3600);
-        } else {
-            setThunderTime(server.e.m.nextInt(168000) + 12000);
-        }
+        if (thundering)
+            setThunderTime(ows.r.nextInt(12000) + 3600);
+        else
+            setThunderTime(ows.r.nextInt(168000) + 12000);
     }
 
     /**
      * Set the thunder ticks.
+     *
+     * @deprecated Use {@link World#setThunderTime(int) } instead.
      * @param ticks ticks of thunder
      */
+    @Deprecated
     public void setThunderTime(int ticks) {
-        server.e.s.b(ticks);
+        server.a(0).x.b(ticks);
     }
 
     /**
      * Sets the rain state.
+     *
+     * @deprecated Use {@link World#setRaining(boolean) } instead.
      * @param raining whether it should rain
      */
+    @Deprecated
     public void setRaining(boolean raining) {
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.WEATHER_CHANGE, raining))
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.WEATHER_CHANGE, getDefaultWorld(), raining))
             return;
-        server.e.s.b(raining);
-        
+
+        OWorldServer ows = server.a(0);
+        ows.x.b(raining);
+
         // Thanks to Bukkit for figuring out these numbers
-        if (raining) {
-            setRainTime(server.e.m.nextInt(12000) + 3600);
-        } else {
-            setRainTime(server.e.m.nextInt(168000) + 12000);
-        }
+        if (raining)
+            setRainTime(ows.r.nextInt(12000) + 3600);
+        else
+            setRainTime(ows.r.nextInt(168000) + 12000);
     }
 
     /**
      * Sets the rain ticks.
+     *
+     * @deprecated Use {@link World#setRainTime(int) } instead.
      * @param ticks ticks of rain
      */
+    @Deprecated
     public void setRainTime(int ticks) {
-        server.e.s.c(ticks);
+        server.a(0).x.c(ticks);
     }
 
     /**
      * Returns whether it's thundering
+     *
+     * @deprecated Use {@link World#isThundering() } instead.
      * @return whether it's thundering
      */
+    @Deprecated
     public boolean isThundering() {
-        return server.e.s.j();
+        return server.a(0).x.j();
     }
 
     /**
      * Returns the number of ticks to go till the end of the thunder
+     *
+     * @deprecated Use {@link World#getThunderTime() } instead.
      * @return the thunder ticks
      */
+    @Deprecated
     public int getThunderTime() {
-        return server.e.s.k();
+        return server.a(0).x.k();
     }
 
     /**
      * Returns whether it's raining
+     *
+     * @deprecated Use {@link World#isRaining() } instead.
      * @return whether it's raining
      */
+    @Deprecated
     public boolean isRaining() {
-        return server.e.s.l();
+        return server.a(0).x.l();
     }
 
     /**
      * Returns the number of ticks to go till the end of the rain
+     *
+     * @deprecated Use {@link World#getRainTime() } instead.
      * @return the rain ticks
      */
+    @Deprecated
     public int getRainTime() {
-        return server.e.s.m();
+        return server.a(0).x.m();
+    }
+
+    /**
+     * Returns the dimension new users spawn in
+     * @return the default dimension
+     */
+    public World getDefaultWorld() {
+        return server.a(0).world;
+    }
+
+    /**
+     * Returns the dimension at the given dimension.
+     * Due to the way the server works, this returns the Nether's {@link World}
+     * if {@code dimension} is -1, the normal dimension's {@link World} otherwise.
+     * @param dimension The dimension to return the World for
+     * @return {@code dimension}'s World
+     */
+    public World getWorld(int dimension) {
+        return server.a(dimension).world;
     }
 }

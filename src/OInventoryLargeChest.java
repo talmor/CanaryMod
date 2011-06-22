@@ -1,6 +1,7 @@
+
 public class OInventoryLargeChest implements OIInventory, Container<OItemStack> {
 
-    private String      a;
+    private String a;
     private OIInventory b;
     private OIInventory c;
 
@@ -41,11 +42,11 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
     public Block getChestBlock() {
         if (b instanceof OTileEntityChest) {
             OTileEntityChest block = (OTileEntityChest) b;
-            return etc.getServer().getBlockAt(block.e, block.f, block.g);
+            return block.d.world.getBlockAt(block.e, block.f, block.g);
         }
         if (c instanceof OTileEntityChest) {
             OTileEntityChest block = (OTileEntityChest) c;
-            return etc.getServer().getBlockAt(block.e, block.f, block.g);
+            return block.d.world.getBlockAt(block.e, block.f, block.g);
         }
         return null;
     }

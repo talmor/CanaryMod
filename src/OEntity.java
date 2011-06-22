@@ -1,257 +1,257 @@
+
 import java.util.List;
 import java.util.Random;
 
 public abstract class OEntity {
-    private static int          a  = 0;
 
-    public int                  aC = a++;
-
-    public double               aD = 1.0D;
-
-    public boolean              aE = false;
-    public OEntity              aF;
-    public OEntity              aG;
-    public OWorld               aH;
-    public double               aI;
-    public double               aJ;
-    public double               aK;
-    public double               aL;
-    public double               aM;
-    public double               aN;
-    public double               aO;
-    public double               aP;
-    public double               aQ;
-    public float                aR;
-    public float                aS;
-    public float                aT;
-    public float                aU;
-    public final OAxisAlignedBB aV = OAxisAlignedBB.a(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
-    public boolean              aW = false;
-    public boolean              aX;
-    public boolean              aY;
-    public boolean              aZ = false;
-    
-    public boolean              ba = false;
-    public boolean              bb;
-    public boolean              bc = true;
-    public boolean              bd = false;
-    public float                be = 0.0F;
-
-    public float                bf = 0.6F;
-    public float                bg = 1.8F;
-
-    public float                bh = 0.0F;
-    public float                bi = 0.0F;
-    protected float             bj = 0.0F;
-    private int                 b  = 1;
-    public double               bk;
-    public double               bl;
-    public double               bm;
-    public float                bn = 0.0F;
-    public float                bo = 0.0F;
-    public boolean              bp = false;
-    public float                bq = 0.0F;
-
-    protected Random            br = new Random();
-    public int                  bs = 0;
-    public int                  bt = 1;
-
-    public int                  bu = 0;
-
-    protected int               bv = 300;
-    protected boolean           bw = false;
-    public int                  bx = 0;
-    public int                  by = 300;
-
-    private boolean             c  = true;
-
-    protected boolean           bz = false;
-
-    protected ODataWatcher      bA = new ODataWatcher();
-    private double              d;
-    private double              e;
-    public boolean              bB = false;
-    public int                  bC;
-    public int                  bD;
-    public int                  bE;
-
+    private static int a = 0;
+    public int aG = a++;
+    public double aH = 1.0D;
+    public boolean aI = false;
+    public OEntity aJ;
+    public OEntity aK;
+    public OWorld aL;
+    public double aM;
+    public double aN;
+    public double aO;
+    public double aP;
+    public double aQ;
+    public double aR;
+    public double aS;
+    public double aT;
+    public double aU;
+    public float aV;
+    public float aW;
+    public float aX;
+    public float aY;
+    public final OAxisAlignedBB aZ = OAxisAlignedBB.a(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+    public boolean ba = false;
+    public boolean bb;
+    public boolean bc;
+    public boolean bd = false;
+    public boolean be = false;
+    public boolean bf;
+    public boolean bg = true;
+    public boolean bh = false;
+    public float bi = 0.0F;
+    public float bj = 0.6F;
+    public float bk = 1.8F;
+    public float bl = 0.0F;
+    public float bm = 0.0F;
+    protected float bn = 0.0F;
+    private int b = 1;
+    public double bo;
+    public double bp;
+    public double bq;
+    public float br = 0.0F;
+    public float bs = 0.0F;
+    public boolean bt = false;
+    public float bu = 0.0F;
+    protected Random bv = new Random();
+    public int bw = 0;
+    public int bx = 1;
+    public int by = 0;
+    protected int bz = 300;
+    protected boolean bA = false;
+    public int bB = 0;
+    public int bC = 300;
+    private boolean c = true;
+    protected boolean bD = false;
+    protected ODataWatcher bE = new ODataWatcher();
+    private double d;
+    private double e;
+    public boolean bF = false;
+    public int bG;
+    public int bH;
+    public int bI;
+    public boolean bJ;
     // CanaryMod Start
-    BaseEntity                  entity  = new BaseEntity(this);
-    public static PluginLoader  manager = etc.getLoader();
+    BaseEntity entity = new BaseEntity(this);
+    public static PluginLoader manager = etc.getLoader();
 
     // CanaryMod end
-
-    
     public OEntity(OWorld paramOWorld) {
-        aH = paramOWorld;
+        aL = paramOWorld;
 
         a(0.0D, 0.0D, 0.0D);
 
-        bA.a(0, (byte) 0);
+        bE.a(0, (byte) 0);
         b();
     }
 
     protected abstract void b();
 
-    public ODataWatcher W() {
-        return bA;
+    public ODataWatcher Z() {
+        return bE;
     }
 
     @Override
     public boolean equals(Object paramObject) {
         if ((paramObject instanceof OEntity))
-            return ((OEntity) paramObject).aC == aC;
+            return ((OEntity) paramObject).aG == aG;
         return false;
     }
 
     @Override
     public int hashCode() {
-        return aC;
+        return aG;
     }
 
-    public void G() {
-        bd = true;
+    public void I() {
+        bh = true;
     }
 
     protected void b(float paramFloat1, float paramFloat2) {
-        bf = paramFloat1;
-        bg = paramFloat2;
+        bj = paramFloat1;
+        bk = paramFloat2;
     }
 
     protected void c(float paramFloat1, float paramFloat2) {
-        aR = paramFloat1 % 360.0F;
-        aS = paramFloat2 % 360.0F;
+        aV = paramFloat1 % 360.0F;
+        aW = paramFloat2 % 360.0F;
     }
 
     public void a(double paramDouble1, double paramDouble2, double paramDouble3) {
-        aL = paramDouble1;
-        aM = paramDouble2;
-        aN = paramDouble3;
-        float f1 = bf / 2.0F;
-        float f2 = bg;
+        aP = paramDouble1;
+        aQ = paramDouble2;
+        aR = paramDouble3;
+        float f1 = bj / 2.0F;
+        float f2 = bk;
 
-        aV.c(paramDouble1 - f1, paramDouble2 - be + bn, paramDouble3 - f1, paramDouble1 + f1, paramDouble2 - be + bn + f2, paramDouble3 + f1);
+        aZ.c(paramDouble1 - f1, paramDouble2 - bi + br, paramDouble3 - f1, paramDouble1 + f1, paramDouble2 - bi + br + f2, paramDouble3 + f1);
     }
 
-    public void p_() {
-        N();
+    public void o_() {
+        Q();
     }
 
-    public void N() {
-        if ((aG != null) && (aG.bd))
-            aG = null;
+    public void Q() {
+        if ((aK != null) && (aK.bh))
+            aK = null;
 
-        bs += 1;
-        bh = bi;
-        aI = aL;
-        aJ = aM;
-        aK = aN;
-        aU = aS;
-        aT = aR;
+        bw += 1;
+        bl = bm;
+        aM = aP;
+        aN = aQ;
+        aO = aR;
+        aY = aW;
+        aX = aV;
 
         if (f_()) {
-            if ((!bw) && (!c)) {
-                float f1 = OMathHelper.a(aO * aO * 0.2D + aP * aP + aQ * aQ * 0.2D) * 0.2F;
+            if ((!bA) && (!c)) {
+                float f1 = OMathHelper.a(aS * aS * 0.2D + aT * aT + aU * aU * 0.2D) * 0.2F;
                 if (f1 > 1.0F)
                     f1 = 1.0F;
-                aH.a(this, "random.splash", f1, 1.0F + (br.nextFloat() - br.nextFloat()) * 0.4F);
-                float f2 = OMathHelper.b(aV.b);
+                aL.a(this, "random.splash", f1, 1.0F + (bv.nextFloat() - bv.nextFloat()) * 0.4F);
+                float f2 = OMathHelper.b(aZ.b);
                 float f3;
                 float f4;
-                for (int i = 0; i < 1.0F + bf * 20.0F; i++) {
-                    f3 = (br.nextFloat() * 2.0F - 1.0F) * bf;
-                    f4 = (br.nextFloat() * 2.0F - 1.0F) * bf;
-                    aH.a("bubble", aL + f3, f2 + 1.0F, aN + f4, aO, aP - br.nextFloat() * 0.2F, aQ);
+                for (int i = 0; i < 1.0F + bj * 20.0F; i++) {
+                    f3 = (bv.nextFloat() * 2.0F - 1.0F) * bj;
+                    f4 = (bv.nextFloat() * 2.0F - 1.0F) * bj;
+                    aL.a("bubble", aP + f3, f2 + 1.0F, aR + f4, aS, aT - bv.nextFloat() * 0.2F, aU);
                 }
-                for (int i = 0; i < 1.0F + bf * 20.0F; i++) {
-                    f3 = (br.nextFloat() * 2.0F - 1.0F) * bf;
-                    f4 = (br.nextFloat() * 2.0F - 1.0F) * bf;
-                    aH.a("splash", aL + f3, f2 + 1.0F, aN + f4, aO, aP, aQ);
+                for (int i = 0; i < 1.0F + bj * 20.0F; i++) {
+                    f3 = (bv.nextFloat() * 2.0F - 1.0F) * bj;
+                    f4 = (bv.nextFloat() * 2.0F - 1.0F) * bj;
+                    aL.a("splash", aP + f3, f2 + 1.0F, aR + f4, aS, aT, aU);
                 }
             }
-            bj = 0.0F;
-            bw = true;
-            bu = 0;
+            bn = 0.0F;
+            bA = true;
+            by = 0;
         } else
-            bw = false;
+            bA = false;
 
-        if (aH.v)
-            bu = 0;
-        else if (bu > 0)
-            if (bz) {
-                bu -= 4;
-                if (bu < 0)
-                    bu = 0;
+        if (aL.B)
+            by = 0;
+        else if (by > 0)
+            if (bD) {
+                by -= 4;
+                if (by < 0)
+                    by = 0;
             } else {
-                if (bu % 20 == 0)
+                if (by % 20 == 0)
                     // CanaryMod Damage hook: Periodic burn damage
                     if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE_TICK, null, entity, 1))
                         a((OEntity) null, 1);
 
-                bu -= 1;
+                by -= 1;
             }
 
-        if (aa())
+        if (ad())
+            aa();
+
+        if (aQ < -64.0D)
             X();
 
-        if (aM < -64.0D)
-            U();
-
-        if (!aH.v) {
-            a(0, bu > 0);
-            a(2, aG != null);
+        if (!aL.B) {
+            a(0, by > 0);
+            a(2, aK != null);
         }
 
         c = false;
     }
 
-    protected void X() {
-        if (!bz) {
+    protected void aa() {
+        if (!bD) {
             // CanaryMod Damage hook: Lava
             if (this instanceof OEntityLiving)
                 if ((Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.LAVA, null, entity, 4))
                     return;
             a((OEntity) null, 4);
 
-            bu = 600;
+            by = 600;
         }
     }
 
-    protected void U() {
-        G();
+    protected void X() {
+        I();
     }
 
     public boolean b(double paramDouble1, double paramDouble2, double paramDouble3) {
-        OAxisAlignedBB localOAxisAlignedBB = aV.c(paramDouble1, paramDouble2, paramDouble3);
-        List localList = aH.a(this, localOAxisAlignedBB);
+        OAxisAlignedBB localOAxisAlignedBB = aZ.c(paramDouble1, paramDouble2, paramDouble3);
+        List localList = aL.a(this, localOAxisAlignedBB);
         if (localList.size() > 0)
             return false;
-        return !aH.c(localOAxisAlignedBB);
+        return !aL.c(localOAxisAlignedBB);
     }
 
     public void c(double paramDouble1, double paramDouble2, double paramDouble3) {
-        if (bp) {
-            aV.d(paramDouble1, paramDouble2, paramDouble3);
-            aL = ((aV.a + aV.d) / 2.0D);
-            aM = (aV.b + be - bn);
-            aN = ((aV.c + aV.f) / 2.0D);
+        if (bt) {
+            aZ.d(paramDouble1, paramDouble2, paramDouble3);
+            aP = ((aZ.a + aZ.d) / 2.0D);
+            aQ = (aZ.b + bi - br);
+            aR = ((aZ.c + aZ.f) / 2.0D);
             return;
         }
 
-        double d1 = aL;
-        double d2 = aN;
+        br *= 0.4F;
+
+        double d1 = aP;
+        double d2 = aR;
+
+        if (bf) {
+            bf = false;
+            paramDouble1 *= 0.25D;
+            paramDouble2 *= 0.05D;
+            paramDouble3 *= 0.25D;
+            aS = 0.0D;
+            aT = 0.0D;
+            aU = 0.0D;
+        }
 
         double d3 = paramDouble1;
         double d4 = paramDouble2;
         double d5 = paramDouble3;
 
-        OAxisAlignedBB localOAxisAlignedBB1 = aV.b();
+        OAxisAlignedBB localOAxisAlignedBB1 = aZ.b();
 
-        boolean i = (aW) && (ae());
+        boolean i = (ba) && (ag());
 
         if (i) {
             double d6 = 0.05D;
-            while ((paramDouble1 != 0.0D) && (aH.a(this, aV.c(paramDouble1, -1.0D, 0.0D)).isEmpty())) {
+            while ((paramDouble1 != 0.0D) && (aL.a(this, aZ.c(paramDouble1, -1.0D, 0.0D)).isEmpty())) {
                 if ((paramDouble1 < d6) && (paramDouble1 >= -d6))
                     paramDouble1 = 0.0D;
                 else if (paramDouble1 > 0.0D)
@@ -260,7 +260,7 @@ public abstract class OEntity {
                     paramDouble1 += d6;
                 d3 = paramDouble1;
             }
-            while ((paramDouble3 != 0.0D) && (aH.a(this, aV.c(0.0D, -1.0D, paramDouble3)).isEmpty())) {
+            while ((paramDouble3 != 0.0D) && (aL.a(this, aZ.c(0.0D, -1.0D, paramDouble3)).isEmpty())) {
                 if ((paramDouble3 < d6) && (paramDouble3 >= -d6))
                     paramDouble3 = 0.0D;
                 else if (paramDouble3 > 0.0D)
@@ -271,145 +271,156 @@ public abstract class OEntity {
             }
         }
 
-        List localList = aH.a(this, aV.a(paramDouble1, paramDouble2, paramDouble3));
+        List localList = aL.a(this, aZ.a(paramDouble1, paramDouble2, paramDouble3));
 
         for (int j = 0; j < localList.size(); j++)
-            paramDouble2 = ((OAxisAlignedBB) localList.get(j)).b(aV, paramDouble2);
-        aV.d(0.0D, paramDouble2, 0.0D);
+            paramDouble2 = ((OAxisAlignedBB) localList.get(j)).b(aZ, paramDouble2);
+        aZ.d(0.0D, paramDouble2, 0.0D);
 
-        if ((!bc) && (d4 != paramDouble2))
+        if ((!bg) && (d4 != paramDouble2))
             paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
 
-        boolean j = (aW) || ((d4 != paramDouble2) && (d4 < 0.0D));
+        boolean j = (ba) || ((d4 != paramDouble2) && (d4 < 0.0D));
 
         for (int k = 0; k < localList.size(); k++)
-            paramDouble1 = ((OAxisAlignedBB) localList.get(k)).a(aV, paramDouble1);
-        aV.d(paramDouble1, 0.0D, 0.0D);
+            paramDouble1 = ((OAxisAlignedBB) localList.get(k)).a(aZ, paramDouble1);
+        aZ.d(paramDouble1, 0.0D, 0.0D);
 
-        if ((!bc) && (d3 != paramDouble1))
+        if ((!bg) && (d3 != paramDouble1))
             paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
 
         for (int k = 0; k < localList.size(); k++)
-            paramDouble3 = ((OAxisAlignedBB) localList.get(k)).c(aV, paramDouble3);
-        aV.d(0.0D, 0.0D, paramDouble3);
+            paramDouble3 = ((OAxisAlignedBB) localList.get(k)).c(aZ, paramDouble3);
+        aZ.d(0.0D, 0.0D, paramDouble3);
 
-        if ((!bc) && (d5 != paramDouble3))
+        if ((!bg) && (d5 != paramDouble3))
             paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
 
-        if ((bo > 0.0F) && j && (bn < 0.05F) && ((d3 != paramDouble1) || (d5 != paramDouble3))) {
+        if ((bs > 0.0F) && j && (i || br < 0.05F) && ((d3 != paramDouble1) || (d5 != paramDouble3))) {
             double d7 = paramDouble1;
             double d8 = paramDouble2;
             double d9 = paramDouble3;
 
             paramDouble1 = d3;
-            paramDouble2 = bo;
+            paramDouble2 = bs;
             paramDouble3 = d5;
 
-            OAxisAlignedBB localOAxisAlignedBB2 = aV.b();
-            aV.b(localOAxisAlignedBB1);
-            localList = aH.a(this, aV.a(paramDouble1, paramDouble2, paramDouble3));
+            OAxisAlignedBB localOAxisAlignedBB2 = aZ.b();
+            aZ.b(localOAxisAlignedBB1);
+            localList = aL.a(this, aZ.a(paramDouble1, paramDouble2, paramDouble3));
 
             for (int n = 0; n < localList.size(); n++)
-                paramDouble2 = ((OAxisAlignedBB) localList.get(n)).b(aV, paramDouble2);
-            aV.d(0.0D, paramDouble2, 0.0D);
+                paramDouble2 = ((OAxisAlignedBB) localList.get(n)).b(aZ, paramDouble2);
+            aZ.d(0.0D, paramDouble2, 0.0D);
 
-            if ((!bc) && (d4 != paramDouble2))
+            if ((!bg) && (d4 != paramDouble2))
                 paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
 
             for (int n = 0; n < localList.size(); n++)
-                paramDouble1 = ((OAxisAlignedBB) localList.get(n)).a(aV, paramDouble1);
-            aV.d(paramDouble1, 0.0D, 0.0D);
+                paramDouble1 = ((OAxisAlignedBB) localList.get(n)).a(aZ, paramDouble1);
+            aZ.d(paramDouble1, 0.0D, 0.0D);
 
-            if ((!bc) && (d3 != paramDouble1))
+            if ((!bg) && (d3 != paramDouble1))
                 paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
 
             for (int n = 0; n < localList.size(); n++)
-                paramDouble3 = ((OAxisAlignedBB) localList.get(n)).c(aV, paramDouble3);
-            aV.d(0.0D, 0.0D, paramDouble3);
+                paramDouble3 = ((OAxisAlignedBB) localList.get(n)).c(aZ, paramDouble3);
+            aZ.d(0.0D, 0.0D, paramDouble3);
 
-            if ((!bc) && (d5 != paramDouble3))
+            if ((!bg) && (d5 != paramDouble3))
                 paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
+
+            if ((!bg) && (d4 != paramDouble2))
+                paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
+            else {
+                paramDouble2 = -bs;
+                for (OAxisAlignedBB oaabb : (List<OAxisAlignedBB>) localList)
+                    paramDouble2 = oaabb.b(aZ, paramDouble2);
+                aZ.d(0.0D, paramDouble2, 0.0D);
+            }
 
             if (d7 * d7 + d9 * d9 >= paramDouble1 * paramDouble1 + paramDouble3 * paramDouble3) {
                 paramDouble1 = d7;
                 paramDouble2 = d8;
                 paramDouble3 = d9;
-                aV.b(localOAxisAlignedBB2);
-            } else
-                bn = (float) (bn + 0.5D);
-
-        }
-
-        aL = ((aV.a + aV.d) / 2.0D);
-        aM = (aV.b + be - bn);
-        aN = ((aV.c + aV.f) / 2.0D);
-
-        aX = ((d3 != paramDouble1) || (d5 != paramDouble3));
-        aY = (d4 != paramDouble2);
-        aW = ((d4 != paramDouble2) && (d4 < 0.0D));
-        aZ = ((aX) || (aY));
-        a(paramDouble2, aW);
-
-        if (d3 != paramDouble1)
-            aO = 0.0D;
-        if (d4 != paramDouble2)
-            aP = 0.0D;
-        if (d5 != paramDouble3)
-            aQ = 0.0D;
-
-        double d7 = aL - d1;
-        double d8 = aN - d2;
-
-        if ((n()) && !i) {
-            bi = (float) (bi + OMathHelper.a(d7 * d7 + d8 * d8) * 0.6D);
-            int i1 = OMathHelper.b(aL);
-            int i2 = OMathHelper.b(aM - 0.2D - be);
-            int m = OMathHelper.b(aN);
-            int n = aH.a(i1, i2, m);
-            if ((bi > b) && (n > 0)) {
-                b += 1;
-                OStepSound localOStepSound = OBlock.m[n].bw;
-                if (aH.a(i1, i2 + 1, m) == OBlock.aS.bl) {
-                    localOStepSound = OBlock.aS.bw;
-                    aH.a(this, localOStepSound.c(), localOStepSound.a() * 0.15F, localOStepSound.b());
-                } else if (!OBlock.m[n].by.d())
-                    aH.a(this, localOStepSound.c(), localOStepSound.a() * 0.15F, localOStepSound.b());
-                OBlock.m[n].b(aH, i1, i2, m, this);
+                aZ.b(localOAxisAlignedBB2);
+            } else {
+                double d10 = aZ.b - (int) aZ.b;
+                if (d10 > 0.0D)
+                    br = (float) (br + d10 + 0.01D);
             }
 
         }
 
-        int i1 = OMathHelper.b(aV.a);
-        int i2 = OMathHelper.b(aV.b);
-        int m = OMathHelper.b(aV.c);
-        int n = OMathHelper.b(aV.d);
-        int i3 = OMathHelper.b(aV.e);
-        int i4 = OMathHelper.b(aV.f);
+        aP = ((aZ.a + aZ.d) / 2.0D);
+        aQ = (aZ.b + bi - br);
+        aR = ((aZ.c + aZ.f) / 2.0D);
 
-        if (aH.a(i1, i2, m, n, i3, i4))
+        bb = ((d3 != paramDouble1) || (d5 != paramDouble3));
+        bc = (d4 != paramDouble2);
+        ba = ((d4 != paramDouble2) && (d4 < 0.0D));
+        bd = ((bb) || (bc));
+        a(paramDouble2, ba);
+
+        if (d3 != paramDouble1)
+            aS = 0.0D;
+        if (d4 != paramDouble2)
+            aT = 0.0D;
+        if (d5 != paramDouble3)
+            aU = 0.0D;
+
+        double d7 = aP - d1;
+        double d8 = aR - d2;
+
+        if ((n()) && !i && aK == null) {
+            bm = (float) (bm + OMathHelper.a(d7 * d7 + d8 * d8) * 0.6D);
+            int i1 = OMathHelper.b(aP);
+            int i2 = OMathHelper.b(aQ - 0.2D - bi);
+            int m = OMathHelper.b(aR);
+            int n = aL.a(i1, i2, m);
+            if ((bm > b) && (n > 0)) {
+                b += 1;
+                OStepSound localOStepSound = OBlock.m[n].by;
+                if (aL.a(i1, i2 + 1, m) == OBlock.aT.bn) {
+                    localOStepSound = OBlock.aT.by;
+                    aL.a(this, localOStepSound.c(), localOStepSound.a() * 0.15F, localOStepSound.b());
+                } else if (!OBlock.m[n].bA.d())
+                    aL.a(this, localOStepSound.c(), localOStepSound.a() * 0.15F, localOStepSound.b());
+                OBlock.m[n].b(aL, i1, i2, m, this);
+            }
+
+        }
+
+        int i1 = OMathHelper.b(aZ.a);
+        int i2 = OMathHelper.b(aZ.b);
+        int m = OMathHelper.b(aZ.c);
+        int n = OMathHelper.b(aZ.d);
+        int i3 = OMathHelper.b(aZ.e);
+        int i4 = OMathHelper.b(aZ.f);
+
+        if (aL.a(i1, i2, m, n, i3, i4))
             for (int i5 = i1; i5 <= n; i5++)
                 for (int i6 = i2; i6 <= i3; i6++)
                     for (int i7 = m; i7 <= i4; i7++) {
-                        int i8 = aH.a(i5, i6, i7);
+                        int i8 = aL.a(i5, i6, i7);
                         if (i8 > 0)
-                            OBlock.m[i8].a(aH, i5, i6, i7, this);
+                            OBlock.m[i8].a(aL, i5, i6, i7, this);
                     }
-        bn *= 0.4F;
 
-        boolean bool = Y();
-        if (aH.d(aV)) {
+        boolean bool = ab();
+        if (aL.d(aZ.e(0.001D, 0.001D, 0.001D))) {
             a(1);
             if (!bool) {
-                bu += 1;
-                if (bu == 0)
-                    bu = 300;
+                by += 1;
+                if (by == 0)
+                    by = 300;
             }
-        } else if (bu <= 0)
-            bu = (-bt);
+        } else if (by <= 0)
+            by = (-bx);
 
-        if ((bool) && (bu > 0)) {
-            aH.a(this, "random.fizz", 0.7F, 1.6F + (br.nextFloat() - br.nextFloat()) * 0.4F);
-            bu = (-bt);
+        if ((bool) && (by > 0)) {
+            aL.a(this, "random.fizz", 0.7F, 1.6F + (bv.nextFloat() - bv.nextFloat()) * 0.4F);
+            by = (-bx);
         }
     }
 
@@ -419,12 +430,12 @@ public abstract class OEntity {
 
     protected void a(double paramDouble, boolean paramBoolean) {
         if (paramBoolean) {
-            if (bj > 0.0F) {
-                a(bj);
-                bj = 0.0F;
+            if (bn > 0.0F) {
+                a(bn);
+                bn = 0.0F;
             }
         } else if (paramDouble < 0.0D)
-            bj = (float) (bj - paramDouble);
+            bn = (float) (bn - paramDouble);
     }
 
     public OAxisAlignedBB e_() {
@@ -432,7 +443,7 @@ public abstract class OEntity {
     }
 
     protected void a(int paramInt) {
-        if (!bz)
+        if (!bD)
             if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE, null, entity, paramInt))
                 a((OEntity) null, paramInt);
 
@@ -441,26 +452,26 @@ public abstract class OEntity {
     protected void a(float paramFloat) {
     }
 
-    public boolean Y() {
-        return bw || aH.q(OMathHelper.b(aL), OMathHelper.b(aM), OMathHelper.b(aN));
+    public boolean ab() {
+        return bA || aL.q(OMathHelper.b(aP), OMathHelper.b(aQ), OMathHelper.b(aR));
     }
 
-    public boolean Z() {
-        return bw;
+    public boolean ac() {
+        return bA;
     }
 
     public boolean f_() {
-        return aH.a(this.aV.b(0.0D, -0.4000000059604645D, 0.0D), OMaterial.f, this);
+        return aL.a(this.aZ.b(0.0D, -0.4000000059604645D, 0.0D).e(0.001D, 0.001D, 0.001D), OMaterial.g, this);
     }
 
     public boolean a(OMaterial paramOMaterial) {
-        double d1 = aM + s();
-        int i = OMathHelper.b(aL);
+        double d1 = aQ + s();
+        int i = OMathHelper.b(aP);
         int j = OMathHelper.d(OMathHelper.b(d1));
-        int k = OMathHelper.b(aN);
-        int m = aH.a(i, j, k);
-        if ((m != 0) && (OBlock.m[m].by == paramOMaterial)) {
-            float f1 = OBlockFluid.c(aH.b(i, j, k)) - 0.1111111F;
+        int k = OMathHelper.b(aR);
+        int m = aL.a(i, j, k);
+        if ((m != 0) && (OBlock.m[m].bA == paramOMaterial)) {
+            float f1 = OBlockFluid.c(aL.b(i, j, k)) - 0.1111111F;
             float f2 = j + 1 - f1;
             return d1 < f2;
         }
@@ -471,8 +482,8 @@ public abstract class OEntity {
         return 0.0F;
     }
 
-    public boolean aa() {
-        return aH.a(aV.b(-0.1D, -0.4D, -0.1D), OMaterial.g);
+    public boolean ad() {
+        return aL.a(aZ.b(-0.1D, -0.4D, -0.1D), OMaterial.h);
     }
 
     public void a(float paramFloat1, float paramFloat2, float paramFloat3) {
@@ -486,75 +497,79 @@ public abstract class OEntity {
         paramFloat1 *= f1;
         paramFloat2 *= f1;
 
-        float f2 = OMathHelper.a(aR * 3.141593F / 180.0F);
-        float f3 = OMathHelper.b(aR * 3.141593F / 180.0F);
+        float f2 = OMathHelper.a(aV * 3.141593F / 180.0F);
+        float f3 = OMathHelper.b(aV * 3.141593F / 180.0F);
 
-        aO += paramFloat1 * f3 - paramFloat2 * f2;
-        aQ += paramFloat2 * f3 + paramFloat1 * f2;
+        aS += paramFloat1 * f3 - paramFloat2 * f2;
+        aU += paramFloat2 * f3 + paramFloat1 * f2;
     }
 
     public float c(float paramFloat) {
-        int i = OMathHelper.b(aL);
+        int i = OMathHelper.b(aP);
 
-        double d1 = (aV.e - aV.b) * 0.66D;
-        int j = OMathHelper.b(aM - be + d1);
-        int k = OMathHelper.b(aN);
-        if (aH.a(OMathHelper.b(aV.a), OMathHelper.b(aV.b), OMathHelper.b(aV.c), OMathHelper.b(aV.d), OMathHelper.b(aV.e), OMathHelper.b(aV.f)))
-            return aH.l(i, j, k);
+        double d1 = (aZ.e - aZ.b) * 0.66D;
+        int j = OMathHelper.b(aQ - bi + d1);
+        int k = OMathHelper.b(aR);
+        if (aL.a(OMathHelper.b(aZ.a), OMathHelper.b(aZ.b), OMathHelper.b(aZ.c), OMathHelper.b(aZ.d), OMathHelper.b(aZ.e), OMathHelper.b(aZ.f)))
+            return aL.m(i, j, k);
         return 0.0F;
     }
 
-    public void b(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
-        aI = (aL = paramDouble1);
-        aJ = (aM = paramDouble2);
-        aK = (aN = paramDouble3);
-        aT = (aR = paramFloat1);
-        aU = (aS = paramFloat2);
-        bn = 0.0F;
+    public void a(OWorld ow) {
+        aL = ow;
+    }
 
-        double d1 = aT - paramFloat1;
+    public void b(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
+        aM = (aP = paramDouble1);
+        aN = (aQ = paramDouble2);
+        aO = (aR = paramDouble3);
+        aX = (aV = paramFloat1);
+        aY = (aW = paramFloat2);
+        br = 0.0F;
+
+        double d1 = aX - paramFloat1;
         if (d1 < -180.0D)
-            aT += 360.0F;
+            aX += 360.0F;
         if (d1 >= 180.0D)
-            aT -= 360.0F;
-        a(aL, aM, aN);
+            aX -= 360.0F;
+        a(aP, aQ, aR);
         c(paramFloat1, paramFloat2);
     }
 
     public void c(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
-        bk = (aI = aL = paramDouble1);
-        bl = (aJ = aM = paramDouble2 + be);
-        bm = (aK = aN = paramDouble3);
-        aR = paramFloat1;
-        aS = paramFloat2;
-        a(aL, aM, aN);
+        bo = (aM = aP = paramDouble1);
+        bp = (aN = aQ = paramDouble2 + bi);
+        bq = (aO = aR = paramDouble3);
+        aV = paramFloat1;
+        aW = paramFloat2;
+        a(aP, aQ, aR);
     }
 
     public float f(OEntity paramOEntity) {
-        float f1 = (float) (aL - paramOEntity.aL);
-        float f2 = (float) (aM - paramOEntity.aM);
-        float f3 = (float) (aN - paramOEntity.aN);
+        float f1 = (float) (aP - paramOEntity.aP);
+        float f2 = (float) (aQ - paramOEntity.aQ);
+        float f3 = (float) (aR - paramOEntity.aR);
         return OMathHelper.c(f1 * f1 + f2 * f2 + f3 * f3);
     }
 
     public double d(double paramDouble1, double paramDouble2, double paramDouble3) {
-        double d1 = aL - paramDouble1;
-        double d2 = aM - paramDouble2;
-        double d3 = aN - paramDouble3;
+        double d1 = aP - paramDouble1;
+        double d2 = aQ - paramDouble2;
+        double d3 = aR - paramDouble3;
         return d1 * d1 + d2 * d2 + d3 * d3;
     }
 
     public double e(double paramDouble1, double paramDouble2, double paramDouble3) {
-        double d1 = aL - paramDouble1;
-        double d2 = aM - paramDouble2;
-        double d3 = aN - paramDouble3;
+        double d1 = aP - paramDouble1;
+        double d2 = aQ - paramDouble2;
+        double d3 = aR - paramDouble3;
         return OMathHelper.a(d1 * d1 + d2 * d2 + d3 * d3);
     }
 
     public double g(OEntity paramOEntity) {
-        double d1 = aL - paramOEntity.aL;
-        double d2 = aM - paramOEntity.aM;
-        double d3 = aN - paramOEntity.aN;
+        double d1 = aP - paramOEntity.aP;
+        double d2 = aQ - paramOEntity.aQ;
+        double d3 = aR - paramOEntity.aR;
         return d1 * d1 + d2 * d2 + d3 * d3;
     }
 
@@ -562,11 +577,11 @@ public abstract class OEntity {
     }
 
     public void h(OEntity paramOEntity) {
-        if ((paramOEntity.aF == this) || (paramOEntity.aG == this))
+        if ((paramOEntity.aJ == this) || (paramOEntity.aK == this))
             return;
 
-        double d1 = paramOEntity.aL - aL;
-        double d2 = paramOEntity.aN - aN;
+        double d1 = paramOEntity.aP - aP;
+        double d2 = paramOEntity.aR - aR;
 
         double d3 = OMathHelper.a(d1, d2);
 
@@ -584,8 +599,8 @@ public abstract class OEntity {
             d1 *= 0.05D;
             d2 *= 0.05D;
 
-            d1 *= (1.0F - bq);
-            d2 *= (1.0F - bq);
+            d1 *= (1.0F - bu);
+            d2 *= (1.0F - bu);
 
             f(-d1, 0.0D, -d2);
             paramOEntity.f(d1, 0.0D, d2);
@@ -593,21 +608,21 @@ public abstract class OEntity {
     }
 
     public void f(double paramDouble1, double paramDouble2, double paramDouble3) {
-        aO += paramDouble1;
-        aP += paramDouble2;
-        aQ += paramDouble3;
+        aS += paramDouble1;
+        aT += paramDouble2;
+        aU += paramDouble3;
     }
 
-    protected void ab() {
-        ba = true;
+    protected void ae() {
+        be = true;
     }
 
     public boolean a(OEntity paramOEntity, int paramInt) {
-        ab();
+        ae();
         return false;
     }
 
-    public boolean o_() {
+    public boolean n_() {
         return false;
     }
 
@@ -619,8 +634,8 @@ public abstract class OEntity {
     }
 
     public boolean c(ONBTTagCompound paramONBTTagCompound) {
-        String str = ac();
-        if ((bd) || (str == null))
+        String str = af();
+        if ((bh) || (str == null))
             return false;
         paramONBTTagCompound.a("id", str);
         d(paramONBTTagCompound);
@@ -628,14 +643,14 @@ public abstract class OEntity {
     }
 
     public void d(ONBTTagCompound paramONBTTagCompound) {
-        paramONBTTagCompound.a("Pos", a(new double[] { aL, aM, aN }));
-        paramONBTTagCompound.a("Motion", a(new double[] { aO, aP, aQ }));
-        paramONBTTagCompound.a("Rotation", a(new float[] { aR, aS }));
+        paramONBTTagCompound.a("Pos", a(new double[]{aP, aQ, aR}));
+        paramONBTTagCompound.a("Motion", a(new double[]{aS, aT, aU}));
+        paramONBTTagCompound.a("Rotation", a(new float[]{aV, aW}));
 
-        paramONBTTagCompound.a("FallDistance", bj);
-        paramONBTTagCompound.a("Fire", (short) bu);
-        paramONBTTagCompound.a("Air", (short) by);
-        paramONBTTagCompound.a("OnGround", aW);
+        paramONBTTagCompound.a("FallDistance", bn);
+        paramONBTTagCompound.a("Fire", (short) by);
+        paramONBTTagCompound.a("Air", (short) bC);
+        paramONBTTagCompound.a("OnGround", ba);
 
         b(paramONBTTagCompound);
     }
@@ -644,37 +659,37 @@ public abstract class OEntity {
         ONBTTagList localONBTTagList1 = paramONBTTagCompound.l("Pos");
         ONBTTagList localONBTTagList2 = paramONBTTagCompound.l("Motion");
         ONBTTagList localONBTTagList3 = paramONBTTagCompound.l("Rotation");
-        a(0.0D, 0.0D, 0.0D);
 
-        aO = ((ONBTTagDouble) localONBTTagList2.a(0)).a;
-        aP = ((ONBTTagDouble) localONBTTagList2.a(1)).a;
-        aQ = ((ONBTTagDouble) localONBTTagList2.a(2)).a;
+        aS = ((ONBTTagDouble) localONBTTagList2.a(0)).a;
+        aT = ((ONBTTagDouble) localONBTTagList2.a(1)).a;
+        aU = ((ONBTTagDouble) localONBTTagList2.a(2)).a;
 
-        if (Math.abs(aO) > 10.0D)
-            aO = 0.0D;
-        if (Math.abs(aP) > 10.0D)
-            aP = 0.0D;
-        if (Math.abs(aQ) > 10.0D)
-            aQ = 0.0D;
+        if (Math.abs(aS) > 10.0D)
+            aS = 0.0D;
+        if (Math.abs(aT) > 10.0D)
+            aT = 0.0D;
+        if (Math.abs(aU) > 10.0D)
+            aU = 0.0D;
 
-        aI = (bk = aL = ((ONBTTagDouble) localONBTTagList1.a(0)).a);
-        aJ = (bl = aM = ((ONBTTagDouble) localONBTTagList1.a(1)).a);
-        aK = (bm = aN = ((ONBTTagDouble) localONBTTagList1.a(2)).a);
+        aM = (bo = aP = ((ONBTTagDouble) localONBTTagList1.a(0)).a);
+        aN = (bp = aQ = ((ONBTTagDouble) localONBTTagList1.a(1)).a);
+        aO = (bq = aR = ((ONBTTagDouble) localONBTTagList1.a(2)).a);
 
-        aT = (aR = ((ONBTTagFloat) localONBTTagList3.a(0)).a % 6.283186F);
-        aU = (aS = ((ONBTTagFloat) localONBTTagList3.a(1)).a % 6.283186F);
+        aX = (aV = ((ONBTTagFloat) localONBTTagList3.a(0)).a % 6.283186F);
+        aY = (aW = ((ONBTTagFloat) localONBTTagList3.a(1)).a % 6.283186F);
 
-        bj = paramONBTTagCompound.g("FallDistance");
-        bu = paramONBTTagCompound.d("Fire");
-        by = paramONBTTagCompound.d("Air");
-        aW = paramONBTTagCompound.m("OnGround");
+        bn = paramONBTTagCompound.g("FallDistance");
+        by = paramONBTTagCompound.d("Fire");
+        bC = paramONBTTagCompound.d("Air");
+        ba = paramONBTTagCompound.m("OnGround");
 
-        a(aL, aM, aN);
+        a(aP, aQ, aR);
+        c(aV, aW);
 
         a(paramONBTTagCompound);
     }
 
-    protected final String ac() {
+    protected final String af() {
         return OEntityList.b(this);
     }
 
@@ -705,21 +720,29 @@ public abstract class OEntity {
     }
 
     public OEntityItem a(OItemStack paramOItemStack, float paramFloat) {
-        OEntityItem localOEntityItem = new OEntityItem(aH, aL, aM + paramFloat, aN, paramOItemStack);
+        OEntityItem localOEntityItem = new OEntityItem(aL, aP, aQ + paramFloat, aR, paramOItemStack);
         localOEntityItem.c = 10;
-        aH.b(localOEntityItem);
+        aL.b(localOEntityItem);
         return localOEntityItem;
     }
 
-    public boolean P() {
-        return !bd;
+    public boolean S() {
+        return !bh;
     }
 
-    public boolean H() {
-        int i = OMathHelper.b(aL);
-        int j = OMathHelper.b(aM + s());
-        int k = OMathHelper.b(aN);
-        return aH.d(i, j, k);
+    public boolean J() {
+        for (int var1 = 0; var1 < 8; ++var1) {
+            float var2 = ((float) ((var1 >> 0) % 2) - 0.5F) * this.bj * 0.9F;
+            float var3 = ((float) ((var1 >> 1) % 2) - 0.5F) * 0.1F;
+            float var4 = ((float) ((var1 >> 2) % 2) - 0.5F) * this.bj * 0.9F;
+            int var5 = OMathHelper.b(this.aP + (double) var2);
+            int var6 = OMathHelper.b(this.aQ + (double) this.s() + (double) var3);
+            int var7 = OMathHelper.b(this.aR + (double) var4);
+            if (this.aL.d(var5, var6, var7))
+                return true;
+        }
+
+        return false;
     }
 
     public boolean a(OEntityPlayer paramOEntityPlayer) {
@@ -730,19 +753,22 @@ public abstract class OEntity {
         return null;
     }
 
-    public void B() {
-        if (aG.bd) {
-            aG = null;
+    public void D() {
+        if (aK.bh) {
+            aK = null;
             return;
         }
-        aO = 0.0D;
-        aP = 0.0D;
-        aQ = 0.0D;
-        p_();
-        aG.f();
+        aS = 0.0D;
+        aT = 0.0D;
+        aU = 0.0D;
+        o_();
 
-        e += aG.aR - aG.aT;
-        d += aG.aS - aG.aU;
+        if (aK == null)
+            return;
+        aK.f();
+
+        e += aK.aV - aK.aX;
+        d += aK.aW - aK.aY;
 
         while (e >= 180.0D)
             e -= 360.0D;
@@ -768,20 +794,20 @@ public abstract class OEntity {
         e -= d1;
         d -= d2;
 
-        aR = (float) (aR + d1);
-        aS = (float) (aS + d2);
+        aV = (float) (aV + d1);
+        aW = (float) (aW + d2);
     }
 
     public void f() {
-        aF.a(aL, aM + m() + aF.F(), aN);
+        aJ.a(aP, aQ + m() + aJ.H(), aR);
     }
 
-    public double F() {
-        return be;
+    public double H() {
+        return bi;
     }
 
     public double m() {
-        return bg * 0.75D;
+        return bk * 0.75D;
     }
 
     public void b(OEntity paramOEntity) {
@@ -789,39 +815,39 @@ public abstract class OEntity {
         e = 0.0D;
 
         if (paramOEntity == null) {
-            if (aG != null) {
-                c(aG.aL, aG.aV.b + aG.bg, aG.aN, aR, aS);
-                aG.aF = null;
+            if (aK != null) {
+                c(aK.aP, aK.aZ.b + aK.bk, aK.aR, aV, aW);
+                aK.aJ = null;
             }
-            aG = null;
+            aK = null;
             return;
         }
-        if (aG == paramOEntity) {
-            aG.aF = null;
-            aG = null;
-            c(paramOEntity.aL, paramOEntity.aV.b + paramOEntity.bg, paramOEntity.aN, aR, aS);
+        if (aK == paramOEntity) {
+            aK.aJ = null;
+            aK = null;
+            c(paramOEntity.aP, paramOEntity.aZ.b + paramOEntity.bk, paramOEntity.aR, aV, aW);
             return;
         }
-        if (aG != null)
-            aG.aF = null;
-        if (paramOEntity.aF != null)
-            paramOEntity.aF.aG = null;
-        aG = paramOEntity;
-        paramOEntity.aF = this;
+        if (aK != null)
+            aK.aJ = null;
+        if (paramOEntity.aJ != null)
+            paramOEntity.aJ.aK = null;
+        aK = paramOEntity;
+        paramOEntity.aJ = this;
     }
 
-    public OVec3D V() {
+    public OVec3D Y() {
         return null;
     }
 
-    public void ad() {
+    public void O() {
     }
 
     public OItemStack[] i_() {
         return null;
     }
 
-    public boolean ae() {
+    public boolean ag() {
         return d(1);
     }
 
@@ -830,27 +856,95 @@ public abstract class OEntity {
     }
 
     protected boolean d(int paramInt) {
-        return (bA.a(0) & 1 << paramInt) != 0;
+        return (bE.a(0) & 1 << paramInt) != 0;
     }
 
     protected void a(int paramInt, boolean paramBoolean) {
-        int i = bA.a(0);
+        int i = bE.a(0);
         if (paramBoolean)
-            bA.b(0, Byte.valueOf((byte) (i | 1 << paramInt)));
+            bE.b(0, Byte.valueOf((byte) (i | 1 << paramInt)));
         else
-            bA.b(0, Byte.valueOf((byte) (i & ~(1 << paramInt))));
+            bE.b(0, Byte.valueOf((byte) (i & ~(1 << paramInt))));
     }
 
     public void a(OEntityLightningBolt var1) {
         if ((Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.LIGHTNING, null, entity, 5))
             return;
         this.a(5);
-        ++this.bu;
-        if (this.bu == 0)
-            this.bu = 300;
+        ++this.by;
+        if (this.by == 0)
+            this.by = 300;
     }
 
     public void a(OEntityLiving var1) {
     }
 
+    protected boolean g(double var1, double var3, double var5) {
+        int var7 = OMathHelper.b(var1);
+        int var8 = OMathHelper.b(var3);
+        int var9 = OMathHelper.b(var5);
+        double var10 = var1 - (double) var7;
+        double var12 = var3 - (double) var8;
+        double var14 = var5 - (double) var9;
+        if (this.aL.d(var7, var8, var9)) {
+            boolean var16 = !this.aL.d(var7 - 1, var8, var9);
+            boolean var17 = !this.aL.d(var7 + 1, var8, var9);
+            boolean var18 = !this.aL.d(var7, var8 - 1, var9);
+            boolean var19 = !this.aL.d(var7, var8 + 1, var9);
+            boolean var20 = !this.aL.d(var7, var8, var9 - 1);
+            boolean var21 = !this.aL.d(var7, var8, var9 + 1);
+            byte var22 = -1;
+            double var23 = 9999.0D;
+            if (var16 && var10 < var23) {
+                var23 = var10;
+                var22 = 0;
+            }
+
+            if (var17 && 1.0D - var10 < var23) {
+                var23 = 1.0D - var10;
+                var22 = 1;
+            }
+
+            if (var18 && var12 < var23) {
+                var23 = var12;
+                var22 = 2;
+            }
+
+            if (var19 && 1.0D - var12 < var23) {
+                var23 = 1.0D - var12;
+                var22 = 3;
+            }
+
+            if (var20 && var14 < var23) {
+                var23 = var14;
+                var22 = 4;
+            }
+
+            if (var21 && 1.0D - var14 < var23) {
+                var23 = 1.0D - var14;
+                var22 = 5;
+            }
+
+            float var25 = this.bv.nextFloat() * 0.2F + 0.1F;
+            if (var22 == 0)
+                this.aS = (double) (-var25);
+
+            if (var22 == 1)
+                this.aS = (double) var25;
+
+            if (var22 == 2)
+                this.aT = (double) (-var25);
+
+            if (var22 == 3)
+                this.aT = (double) var25;
+
+            if (var22 == 4)
+                this.aU = (double) (-var25);
+
+            if (var22 == 5)
+                this.aU = (double) var25;
+        }
+
+        return false;
+    }
 }

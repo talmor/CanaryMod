@@ -63,6 +63,7 @@ public class OTileEntity {
     static {
         a(OTileEntityFurnace.class, "Furnace");
         a(OTileEntityChest.class, "Chest");
+        a(OTileEntityRecordPlayer.class, "RecordPlayer");
         a(OTileEntityDispenser.class, "Trap");
         a(OTileEntitySign.class, "Sign");
         a(OTileEntityMobSpawner.class, "MobSpawner");

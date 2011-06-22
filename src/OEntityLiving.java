@@ -1,77 +1,77 @@
 import java.util.List;
 
 public abstract class OEntityLiving extends OEntity {
-    public int        D  = 20;
-    public float      E;
-    public float      F;
-    public float      G  = 0.0F;
-    public float      H  = 0.0F;
-    protected float   I;
-    protected float   J;
-    protected float   K;
-    protected float   L;
-    protected boolean M  = true;
-    protected String  N  = "/mob/char.png";
-    protected boolean O  = true;
-    protected float   P  = 0.0F;
-    protected String  Q  = null;
-    protected float   R  = 1.0F;
-    protected int     S  = 0;
+    public int        H  = 20;
+    public float      I;
+    public float      J;
+    public float      K  = 0.0F;
+    public float      L  = 0.0F;
+    protected float   M;
+    protected float   N;
+    protected float   O;
+    protected float   P;
+    protected boolean Q  = true;
+    protected String  R  = "/mob/char.png";
+    protected boolean S  = true;
     protected float   T  = 0.0F;
-    public boolean    U  = false;
-    public float      V;
-    public float      W;
-    public int        X;
-    public int        Y;
+    protected String  U  = null;
+    protected float   V  = 1.0F;
+    protected int     W  = 0;
+    protected float   X  = 0.0F;
+    public boolean    Y  = false;
+    public float      Z;
+    public float      aa;
+    public int        ab;
+    public int        ac;
     private int       a;
-    public int        Z;
-    public int        aa;
-    public float      ab = 0.0F;
-    public int        ac = 0;
-    public int        ad = 0;
-    public float      ae;
-    public float      af;
-    protected boolean ag = false;
-    public int        ah = -1;
-    public float      ai = (float) (Math.random() * 0.8999999761581421D + 0.1000000014901161D);
+    public int        ad;
+    public int        ae;
+    public float      af = 0.0F;
+    public int        ag = 0;
+    public int        ah = 0;
+    public float      ai;
     public float      aj;
-    public float      ak;
-    public float      al;
-    protected int     am;
-    protected double  an;
-    protected double  ao;
-    protected double  ap;
-    protected double  aq;
+    protected boolean ak = false;
+    public int        al = -1;
+    public float      am = (float) (Math.random() * 0.8999999761581421D + 0.1000000014901161D);
+    public float      an;
+    public float      ao;
+    public float      ap;
+    protected int     aq;
     protected double  ar;
-    float             as = 0.0F;
+    protected double  as;
+    protected double  at;
+    protected double  au;
+    protected double  av;
+    float             aw = 0.0F;
 
-    protected int     at = 0;
+    protected int     ax = 0;
 
-    protected int     au = 0;
-    protected float   av;
-    protected float   aw;
-    protected float   ax;
-    protected boolean ay = false;
-    protected float   az = 0.0F;
-    protected float   aA = 0.7F;
+    protected int     ay = 0;
+    protected float   az;
+    protected float   aA;
+    protected float   aB;
+    protected boolean aC = false;
+    protected float   aD = 0.0F;
+    protected float   aE = 0.7F;
     private OEntity   b;
     // CanaryMod Start
     LivingEntity      entity = new LivingEntity(this);
 
     // CanaryMod end
-    protected int     aB = 0;
+    protected int     aF = 0;
 
     public OEntityLiving(OWorld paramOWorld) {
         super(paramOWorld);
-        X = 10;
-        aE = true;
+        ab = 10;
+        aI = true;
 
-        F = ((float) (Math.random() + 1.0D) * 0.01F);
-        a(aL, aM, aN);
-        E = ((float) Math.random() * 12398.0F);
-        aR = (float) (Math.random() * 3.141592741012573D * 2.0D);
+        J = ((float) (Math.random() + 1.0D) * 0.01F);
+        a(aP, aQ, aR);
+        I = ((float) Math.random() * 12398.0F);
+        aV = (float) (Math.random() * 3.141592741012573D * 2.0D);
 
-        bo = 0.5F;
+        bs = 0.5F;
     }
 
     @Override
@@ -79,62 +79,62 @@ public abstract class OEntityLiving extends OEntity {
     }
 
     public boolean e(OEntity paramOEntity) {
-        return aH.a(OVec3D.b(aL, aM + s(), aN), OVec3D.b(paramOEntity.aL, paramOEntity.aM + paramOEntity.s(), paramOEntity.aN)) == null;
+        return aL.a(OVec3D.b(aP, aQ + s(), aR), OVec3D.b(paramOEntity.aP, paramOEntity.aQ + paramOEntity.s(), paramOEntity.aR)) == null;
     }
 
     @Override
-    public boolean o_() {
-        return !bd;
+    public boolean n_() {
+        return !bh;
     }
 
     @Override
     public boolean d_() {
-        return !bd;
+        return !bh;
     }
 
     @Override
     public float s() {
-        return bg * 0.85F;
+        return bk * 0.85F;
     }
 
     public int e() {
         return 80;
     }
 
-    public void M() {
+    public void P() {
         String str = g();
         if (str != null)
-            aH.a(this, str, k(), (br.nextFloat() - br.nextFloat()) * 0.2F + 1.0F);
+            aL.a(this, str, k(), (bv.nextFloat() - bv.nextFloat()) * 0.2F + 1.0F);
     }
 
     @Override
-    public void N() {
-        V = W;
-        super.N();
+    public void Q() {
+        Z = aa;
+        super.Q();
 
-        if (br.nextInt(1000) < a++) {
+        if (bv.nextInt(1000) < a++) {
             a = (-e());
-            M();
+            P();
         }
 
-        if ((P()) && (H()))
+        if ((S()) && (J()))
             // CanaryMod Damage hook: Suffocation
             if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.SUFFOCATION, null, entity, 1))
                 a((OEntity) null, 1);
 
 
-        if ((bz) || (aH.v))
-            bu = 0;
+        if ((bD) || (aL.B))
+            by = 0;
         int i;
-        if ((P()) && (a(OMaterial.f)) && (!b_())) {
-            by -= 1;
-            if (by == -20) {
-                by = 0;
+        if ((S()) && (a(OMaterial.g)) && (!b_())) {
+            bC -= 1;
+            if (bC == -20) {
+                bC = 0;
                 for (i = 0; i < 8; i++) {
-                    float f1 = br.nextFloat() - br.nextFloat();
-                    float f2 = br.nextFloat() - br.nextFloat();
-                    float f3 = br.nextFloat() - br.nextFloat();
-                    aH.a("bubble", aL + f1, aM + f2, aN + f3, aO, aP, aQ);
+                    float f1 = bv.nextFloat() - bv.nextFloat();
+                    float f2 = bv.nextFloat() - bv.nextFloat();
+                    float f3 = bv.nextFloat() - bv.nextFloat();
+                    aL.a("bubble", aP + f1, aQ + f2, aR + f3, aS, aT, aU);
                 }
                 // CanaryMod Damage hook: Drowning
                 if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.WATER, null, entity, 2))
@@ -142,91 +142,91 @@ public abstract class OEntityLiving extends OEntity {
 
             }
 
-            bu = 0;
+            by = 0;
         } else
-            by = bv;
+            bC = bz;
 
-        ae = af;
+        ai = aj;
 
+        if (ah > 0)
+            ah -= 1;
         if (ad > 0)
             ad -= 1;
-        if (Z > 0)
-            Z -= 1;
-        if (bx > 0)
-            bx -= 1;
-        if (X <= 0) {
-            ac += 1;
-            if (ac > 20) {
-                T();
-                G();
+        if (bB > 0)
+            bB -= 1;
+        if (ab <= 0) {
+            ag += 1;
+            if (ag > 20) {
+                W();
+                I();
                 for (i = 0; i < 20; i++) {
-                    double d1 = br.nextGaussian() * 0.02D;
-                    double d2 = br.nextGaussian() * 0.02D;
-                    double d3 = br.nextGaussian() * 0.02D;
-                    aH.a("explode", aL + br.nextFloat() * bf * 2.0F - bf, aM + br.nextFloat() * bg, aN + br.nextFloat() * bf * 2.0F - bf, d1, d2, d3);
+                    double d1 = bv.nextGaussian() * 0.02D;
+                    double d2 = bv.nextGaussian() * 0.02D;
+                    double d3 = bv.nextGaussian() * 0.02D;
+                    aL.a("explode", aP + bv.nextFloat() * bj * 2.0F - bj, aQ + bv.nextFloat() * bk, aR + bv.nextFloat() * bj * 2.0F - bj, d1, d2, d3);
                 }
             }
         }
 
+        P = O;
         L = K;
 
-        H = G;
-        aT = aR;
-        aU = aS;
+        aX = aV;
+        aY = aW;
     }
 
-    public void O() {
+    public void R() {
         for (int i = 0; i < 20; i++) {
-            double d1 = br.nextGaussian() * 0.02D;
-            double d2 = br.nextGaussian() * 0.02D;
-            double d3 = br.nextGaussian() * 0.02D;
+            double d1 = bv.nextGaussian() * 0.02D;
+            double d2 = bv.nextGaussian() * 0.02D;
+            double d3 = bv.nextGaussian() * 0.02D;
             double d4 = 10.0D;
-            aH.a("explode", aL + br.nextFloat() * bf * 2.0F - bf - d1 * d4, aM + br.nextFloat() * bg - d2 * d4, aN + br.nextFloat() * bf * 2.0F - bf - d3 * d4, d1, d2, d3);
+            aL.a("explode", aP + bv.nextFloat() * bj * 2.0F - bj - d1 * d4, aQ + bv.nextFloat() * bk - d2 * d4, aR + bv.nextFloat() * bj * 2.0F - bj - d3 * d4, d1, d2, d3);
         }
     }
 
     @Override
-    public void B() {
-        super.B();
-        I = J;
-        J = 0.0F;
+    public void D() {
+        super.D();
+        M = N;
+        N = 0.0F;
     }
 
     @Override
-    public void p_() {
-        super.p_();
+    public void o_() {
+        super.o_();
 
         u();
 
-        double d1 = aL - aI;
-        double d2 = aN - aK;
+        double d1 = aP - aM;
+        double d2 = aR - aO;
 
         float f1 = OMathHelper.a(d1 * d1 + d2 * d2);
 
-        float f2 = G;
+        float f2 = K;
 
         float f3 = 0.0F;
-        I = J;
+        M = N;
         float f4 = 0.0F;
         if (f1 > 0.05F) {
             f4 = 1.0F;
             f3 = f1 * 3.0F;
             f2 = (float) Math.atan2(d2, d1) * 180.0F / 3.141593F - 90.0F;
         }
-        if (W > 0.0F)
-            f2 = aR;
-        if (!aW)
+        if (aa > 0.0F)
+            f2 = aV;
+        if (!ba)
             f4 = 0.0F;
-        J += (f4 - J) * 0.3F;
+        N += (f4 - N) * 0.3F;
 
-        float f5 = f2 - G;
+        float f5 = f2 - K;
         while (f5 < -180.0F)
             f5 += 360.0F;
         while (f5 >= 180.0F)
             f5 -= 360.0F;
-        G += f5 * 0.3F;
+        K += f5 * 0.3F;
 
-        float f6 = aR - G;
+        float f6 = aV - K;
         while (f6 < -180.0F)
             f6 += 360.0F;
         while (f6 >= 180.0F)
@@ -236,25 +236,25 @@ public abstract class OEntityLiving extends OEntity {
             f6 = -75.0F;
         if (f6 >= 75.0F)
             f6 = 75.0F;
-        G = (aR - f6);
+        K = (aV - f6);
         if (f6 * f6 > 2500.0F)
-            G += f6 * 0.2F;
+            K += f6 * 0.2F;
 
         if (i != 0)
             f3 *= -1.0F;
-        while (aR - aT < -180.0F)
-            aT -= 360.0F;
-        while (aR - aT >= 180.0F)
-            aT += 360.0F;
-        while (G - H < -180.0F)
-            H -= 360.0F;
-        while (G - H >= 180.0F)
-            H += 360.0F;
-        while (aS - aU < -180.0F)
-            aU -= 360.0F;
-        while (aS - aU >= 180.0F)
-            aU += 360.0F;
-        K += f3;
+        while (aV - aX < -180.0F)
+            aX -= 360.0F;
+        while (aV - aX >= 180.0F)
+            aX += 360.0F;
+        while (K - L < -180.0F)
+            L -= 360.0F;
+        while (K - L >= 180.0F)
+            L += 360.0F;
+        while (aW - aY < -180.0F)
+            aY -= 360.0F;
+        while (aW - aY >= 180.0F)
+            aY += 360.0F;
+        O += f3;
     }
 
     @Override
@@ -263,23 +263,23 @@ public abstract class OEntityLiving extends OEntity {
     }
 
     public void b(int paramInt) {
-        if (X <= 0)
+        if (ab <= 0)
             return;
-        X += paramInt;
-        if (X > 20)
-            X = 20;
-        bx = (D / 2);
+        ab += paramInt;
+        if (ab > 20)
+            ab = 20;
+        bB = (H / 2);
     }
 
     @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
-        if (aH.v)
+        if (aL.B)
             return false;
-        au = 0;
-        if (X <= 0)
+        ay = 0;
+        if (ab <= 0)
             return false;
 
-        ak = 1.5F;
+        ao = 1.5F;
 
         // CanaryMod damage entities.
         LivingEntity attacker = (paramOEntity != null && paramOEntity instanceof OEntityLiving) ? new LivingEntity((OEntityLiving) paramOEntity) : null;
@@ -290,59 +290,59 @@ public abstract class OEntityLiving extends OEntity {
 
 
         int i = 1;
-        if (bx > D / 2.0F) {
-            if (paramInt <= at)
+        if (bB > H / 2.0F) {
+            if (paramInt <= ax)
                 return false;
             // CanaryMod: partial damage
-            if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, entity, paramInt - at))
+            if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, entity, paramInt - ax))
                     return false;
 
-            c(paramInt - at);
-            at = paramInt;
+            c(paramInt - ax);
+            ax = paramInt;
             i = 0;
         } else {
             // CanaryMod: full damage
             if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, entity, paramInt))
                 return false;
 
-            at = paramInt;
-            Y = X;
-            bx = D;
+            ax = paramInt;
+            ac = ab;
+            bB = H;
             c(paramInt);
-            Z = (aa = 10);
+            ad = (ae = 10);
         }
 
-        ab = 0.0F;
+        af = 0.0F;
 
         if (i != 0) {
             // CanaryMod: forced cast to send 'damage animation'.
-            aH.a(this, (byte)2);
-            ab();
+            aL.a(this, (byte)2);
+            ae();
             if (paramOEntity != null) {
-                double d1 = paramOEntity.aL - aL;
-                double d2 = paramOEntity.aN - aN;
+                double d1 = paramOEntity.aP - aP;
+                double d2 = paramOEntity.aR - aR;
                 while (d1 * d1 + d2 * d2 < 0.0001D) {
                     d1 = (Math.random() - Math.random()) * 0.01D;
                     d2 = (Math.random() - Math.random()) * 0.01D;
                 }
-                ab = ((float) (Math.atan2(d2, d1) * 180.0D / 3.141592741012573D) - aR);
+                af = ((float) (Math.atan2(d2, d1) * 180.0D / 3.141592741012573D) - aV);
                 a(paramOEntity, paramInt, d1, d2);
             } else
-                ab = ((int) (Math.random() * 2.0D) * 180);
+                af = ((int) (Math.random() * 2.0D) * 180);
         }
 
-        if (X <= 0) {
+        if (ab <= 0) {
             if (i != 0)
-                aH.a(this, i(), k(), (br.nextFloat() - br.nextFloat()) * 0.2F + 1.0F);
+                aL.a(this, i(), k(), (bv.nextFloat() - bv.nextFloat()) * 0.2F + 1.0F);
             a(paramOEntity);
         } else if (i != 0)
-            aH.a(this, h(), k(), (br.nextFloat() - br.nextFloat()) * 0.2F + 1.0F);
+            aL.a(this, h(), k(), (bv.nextFloat() - bv.nextFloat()) * 0.2F + 1.0F);
 
         return true;
     }
 
     protected void c(int paramInt) {
-        X -= paramInt;
+        ab -= paramInt;
     }
 
     protected float k() {
@@ -365,37 +365,37 @@ public abstract class OEntityLiving extends OEntity {
         float f1 = OMathHelper.a(paramDouble1 * paramDouble1 + paramDouble2 * paramDouble2);
         float f2 = 0.4F;
 
-        aO /= 2.0D;
-        aP /= 2.0D;
-        aQ /= 2.0D;
+        aS /= 2.0D;
+        aT /= 2.0D;
+        aU /= 2.0D;
 
-        aO -= paramDouble1 / f1 * f2;
-        aP += 0.4D;
-        aQ -= paramDouble2 / f1 * f2;
+        aS -= paramDouble1 / f1 * f2;
+        aT += 0.4D;
+        aU -= paramDouble2 / f1 * f2;
 
-        if (aP > 0.4D)
-            aP = 0.4D;
+        if (aT > 0.4D)
+            aT = 0.4D;
     }
 
     public void a(OEntity paramOEntity) {
-        if ((S >= 0) && (paramOEntity != null))
-            paramOEntity.c(this, S);
+        if ((W >= 0) && (paramOEntity != null))
+            paramOEntity.c(this, W);
 
         if (paramOEntity != null)
             paramOEntity.a(this);
 
-        ag = true;
+        ak = true;
 
-        if (!aH.v)
+        if (!aL.B)
             r();
         // CanaryMod: Forced cast to play Death Animations.
-        aH.a(this, (byte)3);
+        aL.a(this, (byte)3);
     }
 
     protected void r() {
         int i = j();
         if (i > 0) {
-            int j = br.nextInt(3);
+            int j = bv.nextInt(3);
             for (int k = 0; k < j; k++)
                 b(i, 1);
         }
@@ -407,6 +407,7 @@ public abstract class OEntityLiving extends OEntity {
 
     @Override
     protected void a(float paramFloat) {
+        super.a(paramFloat);
         int i = (int) Math.ceil(paramFloat - 3.0F);
         if (i > 0) {
             // CanaryMod Damage hook: Falling
@@ -414,115 +415,127 @@ public abstract class OEntityLiving extends OEntity {
                 a((OEntity) null, i);
 
 
-            int j = aH.a(OMathHelper.b(aL), OMathHelper.b(aK - 0.2D - be), OMathHelper.b(aN));
+            int j = aL.a(OMathHelper.b(aP), OMathHelper.b(aQ - 0.2D - bi), OMathHelper.b(aR));
             if (j > 0) {
-                OStepSound localOStepSound = OBlock.m[j].bw;
-                aH.a(this, localOStepSound.c(), localOStepSound.a() * 0.5F, localOStepSound.b() * 0.75F);
+                OStepSound localOStepSound = OBlock.m[j].by;
+                aL.a(this, localOStepSound.c(), localOStepSound.a() * 0.5F, localOStepSound.b() * 0.75F);
             }
         }
     }
 
     public void a(float paramFloat1, float paramFloat2) {
-        if (Z()) {
-            double d1 = aM;
+        if (ac()) {
+            double d1 = aQ;
             a(paramFloat1, paramFloat2, 0.02F);
-            c(aO, aP, aQ);
+            c(aS, aT, aU);
 
-            aO *= 0.8D;
-            aP *= 0.8D;
-            aQ *= 0.8D;
-            aP -= 0.02D;
+            aS *= 0.8D;
+            aT *= 0.8D;
+            aU *= 0.8D;
+            aT -= 0.02D;
 
-            if ((aX) && (b(aO, aP + 0.6D - aM + d1, aQ)))
-                aP = 0.3D;
-        } else if (aa()) {
-            double d1 = aM;
+            if ((bb) && (b(aS, aT + 0.6D - aQ + d1, aU)))
+                aT = 0.3D;
+        } else if (ad()) {
+            double d1 = aQ;
             a(paramFloat1, paramFloat2, 0.02F);
-            c(aO, aP, aQ);
-            aO *= 0.5D;
-            aP *= 0.5D;
-            aQ *= 0.5D;
-            aP -= 0.02D;
+            c(aS, aT, aU);
+            aS *= 0.5D;
+            aT *= 0.5D;
+            aU *= 0.5D;
+            aT -= 0.02D;
 
-            if ((aX) && (b(aO, aP + 0.6000000238418579D - aM + d1, aQ)))
-                aP = 0.300000011920929D;
+            if ((bb) && (b(aS, aT + 0.6000000238418579D - aQ + d1, aU)))
+                aT = 0.300000011920929D;
         } else {
             float f1 = 0.91F;
-            if (aW) {
+            if (ba) {
                 f1 = 0.546F;
-                int i = aH.a(OMathHelper.b(aL), OMathHelper.b(aV.b) - 1, OMathHelper.b(aN));
+                int i = aL.a(OMathHelper.b(aP), OMathHelper.b(aZ.b) - 1, OMathHelper.b(aR));
                 if (i > 0)
-                    f1 = OBlock.m[i].bz * 0.91F;
+                    f1 = OBlock.m[i].bB * 0.91F;
             }
 
             float f2 = 0.1627714F / (f1 * f1 * f1);
-            a(paramFloat1, paramFloat2, aW ? 0.1F * f2 : 0.02F);
+            a(paramFloat1, paramFloat2, ba ? 0.1F * f2 : 0.02F);
 
             f1 = 0.91F;
-            if (aW) {
+            if (ba) {
                 f1 = 0.546F;
-                int j = aH.a(OMathHelper.b(aL), OMathHelper.b(aV.b) - 1, OMathHelper.b(aN));
+                int j = aL.a(OMathHelper.b(aP), OMathHelper.b(aZ.b) - 1, OMathHelper.b(aR));
                 if (j > 0)
-                    f1 = OBlock.m[j].bz * 0.91F;
+                    f1 = OBlock.m[j].bB * 0.91F;
             }
 
             if (p()) {
-                bj = 0.0F;
-                if (aP < -0.15D)
-                    aP = -0.15D;
-                if ((ae()) && (aP < 0.0D))
-                    aP = 0.0D;
+                float var12 = 0.15F;
+                if (this.aS < (double) (-var12))
+                    this.aS = (double) (-var12);
+
+                if (this.aS > (double) var12)
+                    this.aS = (double) var12;
+
+                if (this.aU < (double) (-var12))
+                    this.aU = (double) (-var12);
+                if (this.aU > (double) var12)
+                    this.aU = (double) var12;
+
+                bn = 0.0F;
+                if (aT < -0.15D)
+                    aT = -0.15D;
+                if ((ag()) && (aT < 0.0D))
+                    aT = 0.0D;
 
             }
 
-            c(aO, aP, aQ);
+            c(aS, aT, aU);
 
-            if ((aX) && (p()))
-                aP = 0.2D;
+            if ((bb) && (p()))
+                aT = 0.2D;
 
-            aP -= 0.08D;
-            aP *= 0.98D;
-            aO *= f1;
-            aQ *= f1;
+            aT -= 0.08D;
+            aT *= 0.98D;
+            aS *= f1;
+            aU *= f1;
         }
-        aj = ak;
-        double d1 = aL - aI;
-        double d2 = aN - aK;
+        an = ao;
+        double d1 = aP - aM;
+        double d2 = aR - aO;
         float f3 = OMathHelper.a(d1 * d1 + d2 * d2) * 4.0F;
         if (f3 > 1.0F)
             f3 = 1.0F;
-        ak += (f3 - ak) * 0.4F;
-        al += ak;
+        ao += (f3 - ao) * 0.4F;
+        ap += ao;
     }
 
     public boolean p() {
-        int i = OMathHelper.b(aL);
-        int j = OMathHelper.b(aV.b);
-        int k = OMathHelper.b(aN);
-        return aH.a(i, j, k) == OBlock.aF.bl;
+        int i = OMathHelper.b(aP);
+        int j = OMathHelper.b(aZ.b);
+        int k = OMathHelper.b(aR);
+        return aL.a(i, j, k) == OBlock.aG.bn;
     }
 
     @Override
     public void b(ONBTTagCompound paramONBTTagCompound) {
-        paramONBTTagCompound.a("Health", (short) X);
-        paramONBTTagCompound.a("HurtTime", (short) Z);
-        paramONBTTagCompound.a("DeathTime", (short) ac);
-        paramONBTTagCompound.a("AttackTime", (short) ad);
+        paramONBTTagCompound.a("Health", (short) ab);
+        paramONBTTagCompound.a("HurtTime", (short) ad);
+        paramONBTTagCompound.a("DeathTime", (short) ag);
+        paramONBTTagCompound.a("AttackTime", (short) ah);
     }
 
     @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
-        X = paramONBTTagCompound.d("Health");
+        ab = paramONBTTagCompound.d("Health");
         if (!paramONBTTagCompound.b("Health"))
-            X = 10;
-        Z = paramONBTTagCompound.d("HurtTime");
-        ac = paramONBTTagCompound.d("DeathTime");
-        ad = paramONBTTagCompound.d("AttackTime");
+            ab = 10;
+        ad = paramONBTTagCompound.d("HurtTime");
+        ag = paramONBTTagCompound.d("DeathTime");
+        ah = paramONBTTagCompound.d("AttackTime");
     }
 
     @Override
-    public boolean P() {
-        return (!bd) && (X > 0);
+    public boolean S() {
+        return (!bh) && (ab > 0);
     }
 
     public boolean b_() {
@@ -530,49 +543,64 @@ public abstract class OEntityLiving extends OEntity {
     }
 
     public void u() {
-        if (am > 0) {
-            double d1 = aL + (an - aL) / am;
-            double d2 = aM + (ao - aM) / am;
-            double d3 = aN + (ap - aN) / am;
+        if (aq > 0) {
+            double d1 = aP + (ar - aP) / aq;
+            double d2 = aQ + (as - aQ) / aq;
+            double d3 = aR + (at - aR) / aq;
 
-            double d4 = aq - aR;
+            double d4 = au - aV;
             while (d4 < -180.0D)
                 d4 += 360.0D;
             while (d4 >= 180.0D)
                 d4 -= 360.0D;
-            aR = (float) (aR + d4 / am);
-            aS = (float) (aS + (ar - aS) / am);
+            aV = (float) (aV + d4 / aq);
+            aW = (float) (aW + (av - aW) / aq);
 
-            am -= 1;
+            aq -= 1;
             a(d1, d2, d3);
-            c(aR, aS);
+            c(aV, aW);
+
+            List var9 = this.aL.a((OEntity) this, this.aZ.e(0.03125D, 0.0D, 0.03125D));
+            if (var9.size() > 0) {
+                double var10 = 0.0D;
+
+                for (int var12 = 0; var12 < var9.size(); ++var12) {
+                    OAxisAlignedBB var13 = (OAxisAlignedBB) var9.get(var12);
+                    if (var13.e > var10)
+                        var10 = var13.e;
+                }
+
+                d2 += var10 - this.aZ.b;
+                this.a(d1, d2, d3);
+            }
+
         }
 
-        if (A()) {
-            ay = false;
-            av = 0.0F;
-            aw = 0.0F;
-            ax = 0.0F;
-        } else if (!U)
+        if (C()) {
+            aC = false;
+            az = 0.0F;
+            aA = 0.0F;
+            aB = 0.0F;
+        } else if (!Y)
             c_();
 
-        boolean bool1 = Z();
-        boolean bool2 = aa();
+        boolean bool1 = ac();
+        boolean bool2 = ad();
 
-        if (ay)
+        if (aC)
             if (bool1)
-                aP += 0.04D;
+                aT += 0.04D;
             else if (bool2)
-                aP += 0.04D;
-            else if (aW)
-                L();
+                aT += 0.04D;
+            else if (ba)
+                N();
 
-        av *= 0.98F;
-        aw *= 0.98F;
-        ax *= 0.9F;
-        a(av, aw);
+        az *= 0.98F;
+        aA *= 0.98F;
+        aB *= 0.9F;
+        a(az, aA);
 
-        List localList = aH.b(this, aV.b(0.2D, 0.0D, 0.2D));
+        List localList = aL.b(this, aZ.b(0.2D, 0.0D, 0.2D));
         if ((localList != null) && (localList.size() > 0))
             for (int i = 0; i < localList.size(); i++) {
                 OEntity localOEntity = (OEntity) localList.get(i);
@@ -582,71 +610,71 @@ public abstract class OEntityLiving extends OEntity {
             }
     }
 
-    protected boolean A() {
-        return X <= 0;
+    protected boolean C() {
+        return ab <= 0;
     }
 
-    protected void L() {
-        aP = 0.42D;
+    protected void N() {
+        aT = 0.42D;
     }
 
     protected boolean l_() {
         return true;
     }
 
-    protected void Q() {
-        OEntityPlayer localOEntityPlayer = aH.a(this, -1.0D);
+    protected void T() {
+        OEntityPlayer localOEntityPlayer = aL.a(this, -1.0D);
 
         if ((l_()) && (localOEntityPlayer != null)) {
-            double d1 = localOEntityPlayer.aL - aL;
-            double d2 = localOEntityPlayer.aM - aM;
-            double d3 = localOEntityPlayer.aN - aN;
+            double d1 = localOEntityPlayer.aP - aP;
+            double d2 = localOEntityPlayer.aQ - aQ;
+            double d3 = localOEntityPlayer.aR - aR;
             double d4 = d1 * d1 + d2 * d2 + d3 * d3;
 
             if (d4 > 16384.0D)
-                G();
+                I();
 
-            if ((au > 600) && (br.nextInt(800) == 0))
+            if ((ay > 600) && (bv.nextInt(800) == 0))
                 if (d4 < 1024.0D)
-                    au = 0;
+                    ay = 0;
                 else
-                    G();
+                    I();
         }
     }
 
     protected void c_() {
-        ++au;
-        OEntityPlayer localOEntityPlayer = aH.a(this, -1.0D);
-        Q();
+        ++ay;
+        OEntityPlayer localOEntityPlayer = aL.a(this, -1.0D);
+        T();
 
-        av = 0.0F;
-        aw = 0.0F;
+        az = 0.0F;
+        aA = 0.0F;
 
         float f = 8.0F;
-        if (br.nextFloat() < 0.02F) {
-            localOEntityPlayer = aH.a(this, f);
+        if (bv.nextFloat() < 0.02F) {
+            localOEntityPlayer = aL.a(this, f);
             if (localOEntityPlayer != null) {
                 b = localOEntityPlayer;
-                aB = (10 + br.nextInt(20));
+                aF = (10 + bv.nextInt(20));
             } else
-                ax = ((br.nextFloat() - 0.5F) * 20.0F);
+                aB = ((bv.nextFloat() - 0.5F) * 20.0F);
         }
 
         if (b != null) {
             a(b, 10.0F, v());
-            if ((aB-- <= 0) || (b.bd) || (b.g(this) > f * f))
+            if ((aF-- <= 0) || (b.bh) || (b.g(this) > f * f))
                 b = null;
         } else {
-            if (br.nextFloat() < 0.05F)
-                ax = ((br.nextFloat() - 0.5F) * 20.0F);
-            aR += ax;
-            aS = az;
+            if (bv.nextFloat() < 0.05F)
+                aB = ((bv.nextFloat() - 0.5F) * 20.0F);
+            aV += aB;
+            aW = aD;
         }
 
-        boolean bool1 = Z();
-        boolean bool2 = aa();
+        boolean bool1 = ac();
+        boolean bool2 = ad();
         if ((bool1) || (bool2))
-            ay = (br.nextFloat() < 0.8F);
+            aC = (bv.nextFloat() < 0.8F);
     }
 
     protected int v() {
@@ -654,29 +682,29 @@ public abstract class OEntityLiving extends OEntity {
     }
 
     public void a(OEntity paramOEntity, float paramFloat1, float paramFloat2) {
-        double d1 = paramOEntity.aL - aL;
+        double d1 = paramOEntity.aP - aP;
 
-        double d2 = paramOEntity.aN - aN;
+        double d2 = paramOEntity.aR - aR;
         double d3;
         if ((paramOEntity instanceof OEntityLiving)) {
             OEntityLiving localOEntityLiving = (OEntityLiving) paramOEntity;
-            d3 = aM + s() - (localOEntityLiving.aM + localOEntityLiving.s());
+            d3 = aQ + s() - (localOEntityLiving.aQ + localOEntityLiving.s());
         } else
-            d3 = (paramOEntity.aV.b + paramOEntity.aV.e) / 2.0D - (aM + s());
+            d3 = (paramOEntity.aZ.b + paramOEntity.aZ.e) / 2.0D - (aQ + s());
 
         double d4 = OMathHelper.a(d1 * d1 + d2 * d2);
 
         float f1 = (float) (Math.atan2(d2, d1) * 180.0D / 3.141592741012573D) - 90.0F;
         float f2 = (float) (-(Math.atan2(d3, d4) * 180.0D / 3.141592741012573D));
-        aS = (-b(aS, f2, paramFloat2));
-        aR = b(aR, f1, paramFloat1);
+        aW = (-b(aW, f2, paramFloat2));
+        aV = b(aV, f1, paramFloat1);
     }
 
-    public boolean R() {
+    public boolean U() {
         return b != null;
     }
 
-    public OEntity S() {
+    public OEntity V() {
         return b;
     }
 
@@ -693,34 +721,34 @@ public abstract class OEntityLiving extends OEntity {
         return paramFloat1 + f;
     }
 
-    public void T() {
+    public void W() {
     }
 
     public boolean d() {
-        return (aH.a(aV)) && (aH.a(this, aV).size() == 0) && (!aH.c(aV));
+        return (aL.a(aZ)) && (aL.a(this, aZ).isEmpty()) && (!aL.c(aZ));
     }
 
     @Override
-    protected void U() {
+    protected void X() {
         a((OEntity)null, 4);
     }
 
     @Override
-    public OVec3D V() {
+    public OVec3D Y() {
         return b(1.0F);
     }
 
     public OVec3D b(float paramFloat) {
         if (paramFloat == 1.0F) {
-            float f1 = OMathHelper.b(-aR * 0.01745329F - 3.141593F);
-            float f2 = OMathHelper.a(-aR * 0.01745329F - 3.141593F);
-            float f3 = -OMathHelper.b(-aS * 0.01745329F);
-            float f4 = OMathHelper.a(-aS * 0.01745329F);
+            float f1 = OMathHelper.b(-aV * 0.01745329F - 3.141593F);
+            float f2 = OMathHelper.a(-aV * 0.01745329F - 3.141593F);
+            float f3 = -OMathHelper.b(-aW * 0.01745329F);
+            float f4 = OMathHelper.a(-aW * 0.01745329F);
 
             return OVec3D.b(f2 * f3, f4, f1 * f3);
         }
-        float f1 = aU + (aS - aU) * paramFloat;
-        float f2 = aT + (aR - aT) * paramFloat;
+        float f1 = aY + (aW - aY) * paramFloat;
+        float f2 = aX + (aV - aX) * paramFloat;
 
         float f3 = OMathHelper.b(-f2 * 0.01745329F - 3.141593F);
         float f4 = OMathHelper.a(-f2 * 0.01745329F - 3.141593F);
@@ -734,7 +762,7 @@ public abstract class OEntityLiving extends OEntity {
         return 4;
     }
 
-    public boolean I() {
+    public boolean K() {
         return false;
     }
 }

@@ -16,9 +16,11 @@ public class OEntityTracker {
     private OMCHash         b = new OMCHash();
     private MinecraftServer c;
     private int             d;
+    private int             e;
 
-    public OEntityTracker(MinecraftServer paramMinecraftServer) {
+    public OEntityTracker(MinecraftServer paramMinecraftServer, int paramInt) {
         c = paramMinecraftServer;
+        e = paramInt;
         d = paramMinecraftServer.f.a();
     }
 
@@ -33,11 +35,13 @@ public class OEntityTracker {
         } else if ((paramOEntity instanceof OEntityFish))
             a(paramOEntity, 64, 5, true);
         else if ((paramOEntity instanceof OEntityArrow))
-            a(paramOEntity, 64, 5, true);
+            a(paramOEntity, 64, 20, false);
+        else if ((paramOEntity instanceof OEntityFireball))
+            a(paramOEntity, 64, 10, false);
         else if ((paramOEntity instanceof OEntitySnowball))
-            a(paramOEntity, 64, 5, true);
+            a(paramOEntity, 64, 10, true);
         else if ((paramOEntity instanceof OEntityEgg))
-            a(paramOEntity, 64, 5, true);
+            a(paramOEntity, 64, 10, true);
         else if ((paramOEntity instanceof OEntityItem))
             a(paramOEntity, 64, 20, true);
         else if ((paramOEntity instanceof OEntityMinecart))
@@ -64,12 +68,12 @@ public class OEntityTracker {
         
         if (paramInt1 > d)
             paramInt1 = d;
-        if (b.b(paramOEntity.aC))
+        if (b.b(paramOEntity.aG))
             throw new IllegalStateException("Entity is already tracked!");
         OEntityTrackerEntry localOEntityTrackerEntry = new OEntityTrackerEntry(paramOEntity, paramInt1, paramInt2, paramBoolean);
         a.add(localOEntityTrackerEntry);
-        b.a(paramOEntity.aC, localOEntityTrackerEntry);
-        localOEntityTrackerEntry.b(c.e.d);
+        b.a(paramOEntity.aG, localOEntityTrackerEntry);
+        localOEntityTrackerEntry.b(c.a(e).d);
     }
 
     public void b(OEntity paramOEntity) {
@@ -79,7 +83,7 @@ public class OEntityTracker {
             for (OEntityTrackerEntry localOEntityTrackerEntry : a)
                 localOEntityTrackerEntry.a((OEntityPlayerMP) localObject);
         }
-        localObject = b.d(paramOEntity.aC);
+        localObject = b.d(paramOEntity.aG);
         if (localObject != null) {
             a.remove(localObject);
             ((OEntityTrackerEntry) localObject).a();
@@ -92,7 +96,7 @@ public class OEntityTracker {
             ArrayList localArrayList = new ArrayList();
             for (Iterator localIterator1 = a.iterator(); localIterator1.hasNext();) {
                 localObject = (OEntityTrackerEntry) localIterator1.next();
-                ((OEntityTrackerEntry) localObject).a(c.e.d);
+                ((OEntityTrackerEntry) localObject).a(c.a(e).d);
                 if ((((OEntityTrackerEntry) localObject).m) && ((((OEntityTrackerEntry) localObject).a instanceof OEntityPlayerMP)))
                     localArrayList.add(((OEntityTrackerEntry) localObject).a);
             }
@@ -130,13 +134,13 @@ public class OEntityTracker {
 
     
     public void a(OEntity paramOEntity, OPacket paramOPacket) {
-        OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aC);
+        OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aG);
         if (localOEntityTrackerEntry != null)
             localOEntityTrackerEntry.a(paramOPacket);
     }
 
     public void b(OEntity paramOEntity, OPacket paramOPacket) {
-        OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aC);
+        OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aG);
         if (localOEntityTrackerEntry != null)
             localOEntityTrackerEntry.b(paramOPacket);
     }

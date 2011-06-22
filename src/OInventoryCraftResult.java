@@ -1,7 +1,8 @@
+
 public class OInventoryCraftResult implements OIInventory, Container<OItemStack> {
 
-    private OItemStack[] a    = new OItemStack[1];
-    private String       name = "Result";
+    private OItemStack[] a = new OItemStack[1];
+    private String name = "Result";
 
     public int a() {
         return 1;

@@ -60,12 +60,12 @@ public class Minecart extends BaseVehicle {
      * @param x
      * @param y
      * @param z
-     * @param Type
+     * @param type
      *            0=Minecart, 1=StorageCart, 2=PoweredMinecart
      */
     public Minecart(double x, double y, double z, Type type) {
-        super(new OEntityMinecart(etc.getMCServer().e, x, y, z, type.getType()));
-        etc.getMCServer().e.b(entity);
+        super(new OEntityMinecart(etc.getMCServer().a(0), x, y, z, type.getType()));
+        etc.getMCServer().a(0).b(entity);
     }
 
     /**

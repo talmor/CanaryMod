@@ -244,7 +244,7 @@ public class PluginListener {
      * fire. block status depends on the light source: 1 = lava. 2 = lighter
      * (flint + steel). 3 = spread (dynamic spreading of fire). 4 = fire
      * destroying a block.
-     * 
+     *
      * @param block
      *            block that the fire wants to spawn in.
      * @param player
@@ -258,9 +258,9 @@ public class PluginListener {
     /**
      * Called when a dynamite block or a creeper is triggerd. block status
      * depends on explosive compound: 1 = dynamite. 2 = creeper.
-     * 
+     *
      * @param block
-     *            dynamite block/creeper location block.
+     *            Dynamite block/creeper location block.
      * 
      * @return true if you dont the block to explode.
      */
@@ -354,7 +354,7 @@ public class PluginListener {
      * method is called frequently whenever a nearby block is changed, or if the
      * block has just been placed. Currently the only supported blocks are sand,
      * gravel and portals.
-     * 
+     *
      * @param block
      *            Block which requires special physics
      * @param placed
@@ -486,7 +486,7 @@ public class PluginListener {
      * @param blockClicked
      * @param itemInHand
      */
-    public void onBlockRightClicked(Player player, Block blockClicked, Item item) {
+    public void onBlockRightClicked(Player player, Block blockClicked, Item itemInHand) {
 
     }
 
@@ -494,11 +494,11 @@ public class PluginListener {
      * Called when water or lava tries to populate a block, you can prevent
      * crushing of torches, railways, flowers etc. You can alternatively allow
      * to let normally solid blocks be crushed.
-     * 
+     *
      * @param currentState
      *            the current tristate, once it's set to a non DEFAULT_ACTION it
      *            is final.
-     * @param liquidBlock
+     * @param liquidBlockId
      *            the type of the attacking block
      * @param targetBlock
      *            the block to be destroyed
@@ -568,7 +568,7 @@ public class PluginListener {
 
     /**
      * Called when a leaf block is about to decay.
-     * 
+     *
      * @param block
      *            The leaf block about to decay
      * @return true if you wish to stop the block from decaying
@@ -604,22 +604,56 @@ public class PluginListener {
     /**
      * Called when the weather changes (rain/snow)
      *
+     * @deprecated Use {@link #onWeatherChange(World, boolean) } instead.
      * @param newValue
      *            The new weather value
      * @return true to prevent the weather from changing
      */
+    @Deprecated
     public boolean onWeatherChange(boolean newValue) {
+        return false;
+    }
+
+    /**
+     * Called when the weather changes (rain/snow)
+     *
+     * @param world
+     *            The {@link World} the wheather changes in
+     * @param newValue
+     *            The new weather value
+     * @return true to prevent the weather from changing
+     */
+    public boolean onWeatherChange(World world, boolean newValue) {
+        if (world.equals(etc.getServer().getDefaultWorld()))
+            onWeatherChange(newValue);
         return false;
     }
 
     /**
      * Called when the thunder changes (NOT when lightning strikes)
      *
+     * @deprecated Use {@link #onThunderChange(World, boolean) } instead.
      * @param newValue
      *            The new thunder value
      * @return true to prevent the thunder from changing
      */
+    @Deprecated
     public boolean onThunderChange(boolean newValue) {
+        return false;
+    }
+
+    /**
+     * Called when the thunder changes (NOT when lightning strikes)
+     *
+     * @param world
+     *            The {@link World} the thunder changes in
+     * @param newValue
+     *            The new thunder value
+     * @return true to prevent the thunder from changing
+     */
+    public boolean onThunderChange(World world, boolean newValue) {
+        if (world.equals(etc.getServer().getDefaultWorld()))
+            return onThunderChange(newValue);
         return false;
     }
 }

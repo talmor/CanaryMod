@@ -1,21 +1,22 @@
+
 public class OItemBoat extends OItem {
 
     public OItemBoat(int paramInt) {
         super(paramInt);
-        be = 1;
+        bf = 1;
     }
 
     @Override
     public OItemStack a(OItemStack paramOItemStack, OWorld paramOWorld, OEntityPlayer paramOEntityPlayer) {
         float f1 = 1.0F;
 
-        float f2 = paramOEntityPlayer.aU + (paramOEntityPlayer.aS - paramOEntityPlayer.aU) * f1;
-        float f3 = paramOEntityPlayer.aT + (paramOEntityPlayer.aR - paramOEntityPlayer.aT) * f1;
+        float f2 = paramOEntityPlayer.aY + (paramOEntityPlayer.aW - paramOEntityPlayer.aY) * f1;
+        float f3 = paramOEntityPlayer.aX + (paramOEntityPlayer.aV - paramOEntityPlayer.aX) * f1;
 
 
-        double d1 = paramOEntityPlayer.aI + (paramOEntityPlayer.aL - paramOEntityPlayer.aI) * f1;
-        double d2 = paramOEntityPlayer.aJ + (paramOEntityPlayer.aM - paramOEntityPlayer.aJ) * f1 + 1.62D - paramOEntityPlayer.be;
-        double d3 = paramOEntityPlayer.aK + (paramOEntityPlayer.aN - paramOEntityPlayer.aK) * f1;
+        double d1 = paramOEntityPlayer.aM + (paramOEntityPlayer.aP - paramOEntityPlayer.aM) * f1;
+        double d2 = paramOEntityPlayer.aN + (paramOEntityPlayer.aQ - paramOEntityPlayer.aN) * f1 + 1.62D - paramOEntityPlayer.bi;
+        double d3 = paramOEntityPlayer.aO + (paramOEntityPlayer.aR - paramOEntityPlayer.aO) * f1;
 
 
         OVec3D localOVec3D1 = OVec3D.b(d1, d2, d3);
@@ -40,11 +41,13 @@ public class OItemBoat extends OItem {
             int j = localOMovingObjectPosition.c;
             int k = localOMovingObjectPosition.d;
 
-            if (!paramOWorld.v) {
+            if (!paramOWorld.B) {
+                if (paramOWorld.a(i, j, k) == OBlock.aT.bn)
+                    j--;
                 // CanaryMod: placing of a boat
-                Block blockClicked = new Block(paramOWorld.a(i, j, k), i, j, k);
+                Block blockClicked = new Block(paramOWorld.world, paramOWorld.a(i, j, k), i, j, k);
                 blockClicked.setFaceClicked(Block.Face.fromId(localOMovingObjectPosition.e));
-                Block blockPlaced = new Block(0, i, j, k);
+                Block blockPlaced = new Block(paramOWorld.world, 0, i, j, k);
                 // CanaryMod: Call hook
                 if (paramOEntityPlayer instanceof OEntityPlayerMP && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) paramOEntityPlayer).getPlayer(), blockPlaced, blockClicked, new Item(paramOItemStack)))
                     return paramOItemStack;

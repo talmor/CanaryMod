@@ -52,8 +52,9 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> implements Inve
             user.getPlayer().giveItemDrop(itemId, temp);
     }
 
+    @Override
     public void update() {
-        user.p_();
+        user.o_();
     }
 
     /**
@@ -75,10 +76,12 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> implements Inve
         return user.getPlayer();
     }
 
+    @Override
     public String getName() {
         return container.getName();
     }
 
+    @Override
     public void setName(String value) {
         container.setName(value);
     }

@@ -1,8 +1,5 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -46,6 +43,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * 
      * @return
      */
+    @Override
     public OEntityPlayerMP getEntity() {
         return (OEntityPlayerMP) entity;
     }
@@ -73,6 +71,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * 
      * @param message
      */
+    @Override
     public void notify(String message) {
         if (message.length() > 0)
             sendMessage(Colors.Rose + message);
@@ -150,7 +149,8 @@ public class Player extends HumanEntity implements MessageReceiver {
                 if (etc.getInstance().showUnknownCommand())
                     sendMessage(Colors.Rose + "Unknown command.");
                 return;
-            } else if ((command.startsWith("/#")) && (etc.getMCServer().f.h(getName()))) {
+            }
+            if ((command.startsWith("/#")) && (etc.getMCServer().f.h(getName()))) {
                 String str = command.substring(2);
                 log.info(getName() + " issued server command: " + str);
                 etc.getMCServer().a(str, getEntity().a);
@@ -329,6 +329,7 @@ public class Player extends HumanEntity implements MessageReceiver {
         loc.z = getZ();
         loc.rotX = getRotation();
         loc.rotY = getPitch();
+        loc.dimension = getWorld().getType().getId();
         return loc;
     }
 
@@ -338,7 +339,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return
      */
     public String getIP() {
-        return getEntity().a.b.b().toString().split(":")[0].substring(1);
+        return getEntity().a.b.c().toString().split(":")[0].substring(1);
     }
 
     /**
@@ -410,7 +411,7 @@ public class Player extends HumanEntity implements MessageReceiver {
     }
 
     /**
-     * Sets whether or not this player can modify the world terrain
+     * Sets whether or not this player can modify the dimension terrain
      * 
      * @param canModifyWorld
      */
@@ -600,19 +601,20 @@ public class Player extends HumanEntity implements MessageReceiver {
     /**
      * Sets the user. Don't use this.
      * 
-     * @param er
+     * @param player
      */
     public void setUser(OEntityPlayerMP player) {
         entity = player;
         inventory = new PlayerInventory(this);
     }
 
+    @Override
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
         OEntityPlayerMP player = getEntity();
 
         // If player is in vehicle - eject them before they are teleported.
-        if (player.aF != null)
-            player.b(player.aF);
+        if (player.aK != null)
+            player.b(player.aK);
         player.a.a(x, y, z, rotation, pitch);
     }
 
@@ -651,7 +653,7 @@ public class Player extends HumanEntity implements MessageReceiver {
     /**
      * Returns item id in player's hand
      * 
-     * @return
+     * @return item id
      */
     public int getItemInHand() {
         return getEntity().a.getItemInHand();
@@ -687,9 +689,43 @@ public class Player extends HumanEntity implements MessageReceiver {
 
     /**
      * Returns the one-use only kits
+     * @return List of kit names
      */
     public List<String> getOnlyOneUseKits() {
         return new ArrayList(onlyOneUseKits);
+    }
+
+    /**
+     * Switch to the other dimension at the according position.
+     * This WILL teleport players to the nether, regardless of whether
+     * allow-nether is set.
+     */
+    public void switchWorlds() {
+        MinecraftServer mcServer = etc.getMCServer();
+        OEntityPlayerMP ent = getEntity();
+
+        // Nether is not allowed, so shush
+        if (!mcServer.d.a("allow-nether", true))
+            return;
+        // Dismount first or get buggy
+        if (ent.aK != null)
+            ent.b(ent.aK);
+
+        mcServer.f.f(ent);
+    }
+
+    @Override
+    public void teleportTo(BaseEntity ent) {
+        if (!getWorld().equals(ent.getWorld()))
+            switchWorlds();
+        super.teleportTo(ent);
+    }
+
+    @Override
+    public void teleportTo(Location location) {
+        if (!getWorld().equals(location.getWorld()))
+            switchWorlds();
+        super.teleportTo(location);
     }
 
     /**

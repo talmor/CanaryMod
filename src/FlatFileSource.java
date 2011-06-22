@@ -16,6 +16,7 @@ import java.util.logging.Level;
  */
 public class FlatFileSource extends DataSource {
 
+    @Override
     public void initialize() {
         loadGroups();
         loadKits();
@@ -70,6 +71,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void loadGroups() {
         String location = etc.getInstance().getGroupLocation();
 
@@ -141,6 +143,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void loadKits() {
         String location = etc.getInstance().getKitsLocation();
 
@@ -204,6 +207,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void loadHomes() {
         synchronized (homeLock) {
             homes = new ArrayList<Warp>();
@@ -245,6 +249,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void loadWarps() {
         synchronized (warpLock) {
             warps = new ArrayList<Warp>();
@@ -257,7 +262,7 @@ public class FlatFileSource extends DataSource {
                         String line = scanner.nextLine();
                         if (line.startsWith("#") || line.equals(""))
                             continue;
-                        String[] split = line.split("[^\\\\]:");
+                        String[] split = line.split("\\:");
                         if (split.length < 4)
                             continue;
 
@@ -265,17 +270,26 @@ public class FlatFileSource extends DataSource {
                         loc.x = Double.parseDouble(split[1]);
                         loc.y = Double.parseDouble(split[2]);
                         loc.z = Double.parseDouble(split[3]);
-                        if (split.length == 6) {
+                        if (split.length >= 6) {
                             loc.rotX = Float.parseFloat(split[4]);
                             loc.rotY = Float.parseFloat(split[5]);
                         }
+
+                        int posShift = 0;
+                        if (split.length >= 7 && split[6].matches("0|-1")) {
+                            loc.dimension = Integer.parseInt(split[6]);
+                            posShift++;
+                        }
+
                         Warp warp = new Warp();
                         warp.Name = split[0].replace("\\:", ":");
                         warp.Location = loc;
-                        if (split.length >= 7)
-                            warp.Group = split[6];
+
+                        if (split.length >= 7 + posShift)
+                            warp.Group = split[6 + posShift];
                         else
                             warp.Group = "";
+
                         warps.add(warp);
                     }
                     scanner.close();
@@ -285,6 +299,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void loadItems() {
         String location = etc.getInstance().getItemLocation();
 
@@ -544,6 +559,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void loadBanList() {
         synchronized (banLock) {
             bans = new ArrayList<Ban>();
@@ -596,6 +612,7 @@ public class FlatFileSource extends DataSource {
     }
 
     // Users
+    @Override
     public void addPlayer(Player player) {
         String loc = etc.getInstance().getUsersLocation();
 
@@ -627,6 +644,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void modifyPlayer(Player player) {
         String loc = etc.getInstance().getUsersLocation();
 
@@ -668,6 +686,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public boolean doesPlayerExist(String player) {
         String location = etc.getInstance().getUsersLocation();
         try {
@@ -688,6 +707,7 @@ public class FlatFileSource extends DataSource {
         return false;
     }
 
+    @Override
     public Player getPlayer(String name) {
         Player player = new Player();
         String location = etc.getInstance().getUsersLocation();
@@ -727,24 +747,29 @@ public class FlatFileSource extends DataSource {
     }
 
     // Groups
+    @Override
     public void addGroup(Group group) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public void modifyGroup(Group group) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // Kits
+    @Override
     public void addKit(Kit kit) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public void modifyKit(Kit kit) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // Homes
+    @Override
     public void addHome(Warp home) {
         String homeLoc = etc.getInstance().getHomeLocation();
         try {
@@ -776,6 +801,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void changeHome(Warp home) {
         synchronized (homeLock) {
             Warp toRem = null;
@@ -832,6 +858,7 @@ public class FlatFileSource extends DataSource {
     }
 
     // Warps
+    @Override
     public void addWarp(Warp warp) {
         String warpLoc = etc.getInstance().getWarpLocation();
         try {
@@ -849,6 +876,8 @@ public class FlatFileSource extends DataSource {
             builder.append(":");
             builder.append(warp.Location.rotY);
             builder.append(":");
+            builder.append(warp.Location.dimension);
+            builder.append(":");
             builder.append(warp.Group);
             bw.append(builder.toString());
             bw.newLine();
@@ -861,6 +890,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void changeWarp(Warp warp) {
         synchronized (warpLock) {
             Warp toRem = null;
@@ -895,6 +925,8 @@ public class FlatFileSource extends DataSource {
                     builder.append(":");
                     builder.append(warp.Location.rotY);
                     builder.append(":");
+                    builder.append(warp.Location.dimension);
+                    builder.append(":");
                     builder.append(warp.Group);
                     toWrite.append(builder.toString()).append("\r\n");
                 }
@@ -914,6 +946,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void removeWarp(Warp warp) {
         FileWriter writer = null;
         String warpLoc = etc.getInstance().getWarpLocation();
@@ -946,6 +979,7 @@ public class FlatFileSource extends DataSource {
     }
 
     // Whitelist
+    @Override
     public void addToWhitelist(String name) {
         if (isUserOnWhitelist(name))
             return;
@@ -967,6 +1001,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void removeFromWhitelist(String name) {
         if (!isUserOnWhitelist(name))
             return;
@@ -998,6 +1033,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public boolean isUserOnWhitelist(String user) {
         String location = etc.getInstance().getWhitelistLocation();
         Player player = getPlayer(user);
@@ -1019,11 +1055,13 @@ public class FlatFileSource extends DataSource {
         return false;
     }
 
+    @Override
     public void modifyBan(Ban ban) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // Reservelist
+    @Override
     public boolean isUserOnReserveList(String user) {
         String location = etc.getInstance().getReservelistLocation();
         Player player = getPlayer(user);
@@ -1045,6 +1083,7 @@ public class FlatFileSource extends DataSource {
         return false;
     }
 
+    @Override
     public void addToReserveList(String name) {
         if (isUserOnReserveList(name))
             return;
@@ -1065,6 +1104,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    @Override
     public void removeFromReserveList(String name) {
         if (!isUserOnReserveList(name))
             return;

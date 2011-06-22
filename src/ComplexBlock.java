@@ -37,4 +37,10 @@ public interface ComplexBlock {
      * @return Block
      */
     public Block getBlock();
+
+    /**
+     * Returns the World associated with this ComplexBlock
+     * @return World
+     */
+    public World getWorld();
 }

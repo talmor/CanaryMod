@@ -16,6 +16,7 @@ public class MySQLSource extends DataSource {
 
     private String table_groups, table_users, table_items, table_kits, table_warps, table_homes, table_reservelist, table_whitelist, table_bans;
 
+    @Override
     public void initialize() {
         PropertiesFile properties = new PropertiesFile("mysql.properties");
         table_groups = properties.getString("groups", "groups");
@@ -35,6 +36,7 @@ public class MySQLSource extends DataSource {
         // loadBanList();
     }
 
+    @Override
     public void loadGroups() {
         synchronized (groupLock) {
             Connection conn = null;
@@ -77,6 +79,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public void loadKits() {
         synchronized (kitLock) {
             Connection conn = null;
@@ -124,6 +127,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public void loadHomes() {
         synchronized (homeLock) {
             if (!etc.getInstance().canSaveHomes())
@@ -166,6 +170,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public void loadWarps() {
         synchronized (warpLock) {
             Connection conn = null;
@@ -183,6 +188,7 @@ public class MySQLSource extends DataSource {
                     location.z = rs.getDouble("z");
                     location.rotX = rs.getFloat("rotX");
                     location.rotY = rs.getFloat("rotY");
+                    location.dimension = rs.getInt("dimension");
                     Warp warp = new Warp();
                     warp.ID = rs.getInt("id");
                     warp.Location = location;
@@ -206,6 +212,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public void loadItems() {
         synchronized (itemLock) {
             Connection conn = null;
@@ -235,6 +242,7 @@ public class MySQLSource extends DataSource {
     }
 
     // Users
+    @Override
     public void addPlayer(Player player) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -269,6 +277,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public void modifyPlayer(Player player) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -296,6 +305,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public boolean doesPlayerExist(String player) {
         boolean exists = false;
         Connection conn = null;
@@ -325,24 +335,29 @@ public class MySQLSource extends DataSource {
     }
 
     // Groups
+    @Override
     public void addGroup(Group group) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public void modifyGroup(Group group) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // Kits
+    @Override
     public void addKit(Kit kit) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public void modifyKit(Kit kit) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // Homes
+    @Override
     public void addHome(Warp home) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -381,6 +396,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public void changeHome(Warp home) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -419,20 +435,22 @@ public class MySQLSource extends DataSource {
     }
 
     // Warps
+    @Override
     public void addWarp(Warp warp) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("INSERT INTO " + table_warps + " (name, x, y, z, rotX, rotY, `group`) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement("INSERT INTO " + table_warps + " (name, x, y, z, rotX, rotY, dimension, `group`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, warp.Name);
             ps.setDouble(2, warp.Location.x);
             ps.setDouble(3, warp.Location.y);
             ps.setDouble(4, warp.Location.z);
             ps.setFloat(5, warp.Location.rotX);
             ps.setFloat(6, warp.Location.rotY);
-            ps.setString(7, warp.Group);
+            ps.setInt(7, warp.Location.dimension);
+            ps.setString(8, warp.Group);
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
@@ -457,19 +475,21 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public void changeWarp(Warp warp) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("UPDATE " + table_warps + " SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, `group` = ? WHERE name = ?");
+            ps = conn.prepareStatement("UPDATE " + table_warps + " SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, dimension = ?, `group` = ? WHERE name = ?");
             ps.setDouble(1, warp.Location.x);
             ps.setDouble(2, warp.Location.y);
             ps.setDouble(3, warp.Location.z);
             ps.setFloat(4, warp.Location.rotX);
             ps.setFloat(5, warp.Location.rotY);
-            ps.setString(6, warp.Group);
-            ps.setString(7, warp.Name);
+            ps.setInt(6, warp.Location.dimension);
+            ps.setString(7, warp.Group);
+            ps.setString(8, warp.Name);
             ps.executeUpdate();
 
             synchronized (warpLock) {
@@ -494,6 +514,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public void removeWarp(Warp warp) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -519,6 +540,7 @@ public class MySQLSource extends DataSource {
     }
 
     // Whitelist
+    @Override
     public void addToWhitelist(String name) {
         if (isUserOnWhitelist(name))
             return;
@@ -543,6 +565,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public void removeFromWhitelist(String name) {
         if (!isUserOnWhitelist(name))
             return;
@@ -567,6 +590,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public Player getPlayer(String name) {
         Player player = new Player();
         Connection conn = null;
@@ -603,6 +627,7 @@ public class MySQLSource extends DataSource {
         return player;
     }
 
+    @Override
     public void loadBanList() {
         synchronized (banLock) {
             bans = new ArrayList<Ban>();
@@ -637,6 +662,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public boolean isUserOnWhitelist(String user) {
         boolean toRet = false;
         Connection conn = null;
@@ -665,10 +691,12 @@ public class MySQLSource extends DataSource {
         return toRet;
     }
 
+    @Override
     public void modifyBan(Ban ban) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public boolean isUserOnReserveList(String user) {
         boolean toRet = false;
         Connection conn = null;
@@ -697,14 +725,15 @@ public class MySQLSource extends DataSource {
         if (toRet || user.charAt(0) == '@')
             return toRet;
         Player pl = getPlayer(user);
-        String[] groups = pl.getGroups();
-        for (int i = 0; i < groups.length; ++i)
-            if (isUserOnReserveList("@" + groups[i]))
+        String[] playerGroups = pl.getGroups();
+        for (int i = 0; i < playerGroups.length; ++i)
+            if (isUserOnReserveList("@" + playerGroups[i]))
                 return true;
         return toRet;
     }
 
     // Reservelist
+    @Override
     public void addToReserveList(String name) {
         if (isUserOnReserveList(name))
             return;
@@ -729,6 +758,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    @Override
     public void removeFromReserveList(String name) {
         if (!isUserOnReserveList(name))
             return;

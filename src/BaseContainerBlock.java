@@ -34,18 +34,25 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
         return container.g;
     }
 
-    public Block getBlock() {
-        return etc.getServer().getBlockAt(getX(), getY(), getZ());
+    public World getWorld() {
+        return container.d.world;
     }
 
+    public Block getBlock() {
+        return getWorld().getBlockAt(getX(), getY(), getZ());
+    }
+
+    @Override
     public void update() {
         container.i();
     }
 
+    @Override
     public String getName() {
         return container.getName();
     }
 
+    @Override
     public void setName(String value) {
         container.setName(value);
     }
@@ -72,6 +79,8 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
             return false;
         if (this.getZ() != other.getZ())
             return false;
+        if (!this.getWorld().equals(other.getWorld()))
+            return false;
         return true;
     }
 
@@ -86,11 +95,12 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
         hash = 97 * hash + this.getX();
         hash = 97 * hash + this.getY();
         hash = 97 * hash + this.getZ();
+        hash = 97 * hash + this.getWorld().hashCode();
         return hash;
     }
 
     @Override
     public String toString() {
-        return String.format(name + " [x=%d, y=%d, z=%d]", getX(), getY(), getZ());
+        return String.format(name + " [x=%d, y=%d, z=%d, world=%d]", getX(), getY(), getZ(), getWorld().getType().getId());
     }
 }

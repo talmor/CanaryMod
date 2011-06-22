@@ -11,23 +11,23 @@ public final class OItemStack {
     }
 
     public OItemStack(OBlock paramOBlock, int paramInt) {
-        this(paramOBlock.bl, paramInt, 0);
+        this(paramOBlock.bn, paramInt, 0);
     }
 
     public OItemStack(OBlock paramOBlock, int paramInt1, int paramInt2) {
-        this(paramOBlock.bl, paramInt1, paramInt2);
+        this(paramOBlock.bn, paramInt1, paramInt2);
     }
 
     public OItemStack(OItem paramOItem) {
-        this(paramOItem.bd, 1, 0);
+        this(paramOItem.be, 1, 0);
     }
 
     public OItemStack(OItem paramOItem, int paramInt) {
-        this(paramOItem.bd, paramInt, 0);
+        this(paramOItem.be, paramInt, 0);
     }
 
     public OItemStack(OItem paramOItem, int paramInt1, int paramInt2) {
-        this(paramOItem.bd, paramInt1, paramInt2);
+        this(paramOItem.be, paramInt1, paramInt2);
     }
 
     public OItemStack(int paramInt1, int paramInt2, int paramInt3) {
@@ -79,7 +79,7 @@ public final class OItemStack {
     }
 
     public int b() {
-        return a().b();
+        return a().c();
     }
 
     public boolean c() {
@@ -87,11 +87,11 @@ public final class OItemStack {
     }
 
     public boolean d() {
-        return OItem.c[c].d() > 0;
+        return OItem.c[c].e() > 0;
     }
 
     public boolean e() {
-        return OItem.c[c].c();
+        return OItem.c[c].d();
     }
 
     public boolean f() {
@@ -106,8 +106,12 @@ public final class OItemStack {
         return d;
     }
 
+    public void b(int var1) {
+        this.d = var1;
+    }
+
     public int i() {
-        return OItem.c[c].d();
+        return OItem.c[c].e();
     }
 
     public void a(int paramInt, OEntity paramOEntity) {
@@ -164,10 +168,10 @@ public final class OItemStack {
             return true;
         if ((paramOItemStack1 == null) || (paramOItemStack2 == null))
             return false;
-        return paramOItemStack1.c(paramOItemStack2);
+        return paramOItemStack1.d(paramOItemStack2);
     }
 
-    private boolean c(OItemStack paramOItemStack) {
+    private boolean d(OItemStack paramOItemStack) {
         if (a != paramOItemStack.a)
             return false;
         if (c != paramOItemStack.c)
@@ -186,5 +190,21 @@ public final class OItemStack {
     @Override
     public String toString() {
         return a + "x" + OItem.c[c].a() + "@" + d;
+    }
+
+    public void a(OWorld var1, OEntity var2, int var3, boolean var4) {
+        if (this.b > 0)
+            --this.b;
+
+        OItem.c[this.c].a(this, var1, var2, var3, var4);
+    }
+
+    public void b(OWorld var1, OEntityPlayer var2) {
+        var2.a(OStatList.D[this.c], this.a);
+        OItem.c[this.c].c(this, var1, var2);
+    }
+
+    public boolean c(OItemStack var1) {
+        return this.c == var1.c && this.a == var1.a && this.d == var1.d;
     }
 }

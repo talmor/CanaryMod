@@ -7,10 +7,10 @@ public class OItemRedstone extends OItem {
     @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // CanaryMod: Store block data clicked
-        Block blockClicked = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+        Block blockClicked = new Block(paramOWorld.world, paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
         blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
 
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) != OBlock.aS.bl) {
+        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) != OBlock.aT.bn) {
             if (paramInt4 == 0)
                 paramInt2--;
             if (paramInt4 == 1)
@@ -26,15 +26,15 @@ public class OItemRedstone extends OItem {
             if (!paramOWorld.e(paramInt1, paramInt2, paramInt3))
                 return false;
         }
-        if (OBlock.av.a(paramOWorld, paramInt1, paramInt2, paramInt3)) {
+        if (OBlock.aw.a(paramOWorld, paramInt1, paramInt2, paramInt3)) {
             // CanaryMod: Redstone dust hook!
-            Block blockPlaced = new Block(Block.Type.RedstoneWire.getType(), paramInt1, paramInt2, paramInt3);
+            Block blockPlaced = new Block(paramOWorld.world, Block.Type.RedstoneWire.getType(), paramInt1, paramInt2, paramInt3);
             Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramOItemStack)))
                 return false;
 
             paramOItemStack.a -= 1;
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.av.bl);
+            paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.aw.bn);
         }
 
         return true;

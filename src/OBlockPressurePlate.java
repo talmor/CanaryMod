@@ -5,8 +5,8 @@ public class OBlockPressurePlate extends OBlock {
 
     private OEnumMobType a;
 
-    protected OBlockPressurePlate(int paramInt1, int paramInt2, OEnumMobType paramOEnumMobType) {
-        super(paramInt1, paramInt2, OMaterial.d);
+    protected OBlockPressurePlate(int paramInt1, int paramInt2, OEnumMobType paramOEnumMobType, OMaterial paramOMaterial) {
+        super(paramInt1, paramInt2, paramOMaterial);
         a = paramOEnumMobType;
         a(true);
 
@@ -15,7 +15,7 @@ public class OBlockPressurePlate extends OBlock {
     }
 
     @Override
-    public int b() {
+    public int c() {
         return 20;
     }
 
@@ -26,6 +26,11 @@ public class OBlockPressurePlate extends OBlock {
 
     @Override
     public boolean a() {
+        return false;
+    }
+
+    @Override
+    public boolean b() {
         return false;
     }
 
@@ -46,14 +51,14 @@ public class OBlockPressurePlate extends OBlock {
             i = 1;
 
         if (i != 0) {
-            a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+            b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
         }
     }
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        if (paramOWorld.v)
+        if (paramOWorld.B)
             return;
         if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0)
             return;
@@ -63,7 +68,7 @@ public class OBlockPressurePlate extends OBlock {
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntity paramOEntity) {
-        if (paramOWorld.v)
+        if (paramOWorld.B)
             return;
 
         if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 1)
@@ -89,38 +94,38 @@ public class OBlockPressurePlate extends OBlock {
 
         // CanaryMod: Allow pressure plate interaction to power redstone
         if (j != i) {
-            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(bl, paramInt1, paramInt2, paramInt3), i, j);
+            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), i, j);
             if (j > 0)
                 j = 1;
         }
 
         if ((j != 0) && (i == 0)) {
             paramOWorld.c(paramInt1, paramInt2, paramInt3, 1);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
             paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
 
             paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.1D, paramInt3 + 0.5D, "random.click", 0.3F, 0.6F);
         }
         if ((j == 0) && (i != 0)) {
             paramOWorld.c(paramInt1, paramInt2, paramInt3, 0);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
             paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
 
             paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.1D, paramInt3 + 0.5D, "random.click", 0.3F, 0.5F);
         }
 
         if (j != 0)
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
+            paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
     }
 
     @Override
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
         if (i > 0) {
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
         }
         super.b(paramOWorld, paramInt1, paramInt2, paramInt3);
     }
@@ -137,7 +142,7 @@ public class OBlockPressurePlate extends OBlock {
     }
 
     @Override
-    public boolean b(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean a(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         return paramOIBlockAccess.b(paramInt1, paramInt2, paramInt3) > 0;
     }
 
@@ -149,7 +154,7 @@ public class OBlockPressurePlate extends OBlock {
     }
 
     @Override
-    public boolean c() {
+    public boolean d() {
         return true;
     }
 }

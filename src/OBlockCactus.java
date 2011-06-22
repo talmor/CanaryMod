@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class OBlockCactus extends OBlock {
     protected OBlockCactus(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, OMaterial.u);
+        super(paramInt1, paramInt2, OMaterial.v);
         a(true);
     }
 
@@ -10,12 +10,12 @@ public class OBlockCactus extends OBlock {
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         if (paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3)) {
             int i = 1;
-            while (paramOWorld.a(paramInt1, paramInt2 - i, paramInt3) == bl)
+            while (paramOWorld.a(paramInt1, paramInt2 - i, paramInt3) == bn)
                 i++;
             if (i < 3) {
                 int j = paramOWorld.b(paramInt1, paramInt2, paramInt3);
                 if (j == 15) {
-                    paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3, bl);
+                    paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3, bn);
                     paramOWorld.c(paramInt1, paramInt2, paramInt3, 0);
                 } else
                     paramOWorld.c(paramInt1, paramInt2, paramInt3, j + 1);
@@ -32,10 +32,10 @@ public class OBlockCactus extends OBlock {
     @Override
     public int a(int paramInt) {
         if (paramInt == 1)
-            return bk - 1;
+            return bm - 1;
         if (paramInt == 0)
-            return bk + 1;
-        return bk;
+            return bm + 1;
+        return bm;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class OBlockCactus extends OBlock {
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (!f(paramOWorld, paramInt1, paramInt2, paramInt3)) {
-            a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+            b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
         }
     }
@@ -70,7 +70,7 @@ public class OBlockCactus extends OBlock {
         if (paramOWorld.c(paramInt1, paramInt2, paramInt3 + 1).a())
             return false;
         int i = paramOWorld.a(paramInt1, paramInt2 - 1, paramInt3);
-        return (i == OBlock.aV.bl) || (i == OBlock.E.bl);
+        return (i == OBlock.aW.bn) || (i == OBlock.F.bn);
     }
 
     @Override

@@ -27,11 +27,11 @@
 		<mkdir dir="${build}/classes" />
 		<mkdir dir="${dist}" />
 		<mkdir dir="${dist}/plugins" />
-		<mkdir dir="${dist}/log" />
+		<mkdir dir="${dist}/logs" />
 	</target>
 
 	<target name="compile" depends="init" description="Compile the source.">
-		<javac destdir="${build}/classes" optimize="on" debug="on" debuglevel="lines,vars,source" source="1.6" target="1.6" nowarn="off">
+		<javac destdir="${build}/classes" optimize="on" debug="on" includeantruntime="false" debuglevel="lines,vars,source" source="1.6" target="1.6" nowarn="off">
 			<src path="${src}" />
 			<classpath refid="classpath" />
 		</javac>
@@ -42,7 +42,7 @@
 			<fileset dir="${build}/classes" />
 			<manifest>
 				<attribute name="Main-Class" value="Main" />
-				<attribute name="Class-Path" value="minecraft_servero.jar jarjar.jar mysql-connector-java-bin.jar plugins/" />
+				<attribute name="Class-Path" value="minecraft_servero.jar jarjar.jar mysql-connector-java-bin.jar plugins/ lib/" />
 			</manifest>
 		</jar>
 	</target>

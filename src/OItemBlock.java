@@ -1,3 +1,4 @@
+
 public class OItemBlock extends OItem {
 
     private int a;
@@ -15,9 +16,9 @@ public class OItemBlock extends OItem {
             return false;
         // CanaryMod: Store blockInfo of the one we clicked
         int blockClickedId = paramOWorld.a(paramInt1, paramInt2, paramInt3);
-        Block blockClicked = new Block(blockClickedId, paramInt1, paramInt2, paramInt3);
+        Block blockClicked = new Block(paramOWorld.world, blockClickedId, paramInt1, paramInt2, paramInt3);
 
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == OBlock.aS.bl)
+        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == OBlock.aT.bn)
             paramInt4 = 0;
         else {
             if (paramInt4 == 0)
@@ -42,14 +43,16 @@ public class OItemBlock extends OItem {
         blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
 
         // CanaryMod: And the block we're about to place
-        Block blockPlaced = new Block(a, paramInt1, paramInt2, paramInt3);
+        Block blockPlaced = new Block(paramOWorld.world, a, paramInt1, paramInt2, paramInt3);
 
         // CanaryMod Store all the old settings 'externally' in case someone changes
         // blockPlaced.
         int oldMaterial = paramOWorld.a(paramInt1, paramInt2, paramInt3);
         int oldData = paramOWorld.b(paramInt1, paramInt2, paramInt3);
 
-        if (paramOWorld.a(a, paramInt1, paramInt2, paramInt3, false)) {
+        if (paramInt2 == 127 && OBlock.m[a].bA.a())
+            return false;
+        if (paramOWorld.a(a, paramInt1, paramInt2, paramInt3, false, paramInt4)) {
             OBlock localOBlock = OBlock.m[a];
             // CanaryMod: take over block placement
             if (paramOWorld.b(paramInt1, paramInt2, paramInt3, a, a(paramOItemStack.h())))
@@ -72,7 +75,7 @@ public class OItemBlock extends OItem {
                 } else {
                     OBlock.m[a].d(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
                     OBlock.m[a].a(paramOWorld, paramInt1, paramInt2, paramInt3, (OEntityLiving) paramOEntityPlayer);
-                    paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bw.c(), (localOBlock.bw.a() + 1.0F) / 2.0F, localOBlock.bw.b() * 0.8F);
+                    paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.by.c(), (localOBlock.by.a() + 1.0F) / 2.0F, localOBlock.by.b() * 0.8F);
                     paramOItemStack.a -= 1;
                 }
 
@@ -83,6 +86,6 @@ public class OItemBlock extends OItem {
 
     @Override
     public String a() {
-        return OBlock.m[a].f();
+        return OBlock.m[a].h();
     }
 }

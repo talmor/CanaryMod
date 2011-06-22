@@ -50,8 +50,8 @@ public class ServerConsoleCommands {
      * found. Returns false if command not found.
      * 
      * @param command
-     * @param player
-     * @param parameters
+     * @param caller
+     * @param args
      * @return
      */
     public static boolean parseServerConsoleCommand(MessageReceiver caller, String command, String[] args) {
@@ -272,7 +272,7 @@ public class ServerConsoleCommands {
                                                       @Override
                                                       void execute(MessageReceiver caller, String[] parameters) {
                                                           if (!etc.getInstance().getTainted())
-                                                              caller.notify(Colors.Gold + "Canary Server Mod Build " + etc.getInstance().getVersion());
+                                                              caller.notify(Colors.Gold + "CanaryMod Build " + etc.getInstance().getVersion());
                                                           else
                                                               caller.notify(Colors.Gold + "Unofficial CanaryMod Build " + etc.getInstance().getVersionStr());
                                                       }

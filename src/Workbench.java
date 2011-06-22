@@ -6,6 +6,7 @@ public class Workbench extends ItemArray<OInventoryCraftResult> implements Inven
         workbench = block;
     }
 
+    @Override
     public void update() {
         throw new UnsupportedOperationException("Not supported. Please use update(Player player)");
         // This is ugly but we kinda need it. :(
@@ -15,10 +16,12 @@ public class Workbench extends ItemArray<OInventoryCraftResult> implements Inven
         workbench.a((OEntityPlayer) player.getUser());
     }
 
+    @Override
     public String getName() {
         return container.getName();
     }
 
+    @Override
     public void setName(String value) {
         container.setName(value);
     }

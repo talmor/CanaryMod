@@ -10,7 +10,7 @@
  * used exactly as it is in getTargetBlock, for instance.
  * 
  * WARNING: Servers with map coordinate bugs may experience a one or more block
- * inaccuracy when in affected parts of the world. A good way to test areas for
+ * inaccuracy when in affected parts of the dimension. A good way to test areas for
  * the offset bug is to use Chrisinajar's Magic Carpet plugin.
  * 
  * Contact: For questions, contact Ho0ber@gmail.com or channel #hey0 on
@@ -114,7 +114,7 @@ public class HitBlox {
         while ((getNextBlock() != null) && (getCurBlock().getType() == 0))
             ;
         if (getCurBlock() != null)
-            etc.getServer().setBlockAt(type, target_x, target_y, target_z);
+            player_loc.getWorld().setBlockAt(type, target_x, target_y, target_z);
     }
 
     /**
@@ -141,7 +141,7 @@ public class HitBlox {
         while ((getNextBlock() != null) && (getCurBlock().getType() == 0))
             ;
         if (getCurBlock() != null)
-            etc.getServer().setBlockAt(type, last_x, last_y, last_z);
+            player_loc.getWorld().setBlockAt(type, last_x, last_y, last_z);
     }
 
     /**
@@ -171,7 +171,7 @@ public class HitBlox {
         if (length > range)
             return null;
 
-        return etc.getServer().getBlockAt(target_x, target_y, target_z);
+        return player_loc.getWorld().getBlockAt(target_x, target_y, target_z);
     }
 
     /**
@@ -183,7 +183,7 @@ public class HitBlox {
         if (length > range)
             return null;
         else
-            return etc.getServer().getBlockAt(target_x, target_y, target_z);
+            return player_loc.getWorld().getBlockAt(target_x, target_y, target_z);
     }
 
     /**
@@ -193,7 +193,7 @@ public class HitBlox {
      */
     public void setCurBlock(int type) {
         if (getCurBlock() != null)
-            etc.getServer().setBlockAt(type, target_x, target_y, target_z);
+            player_loc.getWorld().setBlockAt(type, target_x, target_y, target_z);
     }
 
     /**
@@ -202,7 +202,7 @@ public class HitBlox {
      * @return Block
      */
     public Block getLastBlock() {
-        return etc.getServer().getBlockAt(last_x, last_y, last_z);
+        return player_loc.getWorld().getBlockAt(last_x, last_y, last_z);
     }
 
     /**
@@ -212,6 +212,6 @@ public class HitBlox {
      */
     public void setLastBlock(int type) {
         if (getLastBlock() != null)
-            etc.getServer().setBlockAt(type, last_x, last_y, last_z);
+            player_loc.getWorld().setBlockAt(type, last_x, last_y, last_z);
     }
 }

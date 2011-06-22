@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class OBlockButton extends OBlock {
     protected OBlockButton(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, OMaterial.n);
+        super(paramInt1, paramInt2, OMaterial.o);
         a(true);
     }
 
@@ -12,13 +12,23 @@ public class OBlockButton extends OBlock {
     }
 
     @Override
-    public int b() {
+    public int c() {
         return 20;
     }
 
     @Override
     public boolean a() {
         return false;
+    }
+
+    @Override
+    public boolean b() {
+        return false;
+    }
+
+    @Override
+    public boolean e(OWorld var1, int var2, int var3, int var4, int var5) {
+        return var5 == 2 && var1.d(var2, var3, var4 + 1) ? true : (var5 == 3 && var1.d(var2, var3, var4 - 1) ? true : (var5 == 4 && var1.d(var2 + 1, var3, var4) ? true : var5 == 5 && var1.d(var2 - 1, var3, var4)));
     }
 
     @Override
@@ -80,7 +90,7 @@ public class OBlockButton extends OBlock {
                 j = 1;
 
             if (j != 0) {
-                a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+                b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
                 paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
             }
         }
@@ -88,7 +98,7 @@ public class OBlockButton extends OBlock {
 
     private boolean h(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         if (!a(paramOWorld, paramInt1, paramInt2, paramInt3)) {
-            a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+            b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
             return false;
         }
@@ -131,7 +141,7 @@ public class OBlockButton extends OBlock {
         if (k == 0)
             return true;
         // CanaryMod: Allow button to provide power
-        int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(bl, paramInt1, paramInt2, paramInt3), 0, 1);
+        int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), 0, 1);
         if (change == 0)
             return true;
 
@@ -141,19 +151,19 @@ public class OBlockButton extends OBlock {
 
         paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, 0.6F);
 
-        paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
+        paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
         if (j == 1)
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
         else if (j == 2)
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
         else if (j == 3)
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
         else if (j == 4)
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
         else
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
 
-        paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
+        paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
 
         return true;
     }
@@ -162,24 +172,24 @@ public class OBlockButton extends OBlock {
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
         if ((i & 0x8) > 0) {
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
             int j = i & 0x7;
             if (j == 1)
-                paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bl);
+                paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
             else if (j == 2)
-                paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bl);
+                paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
             else if (j == 3)
-                paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bl);
+                paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
             else if (j == 4)
-                paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bl);
+                paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
             else
-                paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+                paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
         }
         super.b(paramOWorld, paramInt1, paramInt2, paramInt3);
     }
 
     @Override
-    public boolean b(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean a(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         return (paramOIBlockAccess.b(paramInt1, paramInt2, paramInt3) & 0x8) > 0;
     }
 
@@ -202,37 +212,37 @@ public class OBlockButton extends OBlock {
     }
 
     @Override
-    public boolean c() {
+    public boolean d() {
         return true;
     }
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        if (paramOWorld.v)
+        if (paramOWorld.B)
             return;
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
         if ((i & 0x8) == 0)
             return;
         // CanaryMod: Allow button to provide power
-        int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(bl, paramInt1, paramInt2, paramInt3), 1, 0);
+        int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), 1, 0);
         if (change > 0)
             return;
 
         
         paramOWorld.c(paramInt1, paramInt2, paramInt3, i & 0x7);
 
-        paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
+        paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
         int j = i & 0x7;
         if (j == 1)
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
         else if (j == 2)
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
         else if (j == 3)
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
         else if (j == 4)
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
         else
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
 
         paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, 0.5F);
         paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);

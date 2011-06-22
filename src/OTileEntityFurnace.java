@@ -126,7 +126,7 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
         if (a > 0)
             a -= 1;
 
-        if (!d.v) {
+        if (!d.B) {
             if ((a == 0) && (h())) {
                 b = (a = a(h[1]));
                 if (a > 0) {
@@ -162,7 +162,7 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
     private boolean h() {
         if (h[0] == null)
             return false;
-        OItemStack localOItemStack = OFurnaceRecipes.a().a(h[0].a().bd);
+        OItemStack localOItemStack = OFurnaceRecipes.a().a(h[0].a().be);
         if (localOItemStack == null)
             return false;
         if (h[2] == null)
@@ -178,7 +178,7 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
         if (!h())
             return;
 
-        OItemStack localOItemStack = OFurnaceRecipes.a().a(h[0].a().bd);
+        OItemStack localOItemStack = OFurnaceRecipes.a().a(h[0].a().be);
         if (h[2] == null)
             h[2] = localOItemStack.j();
         else if (h[2].c == localOItemStack.c)
@@ -192,21 +192,21 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
     private int a(OItemStack paramOItemStack) {
         if (paramOItemStack == null)
             return 0;
-        int i = paramOItemStack.a().bd;
+        int i = paramOItemStack.a().be;
 
-        if ((i < 256) && (OBlock.m[i].by == OMaterial.c))
+        if ((i < 256) && (OBlock.m[i].bA == OMaterial.d))
             return 300;
 
-        if (i == OItem.B.bd)
+        if (i == OItem.B.be)
             return 100;
 
-        if (i == OItem.k.bd)
+        if (i == OItem.k.be)
             return 1600;
 
-        if (i == OItem.aw.bd)
+        if (i == OItem.aw.be)
             return 20000;
 
-        if (i == OBlock.y.bl)
+        if (i == OBlock.z.bn)
             return 100;
 
         return 0;
@@ -214,7 +214,7 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
 
     @Override
     public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (d.m(e, f, g) != this)
+        if (d.n(e, f, g) != this)
             return false;
         return paramOEntityPlayer.d(e + 0.5D, f + 0.5D, g + 0.5D) <= 64.0D;
     }

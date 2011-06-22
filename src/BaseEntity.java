@@ -28,7 +28,7 @@ public class BaseEntity {
      * @return id
      */
     public int getId() {
-        return entity.aC;
+        return entity.aG;
     }
 
     /**
@@ -70,7 +70,7 @@ public class BaseEntity {
      * @return x
      */
     public double getX() {
-        return entity.aL;
+        return entity.aP;
     }
 
     /**
@@ -89,7 +89,7 @@ public class BaseEntity {
      * @return y
      */
     public double getY() {
-        return entity.aM;
+        return entity.aQ;
     }
 
     /**
@@ -108,7 +108,7 @@ public class BaseEntity {
      * @return z
      */
     public double getZ() {
-        return entity.aN;
+        return entity.aR;
     }
 
     /**
@@ -127,7 +127,7 @@ public class BaseEntity {
      * @return pitch
      */
     public float getPitch() {
-        return entity.aS;
+        return entity.aW;
     }
 
     /**
@@ -146,7 +146,7 @@ public class BaseEntity {
      * @return rotation
      */
     public float getRotation() {
-        return entity.aR;
+        return entity.aV;
     }
 
     /**
@@ -240,7 +240,7 @@ public class BaseEntity {
      * @return
      */
     public int getBaseAirTicks() {
-        return getEntity().bv;
+        return getEntity().bz;
     }
 
     /**
@@ -249,7 +249,7 @@ public class BaseEntity {
      * @param ticks
      */
     public void setBaseAirTicks(int ticks) {
-        getEntity().bv = ticks;
+        getEntity().bz = ticks;
     }
 
     /**
@@ -262,7 +262,7 @@ public class BaseEntity {
      * @return
      */
     public int getNoDamageTicks() {
-        return getEntity().bx;
+        return getEntity().bB;
     }
 
     /**
@@ -275,7 +275,7 @@ public class BaseEntity {
      * @param ticks
      */
     public void setNoDamageTicks(int ticks) {
-        getEntity().bx = ticks;
+        getEntity().bB = ticks;
     }
 
     /**
@@ -287,7 +287,7 @@ public class BaseEntity {
      * @return
      */
     public int getAirTicks() {
-        return getEntity().by;
+        return getEntity().bC;
     }
 
     /**
@@ -299,7 +299,7 @@ public class BaseEntity {
      * @return
      */
     public void setAirTicks(int ticks) {
-        getEntity().by = ticks;
+        getEntity().bC = ticks;
     }
 
     /**
@@ -311,7 +311,7 @@ public class BaseEntity {
      * @return
      */
     public int getFireTicks() {
-        return getEntity().bu;
+        return getEntity().by;
     }
 
     /**
@@ -323,6 +323,14 @@ public class BaseEntity {
      * @return
      */
     public void setFireTicks(int ticks) {
-        getEntity().bu = ticks;
+        getEntity().by = ticks;
+    }
+
+    /**
+     * Gets the World object from this entity.
+     * @return the World this entity is in
+     */
+    public World getWorld() {
+        return getEntity().aL.world;
     }
 }

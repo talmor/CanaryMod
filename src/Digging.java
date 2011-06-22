@@ -9,7 +9,7 @@ public class Digging extends OItemInWorldManager {
      * 
      * @param world
      */
-    public Digging(OWorld world) {
+    public Digging(OWorldServer world) {
         super(world);
     }
 
@@ -19,7 +19,7 @@ public class Digging extends OItemInWorldManager {
      * @param world
      * @param player
      */
-    public Digging(OWorld world, OEntityPlayerMP player) {
+    public Digging(OWorldServer world, OEntityPlayerMP player) {
         this(world);
         a = player;
     }
@@ -35,11 +35,12 @@ public class Digging extends OItemInWorldManager {
      * @return
      */
     @Override
-    public boolean d(int x, int y, int z) {
-        Block block = etc.getServer().getBlockAt(x, y, z);
+    public boolean c(int x, int y, int z) {
+        //Block block = etc.getServer().getBlockAt(x, y, z);
+        Block block = ((OEntityPlayerMP) a).getPlayer().getWorld().getBlockAt(x, y, z);
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, ((OEntityPlayerMP) a).getPlayer(), block))
             return true;
-        return super.d(x, y, z);
+        return super.c(x, y, z);
     }
 
     /**
@@ -49,6 +50,8 @@ public class Digging extends OItemInWorldManager {
      * @param player
      * @param world
      * @param item
+     * @param blockToPlace
+     * @param blockClicked 
      * @return
      */
     public boolean a(OEntityPlayer player, OWorld world, OItemStack item, Block blockToPlace, Block blockClicked) {

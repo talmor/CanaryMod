@@ -2,17 +2,19 @@
 public class OBlockNote extends OBlockContainer {
 
     public OBlockNote(int paramInt) {
-        super(paramInt, 74, OMaterial.c);
+        super(paramInt, 74, OMaterial.d);
     }
 
+    @Override
     public int a(int paramInt) {
-        return bk;
+        return bm;
     }
 
+    @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if ((paramInt4 > 0) && (OBlock.m[paramInt4].c())) {
-            boolean bool = paramOWorld.o(paramInt1, paramInt2, paramInt3);
-            OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.m(paramInt1, paramInt2, paramInt3);
+        if ((paramInt4 > 0) && (OBlock.m[paramInt4].d())) {
+            boolean bool = paramOWorld.q(paramInt1, paramInt2, paramInt3);
+            OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.n(paramInt1, paramInt2, paramInt3);
             if (localOTileEntityNote.b != bool) {
                 if (bool) {
                     localOTileEntityNote.a(paramOWorld, paramInt1, paramInt2, paramInt3);
@@ -22,28 +24,32 @@ public class OBlockNote extends OBlockContainer {
         }
     }
 
+    @Override
     public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntityPlayer paramOEntityPlayer) {
-        if (paramOWorld.v) {
+        if (paramOWorld.B) {
             return true;
         }
-        OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.m(paramInt1, paramInt2, paramInt3);
+        OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.n(paramInt1, paramInt2, paramInt3);
         localOTileEntityNote.a();
         localOTileEntityNote.a(paramOWorld, paramInt1, paramInt2, paramInt3);
         return true;
     }
 
+    @Override
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntityPlayer paramOEntityPlayer) {
-        if (paramOWorld.v) {
+        if (paramOWorld.B) {
             return;
         }
-        OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.m(paramInt1, paramInt2, paramInt3);
+        OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.n(paramInt1, paramInt2, paramInt3);
         localOTileEntityNote.a(paramOWorld, paramInt1, paramInt2, paramInt3);
     }
 
+    @Override
     protected OTileEntity a_() {
         return new OTileEntityNote();
     }
 
+    @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5) {
         float f = (float) Math.pow(2.0D, (paramInt5 - 12) / 12.0D);
 

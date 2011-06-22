@@ -16,31 +16,32 @@ public class OBiomeGenBase {
     public static final OBiomeGenBase j = new OBiomeGenDesert().b(16772499).a("Ice Desert").b().e().a(12899129);
     public static final OBiomeGenBase k = new OBiomeGenBase().b(5762041).a("Tundra").b().a(12899129);
     public static final OBiomeGenBase l = new OBiomeGenHell().b(16711680).a("Hell").e();
-    public String                       m;
-    public int                          n;
-    public byte                         o = (byte) OBlock.u.bl;
-    public byte                         p = (byte) OBlock.v.bl;
-    public int                          q = 5169201;
+    public static final OBiomeGenBase m = new OBiomeGenSky().b(8421631).a("Sky").e();
+    public String                       n;
+    public int                          o;
+    public byte                         p = (byte) OBlock.v.bn;
+    public byte                         q = (byte) OBlock.w.bn;
+    public int                          r = 5169201;
 
-    protected List                      r = new ArrayList();
     protected List                      s = new ArrayList();
     protected List                      t = new ArrayList();
-    private boolean                     u;
-    private boolean                     v = true;
-    private static OBiomeGenBase[]    w = new OBiomeGenBase[4096];
+    protected List                      u = new ArrayList();
+    private boolean                     v;
+    private boolean                     w = true;
+    private static OBiomeGenBase[]    x = new OBiomeGenBase[4096];
 
     private OBiomeGenBase e() {
-        v = false;
+        w = false;
         return this;
     }
 
     public static void a() {
         for (int i1 = 0; i1 < 64; i1++)
             for (int i2 = 0; i2 < 64; i2++)
-                w[(i1 + i2 * 64)] = a(i1 / 63.0F, i2 / 63.0F);
+                x[(i1 + i2 * 64)] = a(i1 / 63.0F, i2 / 63.0F);
 
-        h.o = (h.p = (byte) OBlock.E.bl);
-        j.o = (j.p = (byte) OBlock.E.bl);
+        h.p = (h.q = (byte) OBlock.F.bn);
+        j.p = (j.q = (byte) OBlock.F.bn);
     }
 
     public OWorldGenerator a(Random paramRandom) {
@@ -50,29 +51,29 @@ public class OBiomeGenBase {
     }
 
     protected OBiomeGenBase b() {
-        u = true;
+        v = true;
         return this;
     }
 
     protected OBiomeGenBase a(String paramString) {
-        m = paramString;
+        n = paramString;
         return this;
     }
 
     protected OBiomeGenBase a(int paramInt) {
-        q = paramInt;
+        r = paramInt;
         return this;
     }
 
     protected OBiomeGenBase b(int paramInt) {
-        n = paramInt;
+        o = paramInt;
         return this;
     }
 
     public static OBiomeGenBase a(double paramDouble1, double paramDouble2) {
         int i1 = (int) (paramDouble1 * 63.0D);
         int i2 = (int) (paramDouble2 * 63.0D);
-        return w[(i1 + i2 * 64)];
+        return x[(i1 + i2 * 64)];
     }
 
     public static OBiomeGenBase a(float paramFloat1, float paramFloat2) {
@@ -116,11 +117,11 @@ public class OBiomeGenBase {
     }
 
     public boolean c() {
-        return u;
+        return v;
     }
 
     public boolean d() {
-        return u?false:v;
+        return v?false:w;
     }
 
     static {

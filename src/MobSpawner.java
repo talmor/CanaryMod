@@ -1,3 +1,4 @@
+
 /**
  * MobSpawner.java - Wrapper for mob spawners.
  * 
@@ -16,22 +17,32 @@ public class MobSpawner implements ComplexBlock {
         this.spawner = spawner;
     }
 
+    @Override
     public int getX() {
         return spawner.e;
     }
 
+    @Override
     public int getY() {
         return spawner.f;
     }
 
+    @Override
     public int getZ() {
         return spawner.g;
     }
 
+    @Override
     public Block getBlock() {
-        return etc.getServer().getBlockAt(getX(), getY(), getZ());
+        return getWorld().getBlockAt(getX(), getY(), getZ());
     }
 
+    @Override
+    public World getWorld() {
+        return spawner.d.world;
+    }
+
+    @Override
     public void update() {
         spawner.i();
     }

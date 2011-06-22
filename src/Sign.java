@@ -1,18 +1,20 @@
+
 /**
  * Sign.java - Interface to signs
  * 
  * @author James
  */
 public class Sign implements ComplexBlock {
+
     private OTileEntitySign sign;
 
     /**
      * Creates a sign interface
      * 
-     * @param localav
+     * @param localSign
      */
-    public Sign(OTileEntitySign localay) {
-        sign = localay;
+    public Sign(OTileEntitySign localSign) {
+        sign = localSign;
     }
 
     /**
@@ -41,22 +43,32 @@ public class Sign implements ComplexBlock {
         return "";
     }
 
+    @Override
     public int getX() {
         return sign.e;
     }
 
+    @Override
     public int getY() {
         return sign.f;
     }
 
+    @Override
     public int getZ() {
         return sign.g;
     }
 
+    @Override
     public Block getBlock() {
-        return etc.getServer().getBlockAt(getX(), getY(), getZ());
+        return getWorld().getBlockAt(getX(), getY(), getZ());
     }
 
+    @Override
+    public World getWorld() {
+        return sign.d.world;
+    }
+
+    @Override
     public void update() {
         sign.i();
     }

@@ -4,7 +4,7 @@ public class OItemMinecart extends OItem {
 
     public OItemMinecart(int paramInt1, int paramInt2) {
         super(paramInt1);
-        be = 1;
+        bf = 1;
         a = paramInt2;
     }
 
@@ -13,9 +13,9 @@ public class OItemMinecart extends OItem {
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
 
         if (OBlockRail.c(i)) {
-            if (!paramOWorld.v) {
+            if (!paramOWorld.B) {
                 // CanaryMod: placing of a mine cart
-                Block block = new Block(i, paramInt1, paramInt2, paramInt3);
+                Block block = new Block(paramOWorld.world, i, paramInt1, paramInt2, paramInt3);
                 Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
                 if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, block, block, new Item(paramOItemStack)))
                     return false;

@@ -42,7 +42,8 @@ public class ONetworkListenThread {
             e = new ONetworkAcceptThread(this, "Listen thread", paramMinecraftServer);
             e.start();
         } catch (IOException ex) {
-            a.log(Level.SEVERE, null, ex);
+            a.log(Level.SEVERE, "Severe exception, Canary will now exit", ex);
+            System.exit(1);
         }
     }
 
@@ -68,6 +69,8 @@ public class ONetworkListenThread {
             }
             if (loginHandler.c)
                 g.remove(i--);
+
+            loginHandler.b.a();
         }
         ONetServerHandler handler;
         for (int i = 0; i < h.size(); i++) {
@@ -80,6 +83,8 @@ public class ONetworkListenThread {
             }
             if (handler.c)
                 h.remove(i--);
+
+            handler.b.a();
         }
     }
 }

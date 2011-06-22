@@ -17,7 +17,7 @@ public class OServerConfigurationManager {
     // CanaryMod set list to contain <OEntityPlayerMP> objects.
     public List<OEntityPlayerMP> b = new ArrayList();
     private MinecraftServer      c;
-    private OPlayerManager       d;
+    private OPlayerManager[]     d = new OPlayerManager[2];
     private int                  e;
     // CanaryMod set these to Set<String> to remove errors and warnings.
     private Set<String>          f = new HashSet();
@@ -36,7 +36,7 @@ public class OServerConfigurationManager {
         etc.getInstance().loadData();
         a.info("Note: your current classpath is: " + System.getProperty("java.class.path", "*UNKNOWN*"));
         if (!etc.getInstance().getTainted())
-            a.info("Canary Server Mod Build " + etc.getInstance().getVersion());
+            a.info("Canary Test Build: Crow b1.3." + etc.getInstance().getVersion());
         else
             a.info("CanaryMod Build Information: " + etc.getInstance().getVersionStr());
         c = paramMinecraftServer;
@@ -44,9 +44,11 @@ public class OServerConfigurationManager {
         k = paramMinecraftServer.a("banned-ips.txt");
         l = paramMinecraftServer.a("ops.txt");
         m = paramMinecraftServer.a("white-list.txt");
-        d = new OPlayerManager(paramMinecraftServer);
         e = paramMinecraftServer.d.a("max-players", 20);
         o = paramMinecraftServer.d.a("white-list", false);
+        int i1 = paramMinecraftServer.d.a("view-distance", 10);
+        this.d[0] = new OPlayerManager(paramMinecraftServer, 0, i1);
+        this.d[1] = new OPlayerManager(paramMinecraftServer, -1, i1);
         g();
         i();
         k();
@@ -57,41 +59,58 @@ public class OServerConfigurationManager {
         n();
     }
 
-    public void a(OWorldServer paramOWorldServer) {
-        n = paramOWorldServer.p().d();
-    }
-
-    public int a() {
-        return d.b();
+    public void a(OWorldServer[] paramArrayOfOWorldServer) {
+        n = paramArrayOfOWorldServer[0].p().d();
     }
 
     public void a(OEntityPlayerMP paramOEntityPlayerMP) {
-        b.add(paramOEntityPlayerMP);
-        n.b(paramOEntityPlayerMP);
+        this.d[0].b(paramOEntityPlayerMP);
+        this.d[1].b(paramOEntityPlayerMP);
+        a(paramOEntityPlayerMP.s).a(paramOEntityPlayerMP);
 
-        c.e.w.c((int) paramOEntityPlayerMP.aL >> 4, (int) paramOEntityPlayerMP.aN >> 4);
+        OWorldServer localOWorldServer = this.c.a(paramOEntityPlayerMP.s);
+        localOWorldServer.C.c((int)paramOEntityPlayerMP.aP >> 4, (int)paramOEntityPlayerMP.aR >> 4);
+      }
 
-        while (!c.e.a(paramOEntityPlayerMP, paramOEntityPlayerMP.aV).isEmpty())
-            paramOEntityPlayerMP.a(paramOEntityPlayerMP.aL, paramOEntityPlayerMP.aM + 1.0D, paramOEntityPlayerMP.aN);
-        c.e.b(paramOEntityPlayerMP);
-        d.a(paramOEntityPlayerMP);
-        // CanaryMod: Handle login (send MOTD and call hook)
-        String[] motd = etc.getInstance().getMotd();
-        if (!(motd.length == 1 && motd[0].equals("")))
-            for (String str : etc.getInstance().getMotd())
-                paramOEntityPlayerMP.a.b(new OPacket3Chat(str));
-        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, paramOEntityPlayerMP.getPlayer());
+    public int a() {
+        return d[0].c();
+    }
+    
+    private OPlayerManager a(int paramInt) {
+        return paramInt == -1 ? this.d[1] : this.d[0];
     }
 
     public void b(OEntityPlayerMP paramOEntityPlayerMP) {
-        d.c(paramOEntityPlayerMP);
+        this.n.b(paramOEntityPlayerMP);
+    }
+    
+    public void c(OEntityPlayerMP paramOEntityPlayerMP) {
+        b.add(paramOEntityPlayerMP);
+        OWorldServer localOWorldServer = c.a(paramOEntityPlayerMP.s);
+        localOWorldServer.C.c((int)paramOEntityPlayerMP.aP >> 4, (int)paramOEntityPlayerMP.aR >> 4);
+
+        while (!localOWorldServer.a(paramOEntityPlayerMP, paramOEntityPlayerMP.aZ).isEmpty()) {
+          paramOEntityPlayerMP.a(paramOEntityPlayerMP.aP, paramOEntityPlayerMP.aQ + 1.0D, paramOEntityPlayerMP.aR);
+        }
+        localOWorldServer.b(paramOEntityPlayerMP);
+        a(paramOEntityPlayerMP.s).a(paramOEntityPlayerMP);
+    	// CanaryMod: Handle login (send MOTD and call hook)
+    	String[] motd = etc.getInstance().getMotd();
+    	if (!(motd.length == 1 && motd[0].equals("")))
+    		for (String str : motd)
+    	        paramOEntityPlayerMP.a.b(new OPacket3Chat(str));
+    	etc.getLoader().callHook(PluginLoader.Hook.LOGIN, paramOEntityPlayerMP.getPlayer());
     }
 
-    public void c(OEntityPlayerMP paramOEntityPlayerMP) {
+    public void d(OEntityPlayerMP oemp) {
+        a(oemp.s).c(oemp);
+    }
+
+    public void e(OEntityPlayerMP paramOEntityPlayerMP) {
         n.a(paramOEntityPlayerMP);
-        c.e.e(paramOEntityPlayerMP);
+        c.a(paramOEntityPlayerMP.s).e(paramOEntityPlayerMP);
         b.remove(paramOEntityPlayerMP);
-        d.b(paramOEntityPlayerMP);
+        a(paramOEntityPlayerMP.s).b(paramOEntityPlayerMP);
     }
 
     public OEntityPlayerMP a(ONetLoginHandler paramONetLoginHandler, String paramString1) {
@@ -104,10 +123,10 @@ public class OServerConfigurationManager {
             return null;
         }
         // CanaryMod: whole section below is modified to handle whitelists etc
-        OEntityPlayerMP temp = new OEntityPlayerMP(c, c.e, paramString1, new OItemInWorldManager(c.e));
+        OEntityPlayerMP temp = new OEntityPlayerMP(c, c.a(0), paramString1, new OItemInWorldManager(c.a(0)));
         Player player = temp.getPlayer();
 
-        String str = paramONetLoginHandler.b.b().toString();
+        String str = paramONetLoginHandler.b.c().toString();
         str = str.substring(str.indexOf("/") + 1);
         str = str.substring(0, str.indexOf(":"));
         if (g.contains(str)) {
@@ -186,21 +205,22 @@ public class OServerConfigurationManager {
         return builder.toString();
     }
 
-    public OEntityPlayerMP d(OEntityPlayerMP paramOEntityPlayerMP) {
-        c.k.a(paramOEntityPlayerMP);
-        c.k.b(paramOEntityPlayerMP);
-        d.b(paramOEntityPlayerMP);
+    public OEntityPlayerMP a(OEntityPlayerMP paramOEntityPlayerMP, int var2) {
+        c.b(paramOEntityPlayerMP.s).a(paramOEntityPlayerMP);
+        c.b(paramOEntityPlayerMP.s).b(paramOEntityPlayerMP);
+        a(paramOEntityPlayerMP.s).b(paramOEntityPlayerMP);
         b.remove(paramOEntityPlayerMP);
-        c.e.f(paramOEntityPlayerMP);
+        c.a(paramOEntityPlayerMP.s).f(paramOEntityPlayerMP);
 
-        OChunkCoordinates localOChunkCoordinates1 = paramOEntityPlayerMP.K();
-        
-        OEntityPlayerMP localOEntityPlayerMP = new OEntityPlayerMP(c, c.e, paramOEntityPlayerMP.r, new OItemInWorldManager(c.e));
-        localOEntityPlayerMP.aC = paramOEntityPlayerMP.aC;
+        OChunkCoordinates localOChunkCoordinates1 = paramOEntityPlayerMP.M();
+        paramOEntityPlayerMP.s = var2;
+        OEntityPlayerMP localOEntityPlayerMP = new OEntityPlayerMP(c, c.a(paramOEntityPlayerMP.s), paramOEntityPlayerMP.r, new OItemInWorldManager(c.a(paramOEntityPlayerMP.s)));
+        localOEntityPlayerMP.aG = paramOEntityPlayerMP.aG;
         localOEntityPlayerMP.a = paramOEntityPlayerMP.a;
 
+        OWorldServer ows = c.a(paramOEntityPlayerMP.s);
         if (localOChunkCoordinates1 != null) {
-            OChunkCoordinates localOChunkCoordinates2 = OEntityPlayer.a(c.e, localOChunkCoordinates1);
+            OChunkCoordinates localOChunkCoordinates2 = OEntityPlayer.a(c.a(paramOEntityPlayerMP.s), localOChunkCoordinates1);
             if (localOChunkCoordinates2 != null) {
                 localOEntityPlayerMP.c(localOChunkCoordinates2.a + 0.5F, localOChunkCoordinates2.b + 0.1F, localOChunkCoordinates2.c + 0.5F, 0.0F, 0.0F);
                 localOEntityPlayerMP.a(localOChunkCoordinates1);
@@ -209,16 +229,17 @@ public class OServerConfigurationManager {
 
         }
 
-        c.e.w.c((int) localOEntityPlayerMP.aL >> 4, (int) localOEntityPlayerMP.aN >> 4);
+        ows.C.c((int) localOEntityPlayerMP.aP >> 4, (int) localOEntityPlayerMP.aR >> 4);
 
-        while (!c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.aV).isEmpty())
-            localOEntityPlayerMP.a(localOEntityPlayerMP.aL, localOEntityPlayerMP.aM + 1.0D, localOEntityPlayerMP.aN);
+        while (!ows.a(localOEntityPlayerMP, localOEntityPlayerMP.aZ).isEmpty())
+            localOEntityPlayerMP.a(localOEntityPlayerMP.aP, localOEntityPlayerMP.aQ + 1.0D, localOEntityPlayerMP.aR);
 
-        localOEntityPlayerMP.a.b(new OPacket9Respawn());
-        localOEntityPlayerMP.a.a(localOEntityPlayerMP.aL, localOEntityPlayerMP.aM, localOEntityPlayerMP.aN, localOEntityPlayerMP.aR, localOEntityPlayerMP.aS);
+        localOEntityPlayerMP.a.b(new OPacket9Respawn((byte) localOEntityPlayerMP.s));
+        localOEntityPlayerMP.a.a(localOEntityPlayerMP.aP, localOEntityPlayerMP.aQ, localOEntityPlayerMP.aR, localOEntityPlayerMP.aV, localOEntityPlayerMP.aW);
 
-        d.a(localOEntityPlayerMP);
-        c.e.b(localOEntityPlayerMP);
+        a(localOEntityPlayerMP, ows);
+        a(localOEntityPlayerMP.s).a(localOEntityPlayerMP);
+        ows.b(localOEntityPlayerMP);
         b.add(localOEntityPlayerMP);
 
         localOEntityPlayerMP.o();
@@ -226,18 +247,74 @@ public class OServerConfigurationManager {
         return localOEntityPlayerMP;
     }
 
-    public void b() {
-        d.a();
+    public void f(OEntityPlayerMP var1) {
+        OWorldServer var2 = this.c.a(var1.s);
+        boolean var3 = false;
+        byte var11;
+        if (var1.s == -1)
+            var11 = 0;
+        else
+            var11 = -1;
+
+        var1.s = var11;
+        OWorldServer var4 = this.c.a(var1.s);
+        var1.a.b((OPacket) (new OPacket9Respawn((byte) var1.s)));
+        var2.f(var1);
+        var1.bh = false;
+        double var5 = var1.aP;
+        double var7 = var1.aR;
+        double var9 = 8.0D;
+        if (var1.s == -1) {
+            var5 /= var9;
+            var7 /= var9;
+            var1.c(var5, var1.aQ, var7, var1.aV, var1.aW);
+            if (var1.S())
+                var2.a(var1, false);
+        } else {
+            var5 *= var9;
+            var7 *= var9;
+            var1.c(var5, var1.aQ, var7, var1.aV, var1.aW);
+            if (var1.S())
+                var2.a(var1, false);
+        }
+
+        if (var1.S()) {
+            var4.b(var1);
+            var1.c(var5, var1.aQ, var7, var1.aV, var1.aW);
+            var4.a(var1, false);
+            var4.C.a = true;
+            (new OTeleporter()).a(var4, var1);
+            var4.C.a = false;
+        }
+
+        this.a(var1);
+        var1.a.a(var1.aP, var1.aQ, var1.aR, var1.aV, var1.aW);
+        var1.a((OWorld) var4);
+        this.a(var1, var4);
+        this.g(var1);
     }
 
-    public void a(int paramInt1, int paramInt2, int paramInt3) {
-        d.a(paramInt1, paramInt2, paramInt3);
+    public void b() {
+        for (OPlayerManager opm: d)
+            opm.b();
+    }
+
+    public void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        a(paramInt4).a(paramInt1, paramInt2, paramInt3);
     }
 
     public void a(OPacket paramOPacket) {
         for (int i1 = 0; i1 < b.size(); i1++) {
             OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
             localOEntityPlayerMP.a.b(paramOPacket);
+        }
+    }
+
+    public void a(OPacket paramOPacket, int world) {
+        for (int i1 = 0; i1 < b.size(); i1++) {
+            OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
+            if (localOEntityPlayerMP.s == world)
+                localOEntityPlayerMP.a.b(paramOPacket);
         }
     }
 
@@ -401,14 +478,20 @@ public class OServerConfigurationManager {
             localOEntityPlayerMP.a.b(new OPacket3Chat(paramString2));
     }
 
-    public void a(double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, OPacket paramOPacket) {
+    public void a(double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, int paramInt, OPacket paramOPacket) {
+        a((OEntityPlayer) null, paramDouble1, paramDouble2, paramDouble3, paramDouble4, paramInt, paramOPacket);
+    }
+
+    public void a(OEntityPlayer oep, double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, int paramInt, OPacket paramOPacket) {
         for (int i1 = 0; i1 < b.size(); i1++) {
             OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
-            double d1 = paramDouble1 - localOEntityPlayerMP.aL;
-            double d2 = paramDouble2 - localOEntityPlayerMP.aM;
-            double d3 = paramDouble3 - localOEntityPlayerMP.aN;
-            if (d1 * d1 + d2 * d2 + d3 * d3 < paramDouble4 * paramDouble4)
-                localOEntityPlayerMP.a.b(paramOPacket);
+            if (localOEntityPlayerMP != oep && localOEntityPlayerMP.s == paramInt) {
+                double d1 = paramDouble1 - localOEntityPlayerMP.aP;
+                double d2 = paramDouble2 - localOEntityPlayerMP.aQ;
+                double d3 = paramDouble3 - localOEntityPlayerMP.aR;
+                if (d1 * d1 + d2 * d2 + d3 * d3 < paramDouble4 * paramDouble4)
+                    localOEntityPlayerMP.a.b(paramOPacket);
+            }
         }
     }
 
@@ -436,10 +519,6 @@ public class OServerConfigurationManager {
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3, OTileEntity paramOTileEntity) {
-        // CanaryMod: fix sign updating in beta 1.1_02
-        // Check if bg (TileEntity) is a Sign
-        if (paramOTileEntity instanceof OTileEntitySign)
-            d.sendPacketToChunk(((OTileEntitySign) paramOTileEntity).e(), paramInt1, paramInt2, paramInt3);
     }
 
     public void k(String paramString) {
@@ -458,5 +537,17 @@ public class OServerConfigurationManager {
 
     public void f() {
         m();
+    }
+
+    public void a(OEntityPlayerMP var1, OWorldServer var2) {
+        var1.a.b((OPacket) (new OPacket4UpdateTime(var2.m())));
+        if (var2.v())
+            var1.a.b((OPacket) (new OPacket70Bed(1)));
+
+    }
+
+    public void g(OEntityPlayerMP var1) {
+        var1.a(var1.j);
+        var1.B();
     }
 }
