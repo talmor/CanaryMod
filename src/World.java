@@ -226,7 +226,7 @@ public class World {
         OWorldInfo info = world.x;
         Location spawn = new Location();
         spawn.x = info.c() + 0.5D;
-        spawn.y = world.f(info.c(), info.e()) + 1.5D;;
+        spawn.y = world.f(info.c(), info.e()) + 1.5D;
         spawn.z = info.e() + 0.5D;
         spawn.rotX = 0.0F;
         spawn.rotY = 0.0F;

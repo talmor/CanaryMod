@@ -19,7 +19,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public double               x;
     public double               y;
     protected boolean           z;
-    private OChunkCoordinates   A;
+    public OChunkCoordinates    A;
     private int                 a;
     public float                B;
     public float                C;

@@ -566,6 +566,8 @@ public class Block {
             return false;
         if (z != other.z)
             return false;
+        if (!world.equals(other.world))
+            return false;
         return true;
     }
 

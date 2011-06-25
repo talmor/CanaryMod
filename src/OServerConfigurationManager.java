@@ -36,7 +36,7 @@ public class OServerConfigurationManager {
         etc.getInstance().loadData();
         a.info("Note: your current classpath is: " + System.getProperty("java.class.path", "*UNKNOWN*"));
         if (!etc.getInstance().getTainted())
-            a.info("Canary Test Build: Crow b1.3." + etc.getInstance().getVersion());
+            a.info("Canary Build: " + etc.getInstance().getVersion());
         else
             a.info("CanaryMod Build Information: " + etc.getInstance().getVersionStr());
         c = paramMinecraftServer;
