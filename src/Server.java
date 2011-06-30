@@ -421,7 +421,7 @@ public class Server {
     @Deprecated
     public boolean setBlockData(int x, int y, int z, int data) {
         boolean toRet = server.a(0).d(x, y, z, data);
-        etc.getMCServer().f.a(new OPacket53BlockChange(x, y, z, etc.getMCServer().a(0)));
+        etc.getMCServer().f.a(new OPacket53BlockChange(x, y, z, etc.getMCServer().a(0)), 0);
         ComplexBlock block = getComplexBlock(x, y, z);
         if (block != null)
             block.update();

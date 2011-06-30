@@ -674,7 +674,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return true if sneaking
      */
     public boolean getSneaking() {
-        return getEntity().h;
+        return getEntity().ag();
     }
 
     /**
@@ -684,7 +684,11 @@ public class Player extends HumanEntity implements MessageReceiver {
      *            true if sneaking
      */
     public void setSneaking(boolean sneaking) {
-        getEntity().h = sneaking;
+        getEntity().e(sneaking);
+        OPacket19EntityAction sneakUpdate = new OPacket19EntityAction();
+        sneakUpdate.a = getId();
+        sneakUpdate.b = sneaking ? 1 : 2;
+        etc.getMCServer().f.a(sneakUpdate, getWorld().getType().getId());
     }
 
     /**
@@ -697,8 +701,6 @@ public class Player extends HumanEntity implements MessageReceiver {
 
     /**
      * Switch to the other dimension at the according position.
-     * This WILL teleport players to the nether, regardless of whether
-     * allow-nether is set.
      */
     public void switchWorlds() {
         MinecraftServer mcServer = etc.getMCServer();

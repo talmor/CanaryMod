@@ -285,7 +285,7 @@ public class World {
      */
     public boolean setBlockData(int x, int y, int z, int data) {
         boolean toRet = world.d(x, y, z, data);
-        etc.getMCServer().f.a(new OPacket53BlockChange(x, y, z, etc.getMCServer().a(0)));
+        etc.getMCServer().f.a(new OPacket53BlockChange(x, y, z, world), getType().getId());
         ComplexBlock block = getComplexBlock(x, y, z);
         if (block != null)
             block.update();

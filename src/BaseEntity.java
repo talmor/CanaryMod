@@ -333,4 +333,81 @@ public class BaseEntity {
     public World getWorld() {
         return getEntity().aL.world;
     }
+
+    /**
+     * Returns the x-motion of this entity
+     *
+     * @return x-motion
+     */
+    public double getMotionX() {
+        return entity.aS;
+    }
+
+    /**
+     * Returns the y-motion of this entity
+     *
+     * @return y-motion
+     */
+    public double getMotionY() {
+        return entity.aT;
+    }
+
+    /**
+     * Returns the z-motion of this wntity
+     *
+     * @return z-motion
+     */
+    public double getMotionZ() {
+        return entity.aU;
+    }
+
+    /**
+     * Set entity motion
+     *
+     * @param motionX
+     * @param motionY
+     * @param motionZ
+     */
+    public void setMotion(double motionX, double motionY, double motionZ) {
+        setMotionX(motionX);
+        setMotionY(motionY);
+        setMotionZ(motionZ);
+    }
+
+    /**
+     * Sets the x-motion of this entity
+     *
+     * @param motion
+     * motion to set
+     */
+    public void setMotionX(double motion) {
+        entity.aS = motion;
+    }
+
+    /**
+     * Sets the y-motion of this entity
+     *
+     * @param motion
+     * motion to set
+     */
+    public void setMotionY(double motion) {
+        entity.aT = motion;
+    }
+
+    /**
+     * Sets the z-motion of this entity
+     *
+     * @param motion
+     * motion to set
+     */
+    public void setMotionZ(double motion) {
+        entity.aU = motion;
+    }
+
+    /**
+     * Destroys this entity
+     */
+    public void destroy() {
+        entity.I();
+    }
 }

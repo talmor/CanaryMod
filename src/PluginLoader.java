@@ -673,11 +673,11 @@ public class PluginLoader {
                                     toRet = true;
                                 break;
                             case WEATHER_CHANGE:
-                                if (listener.onWeatherChange(server.getDefaultWorld(), (Boolean) parameters[0]))
+                                if (listener.onWeatherChange((World) parameters[0], (Boolean) parameters[1]))
                                     toRet = true;
                                 break;
                             case THUNDER_CHANGE:
-                                if (listener.onThunderChange(server.getDefaultWorld(), (Boolean) parameters[0]))
+                                if (listener.onThunderChange((World) parameters[0], (Boolean) parameters[1]))
                                     toRet = true;
                                 break;
                         }
