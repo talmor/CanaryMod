@@ -1,157 +1,139 @@
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class OBlockRedstoneTorch extends OBlockTorch {
 
-    private boolean     a = false;
-    private static List b = new ArrayList();
+   private boolean a = false;
+   private static List b = new ArrayList();
 
-    @Override
-    public int a(int paramInt1, int paramInt2) {
-        if (paramInt1 == 1)
-            return OBlock.aw.a(paramInt1, paramInt2);
-        return super.a(paramInt1, paramInt2);
-    }
 
-    private boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, boolean paramBoolean) {
-        if (paramBoolean)
-            b.add(new ORedstoneUpdateInfo(paramInt1, paramInt2, paramInt3, paramOWorld.m()));
-        int i = 0;
-        for (int j = 0; j < b.size(); j++) {
-            ORedstoneUpdateInfo localORedstoneUpdateInfo = (ORedstoneUpdateInfo) b.get(j);
-            if ((localORedstoneUpdateInfo.a == paramInt1) && (localORedstoneUpdateInfo.b == paramInt2) && (localORedstoneUpdateInfo.c == paramInt3)) {
-                i++;
-                if (i >= 8)
-                    return true;
+   public int a(int var1, int var2) {
+      return var1 == 1?OBlock.aw.a(var1, var2):super.a(var1, var2);
+   }
+
+   private boolean a(OWorld var1, int var2, int var3, int var4, boolean var5) {
+      if(var5) {
+         b.add(new ORedstoneUpdateInfo(var2, var3, var4, var1.m()));
+      }
+
+      int var6 = 0;
+
+      for(int var7 = 0; var7 < b.size(); ++var7) {
+         ORedstoneUpdateInfo var8 = (ORedstoneUpdateInfo)b.get(var7);
+         if(var8.a == var2 && var8.b == var3 && var8.c == var4) {
+            ++var6;
+            if(var6 >= 8) {
+               return true;
             }
-        }
-        return false;
-    }
+         }
+      }
 
-    protected OBlockRedstoneTorch(int paramInt1, int paramInt2, boolean paramBoolean) {
-        super(paramInt1, paramInt2);
-        a = paramBoolean;
-        a(true);
-    }
+      return false;
+   }
 
-    @Override
-    public int c() {
-        return 2;
-    }
+   protected OBlockRedstoneTorch(int var1, int var2, boolean var3) {
+      super(var1, var2);
+      this.a = var3;
+      this.a(true);
+   }
 
-    @Override
-    public void e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0)
-            super.e(paramOWorld, paramInt1, paramInt2, paramInt3);
-        if (a) {
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
-            paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bn);
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
-        }
-    }
+   public int c() {
+      return 2;
+   }
 
-    @Override
-    public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if (a) {
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
-            paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bn);
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
-        }
-    }
+   public void e(OWorld var1, int var2, int var3, int var4) {
+      if(var1.b(var2, var3, var4) == 0) {
+         super.e(var1, var2, var3, var4);
+      }
 
-    @Override
-    public boolean a(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (!a)
-            return false;
+      if(this.a) {
+         var1.h(var2, var3 - 1, var4, this.bn);
+         var1.h(var2, var3 + 1, var4, this.bn);
+         var1.h(var2 - 1, var3, var4, this.bn);
+         var1.h(var2 + 1, var3, var4, this.bn);
+         var1.h(var2, var3, var4 - 1, this.bn);
+         var1.h(var2, var3, var4 + 1, this.bn);
+      }
 
-        int i = paramOIBlockAccess.b(paramInt1, paramInt2, paramInt3);
+   }
 
-        if ((i == 5) && (paramInt4 == 1))
-            return false;
-        if ((i == 3) && (paramInt4 == 3))
-            return false;
-        if ((i == 4) && (paramInt4 == 2))
-            return false;
-        if ((i == 1) && (paramInt4 == 5))
-            return false;
-        return (i != 2) || (paramInt4 != 4);
-    }
+   public void b(OWorld var1, int var2, int var3, int var4) {
+      if(this.a) {
+         var1.h(var2, var3 - 1, var4, this.bn);
+         var1.h(var2, var3 + 1, var4, this.bn);
+         var1.h(var2 - 1, var3, var4, this.bn);
+         var1.h(var2 + 1, var3, var4, this.bn);
+         var1.h(var2, var3, var4 - 1, this.bn);
+         var1.h(var2, var3, var4 + 1, this.bn);
+      }
 
-    private boolean g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
+   }
 
-        if ((i == 5) && (paramOWorld.j(paramInt1, paramInt2 - 1, paramInt3, 0)))
-            return true;
-        if ((i == 3) && (paramOWorld.j(paramInt1, paramInt2, paramInt3 - 1, 2)))
-            return true;
-        if ((i == 4) && (paramOWorld.j(paramInt1, paramInt2, paramInt3 + 1, 3)))
-            return true;
-        if ((i == 1) && (paramOWorld.j(paramInt1 - 1, paramInt2, paramInt3, 4)))
-            return true;
-        return (i == 2) && (paramOWorld.j(paramInt1 + 1, paramInt2, paramInt3, 5));
-    }
+   public boolean a(OIBlockAccess var1, int var2, int var3, int var4, int var5) {
+      if(!this.a) {
+         return false;
+      } else {
+         int var6 = var1.b(var2, var3, var4);
+         return var6 == 5 && var5 == 1?false:(var6 == 3 && var5 == 3?false:(var6 == 4 && var5 == 2?false:(var6 == 1 && var5 == 5?false:var6 != 2 || var5 != 4)));
+      }
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        boolean bool = g(paramOWorld, paramInt1, paramInt2, paramInt3);
+   private boolean g(OWorld var1, int var2, int var3, int var4) {
+      int var5 = var1.b(var2, var3, var4);
+      return var5 == 5 && var1.j(var2, var3 - 1, var4, 0)?true:(var5 == 3 && var1.j(var2, var3, var4 - 1, 2)?true:(var5 == 4 && var1.j(var2, var3, var4 + 1, 3)?true:(var5 == 1 && var1.j(var2 - 1, var3, var4, 4)?true:var5 == 2 && var1.j(var2 + 1, var3, var4, 5))));
+   }
 
-        while ((b.size() > 0) && (paramOWorld.m() - ((ORedstoneUpdateInfo) b.get(0)).d > 100L))
-            b.remove(0);
+   public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
+      boolean var6 = this.g(var1, var2, var3, var4);
 
-        if (a) {
-            if (bool) {
-                paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aQ.bn, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+      while(b.size() > 0 && var1.m() - ((ORedstoneUpdateInfo)b.get(0)).d > 100L) {
+         b.remove(0);
+      }
 
-                // CanaryMod: Allow redstone torches to provide power
-                int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), 1, 0);
-                if (current == 0)
-                    if (a(paramOWorld, paramInt1, paramInt2, paramInt3, true)) {
-                        paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, "random.fizz", 0.5F, 2.6F + (paramOWorld.r.nextFloat() - paramOWorld.r.nextFloat()) * 0.8F);
-                        for (int i = 0; i < 5; i++) {
-                            double d1 = paramInt1 + paramRandom.nextDouble() * 0.6D + 0.2D;
-                            double d2 = paramInt2 + paramRandom.nextDouble() * 0.6D + 0.2D;
-                            double d3 = paramInt3 + paramRandom.nextDouble() * 0.6D + 0.2D;
-
-                            paramOWorld.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
-                        }
-                    }
-            }
-        } else if ((!bool) && (!a(paramOWorld, paramInt1, paramInt2, paramInt3, false))) {
+      if(this.a) {
+         if(var6) {
+            var1.b(var2, var3, var4, OBlock.aQ.bn, var1.b(var2, var3, var4));
             // CanaryMod: Allow redstone torches to provide power
-            int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), 0, 1);
-            if (current > 0)
-                paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aR.bn, paramOWorld.b(paramInt1, paramInt2, paramInt3));
-        }
-    }
+            int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), 1, 0);
+            if (current == 0)
+               if(this.a(var1, var2, var3, var4, true)) {
+                  var1.a((double)((float)var2 + 0.5F), (double)((float)var3 + 0.5F), (double)((float)var4 + 0.5F), "random.fizz", 0.5F, 2.6F + (var1.r.nextFloat() - var1.r.nextFloat()) * 0.8F);
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        super.a(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-        paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
-    }
+                  for(int var7 = 0; var7 < 5; ++var7) {
+                     double var8 = (double)var2 + var5.nextDouble() * 0.6D + 0.2D;
+                     double var10 = (double)var3 + var5.nextDouble() * 0.6D + 0.2D;
+                     double var12 = (double)var4 + var5.nextDouble() * 0.6D + 0.2D;
+                     var1.a("smoke", var8, var10, var12, 0.0D, 0.0D, 0.0D);
+                  }
+               }
+         }
+      } else if(!var6 && !this.a(var1, var2, var3, var4, false)) {
+         // CanaryMod: Allow redstone torches to provide power
+         int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), 0, 1);
+         if (current > 0)
+            var1.b(var2, var3, var4, OBlock.aR.bn, var1.b(var2, var3, var4));
+      }
 
-    @Override
-    public boolean c(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (paramInt4 == 0)
-            // CanaryMod: forced downcast!
-            return a((OIBlockAccess) paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-        return false;
-    }
+   }
 
-    @Override
-    public int a(int paramInt, Random paramRandom) {
-        return OBlock.aR.bn;
-    }
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+      super.a(var1, var2, var3, var4, var5);
+      var1.c(var2, var3, var4, this.bn, this.c());
+   }
 
-    @Override
-    public boolean d() {
-        return true;
-    }
+   public boolean c(OWorld var1, int var2, int var3, int var4, int var5) {
+      // CanaryMod: forced casting to OIBlockAccess
+      return var5 == 0?this.a((OIBlockAccess) var1, var2, var3, var4, var5):false;
+   }
+
+   public int a(int var1, Random var2) {
+      return OBlock.aR.bn;
+   }
+
+   public boolean d() {
+      return true;
+   }
+
 }

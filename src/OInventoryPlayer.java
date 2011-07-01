@@ -1,333 +1,385 @@
 
+
 public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
 
-    public OItemStack[] a = new OItemStack[36];
-    public OItemStack[] b = new OItemStack[4];
-    public int c = 0;
-    public OEntityPlayer d;
-    private OItemStack f;
-    public boolean e = false;
-    private String name = "Inventory";
+   public OItemStack[] a = new OItemStack[36];
+   public OItemStack[] b = new OItemStack[4];
+   public int c = 0;
+   public OEntityPlayer d;
+   private OItemStack f;
+   public boolean e = false;
+   // CanaryMod
+   private String name = "Inventory";
 
-    public OInventoryPlayer(OEntityPlayer paramOEntityPlayer) {
-        d = paramOEntityPlayer;
-    }
 
+   public OInventoryPlayer(OEntityPlayer var1) {
+      this.d = var1;
+   }
+
+   public OItemStack b() {
+      return this.c < 9 && this.c >= 0?this.a[this.c]:null;
+   }
+
+   public static int e() {
+      return 9;
+   }
+
+   private int d(int var1) {
+      for(int var2 = 0; var2 < this.a.length; ++var2) {
+         if(this.a[var2] != null && this.a[var2].c == var1) {
+            return var2;
+         }
+      }
+
+      return -1;
+   }
+
+   private int d(OItemStack var1) {
+      for(int var2 = 0; var2 < this.a.length; ++var2) {
+         if(this.a[var2] != null && this.a[var2].c == var1.c && this.a[var2].c() && this.a[var2].a < this.a[var2].b() && this.a[var2].a < this.d() && (!this.a[var2].e() || this.a[var2].h() == var1.h())) {
+            return var2;
+         }
+      }
+
+      return -1;
+   }
+
+   private int k() {
+      for(int var1 = 0; var1 < this.a.length; ++var1) {
+         if(this.a[var1] == null) {
+            return var1;
+         }
+      }
+
+      return -1;
+   }
+
+   private int e(OItemStack var1) {
+      int var2 = var1.c;
+      int var3 = var1.a;
+      int var4 = this.d(var1);
+      if(var4 < 0) {
+         var4 = this.k();
+      }
+
+      if(var4 < 0) {
+         return var3;
+      } else {
+         if(this.a[var4] == null) {
+            this.a[var4] = new OItemStack(var2, 0, var1.h());
+         }
+
+         int var5 = var3;
+         if(var3 > this.a[var4].b() - this.a[var4].a) {
+            var5 = this.a[var4].b() - this.a[var4].a;
+         }
+
+         if(var5 > this.d() - this.a[var4].a) {
+            var5 = this.d() - this.a[var4].a;
+         }
+
+         if(var5 == 0) {
+            return var3;
+         } else {
+            var3 -= var5;
+            this.a[var4].a += var5;
+            this.a[var4].b = 5;
+            return var3;
+         }
+      }
+   }
+
+   public void f() {
+      for(int var1 = 0; var1 < this.a.length; ++var1) {
+         if(this.a[var1] != null) {
+            this.a[var1].a(this.d.aL, this.d, var1, this.c == var1);
+         }
+      }
+
+   }
+
+   public boolean b(int var1) {
+      int var2 = this.d(var1);
+      if(var2 < 0) {
+         return false;
+      } else {
+         if((this.a[var2].a -= 1) <= 0) {
+            this.a[var2] = null;
+         }
+
+         return true;
+      }
+   }
+
+   public boolean a(OItemStack var1) {
+      int var2;
+      if(var1.f()) {
+         var2 = this.k();
+         if(var2 >= 0) {
+            this.a[var2] = OItemStack.b(var1);
+            this.a[var2].b = 5;
+            var1.a = 0;
+            return true;
+         } else {
+            return false;
+         }
+      } else {
+         do {
+            var2 = var1.a;
+            var1.a = this.e(var1);
+         } while(var1.a > 0 && var1.a < var2);
+
+         return var1.a < var2;
+      }
+   }
+
+   public OItemStack a(int var1, int var2) {
+      OItemStack[] var3 = this.a;
+      if(var1 >= this.a.length) {
+         var3 = this.b;
+         var1 -= this.a.length;
+      }
+
+      if(var3[var1] != null) {
+         OItemStack var4;
+         if(var3[var1].a <= var2) {
+            var4 = var3[var1];
+            var3[var1] = null;
+            return var4;
+         } else {
+            var4 = var3[var1].a(var2);
+            if(var3[var1].a == 0) {
+               var3[var1] = null;
+            }
+
+            return var4;
+         }
+      } else {
+         return null;
+      }
+   }
+
+   public void a(int var1, OItemStack var2) {
+      OItemStack[] var3 = this.a;
+      if(var1 >= var3.length) {
+         var1 -= var3.length;
+         var3 = this.b;
+      }
+
+      var3[var1] = var2;
+   }
+
+   public float a(OBlock var1) {
+      float var2 = 1.0F;
+      if(this.a[this.c] != null) {
+         var2 *= this.a[this.c].a(var1);
+      }
+
+      return var2;
+   }
+
+   public ONBTTagList a(ONBTTagList var1) {
+      int var2;
+      ONBTTagCompound var3;
+      for(var2 = 0; var2 < this.a.length; ++var2) {
+         if(this.a[var2] != null) {
+            var3 = new ONBTTagCompound();
+            var3.a("Slot", (byte)var2);
+            this.a[var2].a(var3);
+            var1.a(var3);
+         }
+      }
+
+      for(var2 = 0; var2 < this.b.length; ++var2) {
+         if(this.b[var2] != null) {
+            var3 = new ONBTTagCompound();
+            var3.a("Slot", (byte)(var2 + 100));
+            this.b[var2].a(var3);
+            var1.a(var3);
+         }
+      }
+
+      return var1;
+   }
+
+   public void b(ONBTTagList var1) {
+      this.a = new OItemStack[36];
+      this.b = new OItemStack[4];
+
+      for(int var2 = 0; var2 < var1.c(); ++var2) {
+         ONBTTagCompound var3 = (ONBTTagCompound)var1.a(var2);
+         int var4 = var3.c("Slot") & 255;
+         OItemStack var5 = new OItemStack(var3);
+         if(var5.a() != null) {
+            if(var4 >= 0 && var4 < this.a.length) {
+               this.a[var4] = var5;
+            }
+
+            if(var4 >= 100 && var4 < this.b.length + 100) {
+               this.b[var4 - 100] = var5;
+            }
+         }
+      }
+
+   }
+
+   public int a() {
+      return this.a.length + 4;
+   }
+
+   public OItemStack c_(int var1) {
+      OItemStack[] var2 = this.a;
+      if(var1 >= var2.length) {
+         var1 -= var2.length;
+         var2 = this.b;
+      }
+
+      return var2[var1];
+   }
+
+   public String c() {
+      return name;
+   }
+
+   public int d() {
+      return 64;
+   }
+
+   public int a(OEntity var1) {
+      OItemStack var2 = this.c_(this.c);
+      return var2 != null?var2.a(var1):1;
+   }
+
+   public boolean b(OBlock var1) {
+      if(var1.bA != OMaterial.e && var1.bA != OMaterial.f && var1.bA != OMaterial.u && var1.bA != OMaterial.t) {
+         return true;
+      } else {
+         OItemStack var2 = this.c_(this.c);
+         return var2 != null?var2.b(var1):false;
+      }
+   }
+
+   public int g() {
+      int var1 = 0;
+      int var2 = 0;
+      int var3 = 0;
+
+      for(int var4 = 0; var4 < this.b.length; ++var4) {
+         if(this.b[var4] != null && this.b[var4].a() instanceof OItemArmor) {
+            int var5 = this.b[var4].i();
+            int var6 = this.b[var4].g();
+            int var7 = var5 - var6;
+            var2 += var7;
+            var3 += var5;
+            int var8 = ((OItemArmor)this.b[var4].a()).bk;
+            var1 += var8;
+         }
+      }
+
+      if(var3 == 0) {
+         return 0;
+      } else {
+         return (var1 - 1) * var2 / var3 + 1;
+      }
+   }
+
+   public void c(int var1) {
+      for(int var2 = 0; var2 < this.b.length; ++var2) {
+         if(this.b[var2] != null && this.b[var2].a() instanceof OItemArmor) {
+            this.b[var2].a(var1, this.d);
+            if(this.b[var2].a == 0) {
+               this.b[var2].a(this.d);
+               this.b[var2] = null;
+            }
+         }
+      }
+
+   }
+
+   public void h() {
+      int var1;
+      for(var1 = 0; var1 < this.a.length; ++var1) {
+         if(this.a[var1] != null) {
+            this.d.a(this.a[var1], true);
+            this.a[var1] = null;
+         }
+      }
+
+      for(var1 = 0; var1 < this.b.length; ++var1) {
+         if(this.b[var1] != null) {
+            this.d.a(this.b[var1], true);
+            this.b[var1] = null;
+         }
+      }
+
+   }
+
+   public void i() {
+      this.e = true;
+   }
+
+   public void b(OItemStack var1) {
+      this.f = var1;
+      this.d.a(var1);
+   }
+
+   public OItemStack j() {
+      return this.f;
+   }
+
+   public boolean a_(OEntityPlayer var1) {
+      return this.d.bh?false:var1.g(this.d) <= 64.0D;
+   }
+
+   public boolean c(OItemStack var1) {
+      int var2;
+      for(var2 = 0; var2 < this.b.length; ++var2) {
+         if(this.b[var2] != null && this.b[var2].c(var1)) {
+            return true;
+         }
+      }
+
+      for(var2 = 0; var2 < this.a.length; ++var2) {
+         if(this.a[var2] != null && this.a[var2].c(var1)) {
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+    @Override
     public OItemStack[] getContents() {
         return a;
     }
 
+    @Override
     public void setContents(OItemStack[] values) {
         a = values;
     }
 
+    @Override
     public OItemStack getContentsAt(int index) {
         return c_(index);
     }
 
+    @Override
     public void setContentsAt(int index, OItemStack value) {
         a(index, value);
     }
 
+    @Override
     public int getContentsSize() {
         return a();
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String value) {
         name = value;
-    }
-
-    public OItemStack b() {
-        if ((c < 9) && (c >= 0))
-            return a[c];
-        return null;
-    }
-
-    public static int e() {
-        return 9;
-    }
-
-    private int d(int paramInt) {
-        for (int i = 0; i < a.length; i++)
-            if ((a[i] != null) && (a[i].c == paramInt))
-                return i;
-        return -1;
-    }
-
-    private int d(OItemStack paramOItemStack) {
-        for (int i = 0; i < a.length; i++)
-            if ((a[i] != null) && (a[i].c == paramOItemStack.c) && (a[i].c()) && (a[i].a < a[i].b()) && (a[i].a < d()) && ((!a[i].e()) || (a[i].h() == paramOItemStack.h())))
-                return i;
-        return -1;
-    }
-
-    private int k() {
-        for (int i = 0; i < a.length; i++)
-            if (a[i] == null)
-                return i;
-        return -1;
-    }
-
-    private int e(OItemStack paramOItemStack) {
-        int i = paramOItemStack.c;
-        int j = paramOItemStack.a;
-
-        int k = d(paramOItemStack);
-        if (k < 0)
-            k = k();
-        if (k < 0)
-            return j;
-        if (a[k] == null)
-            a[k] = new OItemStack(i, 0, paramOItemStack.h());
-
-        int m = j;
-        if (m > a[k].b() - a[k].a)
-            m = a[k].b() - a[k].a;
-        if (m > d() - a[k].a)
-            m = d() - a[k].a;
-
-        if (m == 0)
-            return j;
-
-        j -= m;
-        a[k].a += m;
-        a[k].b = 5;
-
-        return j;
-    }
-
-    public void f() {
-        for (int i = 0; i < a.length; i++) {
-            if (a[i] == null)
-                continue;
-            a[i].a(d.aL, d, i, c == i);
-        }
-    }
-
-    public boolean b(int paramInt) {
-        int i = d(paramInt);
-        if (i < 0)
-            return false;
-        if (--a[i].a <= 0)
-            a[i] = null;
-
-        return true;
-    }
-
-    public boolean a(OItemStack paramOItemStack) {
-        int i;
-        if (paramOItemStack.f()) {
-            i = k();
-            if (i >= 0) {
-                a[i] = OItemStack.b(paramOItemStack);
-                a[i].b = 5;
-                paramOItemStack.a = 0;
-                return true;
-            } else
-                return false;
-        } else {
-            do {
-                i = paramOItemStack.a;
-                paramOItemStack.a = e(paramOItemStack);
-            } while (paramOItemStack.a > 0 && paramOItemStack.a < i);
-
-            return paramOItemStack.a < i;
-        }
-    }
-
-    public OItemStack a(int paramInt1, int paramInt2) {
-        OItemStack[] arrayOfOItemStack = a;
-        if (paramInt1 >= a.length) {
-            arrayOfOItemStack = b;
-            paramInt1 -= a.length;
-        }
-
-        if (arrayOfOItemStack[paramInt1] != null) {
-            if (arrayOfOItemStack[paramInt1].a <= paramInt2) {
-                OItemStack localOItemStack = arrayOfOItemStack[paramInt1];
-                arrayOfOItemStack[paramInt1] = null;
-                return localOItemStack;
-            }
-            OItemStack localOItemStack = arrayOfOItemStack[paramInt1].a(paramInt2);
-            if (arrayOfOItemStack[paramInt1].a == 0)
-                arrayOfOItemStack[paramInt1] = null;
-            return localOItemStack;
-        }
-
-        return null;
-    }
-
-    public void a(int paramInt, OItemStack paramOItemStack) {
-        OItemStack[] arrayOfOItemStack = a;
-        if (paramInt >= arrayOfOItemStack.length) {
-            paramInt -= arrayOfOItemStack.length;
-            arrayOfOItemStack = b;
-        }
-
-        arrayOfOItemStack[paramInt] = paramOItemStack;
-    }
-
-    public float a(OBlock paramOBlock) {
-        float f1 = 1.0F;
-        if (a[c] != null)
-            f1 *= a[c].a(paramOBlock);
-        return f1;
-    }
-
-    public ONBTTagList a(ONBTTagList paramONBTTagList) {
-        ONBTTagCompound localONBTTagCompound;
-        for (int i = 0; i < a.length; i++)
-            if (a[i] != null) {
-                localONBTTagCompound = new ONBTTagCompound();
-                localONBTTagCompound.a("Slot", (byte) i);
-                a[i].a(localONBTTagCompound);
-                paramONBTTagList.a(localONBTTagCompound);
-            }
-        for (int i = 0; i < b.length; i++)
-            if (b[i] != null) {
-                localONBTTagCompound = new ONBTTagCompound();
-                localONBTTagCompound.a("Slot", (byte) (i + 100));
-                b[i].a(localONBTTagCompound);
-                paramONBTTagList.a(localONBTTagCompound);
-            }
-        return paramONBTTagList;
-    }
-
-    public void b(ONBTTagList paramONBTTagList) {
-        a = new OItemStack[36];
-        b = new OItemStack[4];
-        for (int i = 0; i < paramONBTTagList.c(); i++) {
-            ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) paramONBTTagList.a(i);
-            int j = localONBTTagCompound.c("Slot") & 0xFF;
-            OItemStack localOItemStack = new OItemStack(localONBTTagCompound);
-            if (localOItemStack.a() != null) {
-                if ((j >= 0) && (j < a.length))
-                    a[j] = localOItemStack;
-                if ((j < 100) || (j >= b.length + 100))
-                    continue;
-                b[(j - 100)] = localOItemStack;
-            }
-        }
-    }
-
-    public int a() {
-        return a.length + 4;
-    }
-
-    public OItemStack c_(int paramInt) {
-        OItemStack[] arrayOfOItemStack = a;
-        if (paramInt >= arrayOfOItemStack.length) {
-            paramInt -= arrayOfOItemStack.length;
-            arrayOfOItemStack = b;
-        }
-
-        return arrayOfOItemStack[paramInt];
-    }
-
-    public String c() {
-        return "Inventory";
-    }
-
-    public int d() {
-        return 64;
-    }
-
-    public int a(OEntity paramOEntity) {
-        OItemStack localOItemStack = c_(c);
-        if (localOItemStack != null)
-            return localOItemStack.a(paramOEntity);
-        return 1;
-    }
-
-    public boolean b(OBlock paramOBlock) {
-        if ((paramOBlock.bA != OMaterial.e) && (paramOBlock.bA != OMaterial.f) && (paramOBlock.bA != OMaterial.u) && (paramOBlock.bA != OMaterial.t))
-            return true;
-
-        OItemStack localOItemStack = c_(c);
-        if (localOItemStack != null)
-            return localOItemStack.b(paramOBlock);
-        return false;
-    }
-
-    public int g() {
-        int i = 0;
-        int j = 0;
-        int k = 0;
-        for (OItemStack element : b)
-            if ((element != null) && ((element.a() instanceof OItemArmor))) {
-                int n = element.i();
-                int i1 = element.g();
-
-                int i2 = n - i1;
-                j += i2;
-                k += n;
-
-                int i3 = ((OItemArmor) element.a()).bk;
-
-                i += i3;
-            }
-        if (k == 0)
-            return 0;
-        return (i - 1) * j / k + 1;
-    }
-
-    public void c(int paramInt) {
-        for (int i = 0; i < b.length; i++)
-            if ((b[i] != null) && ((b[i].a() instanceof OItemArmor))) {
-                b[i].a(paramInt, d);
-                if (b[i].a == 0) {
-                    b[i].a(d);
-                    b[i] = null;
-                }
-            }
-    }
-
-    public void h() {
-        for (int i = 0; i < a.length; i++)
-            if (a[i] != null) {
-                d.a(a[i], true);
-                a[i] = null;
-            }
-        for (int i = 0; i < b.length; i++)
-            if (b[i] != null) {
-                d.a(b[i], true);
-                b[i] = null;
-            }
-    }
-
-    public void i() {
-        e = true;
-    }
-
-    public void b(OItemStack paramOItemStack) {
-        f = paramOItemStack;
-        d.a(paramOItemStack);
-    }
-
-    public OItemStack j() {
-        return f;
-    }
-
-    public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (d.bh)
-            return false;
-        return paramOEntityPlayer.g(d) <= 64.0D;
-    }
-
-    public boolean c(OItemStack var1) {
-        int var2;
-        for (var2 = 0; var2 < this.b.length; ++var2)
-            if (this.b[var2] != null && this.b[var2].c(var1))
-                return true;
-
-        for (var2 = 0; var2 < this.a.length; ++var2)
-            if (this.a[var2] != null && this.a[var2].c(var1))
-                return true;
-
-        return false;
     }
 }

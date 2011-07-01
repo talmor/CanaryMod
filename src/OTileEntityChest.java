@@ -1,17 +1,102 @@
+
+import java.util.Arrays;
+
+
+
 public class OTileEntityChest extends OTileEntity implements OIInventory, Container<OItemStack> {
 
-    private OItemStack[] a    = new OItemStack[36];
-    private String       name = "Chest";
+   private OItemStack[] a = new OItemStack[36];
+   private String name = "Chest";
 
+
+   public int a() {
+      return 27;
+   }
+
+   public OItemStack c_(int var1) {
+      return this.a[var1];
+   }
+
+   public OItemStack a(int var1, int var2) {
+      if(this.a[var1] != null) {
+         OItemStack var3;
+         if(this.a[var1].a <= var2) {
+            var3 = this.a[var1];
+            this.a[var1] = null;
+            this.i();
+            return var3;
+         } else {
+            var3 = this.a[var1].a(var2);
+            if(this.a[var1].a == 0) {
+               this.a[var1] = null;
+            }
+
+            this.i();
+            return var3;
+         }
+      } else {
+         return null;
+      }
+   }
+
+   public void a(int var1, OItemStack var2) {
+      this.a[var1] = var2;
+      if(var2 != null && var2.a > this.d()) {
+         var2.a = this.d();
+      }
+
+      this.i();
+   }
+
+   public String c() {
+      return name;
+   }
+
+   public void a(ONBTTagCompound var1) {
+      super.a(var1);
+      ONBTTagList var2 = var1.l("Items");
+      this.a = new OItemStack[this.a()];
+
+      for(int var3 = 0; var3 < var2.c(); ++var3) {
+         ONBTTagCompound var4 = (ONBTTagCompound)var2.a(var3);
+         int var5 = var4.c("Slot") & 255;
+         if(var5 >= 0 && var5 < this.a.length) {
+            this.a[var5] = new OItemStack(var4);
+         }
+      }
+
+   }
+
+   public void b(ONBTTagCompound var1) {
+      super.b(var1);
+      ONBTTagList var2 = new ONBTTagList();
+
+      for(int var3 = 0; var3 < this.a.length; ++var3) {
+         if(this.a[var3] != null) {
+            ONBTTagCompound var4 = new ONBTTagCompound();
+            var4.a("Slot", (byte)var3);
+            this.a[var3].a(var4);
+            var2.a(var4);
+         }
+      }
+
+      var1.a("Items", var2);
+   }
+
+   public int d() {
+      return 64;
+   }
+
+   public boolean a_(OEntityPlayer var1) {
+      return this.d.n(this.e, this.f, this.g) != this?false:var1.d((double)this.e + 0.5D, (double)this.f + 0.5D, (double)this.g + 0.5D) <= 64.0D;
+   }
+
+    @Override
     public OItemStack[] getContents() {
-        int size = getContentsSize();
-        OItemStack[] result = new OItemStack[size];
-
-        for (int i = 0; i < size; i++)
-            result[i] = getContentsAt(i);
-        return result;
+        return Arrays.copyOf(a, getContentsSize());
     }
 
+    @Override
     public void setContents(OItemStack[] values) {
         int size = getContentsSize();
 
@@ -19,99 +104,28 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
             setContentsAt(i, values[i]);
     }
 
+    @Override
     public OItemStack getContentsAt(int index) {
         return c_(index);
     }
 
+    @Override
     public void setContentsAt(int index, OItemStack value) {
         a(index, value);
     }
 
+    @Override
     public int getContentsSize() {
         return a();
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String value) {
         name = value;
-    }
-
-    public int a() {
-        return 27;
-    }
-
-    public OItemStack c_(int paramInt) {
-        return a[paramInt];
-    }
-
-    public OItemStack a(int paramInt1, int paramInt2) {
-        if (a[paramInt1] != null) {
-            if (a[paramInt1].a <= paramInt2) {
-                OItemStack localOItemStack = a[paramInt1];
-                a[paramInt1] = null;
-                i();
-                return localOItemStack;
-            }
-            OItemStack localOItemStack = a[paramInt1].a(paramInt2);
-            if (a[paramInt1].a == 0)
-                a[paramInt1] = null;
-            i();
-            return localOItemStack;
-        }
-
-        return null;
-    }
-
-    public void a(int paramInt, OItemStack paramOItemStack) {
-        a[paramInt] = paramOItemStack;
-        if ((paramOItemStack != null) && (paramOItemStack.a > d()))
-            paramOItemStack.a = d();
-        i();
-    }
-
-    public String c() {
-        return name;
-    }
-
-    @Override
-    public void a(ONBTTagCompound paramONBTTagCompound) {
-        super.a(paramONBTTagCompound);
-        ONBTTagList localONBTTagList = paramONBTTagCompound.l("Items");
-        a = new OItemStack[a()];
-        for (int i = 0; i < localONBTTagList.c(); i++) {
-            ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) localONBTTagList.a(i);
-            int j = localONBTTagCompound.c("Slot") & 0xFF;
-            if ((j < 0) || (j >= a.length))
-                continue;
-            a[j] = new OItemStack(localONBTTagCompound);
-        }
-    }
-
-    @Override
-    public void b(ONBTTagCompound paramONBTTagCompound) {
-        super.b(paramONBTTagCompound);
-        ONBTTagList localONBTTagList = new ONBTTagList();
-
-        for (int i = 0; i < a.length; i++)
-            if (a[i] != null) {
-                ONBTTagCompound localONBTTagCompound = new ONBTTagCompound();
-                localONBTTagCompound.a("Slot", (byte) i);
-                a[i].a(localONBTTagCompound);
-                localONBTTagList.a(localONBTTagCompound);
-            }
-        paramONBTTagCompound.a("Items", localONBTTagList);
-    }
-
-    public int d() {
-        return 64;
-    }
-
-    public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (d.n(e, f, g) != this)
-            return false;
-        return paramOEntityPlayer.d(e + 0.5D, f + 0.5D, g + 0.5D) <= 64.0D;
     }
 }

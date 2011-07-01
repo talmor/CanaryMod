@@ -1,3 +1,4 @@
+
 import java.util.List;
 
 public class OEntityLightningBolt extends OEntityWeatherEffect {
@@ -61,12 +62,13 @@ public class OEntityLightningBolt extends OEntityWeatherEffect {
 
       if(this.b >= 0) {
          double var4 = 3.0D;
-         List var8 = this.aL.b((OEntity)this, OAxisAlignedBB.b(this.aP - var4, this.aQ - var4, this.aR - var4, this.aP + var4, this.aQ + 6.0D + var4, this.aR + var4));
+         List var8 = this.aL.b(this, OAxisAlignedBB.b(this.aP - var4, this.aQ - var4, this.aR - var4, this.aP + var4, this.aQ + 6.0D + var4, this.aR + var4));
 
          for(int var6 = 0; var6 < var8.size(); ++var6) {
             OEntity var7 = (OEntity)var8.get(var6);
+            // CanaryMod: Lightning strike hook
             if (!(Boolean) manager.callHook(PluginLoader.Hook.LIGHTNING_STRIKE, var7))
-                var7.a(this);
+               var7.a(this);
          }
 
          this.aL.n = 2;
@@ -74,9 +76,12 @@ public class OEntityLightningBolt extends OEntityWeatherEffect {
 
    }
 
-   protected void b() {}
+   protected void b() {
+   }
 
-   protected void a(ONBTTagCompound var1) {}
+   protected void a(ONBTTagCompound var1) {
+   }
 
-   protected void b(ONBTTagCompound var1) {}
+   protected void b(ONBTTagCompound var1) {
+   }
 }

@@ -1,31 +1,31 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import net.minecraft.server.MinecraftServer;
 
 public class OThreadCommandReader extends Thread {
 
-    // CanaryMod: Store server
+   final MinecraftServer a;
 
-    private MinecraftServer server;
 
-    public OThreadCommandReader(MinecraftServer paramMinecraftServer) {
-        // CanaryMod: Actually store it
-        server = paramMinecraftServer;
-    }
+   public OThreadCommandReader(MinecraftServer var1) {
+      this.a = var1;
+   }
 
-    @Override
-    public void run() {
-        BufferedReader localBufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String str = null;
-        try {
-            // CanaryMod: Parse all console commands
-            while ((!server.g) && ((str = localBufferedReader.readLine()) != null))
-                if (!etc.getInstance().parseConsoleCommand(str, server))
-                    server.a(str, server);
-        } catch (IOException localIOException) {
-            localIOException.printStackTrace();
-        }
-    }
+   public void run() {
+      BufferedReader var1 = new BufferedReader(new InputStreamReader(System.in));
+      String var2 = null;
+
+      try {
+         while(!this.a.g && (var2 = var1.readLine()) != null) {
+            // CanaryMod: run through our parser first.
+            if (!etc.getInstance().parseConsoleCommand(var2, a))
+               this.a.a(var2, this.a);
+         }
+      } catch (IOException var4) {
+         var4.printStackTrace();
+      }
+
+   }
 }

@@ -1,88 +1,96 @@
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class OEntityList {
-    private static Map a = new HashMap();
-    private static Map b = new HashMap();
-    private static Map c = new HashMap();
-    private static Map d = new HashMap();
 
-    private static void a(Class paramClass, String paramString, int paramInt) {
-        a.put(paramString, paramClass);
-        b.put(paramClass, paramString);
-        c.put(Integer.valueOf(paramInt), paramClass);
-        d.put(paramClass, Integer.valueOf(paramInt));
-    }
+   private static Map a = new HashMap();
+   private static Map b = new HashMap();
+   private static Map c = new HashMap();
+   private static Map d = new HashMap();
 
-    public static OEntity a(String paramString, OWorld paramOWorld) {
-        OEntity localOEntity = null;
-        try {
-            Class localClass = (Class) a.get(paramString);
-            if (localClass != null)
-                localOEntity = (OEntity) localClass.getConstructor(new Class[] { OWorld.class }).newInstance(new Object[] { paramOWorld });
-        } catch (Exception localException) {
-            localException.printStackTrace();
-        }
-        return localOEntity;
-    }
+   private static void a(Class var0, String var1, int var2) {
+      a.put(var1, var0);
+      b.put(var0, var1);
+      c.put(Integer.valueOf(var2), var0);
+      d.put(var0, Integer.valueOf(var2));
+   }
 
-    public static OEntity a(ONBTTagCompound paramONBTTagCompound, OWorld paramOWorld) {
-        OEntity localOEntity = null;
-        try {
-            Class localClass = (Class) a.get(paramONBTTagCompound.i("id"));
-            if (localClass != null)
-                localOEntity = (OEntity) localClass.getConstructor(new Class[] { OWorld.class }).newInstance(new Object[] { paramOWorld });
-        } catch (Exception localException) {
-            localException.printStackTrace();
-        }
-        if (localOEntity != null)
-            localOEntity.e(paramONBTTagCompound);
-        else
-            System.out.println("Skipping Entity with id " + paramONBTTagCompound.i("id"));
-        return localOEntity;
-    }
+   public static OEntity a(String var0, OWorld var1) {
+      OEntity var2 = null;
 
-    public static int a(OEntity paramOEntity) {
-        return ((Integer) d.get(paramOEntity.getClass())).intValue();
-    }
+      try {
+         Class var3 = (Class)a.get(var0);
+         if(var3 != null) {
+            var2 = (OEntity)var3.getConstructor(new Class[]{OWorld.class}).newInstance(new Object[]{var1});
+         }
+      } catch (Exception var4) {
+         var4.printStackTrace();
+      }
 
-    public static String b(OEntity paramOEntity) {
-        return (String) b.get(paramOEntity.getClass());
-    }
-    // CanaryMod: Let us do a name->class lookup for mob spawning
-    public static Class<?> getEntity(String name) {
-        return (Class<?>) a.get(name);
-    }
+      return var2;
+   }
 
-    static {
-        a(OEntityArrow.class, "Arrow", 10);
-        a(OEntitySnowball.class, "Snowball", 11);
-        a(OEntityItem.class, "Item", 1);
-        a(OEntityPainting.class, "Painting", 9);
+   public static OEntity a(ONBTTagCompound var0, OWorld var1) {
+      OEntity var2 = null;
 
-        a(OEntityLiving.class, "Mob", 48);
-        a(OEntityMob.class, "Monster", 49);
+      try {
+         // CanaryMod: fix jarjar
+         Class var3 = (Class)a.get(var0.i("id"));
+         if(var3 != null) {
+            var2 = (OEntity)var3.getConstructor(new Class[]{OWorld.class}).newInstance(new Object[]{var1});
+         }
+      } catch (Exception var4) {
+         var4.printStackTrace();
+      }
 
-        a(OEntityCreeper.class, "Creeper", 50);
-        a(OEntitySkeleton.class, "Skeleton", 51);
-        a(OEntitySpider.class, "Spider", 52);
-        a(OEntityGiantZombie.class, "Giant", 53);
-        a(OEntityZombie.class, "Zombie", 54);
-        a(OEntitySlime.class, "Slime", 55);
-        a(OEntityGhast.class, "Ghast", 56);
-        a(OEntityPigZombie.class, "PigZombie", 57);
+      if(var2 != null) {
+         var2.e(var0);
+      } else {
+         // CanaryMod: fix jarjar
+         System.out.println("Skipping Entity with id " + var0.i("id"));
+      }
 
-        a(OEntityPig.class, "Pig", 90);
-        a(OEntitySheep.class, "Sheep", 91);
-        a(OEntityCow.class, "Cow", 92);
-        a(OEntityChicken.class, "Chicken", 93);
-        a(OEntitySquid.class, "Squid", 94);
-        a(OEntityWolf.class, "Wolf", 95);
+      return var2;
+   }
 
-        a(OEntityTNTPrimed.class, "PrimedTnt", 20);
-        a(OEntityFallingSand.class, "FallingSand", 21);
+   public static int a(OEntity var0) {
+      return ((Integer)d.get(var0.getClass())).intValue();
+   }
 
-        a(OEntityMinecart.class, "Minecart", 40);
-        a(OEntityBoat.class, "Boat", 41);
-    }
+   public static String b(OEntity var0) {
+      return (String)b.get(var0.getClass());
+   }
+
+   // CanaryMod: Let us do a name->class lookup for mob spawning
+   public static Class<?> getEntity(String name) {
+       return (Class<?>) a.get(name);
+   }
+
+   static {
+      a(OEntityArrow.class, "Arrow", 10);
+      a(OEntitySnowball.class, "Snowball", 11);
+      a(OEntityItem.class, "Item", 1);
+      a(OEntityPainting.class, "Painting", 9);
+      a(OEntityLiving.class, "Mob", 48);
+      a(OEntityMob.class, "Monster", 49);
+      a(OEntityCreeper.class, "Creeper", 50);
+      a(OEntitySkeleton.class, "Skeleton", 51);
+      a(OEntitySpider.class, "Spider", 52);
+      a(OEntityGiantZombie.class, "Giant", 53);
+      a(OEntityZombie.class, "Zombie", 54);
+      a(OEntitySlime.class, "Slime", 55);
+      a(OEntityGhast.class, "Ghast", 56);
+      a(OEntityPigZombie.class, "PigZombie", 57);
+      a(OEntityPig.class, "Pig", 90);
+      a(OEntitySheep.class, "Sheep", 91);
+      a(OEntityCow.class, "Cow", 92);
+      a(OEntityChicken.class, "Chicken", 93);
+      a(OEntitySquid.class, "Squid", 94);
+      a(OEntityWolf.class, "Wolf", 95);
+      a(OEntityTNTPrimed.class, "PrimedTnt", 20);
+      a(OEntityFallingSand.class, "FallingSand", 21);
+      a(OEntityMinecart.class, "Minecart", 40);
+      a(OEntityBoat.class, "Boat", 41);
+   }
 }

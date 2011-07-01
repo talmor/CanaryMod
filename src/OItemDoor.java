@@ -1,79 +1,86 @@
+
+
 public class OItemDoor extends OItem {
 
-    private OMaterial a;
+   private OMaterial a;
 
-    public OItemDoor(int paramInt, OMaterial paramOMaterial) {
-        super(paramInt);
-        a = paramOMaterial;
-        bf = 1;
-    }
 
-    @Override
-    public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (paramInt4 != 1)
+   public OItemDoor(int var1, OMaterial var2) {
+      super(var1);
+      this.a = var2;
+      this.bf = 1;
+   }
+
+   public boolean a(OItemStack var1, OEntityPlayer var2, OWorld var3, int var4, int var5, int var6, int var7) {
+      if(var7 != 1) {
+         return false;
+      } else {
+         ++var5;
+         OBlock var8;
+         if(this.a == OMaterial.d) {
+            var8 = OBlock.aF;
+         } else {
+            var8 = OBlock.aM;
+         }
+
+         if(!var8.a(var3, var4, var5, var6)) {
             return false;
-        paramInt2++;
-        OBlock localOBlock;
-        if (a == OMaterial.d)
-            localOBlock = OBlock.aF;
-        else
-            localOBlock = OBlock.aM;
-        if (!localOBlock.a(paramOWorld, paramInt1, paramInt2, paramInt3))
-            return false;
+         } else {
+            Block blockClicked = new Block(var3.world, var3.a(var4, var5, var6), var4, var5, var6);
+            blockClicked.setFaceClicked(Block.Face.fromId(var7));
+            Block blockPlaced = new Block(var3.world, var3.a(var4, var5 + 1, var6), var4, var5 + 1, var6);
 
-        // CanaryMod: Doors onItemUse
-        Block blockClicked = new Block(paramOWorld.world, paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
-        blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
-        Block blockPlaced = new Block(paramOWorld.world, paramOWorld.a(paramInt1, paramInt2 + 1, paramInt3), paramInt1, paramInt2 + 1, paramInt3);
-
-        // Call the hook
-        if (paramOEntityPlayer instanceof OEntityPlayerMP) {
-            Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramOItemStack)))
-                return false;
-        }
-
-        int i = OMathHelper.b((paramOEntityPlayer.aV + 180.0F) * 4.0F / 360.0F - 0.5D) & 0x3;
-
-        int j = 0;
-        int k = 0;
-        if (i == 0)
-            k = 1;
-        if (i == 1)
-            j = -1;
-        if (i == 2)
-            k = -1;
-        if (i == 3)
-            j = 1;
-
-        int m = (paramOWorld.d(paramInt1 - j, paramInt2, paramInt3 - k) ? 1 : 0) + (paramOWorld.d(paramInt1 - j, paramInt2 + 1, paramInt3 - k) ? 1 : 0);
-        int n = (paramOWorld.d(paramInt1 + j, paramInt2, paramInt3 + k) ? 1 : 0) + (paramOWorld.d(paramInt1 + j, paramInt2 + 1, paramInt3 + k) ? 1 : 0);
-
-        int i1 = (paramOWorld.a(paramInt1 - j, paramInt2, paramInt3 - k) == localOBlock.bn) || (paramOWorld.a(paramInt1 - j, paramInt2 + 1, paramInt3 - k) == localOBlock.bn) ? 1 : 0;
-        int i2 = (paramOWorld.a(paramInt1 + j, paramInt2, paramInt3 + k) == localOBlock.bn) || (paramOWorld.a(paramInt1 + j, paramInt2 + 1, paramInt3 + k) == localOBlock.bn) ? 1 : 0;
-
-        int i3 = 0;
-        if ((i1 != 0) && (i2 == 0))
-            i3 = 1;
-        else if (n > m)
-            i3 = 1;
-
-        if (i3 != 0) {
-            i = i - 1 & 0x3;
-            i += 4;
-        }
+            // Call the hook
+            if (var2 instanceof OEntityPlayerMP) {
+               Player player = ((OEntityPlayerMP) var2).getPlayer();
+               if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(var1)))
+                  return false;
+            }
             
-        paramOWorld.o = true;
+            int var9 = OMathHelper.b((double)((var2.aV + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
+            byte var10 = 0;
+            byte var11 = 0;
+            if(var9 == 0) {
+               var11 = 1;
+            }
 
-        paramOWorld.b(paramInt1, paramInt2, paramInt3, localOBlock.bn, i);
-        paramOWorld.b(paramInt1, paramInt2 + 1, paramInt3, localOBlock.bn, i + 8);
+            if(var9 == 1) {
+               var10 = -1;
+            }
 
-        paramOWorld.o = false;
+            if(var9 == 2) {
+               var11 = -1;
+            }
 
-        paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, localOBlock.bn);
-        paramOWorld.h(paramInt1, paramInt2, paramInt3, localOBlock.bn);
+            if(var9 == 3) {
+               var10 = 1;
+            }
 
-        paramOItemStack.a -= 1;
-        return true;
-    }
+            int var12 = (var3.d(var4 - var10, var5, var6 - var11)?1:0) + (var3.d(var4 - var10, var5 + 1, var6 - var11)?1:0);
+            int var13 = (var3.d(var4 + var10, var5, var6 + var11)?1:0) + (var3.d(var4 + var10, var5 + 1, var6 + var11)?1:0);
+            boolean var14 = var3.a(var4 - var10, var5, var6 - var11) == var8.bn || var3.a(var4 - var10, var5 + 1, var6 - var11) == var8.bn;
+            boolean var15 = var3.a(var4 + var10, var5, var6 + var11) == var8.bn || var3.a(var4 + var10, var5 + 1, var6 + var11) == var8.bn;
+            boolean var16 = false;
+            if(var14 && !var15) {
+               var16 = true;
+            } else if(var13 > var12) {
+               var16 = true;
+            }
+
+            if(var16) {
+               var9 = var9 - 1 & 3;
+               var9 += 4;
+            }
+
+            var3.o = true;
+            var3.b(var4, var5, var6, var8.bn, var9);
+            var3.b(var4, var5 + 1, var6, var8.bn, var9 + 8);
+            var3.o = false;
+            var3.h(var4, var5, var6, var8.bn);
+            var3.h(var4, var5 + 1, var6, var8.bn);
+            --var1.a;
+            return true;
+         }
+      }
+   }
 }

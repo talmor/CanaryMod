@@ -1,40 +1,787 @@
+
 import java.util.List;
 
 public class OEntityMinecart extends OEntity implements OIInventory, Container<OItemStack> {
-    private OItemStack[]           h = new OItemStack[36];
 
-    public int                     a = 0;
-    public int                     b = 0;
-    public int                     c = 1;
-    private boolean                i = false;
-    public int                     d;
-    public int                     e;
-    public double                  f;
-    public double                  g;
-    private static final int[][][] j = { { { 0, 0, -1 }, { 0, 0, 1 } }, { { -1, 0, 0 }, { 1, 0, 0 } }, { { -1, -1, 0 }, { 1, 0, 0 } }, { { -1, 0, 0 }, { 1, -1, 0 } }, { { 0, 0, -1 }, { 0, -1, 1 } }, { { 0, -1, -1 }, { 0, 0, 1 } }, { { 0, 0, 1 }, { 1, 0, 0 } }, { { 0, 0, 1 }, { -1, 0, 0 } }, { { 0, 0, -1 }, { -1, 0, 0 } }, { { 0, 0, -1 }, { 1, 0, 0 } } };
-    private int                    k;
-    private double                 l;
-    private double                 m;
-    private double                 n;
-    private double                 o;
-    private double                 p;
-    private String                 name = "Minecart";
+   private OItemStack[] h;
+   public int a;
+   public int b;
+   public int c;
+   private boolean i;
+   public int d;
+   public int e;
+   public double f;
+   public double g;
+   private static final int[][][] j = new int[][][]{{{0, 0, -1}, {0, 0, 1}}, {{-1, 0, 0}, {1, 0, 0}}, {{-1, -1, 0}, {1, 0, 0}}, {{-1, 0, 0}, {1, -1, 0}}, {{0, 0, -1}, {0, -1, 1}}, {{0, -1, -1}, {0, 0, 1}}, {{0, 0, 1}, {1, 0, 0}}, {{0, 0, 1}, {-1, 0, 0}}, {{0, 0, -1}, {-1, 0, 0}}, {{0, 0, -1}, {1, 0, 0}}};
+   private int k;
+   private double l;
+   private double m;
+   private double n;
+   private double o;
+   private double p;
+   // CanaryMod start
+   private String name = "Minecart";
+   Minecart cart = new Minecart(this);
+   // CanaryMod end
 
-    // CanaryMod start
-    Minecart                       cart = new Minecart(this);
+   public OEntityMinecart(OWorld var1) {
+      super(var1);
+      this.h = new OItemStack[36];
+      this.a = 0;
+      this.b = 0;
+      this.c = 1;
+      this.i = false;
+      this.aI = true;
+      this.b(0.98F, 0.7F);
+      this.bi = this.bk / 2.0F;
+   }
 
-    // CanaryMod end
+   protected boolean n() {
+      return false;
+   }
+
+   protected void b() {
+   }
+
+   public OAxisAlignedBB a_(OEntity var1) {
+      return var1.aZ;
+   }
+
+   public OAxisAlignedBB e_() {
+      return null;
+   }
+
+   public boolean d_() {
+      return true;
+   }
+
+   public OEntityMinecart(OWorld var1, double var2, double var4, double var6, int var8) {
+      this(var1);
+      this.a(var2, var4 + (double)this.bi, var6);
+      this.aS = 0.0D;
+      this.aT = 0.0D;
+      this.aU = 0.0D;
+      this.aM = var2;
+      this.aN = var4;
+      this.aO = var6;
+      this.d = var8;
+      // CanaryMod: Creation of the cart
+      manager.callHook(PluginLoader.Hook.VEHICLE_CREATE, cart);
+   }
+
+   public double m() {
+      return (double)this.bk * 0.0D - 0.30000001192092896D;
+   }
+
+   public boolean a(OEntity var1, int var2) {
+      // CanaryMod: Attack of the cart
+      if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, cart, var1 == null ? null : var1.entity, var2))
+         return true;
+
+      if(!this.aL.B && !this.bh) {
+         this.c = -this.c;
+         this.b = 10;
+         this.ae();
+         this.a += var2 * 10;
+         if(this.a > 40) {
+            if(this.aJ != null) {
+               this.aJ.b(this);
+            }
+
+            this.I();
+            this.a(OItem.ax.be, 1, 0.0F);
+            if(this.d == 1) {
+               OEntityMinecart var3 = this;
+
+               for(int var4 = 0; var4 < var3.a(); ++var4) {
+                  OItemStack var5 = var3.c_(var4);
+                  if(var5 != null) {
+                     float var6 = this.bv.nextFloat() * 0.8F + 0.1F;
+                     float var7 = this.bv.nextFloat() * 0.8F + 0.1F;
+                     float var8 = this.bv.nextFloat() * 0.8F + 0.1F;
+
+                     while(var5.a > 0) {
+                        int var9 = this.bv.nextInt(21) + 10;
+                        if(var9 > var5.a) {
+                           var9 = var5.a;
+                        }
+
+                        var5.a -= var9;
+                        OEntityItem var10 = new OEntityItem(this.aL, this.aP + (double)var6, this.aQ + (double)var7, this.aR + (double)var8, new OItemStack(var5.c, var9, var5.h()));
+                        float var11 = 0.05F;
+                        var10.aS = (double)((float)this.bv.nextGaussian() * var11);
+                        var10.aT = (double)((float)this.bv.nextGaussian() * var11 + 0.2F);
+                        var10.aU = (double)((float)this.bv.nextGaussian() * var11);
+                        this.aL.b(var10);
+                     }
+                  }
+               }
+
+               this.a(OBlock.av.bn, 1, 0.0F);
+            } else if(this.d == 2) {
+               this.a(OBlock.aC.bn, 1, 0.0F);
+            }
+         }
+
+         return true;
+      } else {
+         return true;
+      }
+   }
+
+   public boolean n_() {
+      return !this.bh;
+   }
+
+   public void I() {
+      // CanaryMod: Destruction of the cart
+      manager.callHook(PluginLoader.Hook.VEHICLE_DESTROYED, cart);
+
+      for(int var1 = 0; var1 < this.a(); ++var1) {
+         OItemStack var2 = this.c_(var1);
+         if(var2 != null) {
+            float var3 = this.bv.nextFloat() * 0.8F + 0.1F;
+            float var4 = this.bv.nextFloat() * 0.8F + 0.1F;
+            float var5 = this.bv.nextFloat() * 0.8F + 0.1F;
+
+            while(var2.a > 0) {
+               int var6 = this.bv.nextInt(21) + 10;
+               if(var6 > var2.a) {
+                  var6 = var2.a;
+               }
+
+               var2.a -= var6;
+               OEntityItem var7 = new OEntityItem(this.aL, this.aP + (double)var3, this.aQ + (double)var4, this.aR + (double)var5, new OItemStack(var2.c, var6, var2.h()));
+               float var8 = 0.05F;
+               var7.aS = (double)((float)this.bv.nextGaussian() * var8);
+               var7.aT = (double)((float)this.bv.nextGaussian() * var8 + 0.2F);
+               var7.aU = (double)((float)this.bv.nextGaussian() * var8);
+               this.aL.b(var7);
+            }
+         }
+      }
+
+      super.I();
+   }
+
+   public void o_() {
+      // CanaryMod: Update of the cart
+      manager.callHook(PluginLoader.Hook.VEHICLE_UPDATE, cart);
+
+      if(this.b > 0) {
+         --this.b;
+      }
+
+      if(this.a > 0) {
+         --this.a;
+      }
+
+      double var7;
+      if(this.aL.B && this.k > 0) {
+         if(this.k > 0) {
+            double var1 = this.aP + (this.l - this.aP) / (double)this.k;
+            double var3 = this.aQ + (this.m - this.aQ) / (double)this.k;
+            double var5 = this.aR + (this.n - this.aR) / (double)this.k;
+
+            for(var7 = this.o - (double)this.aV; var7 < -180.0D; var7 += 360.0D) {
+               ;
+            }
+
+            while(var7 >= 180.0D) {
+               var7 -= 360.0D;
+            }
+
+            this.aV = (float)((double)this.aV + var7 / (double)this.k);
+            this.aW = (float)((double)this.aW + (this.p - (double)this.aW) / (double)this.k);
+            --this.k;
+            this.a(var1, var3, var5);
+            this.c(this.aV, this.aW);
+         } else {
+            this.a(this.aP, this.aQ, this.aR);
+            this.c(this.aV, this.aW);
+         }
+
+      } else {
+         this.aM = this.aP;
+         this.aN = this.aQ;
+         this.aO = this.aR;
+         this.aT -= 0.03999999910593033D;
+         int var9 = OMathHelper.b(this.aP);
+         int var10 = OMathHelper.b(this.aQ);
+         int var11 = OMathHelper.b(this.aR);
+         // CanaryMod: Change of the cart
+         manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, var9, var10, var11);
+
+         if(OBlockRail.g(this.aL, var9, var10 - 1, var11)) {
+            --var10;
+         }
+
+         double var12 = 0.4D;
+         boolean var14 = false;
+         var7 = 0.0078125D;
+         int var15 = this.aL.a(var9, var10, var11);
+         if(OBlockRail.c(var15)) {
+            OVec3D var16 = this.h(this.aP, this.aQ, this.aR);
+            int var17 = this.aL.b(var9, var10, var11);
+            this.aQ = (double)var10;
+            boolean var18 = false;
+            boolean var19 = false;
+            if(var15 == OBlock.U.bn) {
+               var18 = (var17 & 8) != 0;
+               var19 = !var18;
+            }
+
+            if(((OBlockRail)OBlock.m[var15]).e()) {
+               var17 &= 7;
+            }
+
+            if(var17 >= 2 && var17 <= 5) {
+               this.aQ = (double)(var10 + 1);
+            }
+
+            if(var17 == 2) {
+               this.aS -= var7;
+            }
+
+            if(var17 == 3) {
+               this.aS += var7;
+            }
+
+            if(var17 == 4) {
+               this.aU += var7;
+            }
+
+            if(var17 == 5) {
+               this.aU -= var7;
+            }
+
+            int[][] var20 = j[var17];
+            double var21 = (double)(var20[1][0] - var20[0][0]);
+            double var23 = (double)(var20[1][2] - var20[0][2]);
+            double var25 = Math.sqrt(var21 * var21 + var23 * var23);
+            double var27 = this.aS * var21 + this.aU * var23;
+            if(var27 < 0.0D) {
+               var21 = -var21;
+               var23 = -var23;
+            }
+
+            double var29 = Math.sqrt(this.aS * this.aS + this.aU * this.aU);
+            this.aS = var29 * var21 / var25;
+            this.aU = var29 * var23 / var25;
+            double var31;
+            if(var19) {
+               var31 = Math.sqrt(this.aS * this.aS + this.aU * this.aU);
+               if(var31 < 0.03D) {
+                  this.aS *= 0.0D;
+                  this.aT *= 0.0D;
+                  this.aU *= 0.0D;
+               } else {
+                  this.aS *= 0.5D;
+                  this.aT *= 0.0D;
+                  this.aU *= 0.5D;
+               }
+            }
+
+            var31 = 0.0D;
+            double var33 = (double)var9 + 0.5D + (double)var20[0][0] * 0.5D;
+            double var35 = (double)var11 + 0.5D + (double)var20[0][2] * 0.5D;
+            double var37 = (double)var9 + 0.5D + (double)var20[1][0] * 0.5D;
+            double var39 = (double)var11 + 0.5D + (double)var20[1][2] * 0.5D;
+            var21 = var37 - var33;
+            var23 = var39 - var35;
+            double var43;
+            double var41;
+            double var45;
+            if(var21 == 0.0D) {
+               this.aP = (double)var9 + 0.5D;
+               var31 = this.aR - (double)var11;
+            } else if(var23 == 0.0D) {
+               this.aR = (double)var11 + 0.5D;
+               var31 = this.aP - (double)var9;
+            } else {
+               var41 = this.aP - var33;
+               var43 = this.aR - var35;
+               var45 = (var41 * var21 + var43 * var23) * 2.0D;
+               var31 = var45;
+            }
+
+            this.aP = var33 + var21 * var31;
+            this.aR = var35 + var23 * var31;
+            this.a(this.aP, this.aQ + (double)this.bi, this.aR);
+            var41 = this.aS;
+            var43 = this.aU;
+            if(this.aJ != null) {
+               var41 *= 0.75D;
+               var43 *= 0.75D;
+            }
+
+            if(var41 < -var12) {
+               var41 = -var12;
+            }
+
+            if(var41 > var12) {
+               var41 = var12;
+            }
+
+            if(var43 < -var12) {
+               var43 = -var12;
+            }
+
+            if(var43 > var12) {
+               var43 = var12;
+            }
+
+            this.c(var41, 0.0D, var43);
+            if(var20[0][1] != 0 && OMathHelper.b(this.aP) - var9 == var20[0][0] && OMathHelper.b(this.aR) - var11 == var20[0][2]) {
+               this.a(this.aP, this.aQ + (double)var20[0][1], this.aR);
+            } else if(var20[1][1] != 0 && OMathHelper.b(this.aP) - var9 == var20[1][0] && OMathHelper.b(this.aR) - var11 == var20[1][2]) {
+               this.a(this.aP, this.aQ + (double)var20[1][1], this.aR);
+            }
+
+            if(this.aJ != null) {
+               this.aS *= 0.996999979019165D;
+               this.aT *= 0.0D;
+               this.aU *= 0.996999979019165D;
+            } else {
+               if(this.d == 2) {
+                  var45 = (double)OMathHelper.a(this.f * this.f + this.g * this.g);
+                  if(var45 > 0.01D) {
+                     var14 = true;
+                     this.f /= var45;
+                     this.g /= var45;
+                     double var47 = 0.04D;
+                     this.aS *= 0.800000011920929D;
+                     this.aT *= 0.0D;
+                     this.aU *= 0.800000011920929D;
+                     this.aS += this.f * var47;
+                     this.aU += this.g * var47;
+                  } else {
+                     this.aS *= 0.8999999761581421D;
+                     this.aT *= 0.0D;
+                     this.aU *= 0.8999999761581421D;
+                  }
+               }
+
+               this.aS *= 0.9599999785423279D;
+               this.aT *= 0.0D;
+               this.aU *= 0.9599999785423279D;
+            }
+
+            OVec3D var49 = this.h(this.aP, this.aQ, this.aR);
+            if(var49 != null && var16 != null) {
+               double var50 = (var16.b - var49.b) * 0.05D;
+               var29 = Math.sqrt(this.aS * this.aS + this.aU * this.aU);
+               if(var29 > 0.0D) {
+                  this.aS = this.aS / var29 * (var29 + var50);
+                  this.aU = this.aU / var29 * (var29 + var50);
+               }
+
+               this.a(this.aP, var49.b, this.aR);
+            }
+
+            int var52 = OMathHelper.b(this.aP);
+            int var53 = OMathHelper.b(this.aR);
+            if(var52 != var9 || var53 != var11) {
+               var29 = Math.sqrt(this.aS * this.aS + this.aU * this.aU);
+               this.aS = var29 * (double)(var52 - var9);
+               this.aU = var29 * (double)(var53 - var11);
+            }
+
+            double var54;
+            if(this.d == 2) {
+               var54 = (double)OMathHelper.a(this.f * this.f + this.g * this.g);
+               if(var54 > 0.01D && this.aS * this.aS + this.aU * this.aU > 0.0010D) {
+                  this.f /= var54;
+                  this.g /= var54;
+                  if(this.f * this.aS + this.g * this.aU < 0.0D) {
+                     this.f = 0.0D;
+                     this.g = 0.0D;
+                  } else {
+                     this.f = this.aS;
+                     this.g = this.aU;
+                  }
+               }
+            }
+
+            if(var18) {
+               var54 = Math.sqrt(this.aS * this.aS + this.aU * this.aU);
+               if(var54 > 0.01D) {
+                  double var56 = 0.06D;
+                  this.aS += this.aS / var54 * var56;
+                  this.aU += this.aU / var54 * var56;
+               } else if(var17 == 1) {
+                  if(this.aL.d(var9 - 1, var10, var11)) {
+                     this.aS = 0.02D;
+                  } else if(this.aL.d(var9 + 1, var10, var11)) {
+                     this.aS = -0.02D;
+                  }
+               } else if(var17 == 0) {
+                  if(this.aL.d(var9, var10, var11 - 1)) {
+                     this.aU = 0.02D;
+                  } else if(this.aL.d(var9, var10, var11 + 1)) {
+                     this.aU = -0.02D;
+                  }
+               }
+            }
+         } else {
+            if(this.aS < -var12) {
+               this.aS = -var12;
+            }
+
+            if(this.aS > var12) {
+               this.aS = var12;
+            }
+
+            if(this.aU < -var12) {
+               this.aU = -var12;
+            }
+
+            if(this.aU > var12) {
+               this.aU = var12;
+            }
+
+            if(this.ba) {
+               this.aS *= 0.5D;
+               this.aT *= 0.5D;
+               this.aU *= 0.5D;
+            }
+
+            this.c(this.aS, this.aT, this.aU);
+            if(!this.ba) {
+               this.aS *= 0.949999988079071D;
+               this.aT *= 0.949999988079071D;
+               this.aU *= 0.949999988079071D;
+            }
+         }
+
+         this.aW = 0.0F;
+         double var58 = this.aM - this.aP;
+         double var60 = this.aO - this.aR;
+         if(var58 * var58 + var60 * var60 > 0.0010D) {
+            this.aV = (float)(Math.atan2(var60, var58) * 180.0D / 3.141592653589793D);
+            if(this.i) {
+               this.aV += 180.0F;
+            }
+         }
+
+         double var62;
+         for(var62 = (double)(this.aV - this.aX); var62 >= 180.0D; var62 -= 360.0D) {
+            ;
+         }
+
+         while(var62 < -180.0D) {
+            var62 += 360.0D;
+         }
+
+         if(var62 < -170.0D || var62 >= 170.0D) {
+            this.aV += 180.0F;
+            this.i = !this.i;
+         }
+
+         this.c(this.aV, this.aW);
+         List var64 = this.aL.b(this, this.aZ.b(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+         if(var64 != null && var64.size() > 0) {
+            for(int var65 = 0; var65 < var64.size(); ++var65) {
+               OEntity var66 = (OEntity)var64.get(var65);
+               if(var66 != this.aJ && var66.d_() && var66 instanceof OEntityMinecart) {
+                  var66.h(this);
+               }
+            }
+         }
+
+         if(this.aJ != null && this.aJ.bh) {
+            this.aJ = null;
+         }
+
+         if(var14 && this.bv.nextInt(4) == 0) {
+            --this.e;
+            if(this.e < 0) {
+               this.f = this.g = 0.0D;
+            }
+
+            this.aL.a("largesmoke", this.aP, this.aQ + 0.8D, this.aR, 0.0D, 0.0D, 0.0D);
+         }
+
+      }
+   }
+
+   public OVec3D h(double var1, double var3, double var5) {
+      int var7 = OMathHelper.b(var1);
+      int var8 = OMathHelper.b(var3);
+      int var9 = OMathHelper.b(var5);
+      // CanaryMod: Change of the cart
+      manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, var7, var8, var9);
+
+      if(OBlockRail.g(this.aL, var7, var8 - 1, var9)) {
+         --var8;
+      }
+
+      int var10 = this.aL.a(var7, var8, var9);
+      if(OBlockRail.c(var10)) {
+         int var11 = this.aL.b(var7, var8, var9);
+         var3 = (double)var8;
+         if(((OBlockRail)OBlock.m[var10]).e()) {
+            var11 &= 7;
+         }
+
+         if(var11 >= 2 && var11 <= 5) {
+            var3 = (double)(var8 + 1);
+         }
+
+         int[][] var12 = j[var11];
+         double var13 = 0.0D;
+         double var15 = (double)var7 + 0.5D + (double)var12[0][0] * 0.5D;
+         double var17 = (double)var8 + 0.5D + (double)var12[0][1] * 0.5D;
+         double var19 = (double)var9 + 0.5D + (double)var12[0][2] * 0.5D;
+         double var21 = (double)var7 + 0.5D + (double)var12[1][0] * 0.5D;
+         double var23 = (double)var8 + 0.5D + (double)var12[1][1] * 0.5D;
+         double var25 = (double)var9 + 0.5D + (double)var12[1][2] * 0.5D;
+         double var27 = var21 - var15;
+         double var29 = (var23 - var17) * 2.0D;
+         double var31 = var25 - var19;
+         if(var27 == 0.0D) {
+            var1 = (double)var7 + 0.5D;
+            var13 = var5 - (double)var9;
+         } else if(var31 == 0.0D) {
+            var5 = (double)var9 + 0.5D;
+            var13 = var1 - (double)var7;
+         } else {
+            double var33 = var1 - var15;
+            double var35 = var5 - var19;
+            double var37 = (var33 * var27 + var35 * var31) * 2.0D;
+            var13 = var37;
+         }
+
+         var1 = var15 + var27 * var13;
+         var3 = var17 + var29 * var13;
+         var5 = var19 + var31 * var13;
+         if(var29 < 0.0D) {
+            ++var3;
+         }
+
+         if(var29 > 0.0D) {
+            var3 += 0.5D;
+         }
+
+         return OVec3D.b(var1, var3, var5);
+      } else {
+         return null;
+      }
+   }
+
+   protected void b(ONBTTagCompound var1) {
+      var1.a("Type", this.d);
+      if(this.d == 2) {
+         var1.a("PushX", this.f);
+         var1.a("PushZ", this.g);
+         var1.a("Fuel", (short)this.e);
+      } else if(this.d == 1) {
+         ONBTTagList var2 = new ONBTTagList();
+
+         for(int var3 = 0; var3 < this.h.length; ++var3) {
+            if(this.h[var3] != null) {
+               ONBTTagCompound var4 = new ONBTTagCompound();
+               var4.a("Slot", (byte)var3);
+               this.h[var3].a(var4);
+               var2.a(var4);
+            }
+         }
+
+         var1.a("Items", var2);
+      }
+
+   }
+
+   protected void a(ONBTTagCompound var1) {
+      this.d = var1.e("Type");
+      if(this.d == 2) {
+         this.f = var1.h("PushX");
+         this.g = var1.h("PushZ");
+         this.e = var1.d("Fuel");
+      } else if(this.d == 1) {
+         ONBTTagList var2 = var1.l("Items");
+         this.h = new OItemStack[this.a()];
+
+         for(int var3 = 0; var3 < var2.c(); ++var3) {
+            ONBTTagCompound var4 = (ONBTTagCompound)var2.a(var3);
+            int var5 = var4.c("Slot") & 255;
+            if(var5 >= 0 && var5 < this.h.length) {
+               this.h[var5] = new OItemStack(var4);
+            }
+         }
+      }
+
+   }
+
+   public void h(OEntity var1) {
+      if(!this.aL.B) {
+         if(var1 != this.aJ) {
+            // CanaryMod: Collision of a cart
+            if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_COLLISION, cart, var1.entity))
+               return;
+
+            if(var1 instanceof OEntityLiving && !(var1 instanceof OEntityPlayer) && this.d == 0 && this.aS * this.aS + this.aU * this.aU > 0.01D && this.aJ == null && var1.aK == null) {
+               var1.b(this);
+            }
+
+            double var2 = var1.aP - this.aP;
+            double var4 = var1.aR - this.aR;
+            double var6 = var2 * var2 + var4 * var4;
+            if(var6 >= 9.999999747378752E-5D) {
+               var6 = (double)OMathHelper.a(var6);
+               var2 /= var6;
+               var4 /= var6;
+               double var8 = 1.0D / var6;
+               if(var8 > 1.0D) {
+                  var8 = 1.0D;
+               }
+
+               var2 *= var8;
+               var4 *= var8;
+               var2 *= 0.10000000149011612D;
+               var4 *= 0.10000000149011612D;
+               var2 *= (double)(1.0F - this.bu);
+               var4 *= (double)(1.0F - this.bu);
+               var2 *= 0.5D;
+               var4 *= 0.5D;
+               if(var1 instanceof OEntityMinecart) {
+                  double var10 = var1.aP - this.aP;
+                  double var12 = var1.aR - this.aR;
+                  double var14 = var10 * var1.aU + var12 * var1.aM;
+                  var14 *= var14;
+                  if(var14 > 5.0D) {
+                     return;
+                  }
+
+                  double var16 = var1.aS + this.aS;
+                  double var18 = var1.aU + this.aU;
+                  if(((OEntityMinecart)var1).d == 2 && this.d != 2) {
+                     this.aS *= 0.20000000298023224D;
+                     this.aU *= 0.20000000298023224D;
+                     this.f(var1.aS - var2, 0.0D, var1.aU - var4);
+                     var1.aS *= 0.699999988079071D;
+                     var1.aU *= 0.699999988079071D;
+                  } else if(((OEntityMinecart)var1).d != 2 && this.d == 2) {
+                     var1.aS *= 0.20000000298023224D;
+                     var1.aU *= 0.20000000298023224D;
+                     var1.f(this.aS + var2, 0.0D, this.aU + var4);
+                     this.aS *= 0.699999988079071D;
+                     this.aU *= 0.699999988079071D;
+                  } else {
+                     var16 /= 2.0D;
+                     var18 /= 2.0D;
+                     this.aS *= 0.20000000298023224D;
+                     this.aU *= 0.20000000298023224D;
+                     this.f(var16 - var2, 0.0D, var18 - var4);
+                     var1.aS *= 0.20000000298023224D;
+                     var1.aU *= 0.20000000298023224D;
+                     var1.f(var16 + var2, 0.0D, var18 + var4);
+                  }
+               } else {
+                  this.f(-var2, 0.0D, -var4);
+                  var1.f(var2 / 4.0D, 0.0D, var4 / 4.0D);
+               }
+            }
+
+         }
+      }
+   }
+
+   public int a() {
+      return 27;
+   }
+
+   public OItemStack c_(int var1) {
+      return this.h[var1];
+   }
+
+   public OItemStack a(int var1, int var2) {
+      if(this.h[var1] != null) {
+         OItemStack var3;
+         if(this.h[var1].a <= var2) {
+            var3 = this.h[var1];
+            this.h[var1] = null;
+            return var3;
+         } else {
+            var3 = this.h[var1].a(var2);
+            if(this.h[var1].a == 0) {
+               this.h[var1] = null;
+            }
+
+            return var3;
+         }
+      } else {
+         return null;
+      }
+   }
+
+   public void a(int var1, OItemStack var2) {
+      this.h[var1] = var2;
+      if(var2 != null && var2.a > this.d()) {
+         var2.a = this.d();
+      }
+
+   }
+
+   public String c() {
+      return getName();
+   }
+
+   public int d() {
+      return 64;
+   }
+
+   public void i() {
+   }
+
+   public boolean a(OEntityPlayer var1) {
+      // CanaryMod: Entering the cart
+      manager.callHook(PluginLoader.Hook.VEHICLE_ENTERED, cart, var1.entity);
+
+      if(this.d == 0) {
+         if(this.aJ != null && this.aJ instanceof OEntityPlayer && this.aJ != var1) {
+            return true;
+         }
+
+         if(!this.aL.B) {
+            var1.b(this);
+         }
+      } else if(this.d == 1) {
+         if(!this.aL.B) {
+            // CanaryMod: cast this down to fix decompiler error.
+            var1.a((OIInventory) this);
+         }
+      } else if(this.d == 2) {
+         OItemStack var2 = var1.i.b();
+         if(var2 != null && var2.c == OItem.k.be) {
+            if((var2.a -= 1) == 0) {
+               var1.i.a(var1.i.c, (OItemStack)null);
+            }
+
+            this.e += 1200;
+         }
+
+         this.f = this.aP - var1.aP;
+         this.g = this.aR - var1.aR;
+      }
+
+      return true;
+   }
+
+   public boolean a_(OEntityPlayer var1) {
+      return this.bh?false:var1.g(this) <= 64.0D;
+   }
+
+    @Override
+    public OItemStack[] getContents() {
+        return h;
+    }
 
     @Override
     public void setContents(OItemStack[] values) {
         h = values;
     }
-    
-    @Override
-    public OItemStack[] getContents() {
-        return h;
-    }
-    
+
     @Override
     public OItemStack getContentsAt(int index) {
         return c_(index);
@@ -60,712 +807,4 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         name = value;
     }
 
-    public OEntityMinecart(OWorld paramOWorld) {
-        super(paramOWorld);
-        aI = true;
-        b(0.98F, 0.7F);
-        bi = (bk / 2.0F);
-        
-
-    }
-
-    @Override
-    protected boolean n() {
-        return false;
-    }
-
-    @Override
-    protected void b() {
-    }
-
-    @Override
-    public OAxisAlignedBB a_(OEntity paramOEntity) {
-        return paramOEntity.aZ;
-    }
-
-    @Override
-    public OAxisAlignedBB e_() {
-        return null;
-    }
-
-    @Override
-    public boolean d_() {
-        return true;
-    }
-
-    public OEntityMinecart(OWorld paramOWorld, double paramDouble1, double paramDouble2, double paramDouble3, int paramInt) {
-        this(paramOWorld);
-        a(paramDouble1, paramDouble2 + bi, paramDouble3);
-
-        aS = 0.0D;
-        aT = 0.0D;
-        aU = 0.0D;
-
-        aM = paramDouble1;
-        aN = paramDouble2;
-        aO = paramDouble3;
-        d = paramInt;
-        // CanaryMod: Creation of the cart
-        manager.callHook(PluginLoader.Hook.VEHICLE_CREATE, cart);
-    }
-
-    @Override
-    public double m() {
-        return bk * 0.0D - 0.3D;
-    }
-
-    @Override
-    public boolean a(OEntity paramOEntity, int paramInt) {
-        // CanaryMod: Attack of the cart
-        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, cart, paramOEntity == null ? null : paramOEntity.entity, paramInt))
-            return true;
-
-
-        if ((aL.B) || (bh))
-            return true;
-        c = (-c);
-        b = 10;
-        ae();
-        a += paramInt * 10;
-        if (a > 40) {
-            if (aJ != null)
-                aJ.b((OEntity) this);
-            I();
-            a(OItem.ax.be, 1, 0.0F);
-            if (d == 1) {
-                OEntityMinecart var3 = this;
-
-                for (int var4 = 0; var4 < var3.a(); ++var4) {
-                    OItemStack var5 = var3.c_(var4);
-                    if (var5 != null) {
-                        float var6 = this.bv.nextFloat() * 0.8F + 0.1F;
-                        float var7 = this.bv.nextFloat() * 0.8F + 0.1F;
-                        float var8 = this.bv.nextFloat() * 0.8F + 0.1F;
-
-                        while (var5.a > 0) {
-                            int var9 = this.bv.nextInt(21) + 10;
-                            if (var9 > var5.a)
-                                var9 = var5.a;
-
-                            var5.a -= var9;
-                            OEntityItem var10 = new OEntityItem(this.aL, this.aP + (double) var6, this.aQ + (double) var7, this.aR + (double) var8, new OItemStack(var5.c, var9, var5.h()));
-                            float var11 = 0.05F;
-                            var10.aS = (double) ((float) this.bv.nextGaussian() * var11);
-                            var10.aT = (double) ((float) this.bv.nextGaussian() * var11 + 0.2F);
-                            var10.aU = (double) ((float) this.bv.nextGaussian() * var11);
-                            this.aL.b((OEntity) var10);
-                        }
-                    }
-                }
-                a(OBlock.av.bn, 1, 0.0F);
-            } else if (d == 2)
-                a(OBlock.aC.bn, 1, 0.0F);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean n_() {
-        return !bh;
-    }
-
-    @Override
-    public void I() {
-        // CanaryMod: Destruction of the cart
-        manager.callHook(PluginLoader.Hook.VEHICLE_DESTROYED, cart);
-
-        
-        for (int i1 = 0; i1 < a(); i1++) {
-            OItemStack localOItemStack = c_(i1);
-            if (localOItemStack != null) {
-                float f1 = bv.nextFloat() * 0.8F + 0.1F;
-                float f2 = bv.nextFloat() * 0.8F + 0.1F;
-                float f3 = bv.nextFloat() * 0.8F + 0.1F;
-
-                while (localOItemStack.a > 0) {
-                    int i2 = bv.nextInt(21) + 10;
-                    if (i2 > localOItemStack.a)
-                        i2 = localOItemStack.a;
-                    localOItemStack.a -= i2;
-
-                    OEntityItem localOEntityItem = new OEntityItem(aL, aP + f1, aQ + f2, aR + f3, new OItemStack(localOItemStack.c, i2, localOItemStack.h()));
-                    float f4 = 0.05F;
-                    localOEntityItem.aS = ((float) bv.nextGaussian() * f4);
-                    localOEntityItem.aT= ((float) bv.nextGaussian() * f4 + 0.2F);
-                    localOEntityItem.aU = ((float) bv.nextGaussian() * f4);
-                    aL.b(localOEntityItem);
-                }
-            }
-        }
-        super.I();
-    }
-
-    @Override
-    public void o_() {
-        // CanaryMod: Update of the cart
-        manager.callHook(PluginLoader.Hook.VEHICLE_UPDATE, cart);
-
-        
-        if (b > 0)
-            b -= 1;
-        if (a > 0)
-            a -= 1;
-
-        if ((aL.B) && (k > 0)) {
-            if (k > 0) {
-                double d1 = aP + (l - aP) / k;
-                double d2 = aQ + (m - aQ) / k;
-                double d3 = aR + (n - aR) / k;
-
-                double d4 = o - aV;
-                while (d4 < -180.0D)
-                    d4 += 360.0D;
-                while (d4 >= 180.0D)
-                    d4 -= 360.0D;
-                aV = (float) (aV + d4 / k);
-                aW = (float) (aW + (p - aW) / k);
-
-                k -= 1;
-                a(d1, d2, d3);
-                c(aV, aW);
-            } else {
-                a(aP, aQ, aR);
-                c(aV, aW);
-            }
-
-            return;
-        }
-        aM = aP;
-        aN = aQ;
-        aO = aR;
-
-        aT -= 0.04D;
-
-        int i1 = OMathHelper.b(aP);
-        int i2 = OMathHelper.b(aQ);
-        int i3 = OMathHelper.b(aR);
-        // CanaryMod: Change of the cart
-        manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, i1, i2, i3);
-
-        if (OBlockRail.g(this.aL, i1, i2 - 1, i3))
-            i2--;
-
-        double d5 = 0.4D;
-        int i4 = 0;
-
-        double d4 = 0.0078125D;
-        int var15 = aL.a(i1, i2, i3);
-        if (OBlockRail.c(var15)) {
-            OVec3D localOVec3D1 = h(aP, aQ, aR);
-            int i5 = aL.b(i1, i2, i3);
-            aQ = i2;
-            
-            boolean var18 = false, var19 = false;
-            if (var15 == OBlock.U.bn) {
-                var18 = (i5 & 8) != 0;
-                var19 = !var18;
-            }
-            
-            if (((OBlockRail) OBlock.m[var15]).e()) {
-                i5 &= 7;
-            }
-
-            
-            if ((i5 >= 2) && (i5 <= 5))
-                aQ = (i2 + 1);
-
-            if (i5 == 2)
-                aS -= d4;
-            if (i5 == 3)
-                aS += d4;
-            if (i5 == 4)
-                aU += d4;
-            if (i5 == 5)
-                aU -= d4;
-
-            int[][] arrayOfInt = j[i5];
-
-            double d6 = arrayOfInt[1][0] - arrayOfInt[0][0];
-            double d7 = arrayOfInt[1][2] - arrayOfInt[0][2];
-            double d8 = Math.sqrt(d6 * d6 + d7 * d7);
-
-            double d9 = aS * d6 + aU * d7;
-            if (d9 < 0.0D) {
-                d6 = -d6;
-                d7 = -d7;
-            }
-
-            double d10 = Math.sqrt(aS * aS + aU * aU);
-
-            aS = (d10 * d6 / d8);
-            aU = (d10 * d7 / d8);
-            
-            if (var19) {
-                double d11 = Math.sqrt(aS * aS + aU * aU);
-                if (d11 < 0.03D) {
-                    aS *= 0.0D;
-                    aT *= 0.0D;
-                    aU *= 0.0D;
-                } else {
-                    aS *= 0.5D;
-                    aT *= 0.0D;
-                    aU *= 0.5D;
-                }
-            }
-
-            double d11 = 0.0D;
-            double d12 = i1 + 0.5D + arrayOfInt[0][0] * 0.5D;
-            double d13 = i3 + 0.5D + arrayOfInt[0][2] * 0.5D;
-            double d14 = i1 + 0.5D + arrayOfInt[1][0] * 0.5D;
-            double d15 = i3 + 0.5D + arrayOfInt[1][2] * 0.5D;
-
-            d6 = d14 - d12;
-            d7 = d15 - d13;
-            double d18;
-            if (d6 == 0.0D) {
-                aP = (i1 + 0.5D);
-                d11 = aR - i3;
-            } else if (d7 == 0.0D) {
-                aR = (i3 + 0.5D);
-                d11 = aP - i1;
-            } else {
-                double d16 = aP - d12;
-                double d17 = aR - d13;
-
-                d18 = (d16 * d6 + d17 * d7) * 2.0D;
-                d11 = d18;
-            }
-
-            aP = (d12 + d6 * d11);
-            aR = (d13 + d7 * d11);
-
-            a(aP, aQ + bi, aR);
-
-            double d16 = aS;
-            double d17 = aU;
-            if (aJ != null) {
-                d16 *= 0.75D;
-                d17 *= 0.75D;
-            }
-            if (d16 < -d5)
-                d16 = -d5;
-            if (d16 > d5)
-                d16 = d5;
-            if (d17 < -d5)
-                d17 = -d5;
-            if (d17 > d5)
-                d17 = d5;
-            c(d16, 0.0D, d17);
-
-            if ((arrayOfInt[0][1] != 0) && (OMathHelper.b(aP) - i1 == arrayOfInt[0][0]) && (OMathHelper.b(aR) - i3 == arrayOfInt[0][2]))
-                a(aP, aQ + arrayOfInt[0][1], aR);
-            else if ((arrayOfInt[1][1] != 0) && (OMathHelper.b(aP) - i1 == arrayOfInt[1][0]) && (OMathHelper.b(aR) - i3 == arrayOfInt[1][2]))
-                a(aP, aQ + arrayOfInt[1][1], aR);
-
-            if (aJ != null) {
-                aS *= 0.997D;
-                aT *= 0.0D;
-                aU *= 0.997D;
-            } else {
-                if (d == 2) {
-                    d18 = OMathHelper.a(f * f + g * g);
-                    if (d18 > 0.01D) {
-                        i4 = 1;
-                        f /= d18;
-                        g /= d18;
-                        double d19 = 0.04D;
-                        aS *= 0.8D;
-                        aT *= 0.0D;
-                        aU *= 0.8D;
-                        aS += f * d19;
-                        aU += g * d19;
-                    } else {
-                        aS *= 0.9D;
-                        aT *= 0.0D;
-                        aU *= 0.9D;
-                    }
-                }
-                aS *= 0.96D;
-                aT *= 0.0D;
-                aU *= 0.96D;
-            }
-
-            OVec3D localOVec3D2 = h(aP, aQ, aR);
-            if ((localOVec3D2 != null) && (localOVec3D1 != null)) {
-                double d20 = (localOVec3D1.b - localOVec3D2.b) * 0.05D;
-
-                d10 = Math.sqrt(aS * aS + aU * aU);
-                if (d10 > 0.0D) {
-                    aS = (aS / d10 * (d10 + d20));
-                    aU = (aU / d10 * (d10 + d20));
-                }
-                a(aP, localOVec3D2.b, aR);
-            }
-
-            int i6 = OMathHelper.b(aP);
-            int i7 = OMathHelper.b(aR);
-            if ((i6 != i1) || (i7 != i3)) {
-                d10 = Math.sqrt(aS * aS + aU * aU);
-
-                aS = (d10 * (i6 - i1));
-                aU = (d10 * (i7 - i3));
-            }
-
-            if (d == 2) {
-                double d21 = OMathHelper.a(f * f + g * g);
-                if ((d21 > 0.01D) && (aS * aS + aU * aU > 0.001D)) {
-                    f /= d21;
-                    g /= d21;
-
-                    if (f * aS + g * aU < 0.0D) {
-                        f = 0.0D;
-                        g = 0.0D;
-                    } else {
-                        f = aS;
-                        g = aU;
-                    }
-                }
-            }
-            if (var18) {
-                double d21 = Math.sqrt(aS * aS + aU * aU);
-                if (d21 > 0.01D) {
-                    double d22 = 0.06D;
-                    aS += aS / d21 * d22;
-                    aU += aU / d21 * d22;
-                } else if (i5 == 1) {
-                    if (aL.d(i1 - 1, i2, i3)) {
-                        aS = 0.02D;
-                    } else if (aL.d(i1 + 1, i2, i3)) {
-                        aS = -0.02D;
-                    }
-                } else if (i5 == 0) {
-                    if (aL.d(i1, i2, i3 - 1)) {
-                        aU = 0.02D;
-                    } else if (aL.d(i1, i2, i3 + 1)) {
-                        aU = -0.02D;
-                    }
-                }
-            }
-        } else {
-            if (aS < -d5)
-                aS = (-d5);
-            if (aS > d5)
-                aS = d5;
-            if (aU < -d5)
-                aU = (-d5);
-            if (aU > d5)
-                aU = d5;
-            if (ba) {
-                aS *= 0.5D;
-                aT *= 0.5D;
-                aU *= 0.5D;
-            }
-            c(aS, aT, aU);
-
-            if (!ba) {
-                aS *= 0.95D;
-                aT *= 0.95D;
-                aU *= 0.95D;
-            }
-        }
-
-        aW = 0.0F;
-        double d22 = aM - aP;
-        double d23 = aO - aR;
-        if (d22 * d22 + d23 * d23 > 0.001D) {
-            aV = (float) (Math.atan2(d23, d22) * 180.0D / 3.141592653589793D);
-            if (i)
-                aV += 180.0F;
-        }
-
-        double d24 = aV - aX;
-        while (d24 >= 180.0D)
-            d24 -= 360.0D;
-        while (d24 < -180.0D)
-            d24 += 360.0D;
-        if ((d24 < -170.0D) || (d24 >= 170.0D)) {
-            aV += 180.0F;
-            i = (!i);
-        }
-        c(aV, aW);
-
-        List localList = aL.b(this, aZ.b(0.2D, 0.0D, 0.2D));
-        if ((localList != null) && (localList.size() > 0))
-            for (int i8 = 0; i8 < localList.size(); i8++) {
-                OEntity localOEntity = (OEntity) localList.get(i8);
-                if ((localOEntity != aJ) && (localOEntity.d_()) && ((localOEntity instanceof OEntityMinecart)))
-                    localOEntity.h(this);
-            }
-
-        if ((aJ != null) && (aJ.bh))
-            aJ = null;
-
-        if ((i4 != 0) && (bv.nextInt(4) == 0)) {
-            e -= 1;
-            if (e < 0)
-                f = (g = 0.0D);
-            aL.a("largesmoke", aP, aQ + 0.8D, aR, 0.0D, 0.0D, 0.0D);
-        }
-    }
-
-    public OVec3D h(double paramDouble1, double paramDouble2, double paramDouble3) {
-        int i1 = OMathHelper.b(paramDouble1);
-        int i2 = OMathHelper.b(paramDouble2);
-        int i3 = OMathHelper.b(paramDouble3);
-        // CanaryMod: Change of the cart
-        manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, i1, i2, i3);
-
-        if (OBlockRail.g(aL, i1, i2 - 1, i3))
-            i2--;
-
-        int var10 = aL.a(i1, i2, i3);
-        if (OBlockRail.c(var10)) {
-            int i4 = aL.b(i1, i2, i3);
-            paramDouble2 = i2;
-
-            if (((OBlockRail) OBlock.m[var10]).e()) {
-                i4 &= 7;
-            }
-
-            if ((i4 >= 2) && (i4 <= 5))
-                paramDouble2 = i2 + 1;
-            if (i4 > 9) {
-                i4 = 9;
-            }
-
-            int[][] arrayOfInt = j[i4];
-
-            double d1 = 0.0D;
-            double d2 = i1 + 0.5D + arrayOfInt[0][0] * 0.5D;
-            double d3 = i2 + 0.5D + arrayOfInt[0][1] * 0.5D;
-            double d4 = i3 + 0.5D + arrayOfInt[0][2] * 0.5D;
-            double d5 = i1 + 0.5D + arrayOfInt[1][0] * 0.5D;
-            double d6 = i2 + 0.5D + arrayOfInt[1][1] * 0.5D;
-            double d7 = i3 + 0.5D + arrayOfInt[1][2] * 0.5D;
-
-            double d8 = d5 - d2;
-            double d9 = (d6 - d3) * 2.0D;
-            double d10 = d7 - d4;
-
-            if (d8 == 0.0D) {
-                paramDouble1 = i1 + 0.5D;
-                d1 = paramDouble3 - i3;
-            } else if (d10 == 0.0D) {
-                paramDouble3 = i3 + 0.5D;
-                d1 = paramDouble1 - i1;
-            } else {
-                double d11 = paramDouble1 - d2;
-                double d12 = paramDouble3 - d4;
-
-                double d13 = (d11 * d8 + d12 * d10) * 2.0D;
-                d1 = d13;
-            }
-
-            paramDouble1 = d2 + d8 * d1;
-            paramDouble2 = d3 + d9 * d1;
-            paramDouble3 = d4 + d10 * d1;
-            if (d9 < 0.0D)
-                paramDouble2 += 1.0D;
-            if (d9 > 0.0D)
-                paramDouble2 += 0.5D;
-            return OVec3D.b(paramDouble1, paramDouble2, paramDouble3);
-        }
-        return null;
-    }
-
-    @Override
-    protected void b(ONBTTagCompound paramONBTTagCompound) {
-        paramONBTTagCompound.a("Type", d);
-
-        if (d == 2) {
-            paramONBTTagCompound.a("PushX", f);
-            paramONBTTagCompound.a("PushZ", g);
-            paramONBTTagCompound.a("Fuel", (short) e);
-        } else if (d == 1) {
-            ONBTTagList localONBTTagList = new ONBTTagList();
-
-            for (int i1 = 0; i1 < h.length; i1++)
-                if (h[i1] != null) {
-                    ONBTTagCompound localONBTTagCompound = new ONBTTagCompound();
-                    localONBTTagCompound.a("Slot", (byte) i1);
-                    h[i1].a(localONBTTagCompound);
-                    localONBTTagList.a(localONBTTagCompound);
-                }
-            paramONBTTagCompound.a("Items", localONBTTagList);
-        }
-    }
-
-    @Override
-    protected void a(ONBTTagCompound paramONBTTagCompound) {
-        d = paramONBTTagCompound.e("Type");
-        if (d == 2) {
-            f = paramONBTTagCompound.h("PushX");
-            g = paramONBTTagCompound.h("PushZ");
-            e = paramONBTTagCompound.d("Fuel");
-        } else if (d == 1) {
-            ONBTTagList localONBTTagList = paramONBTTagCompound.l("Items");
-            h = new OItemStack[a()];
-            for (int i1 = 0; i1 < localONBTTagList.c(); i1++) {
-                ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) localONBTTagList.a(i1);
-                int i2 = localONBTTagCompound.c("Slot") & 0xFF;
-                if ((i2 < 0) || (i2 >= h.length))
-                    continue;
-                h[i2] = new OItemStack(localONBTTagCompound);
-            }
-        }
-    }
-
-    @Override
-    public void h(OEntity paramOEntity) {
-        if (aL.B)
-            return;
-
-        if (paramOEntity == aJ)
-            return;
-        // CanaryMod: Collision of a cart
-        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_COLLISION, cart, paramOEntity.entity))
-            return;
-
-        if (((paramOEntity instanceof OEntityLiving)) && (!(paramOEntity instanceof OEntityPlayer)) && (d == 0) && (aS * aS + aU * aU > 0.01D) && (aJ == null) && (paramOEntity.aK == null))
-            paramOEntity.b(this);
-
-        double d1 = paramOEntity.aP - aP;
-        double d2 = paramOEntity.aR - aR;
-
-        double d3 = d1 * d1 + d2 * d2;
-        if (d3 >= 0.0001D) {
-            d3 = OMathHelper.a(d3);
-            d1 /= d3;
-            d2 /= d3;
-            double d4 = 1.0D / d3;
-            if (d4 > 1.0D)
-                d4 = 1.0D;
-            d1 *= d4;
-            d2 *= d4;
-            d1 *= 0.1D;
-            d2 *= 0.1D;
-
-            d1 *= (1.0F - bu);
-            d2 *= (1.0F - bu);
-            d1 *= 0.5D;
-            d2 *= 0.5D;
-
-            if ((paramOEntity instanceof OEntityMinecart)) {
-                double var10 = paramOEntity.aP - this.aP;
-                double var12 = paramOEntity.aR - this.aR;
-                double var14 = var10 * paramOEntity.aU + var12 * paramOEntity.aM;
-                var14 *= var14;
-                if (var14 > 5.0D)
-                    return;
-
-                double d5 = paramOEntity.aS + aS;
-                double d6 = paramOEntity.aU + aU;
-
-                if ((((OEntityMinecart) paramOEntity).d == 2) && (d != 2)) {
-                    aS *= 0.2D;
-                    aU *= 0.2D;
-                    f(paramOEntity.aS - d1, 0.0D, paramOEntity.aU - d2);
-                    paramOEntity.aS *= 0.7D;
-                    paramOEntity.aU *= 0.7D;
-                } else if ((((OEntityMinecart) paramOEntity).d != 2) && (d == 2)) {
-                    paramOEntity.aS *= 0.2D;
-                    paramOEntity.aU *= 0.2D;
-                    paramOEntity.f(aS + d1, 0.0D, aU + d2);
-                    aS *= 0.7D;
-                    aU *= 0.7D;
-                } else {
-                    d5 /= 2.0D;
-                    d6 /= 2.0D;
-                    aS *= 0.2D;
-                    aU *= 0.2D;
-                    f(d5 - d1, 0.0D, d6 - d2);
-                    paramOEntity.aS *= 0.2D;
-                    paramOEntity.aU *= 0.2D;
-                    paramOEntity.f(d5 + d1, 0.0D, d6 + d2);
-                }
-            } else {
-                f(-d1, 0.0D, -d2);
-                paramOEntity.f(d1 / 4.0D, 0.0D, d2 / 4.0D);
-            }
-        }
-    }
-
-    public int a() {
-        return 27;
-    }
-
-    public OItemStack c_(int paramInt) {
-        return h[paramInt];
-    }
-
-    public OItemStack a(int paramInt1, int paramInt2) {
-        if (h[paramInt1] != null) {
-            if (h[paramInt1].a <= paramInt2) {
-                OItemStack localOItemStack = h[paramInt1];
-                h[paramInt1] = null;
-                return localOItemStack;
-            }
-            OItemStack localOItemStack = h[paramInt1].a(paramInt2);
-            if (h[paramInt1].a == 0)
-                h[paramInt1] = null;
-            return localOItemStack;
-        }
-
-        return null;
-    }
-
-    public void a(int paramInt, OItemStack paramOItemStack) {
-        h[paramInt] = paramOItemStack;
-        if ((paramOItemStack != null) && (paramOItemStack.a > d()))
-            paramOItemStack.a = d();
-    }
-
-    public String c() {
-        return getName();
-    }
-
-    public int d() {
-        return 64;
-    }
-
-    public void i() {
-    }
-
-    @Override
-    public boolean a(OEntityPlayer paramOEntityPlayer) {
-        // CanaryMod: Entering the cart
-        manager.callHook(PluginLoader.Hook.VEHICLE_ENTERED, cart, paramOEntityPlayer.entity);
-
-        
-        if (d == 0) {
-            if ((aJ != null) && ((aJ instanceof OEntityPlayer)) && (aJ != paramOEntityPlayer))
-                return true;
-            if (!aL.B)
-                paramOEntityPlayer.b(this);
-        } else if (d == 1) {
-            if (!aL.B) {
-                // CanaryMod cast this down to fix decompiler error.
-                paramOEntityPlayer.a((OIInventory) this);
-            }
-        } else if (d == 2) {
-            OItemStack localOItemStack = paramOEntityPlayer.i.b();
-            if ((localOItemStack != null) && (localOItemStack.c == OItem.k.be)) {
-                if (--localOItemStack.a == 0)
-                    paramOEntityPlayer.i.a(paramOEntityPlayer.i.c, null);
-                e += 1200;
-            }
-
-            f = (aP - paramOEntityPlayer.aP);
-            g = (aR - paramOEntityPlayer.aR);
-        }
-        return true;
-    }
-
-    public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (bh)
-            return false;
-        return paramOEntityPlayer.g(this) <= 64.0D;
-    }
-
-   
 }

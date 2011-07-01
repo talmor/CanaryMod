@@ -1,72 +1,90 @@
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class OTileEntity {
-    private static Map a = new HashMap();
-    private static Map b = new HashMap();
-    public OWorld      d;
-    public int         e;
-    public int         f;
-    public int         g;
 
-    private static void a(Class paramClass, String paramString) {
-        if (b.containsKey(paramString))
-            throw new IllegalArgumentException("Duplicate id: " + paramString);
-        a.put(paramString, paramClass);
-        b.put(paramClass, paramString);
-    }
+   private static Map a = new HashMap();
+   private static Map b = new HashMap();
+   public OWorld d;
+   public int e;
+   public int f;
+   public int g;
 
-    public void a(ONBTTagCompound paramONBTTagCompound) {
-        e = paramONBTTagCompound.e("x");
-        f = paramONBTTagCompound.e("y");
-        g = paramONBTTagCompound.e("z");
-    }
 
-    public void b(ONBTTagCompound paramONBTTagCompound) {
-        String str = (String) b.get(getClass());
-        if (str == null)
-            throw new RuntimeException(getClass() + " is missing a mapping! This is a bug!");
-        paramONBTTagCompound.a("id", str);
-        paramONBTTagCompound.a("x", e);
-        paramONBTTagCompound.a("y", f);
-        paramONBTTagCompound.a("z", g);
-    }
+   private static void a(Class var0, String var1) {
+      if(b.containsKey(var1)) {
+         throw new IllegalArgumentException("Duplicate id: " + var1);
+      } else {
+         a.put(var1, var0);
+         b.put(var0, var1);
+      }
+   }
 
-    public void g_() {
-    }
+   public void a(ONBTTagCompound var1) {
+      // CanaryMod: fix jarjar
+      this.e = var1.e("x");
+      this.f = var1.e("y");
+      this.g = var1.e("z");
+   }
 
-    public static OTileEntity c(ONBTTagCompound paramONBTTagCompound) {
-        OTileEntity localOTileEntity = null;
-        try {
-            Class localClass = (Class) a.get(paramONBTTagCompound.i("id"));
-            if (localClass != null)
-                localOTileEntity = (OTileEntity) localClass.newInstance();
-        } catch (Exception localException) {
-            localException.printStackTrace();
-        }
-        if (localOTileEntity != null)
-            localOTileEntity.a(paramONBTTagCompound);
-        else
-            System.out.println("Skipping TileEntity with id " + paramONBTTagCompound.i("id"));
-        return localOTileEntity;
-    }
+   public void b(ONBTTagCompound var1) {
+      String var2 = (String)b.get(this.getClass());
+      if(var2 == null) {
+         throw new RuntimeException(this.getClass() + " is missing a mapping! This is a bug!");
+      } else {
+         // CanaryMod: fix jarjar
+         var1.a("id", var2);
+         var1.a("x", this.e);
+         var1.a("y", this.f);
+         var1.a("z", this.g);
+      }
+   }
 
-    public void i() {
-        if (d != null)
-            d.b(e, f, g, this);
-    }
+   public void g_() {
+   }
 
-    public OPacket e() {
-        return null;
-    }
+   public static OTileEntity c(ONBTTagCompound var0) {
+      OTileEntity var1 = null;
 
-    static {
-        a(OTileEntityFurnace.class, "Furnace");
-        a(OTileEntityChest.class, "Chest");
-        a(OTileEntityRecordPlayer.class, "RecordPlayer");
-        a(OTileEntityDispenser.class, "Trap");
-        a(OTileEntitySign.class, "Sign");
-        a(OTileEntityMobSpawner.class, "MobSpawner");
-        a(OTileEntityNote.class, "Music");
-    }
+      try {
+         // CanaryMod: fix jarjar
+         Class var2 = (Class)a.get(var0.i("id"));
+         if(var2 != null) {
+            var1 = (OTileEntity)var2.newInstance();
+         }
+      } catch (Exception var3) {
+         var3.printStackTrace();
+      }
+
+      if(var1 != null) {
+         var1.a(var0);
+      } else {
+         // CanaryMod: fix jarjar
+         System.out.println("Skipping TileEntity with id " + var0.i("id"));
+      }
+
+      return var1;
+   }
+
+   public void i() {
+      if(this.d != null) {
+         this.d.b(this.e, this.f, this.g, this);
+      }
+
+   }
+
+   public OPacket e() {
+      return null;
+   }
+
+   static {
+      a(OTileEntityFurnace.class, "Furnace");
+      a(OTileEntityChest.class, "Chest");
+      a(OTileEntityRecordPlayer.class, "RecordPlayer");
+      a(OTileEntityDispenser.class, "Trap");
+      a(OTileEntitySign.class, "Sign");
+      a(OTileEntityMobSpawner.class, "MobSpawner");
+      a(OTileEntityNote.class, "Music");
+   }
 }

@@ -1,74 +1,73 @@
 
+
 public class OBlockNote extends OBlockContainer {
 
-    public OBlockNote(int paramInt) {
-        super(paramInt, 74, OMaterial.d);
-    }
+   public OBlockNote(int var1) {
+      super(var1, 74, OMaterial.d);
+   }
 
-    @Override
-    public int a(int paramInt) {
-        return bm;
-    }
+   public int a(int var1) {
+      return this.bm;
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if ((paramInt4 > 0) && (OBlock.m[paramInt4].d())) {
-            boolean bool = paramOWorld.q(paramInt1, paramInt2, paramInt3);
-            OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.n(paramInt1, paramInt2, paramInt3);
-            if (localOTileEntityNote.b != bool) {
-                if (bool) {
-                    localOTileEntityNote.a(paramOWorld, paramInt1, paramInt2, paramInt3);
-                }
-                localOTileEntityNote.b = bool;
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+      if(var5 > 0 && OBlock.m[var5].d()) {
+         boolean var6 = var1.q(var2, var3, var4);
+         OTileEntityNote var7 = (OTileEntityNote)var1.n(var2, var3, var4);
+         if(var7.b != var6) {
+            if(var6) {
+               var7.a(var1, var2, var3, var4);
             }
-        }
-    }
 
-    @Override
-    public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntityPlayer paramOEntityPlayer) {
-        if (paramOWorld.B) {
-            return true;
-        }
-        OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.n(paramInt1, paramInt2, paramInt3);
-        localOTileEntityNote.a();
-        localOTileEntityNote.a(paramOWorld, paramInt1, paramInt2, paramInt3);
-        return true;
-    }
+            var7.b = var6;
+         }
+      }
 
-    @Override
-    public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntityPlayer paramOEntityPlayer) {
-        if (paramOWorld.B) {
-            return;
-        }
-        OTileEntityNote localOTileEntityNote = (OTileEntityNote) paramOWorld.n(paramInt1, paramInt2, paramInt3);
-        localOTileEntityNote.a(paramOWorld, paramInt1, paramInt2, paramInt3);
-    }
+   }
 
-    @Override
-    protected OTileEntity a_() {
-        return new OTileEntityNote();
-    }
+   public boolean a(OWorld var1, int var2, int var3, int var4, OEntityPlayer var5) {
+      if(var1.B) {
+         return true;
+      } else {
+         OTileEntityNote var6 = (OTileEntityNote)var1.n(var2, var3, var4);
+         var6.a();
+         var6.a(var1, var2, var3, var4);
+         return true;
+      }
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5) {
-        float f = (float) Math.pow(2.0D, (paramInt5 - 12) / 12.0D);
+   public void b(OWorld var1, int var2, int var3, int var4, OEntityPlayer var5) {
+      if(!var1.B) {
+         OTileEntityNote var6 = (OTileEntityNote)var1.n(var2, var3, var4);
+         var6.a(var1, var2, var3, var4);
+      }
+   }
 
-        // CanaryMod: bd gets jarjar'd, reverse here
-        String str = "harp";
-        if (paramInt4 == 1) {
-            str = "bd";
-        }
-        if (paramInt4 == 2) {
-            str = "snare";
-        }
-        if (paramInt4 == 3) {
-            str = "hat";
-        }
-        if (paramInt4 == 4) {
-            str = "bassattack";
-        }
+   protected OTileEntity a_() {
+      return new OTileEntityNote();
+   }
 
-        paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "note." + str, 3.0F, f);
-        paramOWorld.a("note", paramInt1 + 0.5D, paramInt2 + 1.2D, paramInt3 + 0.5D, paramInt5 / 24.0D, 0.0D, 0.0D);
-    }
+   public void a(OWorld var1, int var2, int var3, int var4, int var5, int var6) {
+      float var7 = (float)Math.pow(2.0D, (double)(var6 - 12) / 12.0D);
+      String var8 = "harp";
+      if(var5 == 1) {
+         // CanaryMod: bd gets jarjar'd, reverse here
+         var8 = "bd";
+      }
+
+      if(var5 == 2) {
+         var8 = "snare";
+      }
+
+      if(var5 == 3) {
+         var8 = "hat";
+      }
+
+      if(var5 == 4) {
+         var8 = "bassattack";
+      }
+
+      var1.a((double)var2 + 0.5D, (double)var3 + 0.5D, (double)var4 + 0.5D, "note." + var8, 3.0F, var7);
+      var1.a("note", (double)var2 + 0.5D, (double)var3 + 1.2D, (double)var4 + 0.5D, (double)var6 / 24.0D, 0.0D, 0.0D);
+   }
 }

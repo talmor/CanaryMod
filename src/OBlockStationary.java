@@ -1,56 +1,63 @@
+
 import java.util.Random;
 
 public class OBlockStationary extends OBlockFluid {
 
-    protected OBlockStationary(int paramInt, OMaterial paramOMaterial) {
-        super(paramInt, paramOMaterial);
+   protected OBlockStationary(int var1, OMaterial var2) {
+      super(var1, var2);
+      this.a(false);
+      if(var2 == OMaterial.h) {
+         this.a(true);
+      }
 
-        a(false);
-        if (paramOMaterial == OMaterial.h)
-            a(true);
-    }
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        super.a(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == bn)
-            i(paramOWorld, paramInt1, paramInt2, paramInt3);
-    }
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+      super.a(var1, var2, var3, var4, var5);
+      if(var1.a(var2, var3, var4) == this.bn) {
+         this.i(var1, var2, var3, var4);
+      }
 
-    private void i(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        paramOWorld.o = true;
-        paramOWorld.a(paramInt1, paramInt2, paramInt3, bn - 1, i);
-        paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
-        paramOWorld.c(paramInt1, paramInt2, paramInt3, bn - 1, c());
-        paramOWorld.o = false;
-    }
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        if (bA == OMaterial.h) {
-            int i = paramRandom.nextInt(3);
-            // CanaryMod: prevent lava from putting something on fire.
-            Block block = new Block(paramOWorld.world, paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
-            block.setStatus(1);
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null))
-                for (int j = 0; j < i; j++) {
-                    paramInt1 += paramRandom.nextInt(3) - 1;
-                    paramInt2++;
-                    paramInt3 += paramRandom.nextInt(3) - 1;
-                    int k = paramOWorld.a(paramInt1, paramInt2, paramInt3);
-                    if (k == 0) {
-                        if ((j(paramOWorld, paramInt1 - 1, paramInt2, paramInt3)) || (j(paramOWorld, paramInt1 + 1, paramInt2, paramInt3)) || (j(paramOWorld, paramInt1, paramInt2, paramInt3 - 1)) || (j(paramOWorld, paramInt1, paramInt2, paramInt3 + 1)) || (j(paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) || (j(paramOWorld, paramInt1, paramInt2 + 1, paramInt3))) {
-                            paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.as.bn);
-                            return;
-                        }
-                    } else if (OBlock.m[k].bA.c())
-                        return;
-                }
-        }
-    }
+   private void i(OWorld var1, int var2, int var3, int var4) {
+      int var5 = var1.b(var2, var3, var4);
+      var1.o = true;
+      var1.a(var2, var3, var4, this.bn - 1, var5);
+      var1.b(var2, var3, var4, var2, var3, var4);
+      var1.c(var2, var3, var4, this.bn - 1, this.c());
+      var1.o = false;
+   }
 
-    private boolean j(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        return paramOWorld.c(paramInt1, paramInt2, paramInt3).e();
-    }
+   public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
+      if(this.bA == OMaterial.h) {
+         int var6 = var5.nextInt(3);
+
+         // CanaryMod: prevent lava from putting something on fire.
+         Block block = new Block(var1.world, var1.a(var2, var3, var4), var2, var3, var4);
+         block.setStatus(1);
+         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null))
+            return;
+
+         for(int var7 = 0; var7 < var6; ++var7) {
+            var2 += var5.nextInt(3) - 1;
+            ++var3;
+            var4 += var5.nextInt(3) - 1;
+            int var8 = var1.a(var2, var3, var4);
+            if(var8 == 0) {
+               if(this.j(var1, var2 - 1, var3, var4) || this.j(var1, var2 + 1, var3, var4) || this.j(var1, var2, var3, var4 - 1) || this.j(var1, var2, var3, var4 + 1) || this.j(var1, var2, var3 - 1, var4) || this.j(var1, var2, var3 + 1, var4)) {
+                  var1.e(var2, var3, var4, OBlock.as.bn);
+                  return;
+               }
+            } else if(OBlock.m[var8].bA.c()) {
+               return;
+            }
+         }
+      }
+
+   }
+
+   private boolean j(OWorld var1, int var2, int var3, int var4) {
+      return var1.c(var2, var3, var4).e();
+   }
 }

@@ -1,247 +1,287 @@
+
 import java.util.Random;
 
 public class OBlockFlowing extends OBlockFluid {
-    int       a = 0;
 
-    boolean[] b = new boolean[4];
-    int[]     c = new int[4];
+   int a = 0;
+   boolean[] b = new boolean[4];
+   int[] c = new int[4];
 
-    protected OBlockFlowing(int paramInt, OMaterial paramOMaterial) {
-        super(paramInt, paramOMaterial);
-    }
 
-    private void i(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        paramOWorld.a(paramInt1, paramInt2, paramInt3, bn + 1, i);
-        paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
-        paramOWorld.g(paramInt1, paramInt2, paramInt3);
-    }
+   protected OBlockFlowing(int var1, OMaterial var2) {
+      super(var1, var2);
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        // CanaryMod: Store originating block
-        World world = paramOWorld.world;
-        Block blockFrom = new Block(world, bn, paramInt1, paramInt2, paramInt3);
+   private void i(OWorld var1, int var2, int var3, int var4) {
+      int var5 = var1.b(var2, var3, var4);
+      var1.a(var2, var3, var4, this.bn + 1, var5);
+      var1.b(var2, var3, var4, var2, var3, var4);
+      var1.g(var2, var3, var4);
+   }
 
-        int i = g(paramOWorld, paramInt1, paramInt2, paramInt3);
+   public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
+      // CanaryMod: Store originating block
+      World world = var1.world;
+      Block blockFrom = new Block(world, bn, var2, var3, var4);
 
-        int j = 1;
-        if ((bA == OMaterial.h) && (!paramOWorld.t.d))
-            j = 2;
+      int var6 = this.g(var1, var2, var3, var4);
+      byte var7 = 1;
+      if(this.bA == OMaterial.h && !var1.t.d) {
+         var7 = 2;
+      }
 
-        int k = 1;
-        int n;
-        if (i > 0) {
-            int m = -100;
-            a = 0;
-            m = f(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, m);
-            m = f(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, m);
-            m = f(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, m);
-            m = f(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, m);
+      boolean var8 = true;
+      int var10;
+      if(var6 > 0) {
+         byte var9 = -100;
+         this.a = 0;
+         int var12 = this.f(var1, var2 - 1, var3, var4, var9);
+         var12 = this.f(var1, var2 + 1, var3, var4, var12);
+         var12 = this.f(var1, var2, var3, var4 - 1, var12);
+         var12 = this.f(var1, var2, var3, var4 + 1, var12);
+         var10 = var12 + var7;
+         if(var10 >= 8 || var12 < 0) {
+            var10 = -1;
+         }
 
-            n = m + j;
-            if ((n >= 8) || (m < 0))
-                n = -1;
-            if (g(paramOWorld, paramInt1, paramInt2 + 1, paramInt3) >= 0) {
-                int i1 = g(paramOWorld, paramInt1, paramInt2 + 1, paramInt3);
-                if (i1 >= 8)
-                    n = i1;
-                else
-                    n = i1 + 8;
+         if(this.g(var1, var2, var3 + 1, var4) >= 0) {
+            int var11 = this.g(var1, var2, var3 + 1, var4);
+            if(var11 >= 8) {
+               var10 = var11;
+            } else {
+               var10 = var11 + 8;
             }
-            if ((a >= 2) && (bA == OMaterial.g))
-                if (paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3))
-                    n = 0;
-                else if ((paramOWorld.c(paramInt1, paramInt2 - 1, paramInt3) == bA) && (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0))
-                    n = 0;
-            if ((bA == OMaterial.h) && (i < 8) && (n < 8) && (n > i) && (paramRandom.nextInt(4) != 0)) {
-                n = i;
-                k = 0;
-            }
+         }
 
-            if (n != i) {
-                i = n;
-                if (i < 0)
-                    paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-                else {
-                    paramOWorld.c(paramInt1, paramInt2, paramInt3, i);
-                    paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
-                    paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
-                }
-            } else if (k != 0)
-                i(paramOWorld, paramInt1, paramInt2, paramInt3);
-        } else
-            i(paramOWorld, paramInt1, paramInt2, paramInt3);
-        if (l(paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) {
-            // CanaryMod: downwards flow.
-            Block blockTo = new Block(world, 0, paramInt1, paramInt2 - 1, paramInt3);
+         if(this.a >= 2 && this.bA == OMaterial.g) {
+            if(var1.c(var2, var3 - 1, var4).a()) {
+               var10 = 0;
+            } else if(var1.c(var2, var3 - 1, var4) == this.bA && var1.b(var2, var3, var4) == 0) {
+               var10 = 0;
+            }
+         }
+
+         if(this.bA == OMaterial.h && var6 < 8 && var10 < 8 && var10 > var6 && var5.nextInt(4) != 0) {
+            var10 = var6;
+            var8 = false;
+         }
+
+         if(var10 != var6) {
+            var6 = var10;
+            if(var10 < 0) {
+               var1.e(var2, var3, var4, 0);
+            } else {
+               var1.c(var2, var3, var4, var10);
+               var1.c(var2, var3, var4, this.bn, this.c());
+               var1.h(var2, var3, var4, this.bn);
+            }
+         } else if(var8) {
+            this.i(var1, var2, var3, var4);
+         }
+      } else {
+         this.i(var1, var2, var3, var4);
+      }
+
+      if(this.l(var1, var2, var3 - 1, var4)) {
+         // CanaryMod: downwards flow.
+         Block blockTo = new Block(world, 0, var2, var3 - 1, var4);
+         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
+            if(var6 >= 8) {
+               var1.b(var2, var3 - 1, var4, this.bn, var6);
+            } else {
+               var1.b(var2, var3 - 1, var4, this.bn, var6 + 8);
+            }
+      } else if(var6 >= 0 && (var6 == 0 || this.k(var1, var2, var3 - 1, var4))) {
+         boolean[] var13 = this.j(var1, var2, var3, var4);
+         var10 = var6 + var7;
+         if(var6 >= 8) {
+            var10 = 1;
+         }
+
+         if(var10 >= 8) {
+            return;
+         }
+         // CanaryMod: sidewards flow.
+         if(var13[0]) {
+            Block blockTo = new Block(world, 0, var2 - 1, var3, var4);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-                if (i >= 8)
-                    paramOWorld.b(paramInt1, paramInt2 - 1, paramInt3, bn, i);
-                else
-                    paramOWorld.b(paramInt1, paramInt2 - 1, paramInt3, bn, i + 8);
+               this.g(var1, var2 - 1, var3, var4, var10);
+         }
 
-        } else if ((i >= 0) && ((i == 0) || (k(paramOWorld, paramInt1, paramInt2 - 1, paramInt3)))) {
-            boolean[] arrayOfBoolean = j(paramOWorld, paramInt1, paramInt2, paramInt3);
-            n = i + j;
-            if (i >= 8)
-                n = 1;
-            if (n >= 8)
-                return;
-            // CanaryMod: sidewards flow.
-            if (arrayOfBoolean[0]) {
-                Block blockTo = new Block(world, 0, paramInt1 - 1, paramInt2, paramInt3);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-                    g(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, n);
+         if(var13[1]) {
+            Block blockTo = new Block(world, 0, var2 + 1, var3, var4);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
+               this.g(var1, var2 + 1, var3, var4, var10);
+         }
+
+         if(var13[2]) {
+            Block blockTo = new Block(world, 0, var2, var3, var4 - 1);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
+               this.g(var1, var2, var3, var4 - 1, var10);
+         }
+
+         if(var13[3]) {
+            Block blockTo = new Block(world, 0, var2, var3, var4 + 1);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
+               this.g(var1, var2, var3, var4 + 1, var10);
+         }
+      }
+
+   }
+
+   private void g(OWorld var1, int var2, int var3, int var4, int var5) {
+      if(this.l(var1, var2, var3, var4)) {
+         int var6 = var1.a(var2, var3, var4);
+         if(var6 > 0) {
+            if(this.bA == OMaterial.h) {
+               this.h(var1, var2, var3, var4);
+            } else {
+               OBlock.m[var6].b_(var1, var2, var3, var4, var1.b(var2, var3, var4));
             }
-            if (arrayOfBoolean[1]) {
-                Block blockTo = new Block(world, 0, paramInt1 + 1, paramInt2, paramInt3);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-                    g(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, n);
-            }
-            if (arrayOfBoolean[2]) {
-                Block blockTo = new Block(world, 0, paramInt1, paramInt2, paramInt3 - 1);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-                    g(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, n);
-            }
-            if (arrayOfBoolean[3]) {
-                Block blockTo = new Block(world, 0, paramInt1, paramInt2, paramInt3 + 1);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-                    g(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, n);
-            }
+         }
 
-        }
-    }
+         var1.b(var2, var3, var4, this.bn, var5);
+      }
 
-    private void g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (l(paramOWorld, paramInt1, paramInt2, paramInt3)) {
-            int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
-            if (i > 0)
-                if (bA == OMaterial.h)
-                    h(paramOWorld, paramInt1, paramInt2, paramInt3);
-                else
-                    OBlock.m[i].b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
-            paramOWorld.b(paramInt1, paramInt2, paramInt3, bn, paramInt4);
-        }
-    }
+   }
 
-    private int b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5) {
-        int i = 1000;
-        for (int j = 0; j < 4; j++) {
-            if (((j == 0) && (paramInt5 == 1)) || ((j == 1) && (paramInt5 == 0)) || ((j == 2) && (paramInt5 == 3)) || ((j == 3) && (paramInt5 == 2)))
-                continue;
-            int k = paramInt1;
-            int m = paramInt2;
-            int n = paramInt3;
+   private int b(OWorld var1, int var2, int var3, int var4, int var5, int var6) {
+      int var7 = 1000;
 
-            if (j == 0)
-                k--;
-            if (j == 1)
-                k++;
-            if (j == 2)
-                n--;
-            if (j == 3)
-                n++;
-
-            if (k(paramOWorld, k, m, n))
-                continue;
-            if ((paramOWorld.c(k, m, n) == bA) && (paramOWorld.b(k, m, n) == 0))
-                continue;
-            if (!k(paramOWorld, k, m - 1, n))
-                return paramInt4;
-            if (paramInt4 < 4) {
-                int i1 = b(paramOWorld, k, m, n, paramInt4 + 1, j);
-                if (i1 >= i)
-                    continue;
-                i = i1;
+      for(int var8 = 0; var8 < 4; ++var8) {
+         if((var8 != 0 || var6 != 1) && (var8 != 1 || var6 != 0) && (var8 != 2 || var6 != 3) && (var8 != 3 || var6 != 2)) {
+            int var9 = var2;
+            int var11 = var4;
+            if(var8 == 0) {
+               var9 = var2 - 1;
             }
 
-        }
+            if(var8 == 1) {
+               ++var9;
+            }
 
-        return i;
-    }
+            if(var8 == 2) {
+               var11 = var4 - 1;
+            }
 
-    private boolean[] j(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        for (int i = 0; i < 4; i++) {
-            c[i] = 1000;
-            int j = paramInt1;
-            int k = paramInt2;
-            int m = paramInt3;
+            if(var8 == 3) {
+               ++var11;
+            }
 
-            if (i == 0)
-                j--;
-            if (i == 1)
-                j++;
-            if (i == 2)
-                m--;
-            if (i == 3)
-                m++;
-            if (k(paramOWorld, j, k, m))
-                continue;
-            if ((paramOWorld.c(j, k, m) == bA) && (paramOWorld.b(j, k, m) == 0))
-                continue;
-            if (!k(paramOWorld, j, k - 1, m))
-                c[i] = 0;
-            else
-                c[i] = b(paramOWorld, j, k, m, 1, i);
+            if(!this.k(var1, var9, var3, var11) && (var1.c(var9, var3, var11) != this.bA || var1.b(var9, var3, var11) != 0)) {
+               if(!this.k(var1, var9, var3 - 1, var11)) {
+                  return var5;
+               }
 
-        }
+               if(var5 < 4) {
+                  int var12 = this.b(var1, var9, var3, var11, var5 + 1, var8);
+                  if(var12 < var7) {
+                     var7 = var12;
+                  }
+               }
+            }
+         }
+      }
 
-        int i = c[0];
-        for (int j = 1; j < 4; j++) {
-            if (c[j] >= i)
-                continue;
-            i = c[j];
-        }
+      return var7;
+   }
 
-        for (int j = 0; j < 4; j++)
-            b[j] = (c[j] == i ? true : false);
-        return b;
-    }
+   private boolean[] j(OWorld var1, int var2, int var3, int var4) {
+      int var5;
+      int var6;
+      for(var5 = 0; var5 < 4; ++var5) {
+         this.c[var5] = 1000;
+         var6 = var2;
+         int var8 = var4;
+         if(var5 == 0) {
+            var6 = var2 - 1;
+         }
 
-    private boolean k(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
-        if ((i == OBlock.aF.bn) || (i == OBlock.aM.bn) || (i == OBlock.aE.bn) || (i == OBlock.aG.bn) || (i == OBlock.aY.bn))
-            return true;
-        if (i == 0)
+         if(var5 == 1) {
+            ++var6;
+         }
+
+         if(var5 == 2) {
+            var8 = var4 - 1;
+         }
+
+         if(var5 == 3) {
+            ++var8;
+         }
+
+         if(!this.k(var1, var6, var3, var8) && (var1.c(var6, var3, var8) != this.bA || var1.b(var6, var3, var8) != 0)) {
+            if(!this.k(var1, var6, var3 - 1, var8)) {
+               this.c[var5] = 0;
+            } else {
+               this.c[var5] = this.b(var1, var6, var3, var8, 1, var5);
+            }
+         }
+      }
+
+      var5 = this.c[0];
+
+      for(var6 = 1; var6 < 4; ++var6) {
+         if(this.c[var6] < var5) {
+            var5 = this.c[var6];
+         }
+      }
+
+      for(var6 = 0; var6 < 4; ++var6) {
+         this.b[var6] = this.c[var6] == var5;
+      }
+
+      return this.b;
+   }
+
+   private boolean k(OWorld var1, int var2, int var3, int var4) {
+      int var5 = var1.a(var2, var3, var4);
+      if(var5 != OBlock.aF.bn && var5 != OBlock.aM.bn && var5 != OBlock.aE.bn && var5 != OBlock.aG.bn && var5 != OBlock.aY.bn) {
+         if(var5 == 0) {
             return false;
-        OMaterial localOMaterial = OBlock.m[i].bA;
-        return localOMaterial.a();
-    }
+         } else {
+            OMaterial var6 = OBlock.m[var5].bA;
+            return var6.c();
+         }
+      } else {
+         return true;
+      }
+   }
 
-    protected int f(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int i = g(paramOWorld, paramInt1, paramInt2, paramInt3);
-        if (i < 0)
-            return paramInt4;
-        if (i == 0)
-            a += 1;
-        if (i >= 8)
-            i = 0;
-        return (paramInt4 < 0) || (i < paramInt4) ? i : paramInt4;
-    }
+   protected int f(OWorld var1, int var2, int var3, int var4, int var5) {
+      int var6 = this.g(var1, var2, var3, var4);
+      if(var6 < 0) {
+         return var5;
+      } else {
+         if(var6 == 0) {
+            ++this.a;
+         }
 
-    private boolean l(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        // CanaryMod: See if this liquid can destroy this block.
-        Block block = new Block(paramOWorld.world, paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
-        PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, bn, block);
-        if (ret == PluginLoader.HookResult.PREVENT_ACTION)
-            return false;
-        else if (ret == PluginLoader.HookResult.ALLOW_ACTION)
-            return true;
+         if(var6 >= 8) {
+            var6 = 0;
+         }
 
-        
-        OMaterial localOMaterial = paramOWorld.c(paramInt1, paramInt2, paramInt3);
-        if (localOMaterial == bA)
-            return false;
-        if (localOMaterial == OMaterial.h)
-            return false;
-        return !k(paramOWorld, paramInt1, paramInt2, paramInt3);
-    }
+         return var5 >= 0 && var6 >= var5?var5:var6;
+      }
+   }
 
-    @Override
-    public void e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        super.e(paramOWorld, paramInt1, paramInt2, paramInt3);
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == bn)
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
-    }
+   private boolean l(OWorld var1, int var2, int var3, int var4) {
+      // CanaryMod: See if this liquid can destroy this block.
+      Block block = new Block(var1.world, var1.a(var2, var3, var4), var2, var3, var4);
+      PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, bn, block);
+      if (ret == PluginLoader.HookResult.PREVENT_ACTION)
+         return false;
+      else if (ret == PluginLoader.HookResult.ALLOW_ACTION)
+         return true;
+
+      OMaterial var5 = var1.c(var2, var3, var4);
+      return var5 == this.bA?false:(var5 == OMaterial.h?false:!this.k(var1, var2, var3, var4));
+   }
+
+   public void e(OWorld var1, int var2, int var3, int var4) {
+      super.e(var1, var2, var3, var4);
+      if(var1.a(var2, var3, var4) == this.bn) {
+         var1.c(var2, var3, var4, this.bn, this.c());
+      }
+
+   }
 }

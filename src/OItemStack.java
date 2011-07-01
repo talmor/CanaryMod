@@ -1,210 +1,215 @@
 
+
 public final class OItemStack {
 
-    public int  a = 0;
-    public int  b;
-    public int  c;
-    private int d;
+   public int a;
+   public int b;
+   public int c;
+   private int d;
 
-    public OItemStack(OBlock paramOBlock) {
-        this(paramOBlock, 1);
-    }
 
-    public OItemStack(OBlock paramOBlock, int paramInt) {
-        this(paramOBlock.bn, paramInt, 0);
-    }
+   public OItemStack(OBlock var1) {
+      this(var1, 1);
+   }
 
-    public OItemStack(OBlock paramOBlock, int paramInt1, int paramInt2) {
-        this(paramOBlock.bn, paramInt1, paramInt2);
-    }
+   public OItemStack(OBlock var1, int var2) {
+      this(var1.bn, var2, 0);
+   }
 
-    public OItemStack(OItem paramOItem) {
-        this(paramOItem.be, 1, 0);
-    }
+   public OItemStack(OBlock var1, int var2, int var3) {
+      this(var1.bn, var2, var3);
+   }
 
-    public OItemStack(OItem paramOItem, int paramInt) {
-        this(paramOItem.be, paramInt, 0);
-    }
+   public OItemStack(OItem var1) {
+      this(var1.be, 1, 0);
+   }
 
-    public OItemStack(OItem paramOItem, int paramInt1, int paramInt2) {
-        this(paramOItem.be, paramInt1, paramInt2);
-    }
+   public OItemStack(OItem var1, int var2) {
+      this(var1.be, var2, 0);
+   }
 
-    public OItemStack(int paramInt1, int paramInt2, int paramInt3) {
-        c = paramInt1;
-        a = paramInt2;
-        d = paramInt3;
-    }
+   public OItemStack(OItem var1, int var2, int var3) {
+      this(var1.be, var2, var3);
+   }
 
-    public OItemStack(ONBTTagCompound paramONBTTagCompound) {
-        b(paramONBTTagCompound);
-    }
+   public OItemStack(int var1, int var2, int var3) {
+      this.a = 0;
+      this.c = var1;
+      this.a = var2;
+      this.d = var3;
+   }
 
-    public OItemStack a(int paramInt) {
-        a -= paramInt;
-        return new OItemStack(c, paramInt, d);
-    }
+   public OItemStack(ONBTTagCompound var1) {
+      this.a = 0;
+      this.b(var1);
+   }
 
-    public OItem a() {
-        return OItem.c[c];
-    }
+   public OItemStack a(int var1) {
+      this.a -= var1;
+      return new OItemStack(this.c, var1, this.d);
+   }
 
-    public boolean a(OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        boolean bool = a().a(this, paramOEntityPlayer, paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-        if (bool)
-            paramOEntityPlayer.a(OStatList.E[c], 1);
-        return bool;
+   public OItem a() {
+      return OItem.c[this.c];
+   }
 
-    }
+   public boolean a(OEntityPlayer var1, OWorld var2, int var3, int var4, int var5, int var6) {
+      boolean var7 = this.a().a(this, var1, var2, var3, var4, var5, var6);
+      if(var7) {
+         var1.a(OStatList.E[this.c], 1);
+      }
 
-    public float a(OBlock paramOBlock) {
-        return a().a(this, paramOBlock);
-    }
+      return var7;
+   }
 
-    public OItemStack a(OWorld paramOWorld, OEntityPlayer paramOEntityPlayer) {
-        return a().a(this, paramOWorld, paramOEntityPlayer);
-    }
+   public float a(OBlock var1) {
+      return this.a().a(this, var1);
+   }
 
-    public ONBTTagCompound a(ONBTTagCompound paramONBTTagCompound) {
-        paramONBTTagCompound.a("id", (short) c);
-        paramONBTTagCompound.a("Count", (byte) a);
-        paramONBTTagCompound.a("Damage", (short) d);
-        return paramONBTTagCompound;
-    }
+   public OItemStack a(OWorld var1, OEntityPlayer var2) {
+      return this.a().a(this, var1, var2);
+   }
 
-    public void b(ONBTTagCompound paramONBTTagCompound) {
-        c = paramONBTTagCompound.d("id");
-        a = paramONBTTagCompound.c("Count");
-        d = paramONBTTagCompound.d("Damage");
-    }
+   public ONBTTagCompound a(ONBTTagCompound var1) {
+      // CanaryMod: fix jarjar
+      var1.a("id", (short)this.c);
+      var1.a("Count", (byte)this.a);
+      var1.a("Damage", (short)this.d);
+      return var1;
+   }
 
-    public int b() {
-        return a().c();
-    }
+   public void b(ONBTTagCompound var1) {
+      // CanaryMod: fix jarjar
+      this.c = var1.d("id");
+      this.a = var1.c("Count");
+      this.d = var1.d("Damage");
+   }
 
-    public boolean c() {
-        return (b() > 1) && ((!d()) || (!f()));
-    }
+   public int b() {
+      return this.a().c();
+   }
 
-    public boolean d() {
-        return OItem.c[c].e() > 0;
-    }
+   public boolean c() {
+      return this.b() > 1 && (!this.d() || !this.f());
+   }
 
-    public boolean e() {
-        return OItem.c[c].d();
-    }
+   public boolean d() {
+      return OItem.c[this.c].e() > 0;
+   }
 
-    public boolean f() {
-        return (d()) && (d > 0);
-    }
+   public boolean e() {
+      return OItem.c[this.c].d();
+   }
 
-    public int g() {
-        return d;
-    }
+   public boolean f() {
+      return this.d() && this.d > 0;
+   }
 
-    public int h() {
-        return d;
-    }
+   public int g() {
+      return this.d;
+   }
 
-    public void b(int var1) {
-        this.d = var1;
-    }
+   public int h() {
+      return this.d;
+   }
 
-    public int i() {
-        return OItem.c[c].e();
-    }
+   public void b(int var1) {
+      this.d = var1;
+   }
 
-    public void a(int paramInt, OEntity paramOEntity) {
-        if (!d())
-            return;
+   public int i() {
+      return OItem.c[this.c].e();
+   }
 
-        d += paramInt;
-        if (d > i()) {
-            if ((paramOEntity instanceof OEntityPlayer))
-                ((OEntityPlayer) paramOEntity).a(OStatList.F[c], 1);
+   public void a(int var1, OEntity var2) {
+      if(this.d()) {
+         this.d += var1;
+         if(this.d > this.i()) {
+            if(var2 instanceof OEntityPlayer) {
+               ((OEntityPlayer)var2).a(OStatList.F[this.c], 1);
+            }
 
-            a -= 1;
-            if (a < 0)
-                a = 0;
-            d = 0;
-        }
-    }
+            --this.a;
+            if(this.a < 0) {
+               this.a = 0;
+            }
 
-    public void a(OEntityLiving paramOEntityLiving, OEntityPlayer paramOEntityPlayer) {
-        boolean bool = OItem.c[c].a(this, paramOEntityLiving, paramOEntityPlayer);
-        if (bool)
-            paramOEntityPlayer.a(OStatList.E[c], 1);
+            this.d = 0;
+         }
 
-    }
+      }
+   }
 
-    public void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4, OEntityPlayer paramOEntityPlayer) {
-        boolean bool = OItem.c[c].a(this, paramInt1, paramInt2, paramInt3, paramInt4, paramOEntityPlayer);
-        if (bool)
-            paramOEntityPlayer.a(OStatList.E[c], 1);
+   public void a(OEntityLiving var1, OEntityPlayer var2) {
+      boolean var3 = OItem.c[this.c].a(this, var1, var2);
+      if(var3) {
+         var2.a(OStatList.E[this.c], 1);
+      }
 
-    }
+   }
 
-    public int a(OEntity paramOEntity) {
-        return OItem.c[c].a(paramOEntity);
-    }
+   public void a(int var1, int var2, int var3, int var4, OEntityPlayer var5) {
+      boolean var6 = OItem.c[this.c].a(this, var1, var2, var3, var4, var5);
+      if(var6) {
+         var5.a(OStatList.E[this.c], 1);
+      }
 
-    public boolean b(OBlock paramOBlock) {
-        return OItem.c[c].a(paramOBlock);
-    }
+   }
 
-    public void a(OEntityPlayer paramOEntityPlayer) {
-    }
+   public int a(OEntity var1) {
+      return OItem.c[this.c].a(var1);
+   }
 
-    public void a(OEntityLiving paramOEntityLiving) {
-        OItem.c[c].a(this, paramOEntityLiving);
-    }
+   public boolean b(OBlock var1) {
+      return OItem.c[this.c].a(var1);
+   }
 
-    public OItemStack j() {
-        return new OItemStack(c, a, d);
-    }
+   public void a(OEntityPlayer var1) {
+   }
 
-    public static boolean a(OItemStack paramOItemStack1, OItemStack paramOItemStack2) {
-        if ((paramOItemStack1 == null) && (paramOItemStack2 == null))
-            return true;
-        if ((paramOItemStack1 == null) || (paramOItemStack2 == null))
-            return false;
-        return paramOItemStack1.d(paramOItemStack2);
-    }
+   public void a(OEntityLiving var1) {
+      OItem.c[this.c].a(this, var1);
+   }
 
-    private boolean d(OItemStack paramOItemStack) {
-        if (a != paramOItemStack.a)
-            return false;
-        if (c != paramOItemStack.c)
-            return false;
-        return d == paramOItemStack.d;
-    }
+   public OItemStack j() {
+      return new OItemStack(this.c, this.a, this.d);
+   }
 
-    public boolean a(OItemStack paramOItemStack) {
-        return (c == paramOItemStack.c) && (d == paramOItemStack.d);
-    }
+   public static boolean a(OItemStack var0, OItemStack var1) {
+      return var0 == null && var1 == null?true:(var0 != null && var1 != null?var0.d(var1):false);
+   }
 
-    public static OItemStack b(OItemStack paramOItemStack) {
-        return paramOItemStack == null ? null : paramOItemStack.j();
-    }
+   private boolean d(OItemStack var1) {
+      return this.a != var1.a?false:(this.c != var1.c?false:this.d == var1.d);
+   }
 
-    @Override
-    public String toString() {
-        return a + "x" + OItem.c[c].a() + "@" + d;
-    }
+   public boolean a(OItemStack var1) {
+      return this.c == var1.c && this.d == var1.d;
+   }
 
-    public void a(OWorld var1, OEntity var2, int var3, boolean var4) {
-        if (this.b > 0)
-            --this.b;
+   public static OItemStack b(OItemStack var0) {
+      return var0 == null?null:var0.j();
+   }
 
-        OItem.c[this.c].a(this, var1, var2, var3, var4);
-    }
+   public String toString() {
+      // CanaryMod: fix jarjar
+      return this.a + "x" + OItem.c[this.c].a() + "@" + this.d;
+   }
 
-    public void b(OWorld var1, OEntityPlayer var2) {
-        var2.a(OStatList.D[this.c], this.a);
-        OItem.c[this.c].c(this, var1, var2);
-    }
+   public void a(OWorld var1, OEntity var2, int var3, boolean var4) {
+      if(this.b > 0) {
+         --this.b;
+      }
 
-    public boolean c(OItemStack var1) {
-        return this.c == var1.c && this.a == var1.a && this.d == var1.d;
-    }
+      OItem.c[this.c].a(this, var1, var2, var3, var4);
+   }
+
+   public void b(OWorld var1, OEntityPlayer var2) {
+      var2.a(OStatList.D[this.c], this.a);
+      OItem.c[this.c].c(this, var1, var2);
+   }
+
+   public boolean c(OItemStack var1) {
+      return this.c == var1.c && this.a == var1.a && this.d == var1.d;
+   }
 }

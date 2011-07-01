@@ -1,160 +1,149 @@
+
 import java.util.List;
 import java.util.Random;
 
 public class OBlockPressurePlate extends OBlock {
 
-    private OEnumMobType a;
+   private OEnumMobType a;
 
-    protected OBlockPressurePlate(int paramInt1, int paramInt2, OEnumMobType paramOEnumMobType, OMaterial paramOMaterial) {
-        super(paramInt1, paramInt2, paramOMaterial);
-        a = paramOEnumMobType;
-        a(true);
 
-        float f = 0.0625F;
-        a(f, 0.0F, f, 1.0F - f, 0.03125F, 1.0F - f);
-    }
+   protected OBlockPressurePlate(int var1, int var2, OEnumMobType var3, OMaterial var4) {
+      super(var1, var2, var4);
+      this.a = var3;
+      this.a(true);
+      float var5 = 0.0625F;
+      this.a(var5, 0.0F, var5, 1.0F - var5, 0.03125F, 1.0F - var5);
+   }
 
-    @Override
-    public int c() {
-        return 20;
-    }
+   public int c() {
+      return 20;
+   }
 
-    @Override
-    public OAxisAlignedBB d(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        return null;
-    }
+   public OAxisAlignedBB d(OWorld var1, int var2, int var3, int var4) {
+      return null;
+   }
 
-    @Override
-    public boolean a() {
-        return false;
-    }
+   public boolean a() {
+      return false;
+   }
 
-    @Override
-    public boolean b() {
-        return false;
-    }
+   public boolean b() {
+      return false;
+   }
 
-    @Override
-    public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        return paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3);
-    }
+   public boolean a(OWorld var1, int var2, int var3, int var4) {
+      return var1.d(var2, var3 - 1, var4);
+   }
 
-    @Override
-    public void e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-    }
+   public void e(OWorld var1, int var2, int var3, int var4) {
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int i = 0;
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+      boolean var6 = false;
+      if(!var1.d(var2, var3 - 1, var4)) {
+         var6 = true;
+      }
 
-        if (!paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3))
-            i = 1;
+      if(var6) {
+         this.b_(var1, var2, var3, var4, var1.b(var2, var3, var4));
+         var1.e(var2, var3, var4, 0);
+      }
 
-        if (i != 0) {
-            b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-        }
-    }
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        if (paramOWorld.B)
-            return;
-        if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0)
-            return;
+   public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
+      if(!var1.B) {
+         if(var1.b(var2, var3, var4) != 0) {
+            this.g(var1, var2, var3, var4);
+         }
+      }
+   }
 
-        g(paramOWorld, paramInt1, paramInt2, paramInt3);
-    }
+   public void a(OWorld var1, int var2, int var3, int var4, OEntity var5) {
+      if(!var1.B) {
+         if(var1.b(var2, var3, var4) != 1) {
+            this.g(var1, var2, var3, var4);
+         }
+      }
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntity paramOEntity) {
-        if (paramOWorld.B)
-            return;
+   private void g(OWorld var1, int var2, int var3, int var4) {
+      boolean var5 = var1.b(var2, var3, var4) == 1;
+      boolean var6 = false;
+      float var7 = 0.125F;
+      List var8 = null;
+      if(this.a == OEnumMobType.a) {
+         var8 = var1.b((OEntity)null, OAxisAlignedBB.b((double)((float)var2 + var7), (double)var3, (double)((float)var4 + var7), (double)((float)(var2 + 1) - var7), (double)var3 + 0.25D, (double)((float)(var4 + 1) - var7)));
+      }
 
-        if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 1)
-            return;
+      if(this.a == OEnumMobType.b) {
+         var8 = var1.a(OEntityLiving.class, OAxisAlignedBB.b((double)((float)var2 + var7), (double)var3, (double)((float)var4 + var7), (double)((float)(var2 + 1) - var7), (double)var3 + 0.25D, (double)((float)(var4 + 1) - var7)));
+      }
 
-        g(paramOWorld, paramInt1, paramInt2, paramInt3);
-    }
+      if(this.a == OEnumMobType.c) {
+         var8 = var1.a(OEntityPlayer.class, OAxisAlignedBB.b((double)((float)var2 + var7), (double)var3, (double)((float)var4 + var7), (double)((float)(var2 + 1) - var7), (double)var3 + 0.25D, (double)((float)(var4 + 1) - var7)));
+      }
 
-    private void g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3) == 1 ? 1 : 0;
-        int j = 0;
+      if(var8.size() > 0) {
+         var6 = true;
+      }
 
-        float f = 0.125F;
-        List localList = null;
-        if (a == OEnumMobType.a)
-            localList = paramOWorld.b(null, OAxisAlignedBB.b(paramInt1 + f, paramInt2, paramInt3 + f, paramInt1 + 1 - f, paramInt2 + 0.25D, paramInt3 + 1 - f));
-        if (a == OEnumMobType.b)
-            localList = paramOWorld.a(OEntityLiving.class, OAxisAlignedBB.b(paramInt1 + f, paramInt2, paramInt3 + f, paramInt1 + 1 - f, paramInt2 + 0.25D, paramInt3 + 1 - f));
-        if (a == OEnumMobType.c)
-            localList = paramOWorld.a(OEntityPlayer.class, OAxisAlignedBB.b(paramInt1 + f, paramInt2, paramInt3 + f, paramInt1 + 1 - f, paramInt2 + 0.25D, paramInt3 + 1 - f));
-        if (localList.size() > 0)
-            j = 1;
+      // CanaryMod: Allow pressure plate interaction to power redstone
+      if (var6 != var5)
+          var6 = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), var5?1:0, var6?1:0) > 0;
 
-        // CanaryMod: Allow pressure plate interaction to power redstone
-        if (j != i) {
-            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), i, j);
-            if (j > 0)
-                j = 1;
-        }
+      if(var6 && !var5) {
+         var1.c(var2, var3, var4, 1);
+         var1.h(var2, var3, var4, this.bn);
+         var1.h(var2, var3 - 1, var4, this.bn);
+         var1.b(var2, var3, var4, var2, var3, var4);
+         var1.a((double)var2 + 0.5D, (double)var3 + 0.1D, (double)var4 + 0.5D, "random.click", 0.3F, 0.6F);
+      }
 
-        if ((j != 0) && (i == 0)) {
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, 1);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
-            paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
+      if(!var6 && var5) {
+         var1.c(var2, var3, var4, 0);
+         var1.h(var2, var3, var4, this.bn);
+         var1.h(var2, var3 - 1, var4, this.bn);
+         var1.b(var2, var3, var4, var2, var3, var4);
+         var1.a((double)var2 + 0.5D, (double)var3 + 0.1D, (double)var4 + 0.5D, "random.click", 0.3F, 0.5F);
+      }
 
-            paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.1D, paramInt3 + 0.5D, "random.click", 0.3F, 0.6F);
-        }
-        if ((j == 0) && (i != 0)) {
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, 0);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
-            paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
+      if(var6) {
+         var1.c(var2, var3, var4, this.bn, this.c());
+      }
 
-            paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.1D, paramInt3 + 0.5D, "random.click", 0.3F, 0.5F);
-        }
+   }
 
-        if (j != 0)
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
-    }
+   public void b(OWorld var1, int var2, int var3, int var4) {
+      int var5 = var1.b(var2, var3, var4);
+      if(var5 > 0) {
+         var1.h(var2, var3, var4, this.bn);
+         var1.h(var2, var3 - 1, var4, this.bn);
+      }
 
-    @Override
-    public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        if (i > 0) {
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
-        }
-        super.b(paramOWorld, paramInt1, paramInt2, paramInt3);
-    }
+      super.b(var1, var2, var3, var4);
+   }
 
-    @Override
-    public void a(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOIBlockAccess.b(paramInt1, paramInt2, paramInt3) == 1 ? 1 : 0;
+   public void a(OIBlockAccess var1, int var2, int var3, int var4) {
+      boolean var5 = var1.b(var2, var3, var4) == 1;
+      float var6 = 0.0625F;
+      if(var5) {
+         this.a(var6, 0.0F, var6, 1.0F - var6, 0.03125F, 1.0F - var6);
+      } else {
+         this.a(var6, 0.0F, var6, 1.0F - var6, 0.0625F, 1.0F - var6);
+      }
 
-        float f = 0.0625F;
-        if (i != 0)
-            a(f, 0.0F, f, 1.0F - f, 0.03125F, 1.0F - f);
-        else
-            a(f, 0.0F, f, 1.0F - f, 0.0625F, 1.0F - f);
-    }
+   }
 
-    @Override
-    public boolean a(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        return paramOIBlockAccess.b(paramInt1, paramInt2, paramInt3) > 0;
-    }
+   public boolean a(OIBlockAccess var1, int var2, int var3, int var4, int var5) {
+      return var1.b(var2, var3, var4) > 0;
+   }
 
-    @Override
-    public boolean c(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0)
-            return false;
-        return paramInt4 == 1;
-    }
+   public boolean c(OWorld var1, int var2, int var3, int var4, int var5) {
+      return var1.b(var2, var3, var4) == 0?false:var5 == 1;
+   }
 
-    @Override
-    public boolean d() {
-        return true;
-    }
+   public boolean d() {
+      return true;
+   }
 }

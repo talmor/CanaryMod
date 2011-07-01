@@ -1,691 +1,721 @@
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-
 import net.minecraft.server.MinecraftServer;
 
 public class ONetServerHandler extends ONetHandler implements OICommandListener {
-    public static Logger    a = Logger.getLogger("Minecraft");
-    public ONetworkManager  b;
-    public boolean          c = false;
-    private MinecraftServer d;
-    private OEntityPlayerMP e;
-    private int             f;
-    private int             g;
-    private int             h;
-    private boolean         i;
-    private double          j;
-    private double          k;
-    private double          l;
-    private boolean         m = true;
 
-    private Map             n = new HashMap();
+   public static Logger a = Logger.getLogger("Minecraft");
+   public ONetworkManager b;
+   public boolean c = false;
+   private MinecraftServer d;
+   private OEntityPlayerMP e;
+   private int f;
+   private int g;
+   private int h;
+   private boolean i;
+   private double j;
+   private double k;
+   private double l;
+   private boolean m = true;
+   private Map n = new HashMap();
 
-    public ONetServerHandler(MinecraftServer paramMinecraftServer, ONetworkManager paramONetworkManager, OEntityPlayerMP paramOEntityPlayerMP) {
-        d = paramMinecraftServer;
-        b = paramONetworkManager;
-        paramONetworkManager.a(this);
-        e = paramOEntityPlayerMP;
-        paramOEntityPlayerMP.a = this;
-    }
 
-    /**
-     * Returns the item in player's hand
-     * 
-     * @return
-     */
-    public int getItemInHand() {
-        if (e.i.b() != null)
-            return e.i.b().c;
-        return -1;
-    }
+   public ONetServerHandler(MinecraftServer var1, ONetworkManager var2, OEntityPlayerMP var3) {
+      this.d = var1;
+      this.b = var2;
+      var2.a(this);
+      this.e = var3;
+      var3.a = this;
+   }
 
-    public Player getPlayer() {
-        return e.getPlayer();
-    }
+   public void a() {
+      this.i = false;
+      this.b.b();
+      if(this.f - this.g > 20) {
+         this.b(new OPacket0KeepAlive());
+      }
 
-    /**
-     * Sends a message to the player
-     * 
-     * @param msg
-     */
-    public void msg(String msg) {
-        if (msg.length() >= 119) {
-            String cutMsg = msg.substring(0, 118);
-            int finalCut = cutMsg.lastIndexOf(" ");
-            String subCut = cutMsg.substring(0, finalCut);
-            String newMsg = msg.substring(finalCut + 1);
-            b(new OPacket3Chat(subCut));
-            msg(newMsg);
-        } else {
-            b(new OPacket3Chat(msg));
-        }
-    }
+   }
 
-    
-    public void a() {
-        i = false;
-        b.b();
-        if (f - g > 20)
-            b(new OPacket0KeepAlive());
-    }
+   public void a(String var1) {
+      this.e.A();
+      this.b(new OPacket255KickDisconnect(var1));
+      this.b.d();
+      this.d.f.a(new OPacket3Chat("\u00a7e" + this.e.r + " left the game."));
+      this.d.f.e(this.e);
+      this.c = true;
+   }
 
-    public void a(String paramString) {
-        e.A();
-        b(new OPacket255KickDisconnect(paramString));
-        b.d();
-        d.f.a(new OPacket3Chat("§e" + e.r + " left the game."));
-        d.f.e(e);
-        c = true;
-    }
+   public void a(OPacket27Position var1) {
+      this.e.a(var1.c(), var1.e(), var1.g(), var1.h(), var1.d(), var1.f());
+   }
 
-    @Override
-    public void a(OPacket27Position paramOPacket27) {
-        e.a(paramOPacket27.c(), paramOPacket27.e(), paramOPacket27.g(), paramOPacket27.h(), paramOPacket27.d(), paramOPacket27.f());
-    }
+   public void a(OPacket10Flying var1) {
+      OWorldServer var2 = this.d.a(this.e.s);
+      this.i = true;
+      double var3;
+      if(!this.m) {
+         var3 = var1.b - this.k;
+         if(var1.a == this.j && var3 * var3 < 0.01D && var1.c == this.l) {
+            this.m = true;
+         }
+      }
+      
+      // CanaryMod: Notice player movement
+      if (etc.floor(j) != etc.floor(getPlayer().getX()) || etc.floor(k) != etc.floor(getPlayer().getY()) || etc.floor(l) != etc.floor(getPlayer().getZ())) {
+         Location from = new Location();
+         from.x = etc.floor(j);
+         from.y = etc.floor(k);
+         from.z = etc.floor(l);
+         from.rotX = getPlayer().getRotation();
+         from.rotY = getPlayer().getPitch();
 
-    @Override
-    public void a(OPacket10Flying paramOPacket10Flying) {
-        OWorldServer localOWorldServer = d.a(e.s);
-        i = true;
-        double d1;
-        if (!m) {
-            d1 = paramOPacket10Flying.b - k;
-            if ((paramOPacket10Flying.a == j) && (d1 * d1 < 0.01D) && (paramOPacket10Flying.c == l))
-                m = true;
-        }
-        // CanaryMod: Notice player movement
-        if (etc.floor(j) != etc.floor(getPlayer().getX()) || etc.floor(k) != etc.floor(getPlayer().getY()) || etc.floor(l) != etc.floor(getPlayer().getZ())) {
-            Location from = new Location();
-            from.x = etc.floor(j);
-            from.y = etc.floor(k);
-            from.z = etc.floor(l);
-            from.rotX = getPlayer().getRotation();
-            from.rotY = getPlayer().getPitch();
+         Location to = new Location();
+         to.x = etc.floor(e.aP);
+         to.y = etc.floor(e.aQ);
+         to.z = etc.floor(e.aR);
+         to.rotX = getPlayer().getRotation();
+         to.rotY = getPlayer().getPitch();
 
-            Location to = new Location();
-            to.x = etc.floor(e.aP);
-            to.y = etc.floor(e.aQ);
-            to.z = etc.floor(e.aR);
-            to.rotX = getPlayer().getRotation();
-            to.rotY = getPlayer().getPitch();
+         OEntity.manager.callHook(PluginLoader.Hook.PLAYER_MOVE, getPlayer(), from, to);
+      }
 
-            OEntity.manager.callHook(PluginLoader.Hook.PLAYER_MOVE, getPlayer(), from, to);
-        }
-
-        if (m) {
-            if (e.aK != null) {
-                float f1 = e.aV;
-                float f2 = e.aW;
-                e.aK.f();
-                double d2 = e.aP;
-                double d3 = e.aQ;
-                double d4 = e.aR;
-                double d5 = 0.0D;
-                double d6 = 0.0D;
-                if (paramOPacket10Flying.i) {
-                    f1 = paramOPacket10Flying.e;
-                    f2 = paramOPacket10Flying.f;
-                }
-                if ((paramOPacket10Flying.h) && (paramOPacket10Flying.b == -999.0D) && (paramOPacket10Flying.d == -999.0D)) {
-                    d5 = paramOPacket10Flying.a;
-                    d6 = paramOPacket10Flying.c;
-                }
-
-                e.ba = paramOPacket10Flying.g;
-
-                e.a(true);
-                e.c(d5, 0.0D, d6);
-                e.b(d2, d3, d4, f1, f2);
-                e.aS = d5;
-                e.aU = d6;
-                if (e.aK != null)
-                    localOWorldServer.b(e.aK, true);
-                if (e.aK != null)
-                    e.aK.f();
-                d.f.d(e);
-                j = e.aP;
-                k = e.aQ;
-                l = e.aR;
-                localOWorldServer.g(e);
-
-                return;
+      if(this.m) {
+         double var7;
+         double var9;
+         double var11;
+         double var15;
+         if(this.e.aK != null) {
+            float var5 = this.e.aV;
+            float var6 = this.e.aW;
+            this.e.aK.f();
+            var7 = this.e.aP;
+            var9 = this.e.aQ;
+            var11 = this.e.aR;
+            double var13 = 0.0D;
+            var15 = 0.0D;
+            if(var1.i) {
+               var5 = var1.e;
+               var6 = var1.f;
             }
 
-            if (e.K()) {
-                e.a(true);
-                e.b(j, k, l, e.aV, e.aW);
-                localOWorldServer.g(e);
-                return;
+            if(var1.h && var1.b == -999.0D && var1.d == -999.0D) {
+               var13 = var1.a;
+               var15 = var1.c;
             }
 
-            d1 = e.aQ;
-            j = e.aP;
-            k = e.aQ;
-            l = e.aR;
-
-            double d2 = e.aP;
-            double d3 = e.aQ;
-            double d4 = e.aR;
-
-            float f3 = e.aV;
-            float f4 = e.aW;
-
-            if ((paramOPacket10Flying.h) && (paramOPacket10Flying.b == -999.0D) && (paramOPacket10Flying.d == -999.0D))
-                paramOPacket10Flying.h = false;
-
-            if (paramOPacket10Flying.h) {
-                d2 = paramOPacket10Flying.a;
-                d3 = paramOPacket10Flying.b;
-                d4 = paramOPacket10Flying.c;
-                double d6 = paramOPacket10Flying.d - paramOPacket10Flying.b;
-                if (!e.K() && (d6 > 1.65D) || (d6 < 0.1D)) {
-                    a("Illegal stance");
-                    a.warning(e.r + " had an illegal stance: " + d6);
-                    return;
-                }
-                
-                if (Math.abs(paramOPacket10Flying.a) > 3.2E7D || Math.abs(paramOPacket10Flying.c) > 3.2E7D) {
-                    this.a("Illegal position");
-                    return;
-                }
-            }
-            if (paramOPacket10Flying.i) {
-                f3 = paramOPacket10Flying.e;
-                f4 = paramOPacket10Flying.f;
+            this.e.ba = var1.g;
+            this.e.a(true);
+            this.e.c(var13, 0.0D, var15);
+            this.e.b(var7, var9, var11, var5, var6);
+            this.e.aS = var13;
+            this.e.aU = var15;
+            if(this.e.aK != null) {
+               var2.b(this.e.aK, true);
             }
 
-            e.a(true);
-            e.br = 0.0F;
-            e.b(j, k, l, f3, f4);
-            if (!m)
-                return;
-
-            double d6 = d2 - e.aP;
-            double d7 = d3 - e.aQ;
-            double d8 = d4 - e.aR;
-
-            // Don't worry, it's notchian code
-            double distance = d6 * d6 + d7 * d7 + d8 * d8;
-            if (distance > 100.0D) {
-                a.warning(e.r + " moved too quickly!");
-                a("You moved too quickly :( (Hacking?)");
-                return;
+            if(this.e.aK != null) {
+               this.e.aK.f();
             }
 
-            float f5 = 0.0625F;
-            boolean n = localOWorldServer.a(e, e.aZ.b().e(f5, f5, f5)).isEmpty();
-
-            e.c(d6, d7, d8);
-            d6 = d2 - e.aP;
-            d7 = d3 - e.aQ;
-            if ((d7 > -0.5D) || (d7 < 0.5D))
-                d7 = 0.0D;
-            d8 = d4 - e.aR;
-            boolean i1 = false;
-            distance = d6 * d6 + d7 * d7 + d8 * d8;
-            if ((distance > 0.0625D) && (!e.K())) {
-                i1 = true;
-                a.warning(e.r + " moved wrongly!");
-                System.out.println("Got position " + d2 + ", " + d3 + ", " + d4);
-                System.out.println("Expected " + e.aP + ", " + e.aQ + ", " + e.aR);
-            }
-            e.b(d2, d3, d4, f3, f4);
-
-            boolean i2 = localOWorldServer.a(e, e.aZ.b().e(f5, f5, f5)).isEmpty();
-            if (n && (i1 || !i2) && !e.K()) {
-                a(j, k, l, f3, f4);
-                return;
-            }
-            
-            OAxisAlignedBB var28 = e.aZ.b().b((double) f5, (double) f5, (double) f5).a(0.0D, -0.55D, 0.0D);
-            if (!(d.o || localOWorldServer.b(var28) || d.f.h(e.r) || getPlayer().ignoreRestrictions())) {
-                if (d7 >= -0.03125D) {
-                    ++h;
-                    if (h > 80) {
-                        a.warning(e.r + " was kicked for floating too long!");
-                        a("Flying is not enabled on this server");
-                        h = 0;
-                        return;
-                    }
-                }
-            } else {
-                this.h = 0;
-            }
-
-
-            e.ba = paramOPacket10Flying.g;
-            d.f.d(e);
-            e.b(e.aQ - d1, paramOPacket10Flying.g);
-        }
-    }
-
-    public void a(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
-        // CanaryMod: Teleportation hook
-        Location from = new Location();
-        from.x = paramDouble1;
-        from.y = paramDouble2;
-        from.z = paramDouble3;
-        from.rotX = paramFloat1;
-        from.rotY = paramFloat2;
-        Player player = getPlayer();
-        if ((Boolean) OEntity.manager.callHook(PluginLoader.Hook.TELEPORT, player, player.getLocation(), from))
+            this.d.f.d(this.e);
+            this.j = this.e.aP;
+            this.k = this.e.aQ;
+            this.l = this.e.aR;
+            var2.g(this.e);
             return;
+         }
 
-        
-        m = false;
-        j = paramDouble1;
-        k = paramDouble2;
-        l = paramDouble3;
-        e.b(paramDouble1, paramDouble2, paramDouble3, paramFloat1, paramFloat2);
-        e.a.b(new OPacket13PlayerLookMove(paramDouble1, paramDouble2 + 1.620000004768372D, paramDouble2, paramDouble3, paramFloat1, paramFloat2, false));
-    }
-
-    // CanaryMod: Store x/y/z
-    int x, y, z, type;
-
-    @Override
-    public void a(OPacket14BlockDig paramOPacket14BlockDig) {
-        OWorldServer ows = d.a(e.s);
-        if (paramOPacket14BlockDig.e == 4) {
-            e.E();
+         if(this.e.K()) {
+            this.e.a(true);
+            this.e.b(this.j, this.k, this.l, this.e.aV, this.e.aW);
+            var2.g(this.e);
             return;
-        }
-        // CanaryMod: We allow admins and ops to dig!
-        boolean bool = ows.D = ows.t.g != 0 || d.f.h(e.r) || getPlayer().isAdmin();
-        int n = 0;
-        if (paramOPacket14BlockDig.e == 0)
-            n = 1;
+         }
 
-        if (paramOPacket14BlockDig.e == 2)
-            n = 1;
+         var3 = this.e.aQ;
+         this.j = this.e.aP;
+         this.k = this.e.aQ;
+         this.l = this.e.aR;
+         var7 = this.e.aP;
+         var9 = this.e.aQ;
+         var11 = this.e.aR;
+         float var17 = this.e.aV;
+         float var18 = this.e.aW;
+         if(var1.h && var1.b == -999.0D && var1.d == -999.0D) {
+            var1.h = false;
+         }
 
-        int i1 = paramOPacket14BlockDig.a;
-        int i2 = paramOPacket14BlockDig.b;
-        int i3 = paramOPacket14BlockDig.c;
-        if (n != 0) {
-            double d1 = e.aP - (i1 + 0.5D);
-            double d2 = e.aQ - (i2 + 0.5D);
-            double d3 = e.aR - (i3 + 0.5D);
-            double d4 = d1 * d1 + d2 * d2 + d3 * d3;
-            if (d4 > 36.0D)
-                return;
-        }
-        OChunkCoordinates localOChunkCoordinates = ows.n();
-        int i4 = (int) OMathHelper.e(i1 - localOChunkCoordinates.a);
-        int i5 = (int) OMathHelper.e(i3 - localOChunkCoordinates.c);
-        if (i4 > i5)
-            i5 = i4;
-        // CanaryMod: the player
-        Player player = getPlayer();
+         if(var1.h) {
+            var7 = var1.a;
+            var9 = var1.b;
+            var11 = var1.c;
+            var15 = var1.d - var1.b;
+            if(!this.e.K() && (var15 > 1.65D || var15 < 0.1D)) {
+               this.a("Illegal stance");
+               a.warning(this.e.r + " had an illegal stance: " + var15);
+               return;
+            }
 
-        if (paramOPacket14BlockDig.e == 0) {
+            if(Math.abs(var1.a) > 3.2E7D || Math.abs(var1.c) > 3.2E7D) {
+               this.a("Illegal position");
+               return;
+            }
+         }
+
+         if(var1.i) {
+            var17 = var1.e;
+            var18 = var1.f;
+         }
+
+         this.e.a(true);
+         this.e.br = 0.0F;
+         this.e.b(this.j, this.k, this.l, var17, var18);
+         if(!this.m) {
+            return;
+         }
+
+         var15 = var7 - this.e.aP;
+         double var19 = var9 - this.e.aQ;
+         double var21 = var11 - this.e.aR;
+         double var23 = var15 * var15 + var19 * var19 + var21 * var21;
+         if(var23 > 100.0D) {
+            a.warning(this.e.r + " moved too quickly!");
+            this.a("You moved too quickly :( (Hacking?)");
+            return;
+         }
+
+         float var25 = 0.0625F;
+         boolean var26 = var2.a(this.e, this.e.aZ.b().e((double)var25, (double)var25, (double)var25)).size() == 0;
+         this.e.c(var15, var19, var21);
+         var15 = var7 - this.e.aP;
+         var19 = var9 - this.e.aQ;
+         if(var19 > -0.5D || var19 < 0.5D) {
+            var19 = 0.0D;
+         }
+
+         var21 = var11 - this.e.aR;
+         var23 = var15 * var15 + var19 * var19 + var21 * var21;
+         boolean var27 = false;
+         if(var23 > 0.0625D && !this.e.K()) {
+            var27 = true;
+            a.warning(this.e.r + " moved wrongly!");
+            System.out.println("Got position " + var7 + ", " + var9 + ", " + var11);
+            System.out.println("Expected " + this.e.aP + ", " + this.e.aQ + ", " + this.e.aR);
+         }
+
+         this.e.b(var7, var9, var11, var17, var18);
+         boolean var28 = var2.a(this.e, this.e.aZ.b().e((double)var25, (double)var25, (double)var25)).size() == 0;
+         if(var26 && (var27 || !var28) && !this.e.K()) {
+            this.a(this.j, this.k, this.l, var17, var18);
+            return;
+         }
+
+         OAxisAlignedBB var29 = this.e.aZ.b().b((double)var25, (double)var25, (double)var25).a(0.0D, -0.55D, 0.0D);
+         // CanaryMod: Allow ops and people with ignoreRestrictions to fly
+         if(!this.d.o && !var2.b(var29) && !d.f.h(e.r) && !getPlayer().canIgnoreRestrictions()) {
+            if(var19 >= -0.03125D) {
+               ++this.h;
+               if(this.h > 80) {
+                  a.warning(this.e.r + " was kicked for floating too long!");
+                  this.a("Flying is not enabled on this server");
+                  return;
+               }
+            }
+         } else {
+            this.h = 0;
+         }
+
+         this.e.ba = var1.g;
+         this.d.f.d(this.e);
+         this.e.b(this.e.aQ - var3, var1.g);
+      }
+
+   }
+
+   public void a(double var1, double var3, double var5, float var7, float var8) {
+      // CanaryMod: Teleportation hook
+      Location from = new Location();
+      from.x = var1;
+      from.y = var3;
+      from.z = var5;
+      from.rotX = var7;
+      from.rotY = var8;
+      Player player = getPlayer();
+      if ((Boolean) OEntity.manager.callHook(PluginLoader.Hook.TELEPORT, player, player.getLocation(), from))
+         return;
+
+      this.m = false;
+      this.j = var1;
+      this.k = var3;
+      this.l = var5;
+      this.e.b(var1, var3, var5, var7, var8);
+      this.e.a.b(new OPacket13PlayerLookMove(var1, var3 + 1.6200000047683716D, var3, var5, var7, var8, false));
+   }
+
+   // CanaryMod: Store x/y/z
+   int x, y, z, type;
+   
+   public void a(OPacket14BlockDig var1) {
+      OWorldServer var2 = this.d.a(this.e.s);
+      if(var1.e == 4) {
+         this.e.E();
+      } else {
+         // CanaryMod: We allow admins and ops to dig!
+         boolean var3 = var2.D = var2.t.g != 0 || this.d.f.h(this.e.r) || getPlayer().isAdmin();
+         boolean var4 = false;
+         if(var1.e == 0) {
+            var4 = true;
+         }
+
+         if(var1.e == 2) {
+            var4 = true;
+         }
+
+         int var5 = var1.a;
+         int var6 = var1.b;
+         int var7 = var1.c;
+         if(var4) {
+            double var8 = this.e.aP - ((double)var5 + 0.5D);
+            double var10 = this.e.aQ - ((double)var6 + 0.5D);
+            double var12 = this.e.aR - ((double)var7 + 0.5D);
+            double var14 = var8 * var8 + var10 * var10 + var12 * var12;
+            if(var14 > 36.0D) {
+               return;
+            }
+         }
+         
+         OChunkCoordinates var16 = var2.n();
+         int var17 = (int)OMathHelper.e((float)(var5 - var16.a));
+         int var18 = (int)OMathHelper.e((float)(var7 - var16.c));
+         if(var17 > var18) {
+            var18 = var17;
+         }
+
+         // CanaryMod: the player
+         Player player = getPlayer();
+         
+         if(var1.e == 0) {
             // CanaryMod: Start digging
             // No buildrights
             if (!getPlayer().canBuild())
                 return;
             // CanaryMod: Custom spawn prot size
-            if ((i5 > etc.getInstance().getSpawnProtectionSize()) || (bool)) {
-                // CanaryMod: Dig hooks
-                Block block = ows.world.getBlockAt(i1, i2, i3);
-                block.setStatus(0); // Started digging
-                x = block.getX();
-                y = block.getY();
-                z = block.getZ();
-                type = block.getType();
-                if (!(Boolean) OEntity.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player, block))
-                    e.c.a(i1, i2, i3, paramOPacket14BlockDig.d);
-                else
-                    e.a.b(new OPacket53BlockChange(i1, i2, i3, ows));
-            } else
-                e.a.b(new OPacket53BlockChange(i1, i2, i3, ows));
-
-        } else if (paramOPacket14BlockDig.e == 2) {
+            if(var18 <= etc.getInstance().getSpawnProtectionSize() && !var3) {
+               this.e.a.b(new OPacket53BlockChange(var5, var6, var7, var2));
+            } else {
+               // CanaryMod: Dig hooks
+               Block block = var2.world.getBlockAt(var5, var6, var7);
+               block.setStatus(0); // Started digging
+               x = block.getX();
+               y = block.getY();
+               z = block.getZ();
+               type = block.getType();
+               if (!(Boolean) OEntity.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player, block))
+                  this.e.c.a(var5, var6, var7, var1.d);
+               else
+                  this.e.a.b(new OPacket53BlockChange(var5, var6, var7, var2));
+            }
+         } else if(var1.e == 2) {
             // CanaryMod: Break block
-            Block block = ows.world.getBlockAt(i1, i2, i3);
+            Block block = var2.world.getBlockAt(var5, var6, var7);
             block.setStatus(2); // Block broken
             OEntity.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player, block);
-            e.c.a(i1, i2, i3);
-            if (ows.a(i1, i2, i3) != 0)
-                e.a.b(new OPacket53BlockChange(i1, i2, i3, ows));
-        } else if (paramOPacket14BlockDig.e == 3) {
+
+            this.e.c.a(var5, var6, var7);
+            if(var2.a(var5, var6, var7) != 0) {
+               this.e.a.b(new OPacket53BlockChange(var5, var6, var7, var2));
+            }
+         } else if(var1.e == 3) {
             // CanaryMod: Send block update
-            Block block = new Block(ows.world, type, x, y, z);
+            Block block = new Block(var2.world, type, x, y, z);
             block.setStatus(3); // Send update for block
             OEntity.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player, block);
 
-            double d5 = e.aP - (i1 + 0.5D);
-            double d6 = e.aQ - (i2 + 0.5D);
-            double d7 = e.aR - (i3 + 0.5D);
-            double d8 = d5 * d5 + d6 * d6 + d7 * d7;
-            if (d8 < 256.0D)
-                e.a.b(new OPacket53BlockChange(i1, i2, i3, ows));
-        }
-        ows.D = false;
-    }
-
-    // CanaryMod: Store the blocks between blockPlaced packets
-    Block lastRightClicked;
-
-    
-    @Override
-    public void a(OPacket15Place paramOPacket15Place) {
-        OWorldServer ows = d.a(e.s);
-        OItemStack localOItemStack = e.i.b();
-
-        // CanaryMod: Store block data to call hooks
-        // CanaryMod START
-        Block blockClicked = null;
-        Block blockPlaced = null;
-
-        // We allow admins and ops to build!
-        boolean bool = ows.D = ows.t.g != 0 || d.f.h(e.r) || getPlayer().isAdmin();
-        if (paramOPacket15Place.d == 255) {
-            // ITEM_USE -- if we have a lastRightClicked then it could be a
-            // usable location
-            blockClicked = lastRightClicked;
-            lastRightClicked = null;
-        } else {
-            // RIGHTCLICK or BLOCK_PLACE .. or nothing
-            blockClicked = new Block(ows.world, ows.world.getBlockIdAt(paramOPacket15Place.a, paramOPacket15Place.b, paramOPacket15Place.c), paramOPacket15Place.a, paramOPacket15Place.b, paramOPacket15Place.c);
-            blockClicked.setFaceClicked(Block.Face.fromId(paramOPacket15Place.d));
-            lastRightClicked = blockClicked;
-        }
-
-     // If we clicked on something then we also have a location to place the
-     // block
-     if (blockClicked != null && localOItemStack != null) {
-         blockPlaced = new Block(ows.world, localOItemStack.c, blockClicked.getX(), blockClicked.getY(), blockClicked.getZ());
-         switch (paramOPacket15Place.d) {
-             case 0:
-                 blockPlaced.setY(blockPlaced.getY() - 1);
-                 break;
-             case 1:
-                 blockPlaced.setY(blockPlaced.getY() + 1);
-                 break;
-             case 2:
-                 blockPlaced.setZ(blockPlaced.getZ() - 1);
-                 break;
-             case 3:
-                 blockPlaced.setZ(blockPlaced.getZ() + 1);
-                 break;
-             case 4:
-                 blockPlaced.setX(blockPlaced.getX() - 1);
-                 break;
-             case 5:
-                 blockPlaced.setX(blockPlaced.getX() + 1);
-                 break;
+            double var19 = this.e.aP - ((double)var5 + 0.5D);
+            double var21 = this.e.aQ - ((double)var6 + 0.5D);
+            double var23 = this.e.aR - ((double)var7 + 0.5D);
+            double var25 = var19 * var19 + var21 * var21 + var23 * var23;
+            if(var25 < 256.0D) {
+               this.e.a.b(new OPacket53BlockChange(var5, var6, var7, var2));
+            }
          }
-     }
-     // CanaryMod: END
 
-        if (paramOPacket15Place.d == 255) {
-            // CanaryMod: call our version with extra blockClicked/blockPlaced
-            if (blockPlaced != null)
-                // Set the type of block to what it currently is
-                blockPlaced.setType(ows.world.getBlockIdAt(blockPlaced.getX(), blockPlaced.getY(), blockPlaced.getZ()));
+         var2.D = false;
+      }
+   }
 
-            if (localOItemStack == null)
-                return;
-            ((Digging) e.c).a(e, ows, localOItemStack, blockPlaced, blockClicked);
-        } else {
-            int n = paramOPacket15Place.a;
-            int i1 = paramOPacket15Place.b;
-            int i2 = paramOPacket15Place.c;
-            int i3 = paramOPacket15Place.d;
-            OChunkCoordinates localOChunkCoordinates = ows.n();
-            // CanaryMod : Fix stupid buggy spawn protection.
-            int i4 = (int) OMathHelper.e((i3 == 4 ? n - 1 : (i3 == 5 ? (n + 1) : n)) - localOChunkCoordinates.a);
-            // CanaryMod : Fix stupid buggy spawn protection.
-            int i5 = (int) OMathHelper.e((i3 == 2 ? i2 - 1 : (i3 == 3 ? (i2 + 1) : i2)) - localOChunkCoordinates.c);
+   // CanaryMod: Store the blocks between blockPlaced packets
+   Block lastRightClicked;
 
-            if (i4 > i5)
-                i5 = i4;
-            // CanaryMod: call BLOCK_RIGHTCLICKED
-            Item item = (localOItemStack != null) ? new Item(localOItemStack) : new Item(Item.Type.Air);
-            Player player = getPlayer();
-            OEntity.manager.callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, player, blockClicked, item);
+   public void a(OPacket15Place var1) {
+      OWorldServer var2 = this.d.a(this.e.s);
+      OItemStack var3 = this.e.i.b();
 
-            // CanaryMod: call original BLOCK_CREATED
-            OEntity.manager.callHook(PluginLoader.Hook.BLOCK_CREATED, player, blockPlaced, blockClicked, item.getItemId());
-            // CanaryMod: If we were building inside spawn, bail! (unless ops/admin)
+      // CanaryMod: Store block data to call hooks
+      // CanaryMod START
+      Block blockClicked = null;
+      Block blockPlaced = null;
 
-            if (m && e.d(n + 0.5D, i1 + 0.5D, i2 + 0.5D) < 64.0D && ((i5 > etc.getInstance().getSpawnProtectionSize() && !etc.getInstance().isOnItemBlacklist(item.getItemId())) || bool) && player.canBuild())
-                e.c.a(e, ows, localOItemStack, n, i1, i2, i3);
-            else {
-                // CanaryMod: No point sending the client to update the blocks, you
-                // weren't allowed to place!
-                ows.D = false;
-                return;
-            }
+      // We allow admins and ops to build!
+      boolean var4 = var2.D = var2.t.g != 0 || this.d.f.h(this.e.r) || getPlayer().isAdmin();
+      if (var1.d == 255) {
+         // ITEM_USE -- if we have a lastRightClicked then it could be a
+         // usable location
+         blockClicked = lastRightClicked;
+         lastRightClicked = null;
+      } else {
+         // RIGHTCLICK or BLOCK_PLACE .. or nothing
+         blockClicked = new Block(var2.world, var2.world.getBlockIdAt(var1.a, var1.b, var1.c), var1.a, var1.b, var1.c);
+         blockClicked.setFaceClicked(Block.Face.fromId(var1.d));
+         lastRightClicked = blockClicked;
+      }
 
-            // CanaryMod: these are the 'block changed' packets for the client.
+      // If we clicked on something then we also have a location to place the
+      // block
+      if (blockClicked != null && var3 != null) {
+         blockPlaced = new Block(var2.world, var3.c, blockClicked.getX(), blockClicked.getY(), blockClicked.getZ());
+         switch (var1.d) {
+            case 0:
+               blockPlaced.setY(blockPlaced.getY() - 1);
+               break;
+            case 1:
+               blockPlaced.setY(blockPlaced.getY() + 1);
+               break;
+            case 2:
+               blockPlaced.setZ(blockPlaced.getZ() - 1);
+               break;
+            case 3:
+               blockPlaced.setZ(blockPlaced.getZ() + 1);
+               break;
+            case 4:
+               blockPlaced.setX(blockPlaced.getX() - 1);
+               break;
+            case 5:
+               blockPlaced.setX(blockPlaced.getX() + 1);
+               break;
+         }
+      }
+      // CanaryMod: END
+      
+      if(var1.d == 255) {
+         // CanaryMod: call our version with extra blockClicked/blockPlaced
+         if (blockPlaced != null)
+             // Set the type of block to what it currently is
+             blockPlaced.setType(var2.world.getBlockIdAt(blockPlaced.getX(), blockPlaced.getY(), blockPlaced.getZ()));
 
-            e.a.b(new OPacket53BlockChange(n, i1, i2, ows));
-
-            if (i3 == 0)
-                i1--;
-            if (i3 == 1)
-                i1++;
-            if (i3 == 2)
-                i2--;
-            if (i3 == 3)
-                i2++;
-            if (i3 == 4)
-                n--;
-            if (i3 == 5)
-                n++;
-
-            e.a.b(new OPacket53BlockChange(n, i1, i2, ows));
-        }
-
-        localOItemStack = e.i.b();
-        if ((localOItemStack != null) && (localOItemStack.a == 0))
-            e.i.a[e.i.c] = null;
-
-        e.h = true;
-        e.i.a[e.i.c] = OItemStack.b(e.i.a[e.i.c]);
-        OSlot localOSlot = e.k.a(e.i, e.i.c);
-        e.k.a();
-        e.h = false;
-
-        if (!OItemStack.a(e.i.b(), paramOPacket15Place.e))
-            b(new OPacket103SetSlot(e.k.f, localOSlot.a, e.i.b()));
-
-        ows.D = false;
-    }
-
-    @Override
-    public void a(String paramString, Object[] paramArrayOfObject) {
-        // CanaryMod: disconnect!
-        OEntity.manager.callHook(PluginLoader.Hook.DISCONNECT, getPlayer());
-        a.info(e.r + " lost connection: " + paramString);
-        d.f.a(new OPacket3Chat("§e" + e.r + " left the game."));
-        d.f.e(e);
-        c = true;
-    }
-
-    @Override
-    public void a(OPacket paramOPacket) {
-        a.warning(getClass() + " wasn't prepared to deal with a " + paramOPacket.getClass());
-        a("Protocol error, unexpected packet");
-    }
-
-    public void b(OPacket paramOPacket) {
-        b.a(paramOPacket);
-        g = f;
-    }
-
-    @Override
-    public void a(OPacket16BlockItemSwitch paramOPacket16BlockItemSwitch) {
-        if ((paramOPacket16BlockItemSwitch.a < 0) || (paramOPacket16BlockItemSwitch.a > OInventoryPlayer.e())) {
-            a.warning(e.r + " tried to set an invalid carried item");
+         if(var3 == null) {
             return;
-        }
-        e.i.c = paramOPacket16BlockItemSwitch.a;
-    }
+         }
 
-    @Override
-    public void a(OPacket3Chat paramOPacket3Chat) {
-        String str = paramOPacket3Chat.a;
-        // CanaryMod: redirect chathandling to player class
-        getPlayer().chat(str);
+         ((Digging) this.e.c).a(this.e, var2, var3, blockPlaced, blockClicked);
+      } else {
+         int var5 = var1.a;
+         int var6 = var1.b;
+         int var7 = var1.c;
+         int var8 = var1.d;
+         OChunkCoordinates var9 = var2.n();
+         // CanaryMod : Fix stupid buggy spawn protection. (2 times)
+         int var10 = (int) OMathHelper.e((var8 == 4 ? var5 - 1 : (var8 == 5 ? (var5 + 1) : var5)) - var9.a);
+         int var11 = (int) OMathHelper.e((var8 == 2 ? var7 - 1 : (var8 == 3 ? (var7 + 1) : var7)) - var9.c);
 
-    }
+         if(var10 > var11) {
+            var11 = var10;
+         }
 
-    private void c(String paramString) {
+         // CanaryMod: call BLOCK_RIGHTCLICKED
+         Item item = (var3 != null) ? new Item(var3) : new Item(Item.Type.Air);
+         Player player = getPlayer();
+         boolean cancelled = (Boolean) OEntity.manager.callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, player, blockClicked, item);
 
-    }
+         // CanaryMod: call original BLOCK_CREATED
+         OEntity.manager.callHook(PluginLoader.Hook.BLOCK_CREATED, player, blockPlaced, blockClicked, item.getItemId());
+         // CanaryMod: If we were building inside spawn, bail! (unless ops/admin)
 
-    @Override
-    public void a(OPacket18Animation paramOPacket18ArmAnimation) {
-        if (paramOPacket18ArmAnimation.b == 1) {
-            // CanaryMod: Swing the arm!
-            OEntity.manager.callHook(PluginLoader.Hook.ARM_SWING, getPlayer());
-
-            e.k_();
-        }
-    }
-
-    @Override
-    public void a(OPacket19EntityAction paramOPacket19) {
-        if (paramOPacket19.b == 1)
-            e.e(true);
-        else if (paramOPacket19.b == 2)
-            e.e(false);
-        else if (paramOPacket19.b == 3) {
-            e.a(false, true, true);
-            m = false;
-        }
-    }
-
-    @Override
-    public void a(OPacket255KickDisconnect paramOPacket255KickDisconnect) {
-        b.a("disconnect.quitting", new Object[0]);
-    }
-
-    public int b() {
-        return b.e();
-    }
-
-    public void b(String paramString) {
-        b(new OPacket3Chat("§7" + paramString));
-    }
-
-    public String d() {
-        return e.r;
-    }
-
-    @Override
-    public void a(OPacket7UseEntity paramOPacket7) {
-        OEntity localOEntity = d.a(e.s).a(paramOPacket7.b);
-
-        if ((localOEntity != null) && (e.e(localOEntity)) && (e.f(localOEntity) < 4.0F))
-            if (paramOPacket7.c == 0)
-                e.c(localOEntity);
-            else if (paramOPacket7.c == 1)
-                e.d(localOEntity);
-    }
-
-    @Override
-    public void a(OPacket9Respawn paramOPacket9) {
-        if (e.ab > 0)
+         if(this.m && this.e.d((double)var5 + 0.5D, (double)var6 + 0.5D, (double)var7 + 0.5D) < 64.0D && (var11 > etc.getInstance().getSpawnProtectionSize() || var4) && player.canBuild() && !cancelled) {
+            this.e.c.a(this.e, var2, var3, var5, var6, var7, var8);
+         } else {
+            // CanaryMod: No point sending the client to update the blocks, you
+            // weren't allowed to place!
+            var2.D = false;
             return;
+         }
 
-        e = d.f.a(e, 0);
-    }
+         this.e.a.b(new OPacket53BlockChange(var5, var6, var7, var2));
+         if(var8 == 0) {
+            --var6;
+         }
 
-    @Override
-    public void a(OPacket101CloseWindow paramOPacket101) {
-        e.z();
-    }
+         if(var8 == 1) {
+            ++var6;
+         }
 
-    @Override
-    public void a(OPacket102WindowClick paramOPacket102) {
-        if ((e.k.f == paramOPacket102.a) && (e.k.c(e))) {
-            OItemStack localOItemStack = e.k.a(paramOPacket102.b, paramOPacket102.c, paramOPacket102.f, e);
+         if(var8 == 2) {
+            --var7;
+         }
 
-            if (OItemStack.a(paramOPacket102.e, localOItemStack)) {
-                e.a.b(new OPacket106Transaction(paramOPacket102.a, paramOPacket102.d, true));
-                e.h = true;
-                e.k.a();
-                e.y();
-                e.h = false;
-            } else {
-                n.put(Integer.valueOf(e.k.f), Short.valueOf(paramOPacket102.d));
-                e.a.b(new OPacket106Transaction(paramOPacket102.a, paramOPacket102.d, false));
-                e.k.a(e, false);
+         if(var8 == 3) {
+            ++var7;
+         }
 
-                ArrayList localArrayList = new ArrayList();
-                for (int n = 0; n < e.k.e.size(); n++)
-                    localArrayList.add(((OSlot) e.k.e.get(n)).a());
-                e.a(e.k, localArrayList);
+         if(var8 == 4) {
+            --var5;
+         }
+
+         if(var8 == 5) {
+            ++var5;
+         }
+
+         this.e.a.b(new OPacket53BlockChange(var5, var6, var7, var2));
+      }
+
+      var3 = this.e.i.b();
+      if(var3 != null && var3.a == 0) {
+         this.e.i.a[this.e.i.c] = null;
+      }
+
+      this.e.h = true;
+      this.e.i.a[this.e.i.c] = OItemStack.b(this.e.i.a[this.e.i.c]);
+      OSlot var12 = this.e.k.a(this.e.i, this.e.i.c);
+      this.e.k.a();
+      this.e.h = false;
+      if(!OItemStack.a(this.e.i.b(), var1.e)) {
+         this.b(new OPacket103SetSlot(this.e.k.f, var12.a, this.e.i.b()));
+      }
+
+      var2.D = false;
+   }
+
+   public void a(String var1, Object[] var2) {
+      // CanaryMod: disconnect!
+      OEntity.manager.callHook(PluginLoader.Hook.DISCONNECT, getPlayer());
+      a.info(this.e.r + " lost connection: " + var1);
+      this.d.f.a(new OPacket3Chat("\u00a7e" + this.e.r + " left the game."));
+      this.d.f.e(this.e);
+      this.c = true;
+   }
+
+   public void a(OPacket var1) {
+      a.warning(this.getClass() + " wasn\'t prepared to deal with a " + var1.getClass());
+      this.a("Protocol error, unexpected packet");
+   }
+
+   public void b(OPacket var1) {
+      this.b.a(var1);
+      this.g = this.f;
+   }
+
+   public void a(OPacket16BlockItemSwitch var1) {
+      if(var1.a >= 0 && var1.a <= OInventoryPlayer.e()) {
+         this.e.i.c = var1.a;
+      } else {
+         a.warning(this.e.r + " tried to set an invalid carried item");
+      }
+   }
+
+   public void a(OPacket3Chat var1) {
+      String var2 = var1.a;
+      // CanaryMod: redirect chathandling to player class
+      getPlayer().chat(var2);
+   }
+
+   private void c(String var1) {
+      //Handled by PlayerCommands class
+   }
+
+   public void a(OPacket18Animation var1) {
+      if(var1.b == 1) {
+         // CanaryMod: Swing the arm!
+         OEntity.manager.callHook(PluginLoader.Hook.ARM_SWING, getPlayer());
+         this.e.k_();
+      }
+
+   }
+
+   public void a(OPacket19EntityAction var1) {
+      if(var1.b == 1) {
+         this.e.e(true);
+      } else if(var1.b == 2) {
+         this.e.e(false);
+      } else if(var1.b == 3) {
+         this.e.a(false, true, true);
+         this.m = false;
+      }
+
+   }
+
+   public void a(OPacket255KickDisconnect var1) {
+      this.b.a("disconnect.quitting", new Object[0]);
+   }
+
+   public int b() {
+      return this.b.e();
+   }
+
+   public void b(String var1) {
+      this.b(new OPacket3Chat("\u00a77" + var1));
+   }
+
+   public String d() {
+      return this.e.r;
+   }
+
+   public void a(OPacket7UseEntity var1) {
+      OWorldServer var2 = this.d.a(this.e.s);
+      OEntity var3 = var2.a(var1.b);
+      if(var3 != null && this.e.e(var3) && this.e.g(var3) < 36.0D) {
+         if(var1.c == 0) {
+            this.e.c(var3);
+         } else if(var1.c == 1) {
+            this.e.d(var3);
+         }
+      }
+
+   }
+
+   public void a(OPacket9Respawn var1) {
+      if(this.e.ab <= 0) {
+         this.e = this.d.f.a(this.e, 0);
+      }
+   }
+
+   public void a(OPacket101CloseWindow var1) {
+      this.e.z();
+   }
+
+   public void a(OPacket102WindowClick var1) {
+      if(this.e.k.f == var1.a && this.e.k.c(this.e)) {
+         OItemStack var2 = this.e.k.a(var1.b, var1.c, var1.f, this.e);
+         if(OItemStack.a(var1.e, var2)) {
+            this.e.a.b(new OPacket106Transaction(var1.a, var1.d, true));
+            this.e.h = true;
+            this.e.k.a();
+            this.e.y();
+            this.e.h = false;
+         } else {
+            this.n.put(Integer.valueOf(this.e.k.f), Short.valueOf(var1.d));
+            this.e.a.b(new OPacket106Transaction(var1.a, var1.d, false));
+            this.e.k.a(this.e, false);
+            ArrayList var3 = new ArrayList();
+
+            for(int var4 = 0; var4 < this.e.k.e.size(); ++var4) {
+               var3.add(((OSlot)this.e.k.e.get(var4)).a());
             }
-        }
-    }
 
-    @Override
-    public void a(OPacket106Transaction paramOPacket106) {
-        Short localShort = (Short) n.get(Integer.valueOf(e.k.f));
-        if ((localShort != null) && (paramOPacket106.b == localShort.shortValue()) && (e.k.f == paramOPacket106.a) && (!e.k.c(e)))
-            e.k.a(e, true);
-    }
+            this.e.a(this.e.k, var3);
+         }
+      }
 
-    @Override
-    public void a(OPacket130UpdateSign paramOPacket130) {
-        OWorldServer ows = d.a(e.s);
-        if (ows.f(paramOPacket130.a, paramOPacket130.b, paramOPacket130.c)) {
-            OTileEntity localOTileEntity = ows.n(paramOPacket130.a, paramOPacket130.b, paramOPacket130.c);
+   }
 
-            if ((localOTileEntity instanceof OTileEntitySign)) {
-                OTileEntitySign localOTileEntitySign1 = (OTileEntitySign) localOTileEntity;
-                if (!localOTileEntitySign1.a()) {
-                    d.c("Player " + e.r + " just tried to change non-editable sign");
-                    return;
-                }
+   public void a(OPacket106Transaction var1) {
+      Short var2 = (Short)this.n.get(Integer.valueOf(this.e.k.f));
+      if(var2 != null && var1.b == var2.shortValue() && this.e.k.f == var1.a && !this.e.k.c(this.e)) {
+         this.e.k.a(this.e, true);
+      }
+
+   }
+
+   public void a(OPacket130UpdateSign var1) {
+      OWorldServer var2 = this.d.a(this.e.s);
+      if(var2.f(var1.a, var1.b, var1.c)) {
+         OTileEntity var3 = var2.n(var1.a, var1.b, var1.c);
+         if(var3 instanceof OTileEntitySign) {
+            OTileEntitySign var4 = (OTileEntitySign)var3;
+            if(!var4.a()) {
+               this.d.c("Player " + this.e.r + " just tried to change non-editable sign");
+               return;
             }
-            int i1;
-            int i2;
-            for (int n = 0; n < 4; n++) {
-                i1 = 1;
-                // CanaryMod: Remove the char limit, for plugins.
-                // if (paramOPacket130.d[n].length() > 15) {
-                // i1 = 0;
-                // } else {
+         }
 
-                    for (i2 = 0; i2 < paramOPacket130.d[n].length(); i2++)
-                        if (OChatAllowedCharacters.a.indexOf(paramOPacket130.d[n].charAt(i2)) < 0)
-                            i1 = 0;
-                if (i1 == 0)
-                    paramOPacket130.d[n] = "!?";
-           }
-            if ((localOTileEntity instanceof OTileEntitySign)) {
-                int n = paramOPacket130.a;
-                i1 = paramOPacket130.b;
-                i2 = paramOPacket130.c;
-                
-                OTileEntitySign localOTileEntitySign2 = (OTileEntitySign) localOTileEntity;
-                // CanaryMod: Copy the old line text
-                String[] old = Arrays.copyOf(localOTileEntitySign2.a, localOTileEntitySign2.a.length);
+         int var6;
+         int var10;
+         for(var10 = 0; var10 < 4; ++var10) {
+            boolean var5 = true;
+            // CanaryMod: Remove the char limit, for plugins.
+            //if(var1.d[var10].length() > 15) {
+            //   var5 = false;
+            //} else {
+               for(var6 = 0; var6 < var1.d[var10].length(); ++var6) {
+                  if(OChatAllowedCharacters.a.indexOf(var1.d[var10].charAt(var6)) < 0) {
+                     var5 = false;
+                  }
+               }
+            //}
 
-                for (int i3 = 0; i3 < 4; i3++)
-                    localOTileEntitySign2.a[i3] = paramOPacket130.d[i3];
-
-                // CanaryMod: Check if we can change it
-                Sign sign = new Sign(localOTileEntitySign2);
-                if ((Boolean) OEntity.manager.callHook(PluginLoader.Hook.SIGN_CHANGE, getPlayer(), sign))
-                    localOTileEntitySign2.a = Arrays.copyOf(old, old.length);
-                
-                localOTileEntitySign2.i();
-                ows.g(n, i1, i2);
+            if(!var5) {
+               var1.d[var10] = "!?";
             }
-        }
-    }
+         }
 
-    @Override
-    public boolean c() {
-        return true;
-    }
+         if(var3 instanceof OTileEntitySign) {
+            var10 = var1.a;
+            int var9 = var1.b;
+            var6 = var1.c;
+            OTileEntitySign var7 = (OTileEntitySign)var3;
+            // CanaryMod: Copy the old line text
+            String[] old = Arrays.copyOf(var7.a, var7.a.length);
+
+            for(int var8 = 0; var8 < 4; ++var8) {
+               var7.a[var8] = var1.d[var8];
+            }
+            
+            // CanaryMod: Check if we can change it
+            Sign sign = new Sign(var7);
+            if ((Boolean) OEntity.manager.callHook(PluginLoader.Hook.SIGN_CHANGE, getPlayer(), sign))
+               var7.a = Arrays.copyOf(old, old.length);
+
+            var7.i();
+            var2.g(var10, var9, var6);
+         }
+      }
+
+   }
+
+   public boolean c() {
+      return true;
+   }
+
+   /**
+    * Returns the item in player's hand
+    *
+    * @return item
+    */
+   public int getItemInHand() {
+      if (e.i.b() != null)
+         return e.i.b().c;
+      return -1;
+   }
+
+   /**
+    * Returns the player
+    *
+    * @return player
+    */
+   public Player getPlayer() {
+      return e.getPlayer();
+   }
+
+   /**
+    * Sends a message to the player
+    *
+    * @param msg
+    */
+   public void msg(String msg) {
+      if (msg.length() >= 119) {
+         String cutMsg = msg.substring(0, 118);
+         int finalCut = cutMsg.lastIndexOf(" ");
+         String subCut = cutMsg.substring(0, finalCut);
+         String newMsg = msg.substring(finalCut + 1);
+         b(new OPacket3Chat(subCut));
+         msg(newMsg);
+      } else {
+         b(new OPacket3Chat(msg));
+      }
+   }
+
 }

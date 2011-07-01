@@ -1,30 +1,32 @@
+
+
 public class OItemMinecart extends OItem {
 
-    public int a;
+   public int a;
 
-    public OItemMinecart(int paramInt1, int paramInt2) {
-        super(paramInt1);
-        bf = 1;
-        a = paramInt2;
-    }
 
-    @Override
-    public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
+   public OItemMinecart(int var1, int var2) {
+      super(var1);
+      this.a = var2;
+   }
 
-        if (OBlockRail.c(i)) {
-            if (!paramOWorld.B) {
-                // CanaryMod: placing of a mine cart
-                Block block = new Block(paramOWorld.world, i, paramInt1, paramInt2, paramInt3);
-                Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, block, block, new Item(paramOItemStack)))
-                    return false;
+   public boolean a(OItemStack var1, OEntityPlayer var2, OWorld var3, int var4, int var5, int var6, int var7) {
+      int var8 = var3.a(var4, var5, var6);
+      if(OBlockRail.c(var8)) {
+         if(!var3.B) {
+            // CanaryMod: placing of a mine cart
+            Block block = new Block(var3.world, var8, var4, var5, var6);
+            Player player = ((OEntityPlayerMP) var2).getPlayer();
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, block, block, new Item(var1)))
+               return false;
 
-                paramOWorld.b(new OEntityMinecart(paramOWorld, paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, a));
-            }
-            paramOItemStack.a -= 1;
-            return true;
-        }
-        return false;
-    }
+            var3.b(new OEntityMinecart(var3, (double)((float)var4 + 0.5F), (double)((float)var5 + 0.5F), (double)((float)var6 + 0.5F), this.a));
+         }
+
+         --var1.a;
+         return true;
+      } else {
+         return false;
+      }
+   }
 }

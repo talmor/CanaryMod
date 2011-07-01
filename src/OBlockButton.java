@@ -1,250 +1,228 @@
+
 import java.util.Random;
 
 public class OBlockButton extends OBlock {
-    protected OBlockButton(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, OMaterial.o);
-        a(true);
-    }
 
-    @Override
-    public OAxisAlignedBB d(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        return null;
-    }
+   protected OBlockButton(int var1, int var2) {
+      super(var1, var2, OMaterial.o);
+      this.a(true);
+   }
 
-    @Override
-    public int c() {
-        return 20;
-    }
+   public OAxisAlignedBB d(OWorld var1, int var2, int var3, int var4) {
+      return null;
+   }
 
-    @Override
-    public boolean a() {
-        return false;
-    }
+   public int c() {
+      return 20;
+   }
 
-    @Override
-    public boolean b() {
-        return false;
-    }
+   public boolean a() {
+      return false;
+   }
 
-    @Override
-    public boolean e(OWorld var1, int var2, int var3, int var4, int var5) {
-        return var5 == 2 && var1.d(var2, var3, var4 + 1) ? true : (var5 == 3 && var1.d(var2, var3, var4 - 1) ? true : (var5 == 4 && var1.d(var2 + 1, var3, var4) ? true : var5 == 5 && var1.d(var2 - 1, var3, var4)));
-    }
+   public boolean b() {
+      return false;
+   }
 
-    @Override
-    public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if (paramOWorld.d(paramInt1 - 1, paramInt2, paramInt3))
-            return true;
-        if (paramOWorld.d(paramInt1 + 1, paramInt2, paramInt3))
-            return true;
-        if (paramOWorld.d(paramInt1, paramInt2, paramInt3 - 1))
-            return true;
-        return paramOWorld.d(paramInt1, paramInt2, paramInt3 + 1);
-    }
+   public boolean e(OWorld var1, int var2, int var3, int var4, int var5) {
+      return var5 == 2 && var1.d(var2, var3, var4 + 1)?true:(var5 == 3 && var1.d(var2, var3, var4 - 1)?true:(var5 == 4 && var1.d(var2 + 1, var3, var4)?true:var5 == 5 && var1.d(var2 - 1, var3, var4)));
+   }
 
-    @Override
-    public void d(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
+   public boolean a(OWorld var1, int var2, int var3, int var4) {
+      return var1.d(var2 - 1, var3, var4)?true:(var1.d(var2 + 1, var3, var4)?true:(var1.d(var2, var3, var4 - 1)?true:var1.d(var2, var3, var4 + 1)));
+   }
 
-        int j = i & 0x8;
-        i &= 7;
+   public void d(OWorld var1, int var2, int var3, int var4, int var5) {
+      int var6 = var1.b(var2, var3, var4);
+      int var7 = var6 & 8;
+      var6 &= 7;
+      if(var5 == 2 && var1.d(var2, var3, var4 + 1)) {
+         var6 = 4;
+      } else if(var5 == 3 && var1.d(var2, var3, var4 - 1)) {
+         var6 = 3;
+      } else if(var5 == 4 && var1.d(var2 + 1, var3, var4)) {
+         var6 = 2;
+      } else if(var5 == 5 && var1.d(var2 - 1, var3, var4)) {
+         var6 = 1;
+      } else {
+         var6 = this.g(var1, var2, var3, var4);
+      }
 
-        if ((paramInt4 == 2) && (paramOWorld.d(paramInt1, paramInt2, paramInt3 + 1)))
-            i = 4;
-        else if ((paramInt4 == 3) && (paramOWorld.d(paramInt1, paramInt2, paramInt3 - 1)))
-            i = 3;
-        else if ((paramInt4 == 4) && (paramOWorld.d(paramInt1 + 1, paramInt2, paramInt3)))
-            i = 2;
-        else if ((paramInt4 == 5) && (paramOWorld.d(paramInt1 - 1, paramInt2, paramInt3)))
-            i = 1;
-        else
-            i = g(paramOWorld, paramInt1, paramInt2, paramInt3);
-        paramOWorld.c(paramInt1, paramInt2, paramInt3, i + j);
-    }
+      var1.c(var2, var3, var4, var6 + var7);
+   }
 
-    private int g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if (paramOWorld.d(paramInt1 - 1, paramInt2, paramInt3))
-            return 1;
-        if (paramOWorld.d(paramInt1 + 1, paramInt2, paramInt3))
-            return 2;
-        if (paramOWorld.d(paramInt1, paramInt2, paramInt3 - 1))
-            return 3;
-        if (paramOWorld.d(paramInt1, paramInt2, paramInt3 + 1))
-            return 4;
-        return 1;
-    }
+   private int g(OWorld var1, int var2, int var3, int var4) {
+      return var1.d(var2 - 1, var3, var4)?1:(var1.d(var2 + 1, var3, var4)?2:(var1.d(var2, var3, var4 - 1)?3:(var1.d(var2, var3, var4 + 1)?4:1)));
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (h(paramOWorld, paramInt1, paramInt2, paramInt3)) {
-            int i = paramOWorld.b(paramInt1, paramInt2, paramInt3) & 0x7;
-            int j = 0;
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+      if(this.h(var1, var2, var3, var4)) {
+         int var6 = var1.b(var2, var3, var4) & 7;
+         boolean var7 = false;
+         if(!var1.d(var2 - 1, var3, var4) && var6 == 1) {
+            var7 = true;
+         }
 
-            if ((!paramOWorld.d(paramInt1 - 1, paramInt2, paramInt3)) && (i == 1))
-                j = 1;
-            if ((!paramOWorld.d(paramInt1 + 1, paramInt2, paramInt3)) && (i == 2))
-                j = 1;
-            if ((!paramOWorld.d(paramInt1, paramInt2, paramInt3 - 1)) && (i == 3))
-                j = 1;
-            if ((!paramOWorld.d(paramInt1, paramInt2, paramInt3 + 1)) && (i == 4))
-                j = 1;
+         if(!var1.d(var2 + 1, var3, var4) && var6 == 2) {
+            var7 = true;
+         }
 
-            if (j != 0) {
-                b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
-                paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
+         if(!var1.d(var2, var3, var4 - 1) && var6 == 3) {
+            var7 = true;
+         }
+
+         if(!var1.d(var2, var3, var4 + 1) && var6 == 4) {
+            var7 = true;
+         }
+
+         if(var7) {
+            this.b_(var1, var2, var3, var4, var1.b(var2, var3, var4));
+            var1.e(var2, var3, var4, 0);
+         }
+      }
+
+   }
+
+   private boolean h(OWorld var1, int var2, int var3, int var4) {
+      if(!this.a(var1, var2, var3, var4)) {
+         this.b_(var1, var2, var3, var4, var1.b(var2, var3, var4));
+         var1.e(var2, var3, var4, 0);
+         return false;
+      } else {
+         return true;
+      }
+   }
+
+   public void a(OIBlockAccess var1, int var2, int var3, int var4) {
+      int var5 = var1.b(var2, var3, var4);
+      int var6 = var5 & 7;
+      boolean var7 = (var5 & 8) > 0;
+      float var8 = 0.375F;
+      float var9 = 0.625F;
+      float var10 = 0.1875F;
+      float var11 = 0.125F;
+      if(var7) {
+         var11 = 0.0625F;
+      }
+
+      if(var6 == 1) {
+         this.a(0.0F, var8, 0.5F - var10, var11, var9, 0.5F + var10);
+      } else if(var6 == 2) {
+         this.a(1.0F - var11, var8, 0.5F - var10, 1.0F, var9, 0.5F + var10);
+      } else if(var6 == 3) {
+         this.a(0.5F - var10, var8, 0.0F, 0.5F + var10, var9, var11);
+      } else if(var6 == 4) {
+         this.a(0.5F - var10, var8, 1.0F - var11, 0.5F + var10, var9, 1.0F);
+      }
+
+   }
+
+   public void b(OWorld var1, int var2, int var3, int var4, OEntityPlayer var5) {
+      this.a(var1, var2, var3, var4, var5);
+   }
+
+   public boolean a(OWorld var1, int var2, int var3, int var4, OEntityPlayer var5) {
+      int var6 = var1.b(var2, var3, var4);
+      int var7 = var6 & 7;
+      int var8 = 8 - (var6 & 8);
+      if(var8 == 0) {
+         return true;
+      }
+
+      // CanaryMod: Allow button to provide power
+      int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), 0, 1);
+      if (change == 0)
+          return true;
+      
+      else {
+         var1.c(var2, var3, var4, var7 + var8);
+         var1.b(var2, var3, var4, var2, var3, var4);
+         var1.a((double)var2 + 0.5D, (double)var3 + 0.5D, (double)var4 + 0.5D, "random.click", 0.3F, 0.6F);
+         var1.h(var2, var3, var4, this.bn);
+         if(var7 == 1) {
+            var1.h(var2 - 1, var3, var4, this.bn);
+         } else if(var7 == 2) {
+            var1.h(var2 + 1, var3, var4, this.bn);
+         } else if(var7 == 3) {
+            var1.h(var2, var3, var4 - 1, this.bn);
+         } else if(var7 == 4) {
+            var1.h(var2, var3, var4 + 1, this.bn);
+         } else {
+            var1.h(var2, var3 - 1, var4, this.bn);
+         }
+
+         var1.c(var2, var3, var4, this.bn, this.c());
+         return true;
+      }
+   }
+
+   public void b(OWorld var1, int var2, int var3, int var4) {
+      int var5 = var1.b(var2, var3, var4);
+      if((var5 & 8) > 0) {
+         var1.h(var2, var3, var4, this.bn);
+         int var6 = var5 & 7;
+         if(var6 == 1) {
+            var1.h(var2 - 1, var3, var4, this.bn);
+         } else if(var6 == 2) {
+            var1.h(var2 + 1, var3, var4, this.bn);
+         } else if(var6 == 3) {
+            var1.h(var2, var3, var4 - 1, this.bn);
+         } else if(var6 == 4) {
+            var1.h(var2, var3, var4 + 1, this.bn);
+         } else {
+            var1.h(var2, var3 - 1, var4, this.bn);
+         }
+      }
+
+      super.b(var1, var2, var3, var4);
+   }
+
+   public boolean a(OIBlockAccess var1, int var2, int var3, int var4, int var5) {
+      return (var1.b(var2, var3, var4) & 8) > 0;
+   }
+
+   public boolean c(OWorld var1, int var2, int var3, int var4, int var5) {
+      int var6 = var1.b(var2, var3, var4);
+      if((var6 & 8) == 0) {
+         return false;
+      } else {
+         int var7 = var6 & 7;
+         return var7 == 5 && var5 == 1?true:(var7 == 4 && var5 == 2?true:(var7 == 3 && var5 == 3?true:(var7 == 2 && var5 == 4?true:var7 == 1 && var5 == 5)));
+      }
+   }
+
+   public boolean d() {
+      return true;
+   }
+
+   public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
+      if(!var1.B) {
+         int var6 = var1.b(var2, var3, var4);
+         if((var6 & 8) != 0) {
+             
+            // CanaryMod: Allow button to provide power
+            int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), 1, 0);
+            if (change > 0)
+               return;
+
+            var1.c(var2, var3, var4, var6 & 7);
+            var1.h(var2, var3, var4, this.bn);
+            int var7 = var6 & 7;
+            if(var7 == 1) {
+               var1.h(var2 - 1, var3, var4, this.bn);
+            } else if(var7 == 2) {
+               var1.h(var2 + 1, var3, var4, this.bn);
+            } else if(var7 == 3) {
+               var1.h(var2, var3, var4 - 1, this.bn);
+            } else if(var7 == 4) {
+               var1.h(var2, var3, var4 + 1, this.bn);
+            } else {
+               var1.h(var2, var3 - 1, var4, this.bn);
             }
-        }
-    }
 
-    private boolean h(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if (!a(paramOWorld, paramInt1, paramInt2, paramInt3)) {
-            b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void a(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOIBlockAccess.b(paramInt1, paramInt2, paramInt3);
-        int j = i & 0x7;
-        int k = (i & 0x8) > 0 ? 1 : 0;
-
-        float f1 = 0.375F;
-        float f2 = 0.625F;
-        float f3 = 0.1875F;
-        float f4 = 0.125F;
-        if (k != 0)
-            f4 = 0.0625F;
-
-        if (j == 1)
-            a(0.0F, f1, 0.5F - f3, f4, f2, 0.5F + f3);
-        else if (j == 2)
-            a(1.0F - f4, f1, 0.5F - f3, 1.0F, f2, 0.5F + f3);
-        else if (j == 3)
-            a(0.5F - f3, f1, 0.0F, 0.5F + f3, f2, f4);
-        else if (j == 4)
-            a(0.5F - f3, f1, 1.0F - f4, 0.5F + f3, f2, 1.0F);
-    }
-
-    @Override
-    public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntityPlayer paramOEntityPlayer) {
-        a(paramOWorld, paramInt1, paramInt2, paramInt3, paramOEntityPlayer);
-    }
-
-    @Override
-    public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntityPlayer paramOEntityPlayer) {
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        int j = i & 0x7;
-        int k = 8 - (i & 0x8);
-        if (k == 0)
-            return true;
-        // CanaryMod: Allow button to provide power
-        int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), 0, 1);
-        if (change == 0)
-            return true;
-
-
-        paramOWorld.c(paramInt1, paramInt2, paramInt3, j + k);
-        paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
-
-        paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, 0.6F);
-
-        paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
-        if (j == 1)
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
-        else if (j == 2)
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
-        else if (j == 3)
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
-        else if (j == 4)
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
-        else
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
-
-        paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
-
-        return true;
-    }
-
-    @Override
-    public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        if ((i & 0x8) > 0) {
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
-            int j = i & 0x7;
-            if (j == 1)
-                paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
-            else if (j == 2)
-                paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
-            else if (j == 3)
-                paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
-            else if (j == 4)
-                paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
-            else
-                paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
-        }
-        super.b(paramOWorld, paramInt1, paramInt2, paramInt3);
-    }
-
-    @Override
-    public boolean a(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        return (paramOIBlockAccess.b(paramInt1, paramInt2, paramInt3) & 0x8) > 0;
-    }
-
-    @Override
-    public boolean c(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        if ((i & 0x8) == 0)
-            return false;
-        int j = i & 0x7;
-
-        if ((j == 5) && (paramInt4 == 1))
-            return true;
-        if ((j == 4) && (paramInt4 == 2))
-            return true;
-        if ((j == 3) && (paramInt4 == 3))
-            return true;
-        if ((j == 2) && (paramInt4 == 4))
-            return true;
-        return (j == 1) && (paramInt4 == 5);
-    }
-
-    @Override
-    public boolean d() {
-        return true;
-    }
-
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        if (paramOWorld.B)
-            return;
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        if ((i & 0x8) == 0)
-            return;
-        // CanaryMod: Allow button to provide power
-        int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), 1, 0);
-        if (change > 0)
-            return;
-
-        
-        paramOWorld.c(paramInt1, paramInt2, paramInt3, i & 0x7);
-
-        paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
-        int j = i & 0x7;
-        if (j == 1)
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
-        else if (j == 2)
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
-        else if (j == 3)
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
-        else if (j == 4)
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
-        else
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
-
-        paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, 0.5F);
-        paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
-    }
+            var1.a((double)var2 + 0.5D, (double)var3 + 0.5D, (double)var4 + 0.5D, "random.click", 0.3F, 0.5F);
+            var1.b(var2, var3, var4, var2, var3, var4);
+         }
+      }
+   }
 }

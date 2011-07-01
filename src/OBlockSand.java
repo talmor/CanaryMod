@@ -1,65 +1,66 @@
+
 import java.util.Random;
 
 public class OBlockSand extends OBlock {
 
-    public static boolean a = false;
+   public static boolean a = false;
 
-    public OBlockSand(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, OMaterial.n);
-    }
 
-    @Override
-    public void e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        // CanaryMod: Physics
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), true))
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
-    }
+   public OBlockSand(int var1, int var2) {
+      super(var1, var2, OMaterial.n);
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        // CanaryMod: Physics
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), true))
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, bn, c());
-    }
+   public void e(OWorld var1, int var2, int var3, int var4) {
+      // CanaryMod: Physics
+      if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(var1.world, bn, var2, var3, var4), true))
+         var1.c(var2, var3, var4, this.bn, this.c());
+   }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        g(paramOWorld, paramInt1, paramInt2, paramInt3);
-    }
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+      // CanaryMod: Physics
+      if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(var1.world, bn, var2, var3, var4), true))
+         var1.c(var2, var3, var4, this.bn, this.c());
+   }
 
-    private void g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramInt1;
-        int j = paramInt2;
-        int k = paramInt3;
-        if ((c_(paramOWorld, i, j - 1, k)) && (j >= 0)) {
-            int m = 32;
-            if ((a) || (!paramOWorld.a(paramInt1 - m, paramInt2 - m, paramInt3 - m, paramInt1 + m, paramInt2 + m, paramInt3 + m))) {
-                paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-                while ((c_(paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) && (paramInt2 > 0))
-                    paramInt2--;
-                if (paramInt2 > 0)
-                    paramOWorld.e(paramInt1, paramInt2, paramInt3, bn);
-            } else {
-                OEntityFallingSand localOEntityFallingSand = new OEntityFallingSand(paramOWorld, paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, bn);
-                paramOWorld.b(localOEntityFallingSand);
+   public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
+      this.g(var1, var2, var3, var4);
+   }
+
+   private void g(OWorld var1, int var2, int var3, int var4) {
+      if(c_(var1, var2, var3 - 1, var4) && var3 >= 0) {
+         byte var8 = 32;
+         if(!a && var1.a(var2 - var8, var3 - var8, var4 - var8, var2 + var8, var3 + var8, var4 + var8)) {
+            OEntityFallingSand var9 = new OEntityFallingSand(var1, (double)((float)var2 + 0.5F), (double)((float)var3 + 0.5F), (double)((float)var4 + 0.5F), this.bn);
+            var1.b(var9);
+         } else {
+            var1.e(var2, var3, var4, 0);
+
+            while(c_(var1, var2, var3 - 1, var4) && var3 > 0) {
+               --var3;
             }
-        }
-    }
 
-    @Override
-    public int c() {
-        return 3;
-    }
+            if(var3 > 0) {
+               var1.e(var2, var3, var4, this.bn);
+            }
+         }
+      }
 
-    public static boolean c_(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
-        if (i == 0)
-            return true;
-        if (i == OBlock.as.bn)
-            return true;
-        OMaterial localOMaterial = OBlock.m[i].bA;
-        if (localOMaterial == OMaterial.g)
-            return true;
-        return localOMaterial == OMaterial.h;
-    }
+   }
+
+   public int c() {
+      return 3;
+   }
+
+   public static boolean c_(OWorld var0, int var1, int var2, int var3) {
+      int var4 = var0.a(var1, var2, var3);
+      if(var4 == 0) {
+         return true;
+      } else if(var4 == OBlock.as.bn) {
+         return true;
+      } else {
+         OMaterial var5 = OBlock.m[var4].bA;
+         return var5 == OMaterial.g?true:var5 == OMaterial.h;
+      }
+   }
+
 }

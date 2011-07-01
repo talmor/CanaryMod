@@ -1,40 +1,39 @@
+
+
 public class OItemHoe extends OItem {
 
-    public OItemHoe(int paramInt, OEnumToolMaterial paramOEnumToolMaterial) {
-        super(paramInt);
-        bf = 1;
-        d(paramOEnumToolMaterial.a());
-    }
+   public OItemHoe(int var1, OEnumToolMaterial var2) {
+      super(var1);
+      this.d(var2.a());
+   }
 
-    @Override
-    public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
-        int i2 = paramOWorld.a(paramInt1, paramInt2 + 1, paramInt3);
+   public boolean a(OItemStack var1, OEntityPlayer var2, OWorld var3, int var4, int var5, int var6, int var7) {
+      int var8 = var3.a(var4, var5, var6);
+      int var9 = var3.a(var4, var5 + 1, var6);
+      if((var7 == 0 || var9 != 0 || var8 != OBlock.v.bn) && var8 != OBlock.w.bn) {
+         return false;
+      } else {
+         // CanaryMod: Hoes
+         Block blockClicked = new Block(var3.world, var8, var4, var5, var6);
+         blockClicked.setFaceClicked(Block.Face.fromId(var7));
+         Block blockPlaced = new Block(var3.world, var3.a(var4, var5 + 1, var6), var4, var5 + 1, var6);
 
-        if (((paramInt4 != 0) && i2 == 0 && (i == OBlock.v.bn)) || (i == OBlock.w.bn)) {
-            // CanaryMod: Hoes
-            Block blockClicked = new Block(paramOWorld.world, i, paramInt1, paramInt2, paramInt3);
-            blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
-            Block blockPlaced = new Block(paramOWorld.world, paramOWorld.a(paramInt1, paramInt2 + 1, paramInt3), paramInt1, paramInt2 + 1, paramInt3);
+         // Call the hook
+         if (var2 instanceof OEntityPlayerMP) {
+            Player player = ((OEntityPlayerMP) var2).getPlayer();
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(var1)))
+               return false;
+         }
 
-            // Call the hook
-            if (paramOEntityPlayer instanceof OEntityPlayerMP) {
-                Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramOItemStack)))
-                    return false;
-            }
-
-            OBlock localOBlock = OBlock.aB;
-            paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.by.c(), (localOBlock.by.a() + 1.0F) / 2.0F, localOBlock.by.b() * 0.8F);
-
-            if (paramOWorld.B)
-                return true;
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, localOBlock.bn);
-            paramOItemStack.a(1, paramOEntityPlayer);
-
+         OBlock var10 = OBlock.aB;
+         var3.a((double)((float)var4 + 0.5F), (double)((float)var5 + 0.5F), (double)((float)var6 + 0.5F), var10.by.c(), (var10.by.a() + 1.0F) / 2.0F, var10.by.b() * 0.8F);
+         if(var3.B) {
             return true;
-        }
-
-        return false;
-    }
+         } else {
+            var3.e(var4, var5, var6, var10.bn);
+            var1.a(1, var2);
+            return true;
+         }
+      }
+   }
 }

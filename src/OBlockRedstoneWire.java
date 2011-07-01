@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -5,306 +6,326 @@ import java.util.Set;
 
 public class OBlockRedstoneWire extends OBlock {
 
-    private boolean a = true;
-    private Set     b = new HashSet();
+   private boolean a = true;
+   private Set b = new HashSet();
 
-    public OBlockRedstoneWire(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, OMaterial.o);
-        a(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
-    }
 
-    @Override
-    public int a(int paramInt1, int paramInt2) {
-        return bm;
-    }
+   public OBlockRedstoneWire(int var1, int var2) {
+      super(var1, var2, OMaterial.o);
+      this.a(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
+   }
 
-    @Override
-    public OAxisAlignedBB d(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        return null;
-    }
+   public int a(int var1, int var2) {
+      return this.bm;
+   }
 
-    @Override
-    public boolean a() {
-        return false;
-    }
+   public OAxisAlignedBB d(OWorld var1, int var2, int var3, int var4) {
+      return null;
+   }
 
-    @Override
-    public boolean b() {
-        return false;
-    }
+   public boolean a() {
+      return false;
+   }
 
-    @Override
-    public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        return paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3);
-    }
+   public boolean b() {
+      return false;
+   }
 
-    private void g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        a(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
-        ArrayList localArrayList = new ArrayList(b);
-        b.clear();
-        for (int i = 0; i < localArrayList.size(); i++) {
-            OChunkPosition localOChunkPosition = (OChunkPosition) localArrayList.get(i);
-            paramOWorld.h(localOChunkPosition.a, localOChunkPosition.b, localOChunkPosition.c, bn);
-        }
-    }
+   public boolean a(OWorld var1, int var2, int var3, int var4) {
+      return var1.d(var2, var3 - 1, var4);
+   }
 
-    private void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5, int paramInt6) {
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        int j = 0;
+   private void g(OWorld var1, int var2, int var3, int var4) {
+      this.a(var1, var2, var3, var4, var2, var3, var4);
+      ArrayList var5 = new ArrayList(this.b);
+      this.b.clear();
 
-        a = false;
-        boolean bool = paramOWorld.r(paramInt1, paramInt2, paramInt3);
-        a = true;
-        int k;
-        int m;
-        int n;
-        if (bool)
-            j = 15;
-        else {
-            for (k = 0; k < 4; k++) {
-                m = paramInt1;
-                n = paramInt3;
-                if (k == 0)
-                    m--;
-                if (k == 1)
-                    m++;
-                if (k == 2)
-                    n--;
-                if (k == 3)
-                    n++;
+      for(int var6 = 0; var6 < var5.size(); ++var6) {
+         OChunkPosition var7 = (OChunkPosition)var5.get(var6);
+         var1.h(var7.a, var7.b, var7.c, this.bn);
+      }
 
-                if ((m != paramInt4) || (paramInt2 != paramInt5) || (n != paramInt6))
-                    j = g(paramOWorld, m, paramInt2, n, j);
-                if ((paramOWorld.d(m, paramInt2, n)) && (!paramOWorld.d(paramInt1, paramInt2 + 1, paramInt3))) {
-                    if ((m == paramInt4) && (paramInt2 + 1 == paramInt5) && (n == paramInt6))
-                        continue;
-                    j = g(paramOWorld, m, paramInt2 + 1, n, j);
-                } else if ((!paramOWorld.d(m, paramInt2, n)) && ((m != paramInt4) || (paramInt2 - 1 != paramInt5) || (n != paramInt6)))
-                    j = g(paramOWorld, m, paramInt2 - 1, n, j);
-            }
-            if (j > 0)
-                j--;
-            else
-                j = 0;
-        }
-        // CanaryMod: Allow redstone wire current changes
-        if (i != j)
-            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(paramOWorld.world, bn, paramInt1, paramInt2, paramInt3), i, j);
+   }
 
-        if (i != j) {
-            paramOWorld.o = true;
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, j);
-            paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
-            paramOWorld.o = false;
-
-            for (k = 0; k < 4; k++) {
-                m = paramInt1;
-                n = paramInt3;
-                int i1 = paramInt2 - 1;
-                if (k == 0)
-                    m--;
-                if (k == 1)
-                    m++;
-                if (k == 2)
-                    n--;
-                if (k == 3)
-                    n++;
-
-                if (paramOWorld.d(m, paramInt2, n))
-                    i1 += 2;
-
-                int i2 = 0;
-                i2 = g(paramOWorld, m, paramInt2, n, -1);
-                j = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-                if (j > 0)
-                    j--;
-                if ((i2 >= 0) && (i2 != j))
-                    a(paramOWorld, m, paramInt2, n, paramInt1, paramInt2, paramInt3);
-                i2 = g(paramOWorld, m, i1, n, -1);
-                j = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-                if (j > 0)
-                    j--;
-                if ((i2 >= 0) && (i2 != j))
-                    a(paramOWorld, m, i1, n, paramInt1, paramInt2, paramInt3);
+   private void a(OWorld var1, int var2, int var3, int var4, int var5, int var6, int var7) {
+      int var8 = var1.b(var2, var3, var4);
+      int var9 = 0;
+      this.a = false;
+      boolean var10 = var1.r(var2, var3, var4);
+      this.a = true;
+      int var11;
+      int var12;
+      int var13;
+      if(var10) {
+         var9 = 15;
+      } else {
+         for(var11 = 0; var11 < 4; ++var11) {
+            var12 = var2;
+            var13 = var4;
+            if(var11 == 0) {
+               var12 = var2 - 1;
             }
 
-            if ((i == 0) || (j == 0)) {
-                b.add(new OChunkPosition(paramInt1, paramInt2, paramInt3));
-                b.add(new OChunkPosition(paramInt1 - 1, paramInt2, paramInt3));
-                b.add(new OChunkPosition(paramInt1 + 1, paramInt2, paramInt3));
-                b.add(new OChunkPosition(paramInt1, paramInt2 - 1, paramInt3));
-                b.add(new OChunkPosition(paramInt1, paramInt2 + 1, paramInt3));
-                b.add(new OChunkPosition(paramInt1, paramInt2, paramInt3 - 1));
-                b.add(new OChunkPosition(paramInt1, paramInt2, paramInt3 + 1));
+            if(var11 == 1) {
+               ++var12;
             }
-        }
-    }
 
-    private void h(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) != bn)
-            return;
+            if(var11 == 2) {
+               var13 = var4 - 1;
+            }
 
-        paramOWorld.h(paramInt1, paramInt2, paramInt3, bn);
-        paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bn);
-        paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bn);
-        paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bn);
-        paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bn);
-        paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
-        paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bn);
-    }
+            if(var11 == 3) {
+               ++var13;
+            }
 
-    @Override
-    public void e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        super.e(paramOWorld, paramInt1, paramInt2, paramInt3);
-        if (paramOWorld.B)
-            return;
+            if(var12 != var5 || var3 != var6 || var13 != var7) {
+               var9 = this.g(var1, var12, var3, var13, var9);
+            }
 
-        g(paramOWorld, paramInt1, paramInt2, paramInt3);
-        paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bn);
-        paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
+            if(var1.d(var12, var3, var13) && !var1.d(var2, var3 + 1, var4)) {
+               if(var12 != var5 || var3 + 1 != var6 || var13 != var7) {
+                  var9 = this.g(var1, var12, var3 + 1, var13, var9);
+               }
+            } else if(!var1.d(var12, var3, var13) && (var12 != var5 || var3 - 1 != var6 || var13 != var7)) {
+               var9 = this.g(var1, var12, var3 - 1, var13, var9);
+            }
+         }
 
-        h(paramOWorld, paramInt1 - 1, paramInt2, paramInt3);
-        h(paramOWorld, paramInt1 + 1, paramInt2, paramInt3);
-        h(paramOWorld, paramInt1, paramInt2, paramInt3 - 1);
-        h(paramOWorld, paramInt1, paramInt2, paramInt3 + 1);
+         if(var9 > 0) {
+            --var9;
+         } else {
+            var9 = 0;
+         }
+      }
 
-        if (paramOWorld.d(paramInt1 - 1, paramInt2, paramInt3))
-            h(paramOWorld, paramInt1 - 1, paramInt2 + 1, paramInt3);
-        else
-            h(paramOWorld, paramInt1 - 1, paramInt2 - 1, paramInt3);
-        if (paramOWorld.d(paramInt1 + 1, paramInt2, paramInt3))
-            h(paramOWorld, paramInt1 + 1, paramInt2 + 1, paramInt3);
-        else
-            h(paramOWorld, paramInt1 + 1, paramInt2 - 1, paramInt3);
-        if (paramOWorld.d(paramInt1, paramInt2, paramInt3 - 1))
-            h(paramOWorld, paramInt1, paramInt2 + 1, paramInt3 - 1);
-        else
-            h(paramOWorld, paramInt1, paramInt2 - 1, paramInt3 - 1);
-        if (paramOWorld.d(paramInt1, paramInt2, paramInt3 + 1))
-            h(paramOWorld, paramInt1, paramInt2 + 1, paramInt3 + 1);
-        else
-            h(paramOWorld, paramInt1, paramInt2 - 1, paramInt3 + 1);
-    }
+      // CanaryMod: Allow redstone wire current changes
+      if (var8 != var9)
+         var9 = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), var8, var9);
 
-    @Override
-    public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        super.b(paramOWorld, paramInt1, paramInt2, paramInt3);
-        if (paramOWorld.B)
-            return;
+      if(var8 != var9) {
+         var1.o = true;
+         var1.c(var2, var3, var4, var9);
+         var1.b(var2, var3, var4, var2, var3, var4);
+         var1.o = false;
 
-        paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bn);
-        paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bn);
-        g(paramOWorld, paramInt1, paramInt2, paramInt3);
+         for(var11 = 0; var11 < 4; ++var11) {
+            var12 = var2;
+            var13 = var4;
+            int var14 = var3 - 1;
+            if(var11 == 0) {
+               var12 = var2 - 1;
+            }
 
-        h(paramOWorld, paramInt1 - 1, paramInt2, paramInt3);
-        h(paramOWorld, paramInt1 + 1, paramInt2, paramInt3);
-        h(paramOWorld, paramInt1, paramInt2, paramInt3 - 1);
-        h(paramOWorld, paramInt1, paramInt2, paramInt3 + 1);
+            if(var11 == 1) {
+               ++var12;
+            }
 
-        if (paramOWorld.d(paramInt1 - 1, paramInt2, paramInt3))
-            h(paramOWorld, paramInt1 - 1, paramInt2 + 1, paramInt3);
-        else
-            h(paramOWorld, paramInt1 - 1, paramInt2 - 1, paramInt3);
-        if (paramOWorld.d(paramInt1 + 1, paramInt2, paramInt3))
-            h(paramOWorld, paramInt1 + 1, paramInt2 + 1, paramInt3);
-        else
-            h(paramOWorld, paramInt1 + 1, paramInt2 - 1, paramInt3);
-        if (paramOWorld.d(paramInt1, paramInt2, paramInt3 - 1))
-            h(paramOWorld, paramInt1, paramInt2 + 1, paramInt3 - 1);
-        else
-            h(paramOWorld, paramInt1, paramInt2 - 1, paramInt3 - 1);
-        if (paramOWorld.d(paramInt1, paramInt2, paramInt3 + 1))
-            h(paramOWorld, paramInt1, paramInt2 + 1, paramInt3 + 1);
-        else
-            h(paramOWorld, paramInt1, paramInt2 - 1, paramInt3 + 1);
-    }
+            if(var11 == 2) {
+               var13 = var4 - 1;
+            }
 
-    private int g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) != bn)
-            return paramInt4;
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-        if (i > paramInt4)
-            return i;
-        return paramInt4;
-    }
+            if(var11 == 3) {
+               ++var13;
+            }
 
-    @Override
-    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (paramOWorld.B)
-            return;
-        int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
+            if(var1.d(var12, var3, var13)) {
+               var14 += 2;
+            }
 
-        boolean bool = a(paramOWorld, paramInt1, paramInt2, paramInt3);
+            boolean var15 = false;
+            int var16 = this.g(var1, var12, var3, var13, -1);
+            var9 = var1.b(var2, var3, var4);
+            if(var9 > 0) {
+               --var9;
+            }
 
-        if (!bool) {
-            b_(paramOWorld, paramInt1, paramInt2, paramInt3, i);
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-        } else
-            g(paramOWorld, paramInt1, paramInt2, paramInt3);
+            if(var16 >= 0 && var16 != var9) {
+               this.a(var1, var12, var3, var13, var2, var3, var4);
+            }
 
-        super.a(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-    }
+            var16 = this.g(var1, var12, var14, var13, -1);
+            var9 = var1.b(var2, var3, var4);
+            if(var9 > 0) {
+               --var9;
+            }
 
-    @Override
-    public int a(int paramInt, Random paramRandom) {
-        return OItem.aA.be;
-    }
+            if(var16 >= 0 && var16 != var9) {
+               this.a(var1, var12, var14, var13, var2, var3, var4);
+            }
+         }
 
-    @Override
-    public boolean c(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (!a)
-            return false;
-        return a((OIBlockAccess) paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-    }
+         if(var8 == 0 || var9 == 0) {
+            this.b.add(new OChunkPosition(var2, var3, var4));
+            this.b.add(new OChunkPosition(var2 - 1, var3, var4));
+            this.b.add(new OChunkPosition(var2 + 1, var3, var4));
+            this.b.add(new OChunkPosition(var2, var3 - 1, var4));
+            this.b.add(new OChunkPosition(var2, var3 + 1, var4));
+            this.b.add(new OChunkPosition(var2, var3, var4 - 1));
+            this.b.add(new OChunkPosition(var2, var3, var4 + 1));
+         }
+      }
 
-    @Override
-    public boolean a(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (!a)
-            return false;
-        if (paramOIBlockAccess.b(paramInt1, paramInt2, paramInt3) == 0)
-            return false;
+   }
 
-        if (paramInt4 == 1)
-            return true;
+   private void h(OWorld var1, int var2, int var3, int var4) {
+      if(var1.a(var2, var3, var4) == this.bn) {
+         var1.h(var2, var3, var4, this.bn);
+         var1.h(var2 - 1, var3, var4, this.bn);
+         var1.h(var2 + 1, var3, var4, this.bn);
+         var1.h(var2, var3, var4 - 1, this.bn);
+         var1.h(var2, var3, var4 + 1, this.bn);
+         var1.h(var2, var3 - 1, var4, this.bn);
+         var1.h(var2, var3 + 1, var4, this.bn);
+      }
+   }
 
-        int i = (b(paramOIBlockAccess, paramInt1 - 1, paramInt2, paramInt3)) || ((!paramOIBlockAccess.d(paramInt1 - 1, paramInt2, paramInt3)) && (b(paramOIBlockAccess, paramInt1 - 1, paramInt2 - 1, paramInt3))) ? 1 : 0;
-        int j = (b(paramOIBlockAccess, paramInt1 + 1, paramInt2, paramInt3)) || ((!paramOIBlockAccess.d(paramInt1 + 1, paramInt2, paramInt3)) && (b(paramOIBlockAccess, paramInt1 + 1, paramInt2 - 1, paramInt3))) ? 1 : 0;
-        int k = (b(paramOIBlockAccess, paramInt1, paramInt2, paramInt3 - 1)) || ((!paramOIBlockAccess.d(paramInt1, paramInt2, paramInt3 - 1)) && (b(paramOIBlockAccess, paramInt1, paramInt2 - 1, paramInt3 - 1))) ? 1 : 0;
-        int m = (b(paramOIBlockAccess, paramInt1, paramInt2, paramInt3 + 1)) || ((!paramOIBlockAccess.d(paramInt1, paramInt2, paramInt3 + 1)) && (b(paramOIBlockAccess, paramInt1, paramInt2 - 1, paramInt3 + 1))) ? 1 : 0;
-        if (!paramOIBlockAccess.d(paramInt1, paramInt2 + 1, paramInt3)) {
-            if ((paramOIBlockAccess.d(paramInt1 - 1, paramInt2, paramInt3)) && (b(paramOIBlockAccess, paramInt1 - 1, paramInt2 + 1, paramInt3)))
-                i = 1;
-            if ((paramOIBlockAccess.d(paramInt1 + 1, paramInt2, paramInt3)) && (b(paramOIBlockAccess, paramInt1 + 1, paramInt2 + 1, paramInt3)))
-                j = 1;
-            if ((paramOIBlockAccess.d(paramInt1, paramInt2, paramInt3 - 1)) && (b(paramOIBlockAccess, paramInt1, paramInt2 + 1, paramInt3 - 1)))
-                k = 1;
-            if ((paramOIBlockAccess.d(paramInt1, paramInt2, paramInt3 + 1)) && (b(paramOIBlockAccess, paramInt1, paramInt2 + 1, paramInt3 + 1)))
-                m = 1;
-        }
+   public void e(OWorld var1, int var2, int var3, int var4) {
+      super.e(var1, var2, var3, var4);
+      if(!var1.B) {
+         this.g(var1, var2, var3, var4);
+         var1.h(var2, var3 + 1, var4, this.bn);
+         var1.h(var2, var3 - 1, var4, this.bn);
+         this.h(var1, var2 - 1, var3, var4);
+         this.h(var1, var2 + 1, var3, var4);
+         this.h(var1, var2, var3, var4 - 1);
+         this.h(var1, var2, var3, var4 + 1);
+         if(var1.d(var2 - 1, var3, var4)) {
+            this.h(var1, var2 - 1, var3 + 1, var4);
+         } else {
+            this.h(var1, var2 - 1, var3 - 1, var4);
+         }
 
-        if ((k == 0) && (j == 0) && (i == 0) && (m == 0) && (paramInt4 >= 2) && (paramInt4 <= 5))
-            return true;
+         if(var1.d(var2 + 1, var3, var4)) {
+            this.h(var1, var2 + 1, var3 + 1, var4);
+         } else {
+            this.h(var1, var2 + 1, var3 - 1, var4);
+         }
 
-        if ((paramInt4 == 2) && (k != 0) && (i == 0) && (j == 0))
-            return true;
-        if ((paramInt4 == 3) && (m != 0) && (i == 0) && (j == 0))
-            return true;
-        if ((paramInt4 == 4) && (i != 0) && (k == 0) && (m == 0))
-            return true;
-        return (paramInt4 == 5) && (j != 0) && (k == 0) && (m == 0);
-    }
+         if(var1.d(var2, var3, var4 - 1)) {
+            this.h(var1, var2, var3 + 1, var4 - 1);
+         } else {
+            this.h(var1, var2, var3 - 1, var4 - 1);
+         }
 
-    @Override
-    public boolean d() {
-        return a;
-    }
+         if(var1.d(var2, var3, var4 + 1)) {
+            this.h(var1, var2, var3 + 1, var4 + 1);
+         } else {
+            this.h(var1, var2, var3 - 1, var4 + 1);
+         }
 
-    public static boolean b(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramOIBlockAccess.a(paramInt1, paramInt2, paramInt3);
-        if (i == OBlock.aw.bn)
-            return true;
-        if (i == 0)
-            return false;
-        return OBlock.m[i].d();
-    }
+      }
+   }
+
+   public void b(OWorld var1, int var2, int var3, int var4) {
+      super.b(var1, var2, var3, var4);
+      if(!var1.B) {
+         var1.h(var2, var3 + 1, var4, this.bn);
+         var1.h(var2, var3 - 1, var4, this.bn);
+         this.g(var1, var2, var3, var4);
+         this.h(var1, var2 - 1, var3, var4);
+         this.h(var1, var2 + 1, var3, var4);
+         this.h(var1, var2, var3, var4 - 1);
+         this.h(var1, var2, var3, var4 + 1);
+         if(var1.d(var2 - 1, var3, var4)) {
+            this.h(var1, var2 - 1, var3 + 1, var4);
+         } else {
+            this.h(var1, var2 - 1, var3 - 1, var4);
+         }
+
+         if(var1.d(var2 + 1, var3, var4)) {
+            this.h(var1, var2 + 1, var3 + 1, var4);
+         } else {
+            this.h(var1, var2 + 1, var3 - 1, var4);
+         }
+
+         if(var1.d(var2, var3, var4 - 1)) {
+            this.h(var1, var2, var3 + 1, var4 - 1);
+         } else {
+            this.h(var1, var2, var3 - 1, var4 - 1);
+         }
+
+         if(var1.d(var2, var3, var4 + 1)) {
+            this.h(var1, var2, var3 + 1, var4 + 1);
+         } else {
+            this.h(var1, var2, var3 - 1, var4 + 1);
+         }
+
+      }
+   }
+
+   private int g(OWorld var1, int var2, int var3, int var4, int var5) {
+      if(var1.a(var2, var3, var4) != this.bn) {
+         return var5;
+      } else {
+         int var6 = var1.b(var2, var3, var4);
+         return var6 > var5?var6:var5;
+      }
+   }
+
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+      if(!var1.B) {
+         int var6 = var1.b(var2, var3, var4);
+         boolean var7 = this.a(var1, var2, var3, var4);
+         if(!var7) {
+            this.b_(var1, var2, var3, var4, var6);
+            var1.e(var2, var3, var4, 0);
+         } else {
+            this.g(var1, var2, var3, var4);
+         }
+
+         super.a(var1, var2, var3, var4, var5);
+      }
+   }
+
+   public int a(int var1, Random var2) {
+      return OItem.aA.be;
+   }
+
+   public boolean c(OWorld var1, int var2, int var3, int var4, int var5) {
+      // CanaryMod: forced casting to OIBlockAccess
+      return !this.a?false:this.a((OIBlockAccess) var1, var2, var3, var4, var5);
+   }
+
+   public boolean a(OIBlockAccess var1, int var2, int var3, int var4, int var5) {
+      if(!this.a) {
+         return false;
+      } else if(var1.b(var2, var3, var4) == 0) {
+         return false;
+      } else if(var5 == 1) {
+         return true;
+      } else {
+         boolean var6 = b(var1, var2 - 1, var3, var4) || !var1.d(var2 - 1, var3, var4) && b(var1, var2 - 1, var3 - 1, var4);
+         boolean var7 = b(var1, var2 + 1, var3, var4) || !var1.d(var2 + 1, var3, var4) && b(var1, var2 + 1, var3 - 1, var4);
+         boolean var8 = b(var1, var2, var3, var4 - 1) || !var1.d(var2, var3, var4 - 1) && b(var1, var2, var3 - 1, var4 - 1);
+         boolean var9 = b(var1, var2, var3, var4 + 1) || !var1.d(var2, var3, var4 + 1) && b(var1, var2, var3 - 1, var4 + 1);
+         if(!var1.d(var2, var3 + 1, var4)) {
+            if(var1.d(var2 - 1, var3, var4) && b(var1, var2 - 1, var3 + 1, var4)) {
+               var6 = true;
+            }
+
+            if(var1.d(var2 + 1, var3, var4) && b(var1, var2 + 1, var3 + 1, var4)) {
+               var7 = true;
+            }
+
+            if(var1.d(var2, var3, var4 - 1) && b(var1, var2, var3 + 1, var4 - 1)) {
+               var8 = true;
+            }
+
+            if(var1.d(var2, var3, var4 + 1) && b(var1, var2, var3 + 1, var4 + 1)) {
+               var9 = true;
+            }
+         }
+
+         return !var8 && !var7 && !var6 && !var9 && var5 >= 2 && var5 <= 5?true:(var5 == 2 && var8 && !var6 && !var7?true:(var5 == 3 && var9 && !var6 && !var7?true:(var5 == 4 && var6 && !var8 && !var9?true:var5 == 5 && var7 && !var8 && !var9)));
+      }
+   }
+
+   public boolean d() {
+      return this.a;
+   }
+
+   public static boolean b(OIBlockAccess var0, int var1, int var2, int var3) {
+      int var4 = var0.a(var1, var2, var3);
+      return var4 == OBlock.aw.bn?true:(var4 == 0?false:OBlock.m[var4].d());
+   }
 }

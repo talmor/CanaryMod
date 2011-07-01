@@ -1,16 +1,57 @@
 
+
 public class OInventoryLargeChest implements OIInventory, Container<OItemStack> {
 
-    private String a;
-    private OIInventory b;
-    private OIInventory c;
+   private String a;
+   private OIInventory b;
+   private OIInventory c;
 
-    public OInventoryLargeChest(String paramString, OIInventory paramOIInventory1, OIInventory paramOIInventory2) {
-        a = paramString;
-        b = paramOIInventory1;
-        c = paramOIInventory2;
-    }
 
+   public OInventoryLargeChest(String var1, OIInventory var2, OIInventory var3) {
+      this.a = var1;
+      this.b = var2;
+      this.c = var3;
+   }
+
+   public int a() {
+      return this.b.a() + this.c.a();
+   }
+
+   public String c() {
+      return this.a;
+   }
+
+   public OItemStack c_(int var1) {
+      return var1 >= this.b.a()?this.c.c_(var1 - this.b.a()):this.b.c_(var1);
+   }
+
+   public OItemStack a(int var1, int var2) {
+      return var1 >= this.b.a()?this.c.a(var1 - this.b.a(), var2):this.b.a(var1, var2);
+   }
+
+   public void a(int var1, OItemStack var2) {
+      if(var1 >= this.b.a()) {
+         this.c.a(var1 - this.b.a(), var2);
+      } else {
+         this.b.a(var1, var2);
+      }
+
+   }
+
+   public int d() {
+      return this.b.d();
+   }
+
+   public void i() {
+      this.b.i();
+      this.c.i();
+   }
+
+   public boolean a_(OEntityPlayer var1) {
+      return this.b.a_(var1) && this.c.a_(var1);
+   }
+
+    @Override
     public OItemStack[] getContents() {
         int size = getContentsSize();
         OItemStack[] result = new OItemStack[size];
@@ -20,6 +61,7 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
         return result;
     }
 
+    @Override
     public void setContents(OItemStack[] values) {
         int size = getContentsSize();
 
@@ -27,16 +69,29 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
             setContentsAt(i, values[i]);
     }
 
+    @Override
     public OItemStack getContentsAt(int index) {
         return c_(index);
     }
 
+    @Override
     public void setContentsAt(int index, OItemStack value) {
         a(index, value);
     }
 
+    @Override
     public int getContentsSize() {
         return a();
+    }
+
+    @Override
+    public String getName() {
+        return a;
+    }
+
+    @Override
+    public void setName(String value) {
+        a = value;
     }
 
     public Block getChestBlock() {
@@ -49,53 +104,5 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
             return block.d.world.getBlockAt(block.e, block.f, block.g);
         }
         return null;
-    }
-
-    public String getName() {
-        return a;
-    }
-
-    public void setName(String value) {
-        a = value;
-    }
-
-    public int a() {
-        return b.a() + c.a();
-    }
-
-    public String c() {
-        return a;
-    }
-
-    public OItemStack c_(int paramInt) {
-        if (paramInt >= b.a())
-            return c.c_(paramInt - b.a());
-        return b.c_(paramInt);
-    }
-
-    public OItemStack a(int paramInt1, int paramInt2) {
-        if (paramInt1 >= b.a())
-            return c.a(paramInt1 - b.a(), paramInt2);
-        return b.a(paramInt1, paramInt2);
-    }
-
-    public void a(int paramInt, OItemStack paramOItemStack) {
-        if (paramInt >= b.a())
-            c.a(paramInt - b.a(), paramOItemStack);
-        else
-            b.a(paramInt, paramOItemStack);
-    }
-
-    public int d() {
-        return b.d();
-    }
-
-    public void i() {
-        b.i();
-        c.i();
-    }
-
-    public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        return (b.a_(paramOEntityPlayer)) && (c.a_(paramOEntityPlayer));
     }
 }

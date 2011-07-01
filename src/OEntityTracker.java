@@ -1,152 +1,180 @@
+
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.DelayQueue;
-
+import java.util.logging.Level;
 import net.minecraft.server.MinecraftServer;
 
 public class OEntityTracker {
-    // CanaryMod: New fields to store the runnables in.
-    private static final DelayQueue<DelayedTask> delayQueue = new DelayQueue<DelayedTask>();
+   // CanaryMod: New fields to store the runnables in.
+   private static final DelayQueue<DelayedTask> delayQueue = new DelayQueue<DelayedTask>();
 
-    
-    private Set<OEntityTrackerEntry>             a = new HashSet();
-    private OMCHash         b = new OMCHash();
-    private MinecraftServer c;
-    private int             d;
-    private int             e;
+   private Set a = new HashSet();
+   private OMCHash b = new OMCHash();
+   private MinecraftServer c;
+   private int d;
+   private int e;
 
-    public OEntityTracker(MinecraftServer paramMinecraftServer, int paramInt) {
-        c = paramMinecraftServer;
-        e = paramInt;
-        d = paramMinecraftServer.f.a();
-    }
 
-    public void a(OEntity paramOEntity) {
-        OEntityPlayerMP localOEntityPlayerMP;
-        if ((paramOEntity instanceof OEntityPlayerMP)) {
-            a(paramOEntity, 512, 2);
-            localOEntityPlayerMP = (OEntityPlayerMP) paramOEntity;
-            for (OEntityTrackerEntry localOEntityTrackerEntry : a)
-                if (localOEntityTrackerEntry.a != localOEntityPlayerMP)
-                    localOEntityTrackerEntry.b(localOEntityPlayerMP);
-        } else if ((paramOEntity instanceof OEntityFish))
-            a(paramOEntity, 64, 5, true);
-        else if ((paramOEntity instanceof OEntityArrow))
-            a(paramOEntity, 64, 20, false);
-        else if ((paramOEntity instanceof OEntityFireball))
-            a(paramOEntity, 64, 10, false);
-        else if ((paramOEntity instanceof OEntitySnowball))
-            a(paramOEntity, 64, 10, true);
-        else if ((paramOEntity instanceof OEntityEgg))
-            a(paramOEntity, 64, 10, true);
-        else if ((paramOEntity instanceof OEntityItem))
-            a(paramOEntity, 64, 20, true);
-        else if ((paramOEntity instanceof OEntityMinecart))
-            a(paramOEntity, 160, 5, true);
-        else if ((paramOEntity instanceof OEntityBoat))
-            a(paramOEntity, 160, 5, true);
-        else if ((paramOEntity instanceof OEntitySquid))
-            a(paramOEntity, 160, 3, true);
-        else if ((paramOEntity instanceof OIAnimals))
-            a(paramOEntity, 160, 3);
-        else if ((paramOEntity instanceof OEntityTNTPrimed))
-            a(paramOEntity, 160, 10, true);
-        else if ((paramOEntity instanceof OEntityFallingSand))
-            a(paramOEntity, 160, 20, true);
-        else if ((paramOEntity instanceof OEntityPainting))
-            a(paramOEntity, 160, 2147483647, false);
-    }
+   public OEntityTracker(MinecraftServer var1, int var2) {
+      this.c = var1;
+      this.e = var2;
+      this.d = var1.f.a();
+   }
 
-    public void a(OEntity paramOEntity, int paramInt1, int paramInt2) {
-        a(paramOEntity, paramInt1, paramInt2, false);
-    }
+   public void a(OEntity var1) {
+      if(var1 instanceof OEntityPlayerMP) {
+         this.a(var1, 512, 2);
+         OEntityPlayerMP var2 = (OEntityPlayerMP)var1;
+         Iterator var3 = this.a.iterator();
 
-    public void a(OEntity paramOEntity, int paramInt1, int paramInt2, boolean paramBoolean) {
-        
-        if (paramInt1 > d)
-            paramInt1 = d;
-        if (b.b(paramOEntity.aG))
-            throw new IllegalStateException("Entity is already tracked!");
-        OEntityTrackerEntry localOEntityTrackerEntry = new OEntityTrackerEntry(paramOEntity, paramInt1, paramInt2, paramBoolean);
-        a.add(localOEntityTrackerEntry);
-        b.a(paramOEntity.aG, localOEntityTrackerEntry);
-        localOEntityTrackerEntry.b(c.a(e).d);
-    }
-
-    public void b(OEntity paramOEntity) {
-        Object localObject;
-        if ((paramOEntity instanceof OEntityPlayerMP)) {
-            localObject = (OEntityPlayerMP) paramOEntity;
-            for (OEntityTrackerEntry localOEntityTrackerEntry : a)
-                localOEntityTrackerEntry.a((OEntityPlayerMP) localObject);
-        }
-        localObject = b.d(paramOEntity.aG);
-        if (localObject != null) {
-            a.remove(localObject);
-            ((OEntityTrackerEntry) localObject).a();
-        }
-    }
-
-    public void a() {
-        try {
-            Object localObject;
-            ArrayList localArrayList = new ArrayList();
-            for (Iterator localIterator1 = a.iterator(); localIterator1.hasNext();) {
-                localObject = (OEntityTrackerEntry) localIterator1.next();
-                ((OEntityTrackerEntry) localObject).a(c.a(e).d);
-                if ((((OEntityTrackerEntry) localObject).m) && ((((OEntityTrackerEntry) localObject).a instanceof OEntityPlayerMP)))
-                    localArrayList.add(((OEntityTrackerEntry) localObject).a);
+         while(var3.hasNext()) {
+            OEntityTrackerEntry var4 = (OEntityTrackerEntry)var3.next();
+            if(var4.a != var2) {
+               var4.b(var2);
             }
-            for (int i = 0; i < localArrayList.size(); i++) {
-                localObject = localArrayList.get(i);
-                for (OEntityTrackerEntry localOEntityTrackerEntry : a)
-                    if (localOEntityTrackerEntry.a != localObject)
-                        localOEntityTrackerEntry.b((OEntityPlayerMP) localObject);
-            }
-        } catch (ConcurrentModificationException e) {
-            // people seem to get this exception often, lets just catch so it
-            // doesn't crash the server.
-            MinecraftServer.a.warning("CanaryMod WARNING: ConcurrentModificationException in OEntityTracker:");
-            e.printStackTrace();
-        }
-        // CanaryMod: Execute runnables contained in eventQueue.
-        for (DelayedTask task = delayQueue.poll(); task != null; task = delayQueue.poll())
-            // should we catch exceptions here?
-            task.run();
+         }
+      } else if(var1 instanceof OEntityFish) {
+         this.a(var1, 64, 5, true);
+      } else if(var1 instanceof OEntityArrow) {
+         this.a(var1, 64, 20, false);
+      } else if(var1 instanceof OEntityFireball) {
+         this.a(var1, 64, 10, false);
+      } else if(var1 instanceof OEntitySnowball) {
+         this.a(var1, 64, 10, true);
+      } else if(var1 instanceof OEntityEgg) {
+         this.a(var1, 64, 10, true);
+      } else if(var1 instanceof OEntityItem) {
+         this.a(var1, 64, 20, true);
+      } else if(var1 instanceof OEntityMinecart) {
+         this.a(var1, 160, 5, true);
+      } else if(var1 instanceof OEntityBoat) {
+         this.a(var1, 160, 5, true);
+      } else if(var1 instanceof OEntitySquid) {
+         this.a(var1, 160, 3, true);
+      } else if(var1 instanceof OIAnimals) {
+         this.a(var1, 160, 3);
+      } else if(var1 instanceof OEntityTNTPrimed) {
+         this.a(var1, 160, 10, true);
+      } else if(var1 instanceof OEntityFallingSand) {
+         this.a(var1, 160, 20, true);
+      } else if(var1 instanceof OEntityPainting) {
+         this.a(var1, 160, Integer.MAX_VALUE, false);
+      }
 
-    }
+   }
 
-    // CanaryMod: Allow adding of tasks to the queue
+   public void a(OEntity var1, int var2, int var3) {
+      this.a(var1, var2, var3, false);
+   }
 
-    public static void add(Runnable task, long delayMillis) {
-        // j.u.concurent.* classes are thread safe
-        delayQueue.add(new DelayedTask(task, delayMillis));
-    }
+   public void a(OEntity var1, int var2, int var3, boolean var4) {
+      if(var2 > this.d) {
+         var2 = this.d;
+      }
 
-    // CanaryMod: deprecated. Use server.addToServerQueue().
-    @Deprecated
-    public synchronized static void add(Runnable r) {
-        add(r, 0L);
-    }
+      if(this.b.b(var1.aG)) {
+         throw new IllegalStateException("Entity is already tracked!");
+      } else {
+         OEntityTrackerEntry var5 = new OEntityTrackerEntry(var1, var2, var3, var4);
+         this.a.add(var5);
+         this.b.a(var1.aG, var5);
+         var5.b(this.c.a(this.e).d);
+      }
+   }
 
-    
-    public void a(OEntity paramOEntity, OPacket paramOPacket) {
-        OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aG);
-        if (localOEntityTrackerEntry != null)
-            localOEntityTrackerEntry.a(paramOPacket);
-    }
+   public void b(OEntity var1) {
+      if(var1 instanceof OEntityPlayerMP) {
+         OEntityPlayerMP var2 = (OEntityPlayerMP)var1;
+         Iterator var3 = this.a.iterator();
 
-    public void b(OEntity paramOEntity, OPacket paramOPacket) {
-        OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aG);
-        if (localOEntityTrackerEntry != null)
-            localOEntityTrackerEntry.b(paramOPacket);
-    }
+         while(var3.hasNext()) {
+            OEntityTrackerEntry var4 = (OEntityTrackerEntry)var3.next();
+            var4.a(var2);
+         }
+      }
 
-    public void a(OEntityPlayerMP paramOEntityPlayerMP) {
-        for (OEntityTrackerEntry localOEntityTrackerEntry : a)
-            localOEntityTrackerEntry.c(paramOEntityPlayerMP);
-    }
+      OEntityTrackerEntry var5 = (OEntityTrackerEntry)this.b.d(var1.aG);
+      if(var5 != null) {
+         this.a.remove(var5);
+         var5.a();
+      }
+
+   }
+
+   public void a() {
+       try {
+           ArrayList var1 = new ArrayList();
+           Iterator var2 = this.a.iterator();
+
+           while (var2.hasNext()) {
+               OEntityTrackerEntry var3 = (OEntityTrackerEntry) var2.next();
+               var3.a(this.c.a(this.e).d);
+               if (var3.m && var3.a instanceof OEntityPlayerMP)
+                   var1.add((OEntityPlayerMP) var3.a);
+           }
+
+           for (int var6 = 0; var6 < var1.size(); ++var6) {
+               OEntityPlayerMP var7 = (OEntityPlayerMP) var1.get(var6);
+               Iterator var4 = this.a.iterator();
+
+               while (var4.hasNext()) {
+                   OEntityTrackerEntry var5 = (OEntityTrackerEntry) var4.next();
+                   if (var5.a != var7)
+                       var5.b(var7);
+               }
+           }
+       } catch (ConcurrentModificationException ex) {
+          // people seem to get this exception often, lets just catch so it
+          // doesn't crash the server.
+          MinecraftServer.a.log(Level.WARNING, "CanaryMod WARNING: ConcurrentModificationException in OEntityTracker:", ex);
+       }
+       // CanaryMod: Execute runnables contained in eventQueue.
+       for (DelayedTask task = delayQueue.poll(); task != null; task = delayQueue.poll())
+          // should we catch exceptions here?
+          task.run();
+
+   }
+
+   // CanaryMod: Allow adding of tasks to the queue
+
+   public static void add(Runnable task, long delayMillis) {
+      // j.u.concurent.* classes are thread safe
+      delayQueue.add(new DelayedTask(task, delayMillis));
+   }
+
+   // CanaryMod: deprecated. Use server.addToServerQueue().
+   @Deprecated
+   public synchronized static void add(Runnable r) {
+      add(r, 0L);
+   }
+
+   public void a(OEntity var1, OPacket var2) {
+      OEntityTrackerEntry var3 = (OEntityTrackerEntry)this.b.a(var1.aG);
+      if(var3 != null) {
+         var3.a(var2);
+      }
+
+   }
+
+   public void b(OEntity var1, OPacket var2) {
+      OEntityTrackerEntry var3 = (OEntityTrackerEntry)this.b.a(var1.aG);
+      if(var3 != null) {
+         var3.b(var2);
+      }
+
+   }
+
+   public void a(OEntityPlayerMP var1) {
+      Iterator var2 = this.a.iterator();
+
+      while(var2.hasNext()) {
+         OEntityTrackerEntry var3 = (OEntityTrackerEntry)var2.next();
+         var3.c(var1);
+      }
+
+   }
 }

@@ -1,57 +1,70 @@
+
+
 public class OItemReed extends OItem {
 
-    private int a;
+   private int a;
 
-    public OItemReed(int paramInt, OBlock paramOBlock) {
-        super(paramInt);
-        a = paramOBlock.bn;
-    }
 
-    @Override
-    public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        // CanaryMod: Store blockClicked
-        int clicked = paramOWorld.a(paramInt1, paramInt2, paramInt3);
-        Block blockClicked = new Block(paramOWorld.world, clicked, paramInt1, paramInt2, paramInt3);
+   public OItemReed(int var1, OBlock var2) {
+      super(var1);
+      this.a = var2.bn;
+   }
 
-        if (clicked == OBlock.aT.bn)
-            paramInt4 = 0;
-        else {
-            if (paramInt4 == 0)
-                paramInt2--;
-            if (paramInt4 == 1)
-                paramInt2++;
-            if (paramInt4 == 2)
-                paramInt3--;
-            if (paramInt4 == 3)
-                paramInt3++;
-            if (paramInt4 == 4)
-                paramInt1--;
-            if (paramInt4 == 5)
-                paramInt1++;
-        }
+   public boolean a(OItemStack var1, OEntityPlayer var2, OWorld var3, int var4, int var5, int var6, int var7) {
+      // CanaryMod: Store blockClicked
+      int clicked = var3.a(var4, var5, var6);
+      Block blockClicked = new Block(var3.world, clicked, var4, var5, var6);
 
-        if (paramOItemStack.a == 0)
-            return false;
+      if(var3.a(var4, var5, var6) == OBlock.aT.bn) {
+         var7 = 0;
+      } else {
+         if(var7 == 0) {
+            --var5;
+         }
 
-        if (paramOWorld.a(a, paramInt1, paramInt2, paramInt3, false, paramInt4)) {
+         if(var7 == 1) {
+            ++var5;
+         }
+
+         if(var7 == 2) {
+            --var6;
+         }
+
+         if(var7 == 3) {
+            ++var6;
+         }
+
+         if(var7 == 4) {
+            --var4;
+         }
+
+         if(var7 == 5) {
+            ++var4;
+         }
+      }
+
+      if(var1.a == 0) {
+         return false;
+      } else {
+         if(var3.a(this.a, var4, var5, var6, false, var7)) {
             // CanaryMod: Reed placement
-            Block blockPlaced = new Block(paramOWorld.world, paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
-            blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
-            Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
+            Block blockPlaced = new Block(var3.world, var3.a(var4, var5, var6), var4, var5, var6);
+            blockClicked.setFaceClicked(Block.Face.fromId(var7));
+            Player player = ((OEntityPlayerMP) var2).getPlayer();
 
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramOItemStack)))
-                return false;
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(var1)))
+               return false;
 
-            OBlock localOBlock = OBlock.m[a];
-            if (paramOWorld.e(paramInt1, paramInt2, paramInt3, a)) {
-                OBlock.m[a].d(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-                OBlock.m[a].a(paramOWorld, paramInt1, paramInt2, paramInt3, (OEntityLiving) paramOEntityPlayer);
-                paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.by.c(), (localOBlock.by.a() + 1.0F) / 2.0F, localOBlock.by.b() * 0.8F);
-                paramOItemStack.a -= 1;
+            OBlock var8 = OBlock.m[this.a];
+            if(var3.e(var4, var5, var6, this.a)) {
+               OBlock.m[this.a].d(var3, var4, var5, var6, var7);
+               OBlock.m[this.a].a(var3, var4, var5, var6, var2);
+               var3.a((double)((float)var4 + 0.5F), (double)((float)var5 + 0.5F), (double)((float)var6 + 0.5F), var8.by.c(), (var8.by.a() + 1.0F) / 2.0F, var8.by.b() * 0.8F);
+               --var1.a;
             }
+         }
 
-        }
-
-        return true;
-    }
+         return true;
+      }
+   }
 }
