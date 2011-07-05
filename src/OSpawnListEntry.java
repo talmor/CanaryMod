@@ -35,7 +35,10 @@ public class OSpawnListEntry {
    }
 
    // CanaryMod: actual method to get entries
-   public static OSpawnListEntry getSpawnListEntry(Class<? extends OEntityLiving> entityClass) {
+   @SuppressWarnings("element-type-mismatch")
+   public static OSpawnListEntry getSpawnListEntry(Class<?> entityClass) {
+      if (!OEntityLiving.class.isAssignableFrom(entityClass))
+          throw new IllegalArgumentException(entityClass + " is not an entity class!");
       return new OSpawnListEntry(entityClass, chanceMap.get(entityClass));
    }
 }

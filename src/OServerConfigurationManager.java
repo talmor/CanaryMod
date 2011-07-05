@@ -32,6 +32,15 @@ public class OServerConfigurationManager {
 
 
    public OServerConfigurationManager(MinecraftServer var1) {
+      // CanaryMod: initialize
+      etc.setServer(var1);
+      etc.getInstance().loadData();
+      a.info("Note: your current classpath is: " + System.getProperty("java.class.path", "*UNKNOWN*"));
+      if (!etc.getInstance().getTainted())
+         a.info("Canary Build: " + etc.getInstance().getVersion());
+      else
+         a.info("CanaryMod Build Information: " + etc.getInstance().getVersionStr());
+
       this.c = var1;
       this.j = var1.a("banned-players.txt");
       this.k = var1.a("banned-ips.txt");

@@ -174,7 +174,7 @@ public class Server {
         Player lastPlayer = null;
         name = name.toLowerCase();
 
-        for (OEntityPlayerMP player : server.f.b) {
+        for (OEntityPlayerMP player : (List<OEntityPlayerMP>) server.f.b) {
             String playerName = player.r;
 
             if (playerName.toLowerCase().equals(name)) {
@@ -212,7 +212,7 @@ public class Server {
      */
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
-        for (OEntityPlayerMP oepmp : server.f.b)
+        for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.f.b)
             toRet.add(oepmp.getPlayer());
         return toRet;
     }
