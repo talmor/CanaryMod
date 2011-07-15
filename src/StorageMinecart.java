@@ -3,7 +3,7 @@
  * 
  * @author James
  */
-public class StorageMinecart extends ItemArray<OEntityMinecart> {
+public class StorageMinecart extends ItemArray {
 
     /**
      * Creates an interface for storage of powered and storage carts.

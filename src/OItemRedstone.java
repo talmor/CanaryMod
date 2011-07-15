@@ -36,7 +36,7 @@ public class OItemRedstone extends OItem {
             ++var4;
          }
 
-         if(!var3.e(var4, var5, var6)) {
+         if(!var3.f(var4, var5, var6)) {
             return false;
          }
       }

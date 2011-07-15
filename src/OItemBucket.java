@@ -7,6 +7,7 @@ public class OItemBucket extends OItem {
 
    public OItemBucket(int var1, int var2) {
       super(var1);
+      this.bg = 1;
       this.a = var2;
    }
 
@@ -43,7 +44,7 @@ public class OItemBucket extends OItem {
             Block blockPlaced = new Block(var2.world, 0, var25, var26, var27);
 
             if(this.a == 0) {
-               if(var2.c(var25, var26, var27) == OMaterial.g && var2.b(var25, var26, var27) == 0) {
+               if(var2.d(var25, var26, var27) == OMaterial.g && var2.c(var25, var26, var27) == 0) {
                   // Filling a bucket with water!
                   if (var3 instanceof OEntityPlayerMP && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) var3).getPlayer(), blockPlaced, blockClicked, new Item(var1)))
                      return var1;
@@ -52,7 +53,7 @@ public class OItemBucket extends OItem {
                   return new OItemStack(OItem.av);
                }
 
-               if(var2.c(var25, var26, var27) == OMaterial.h && var2.b(var25, var26, var27) == 0) {
+               if(var2.d(var25, var26, var27) == OMaterial.h && var2.c(var25, var26, var27) == 0) {
                   // Filling a bucket with lava!
                   if (var3 instanceof OEntityPlayerMP && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) var3).getPlayer(), blockPlaced, blockClicked, new Item(var1)))
                      return var1;
@@ -89,7 +90,7 @@ public class OItemBucket extends OItem {
                   ++var25;
                }
 
-               if(var2.e(var25, var26, var27) || !var2.c(var25, var26, var27).a()) {
+               if(var2.f(var25, var26, var27) || !var2.d(var25, var26, var27).a()) {
                   if(var2.t.d && this.a == OBlock.B.bn) {
                      var2.a(var7 + 0.5D, var9 + 0.5D, var11 + 0.5D, "random.fizz", 0.5F, 2.6F + (var2.r.nextFloat() - var2.r.nextFloat()) * 0.8F);
 

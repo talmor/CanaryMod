@@ -221,7 +221,24 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @param command
      * @return
      */
-    public boolean canUseCommand(String command) {
+    public boolean canUseCommand(String command){
+         PluginLoader.HookResult res = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.COMMAND_CHECK, this, command);
+         if(res == PluginLoader.HookResult.DEFAULT_ACTION)
+             return canUseCommandByDefault(command);//If someone wants to use false instead, this can be done with low priority plugin.
+         if(res == PluginLoader.HookResult.ALLOW_ACTION)
+             return true;
+         return false;
+     }
+ 
+     /**
+      * Returns true if this player can use the specified command
+      * This method ignores permission management plugins and shouldn't be used by other plugins.
+      * 
+      * @param command
+      * @return
+      */
+      
+     public boolean canUseCommandByDefault(String command) {
         for (String str : commands)
             if (str.equalsIgnoreCase(command))
                 return true;
@@ -658,6 +675,18 @@ public class Player extends HumanEntity implements MessageReceiver {
     public int getItemInHand() {
         return getEntity().a.getItemInHand();
     }
+    
+    /**
+     *  Returns the item stack in the player's hand.
+     * @return Item
+     */
+    public Item getItemStackInHand() {
+        OItemStack result = getEntity().i.b();
+        if (result != null){
+            return new Item(result, getEntity().i.c);
+        }
+        return null;
+    }
 
     /**
      * Returns this player's inventory
@@ -674,7 +703,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return true if sneaking
      */
     public boolean getSneaking() {
-        return getEntity().ag();
+        return getEntity().ah();
     }
 
     /**
@@ -713,7 +742,8 @@ public class Player extends HumanEntity implements MessageReceiver {
         if (ent.aK != null)
             ent.b(ent.aK);
 
-        mcServer.f.f(ent);
+        // Canary: We don't want a portal created
+        mcServer.f.f(ent,false);
     }
 
     @Override

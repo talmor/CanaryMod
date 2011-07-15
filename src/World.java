@@ -97,7 +97,8 @@ public class World {
      *            time (-2^63 to 2^63-1)
      */
     public void setTime(long time) {
-        world.a(time);
+        etc.getMCServer().a(0).a(time);
+        etc.getMCServer().a(-1).a(time);
     }
 
     /**
@@ -267,7 +268,7 @@ public class World {
      * @return block data
      */
     public int getBlockData(int x, int y, int z) {
-        return world.b(x, y, z);
+        return world.c(x, y, z);
     }
 
     /**
@@ -394,7 +395,7 @@ public class World {
      * @return complex block
      */
     public ComplexBlock getOnlyComplexBlock(int x, int y, int z) {
-        OTileEntity localav = world.n(x, y, z);
+        OTileEntity localav = world.b(x, y, z);
         if (localav != null)
             if (localav instanceof OTileEntityChest)
                 return new Chest((OTileEntityChest) localav);
@@ -416,7 +417,7 @@ public class World {
      * @param itemId
      */
     public void dropItem(Location loc, int itemId) {
-        dropItem(loc.x, loc.y, loc.z, itemId, 1);
+        dropItem(loc.x, loc.y, loc.z, itemId, 1, 0);
     }
 
     /**
@@ -428,18 +429,7 @@ public class World {
      * @param itemId
      */
     public void dropItem(double x, double y, double z, int itemId) {
-        dropItem(x, y, z, itemId, 1);
-    }
-
-    /**
-     * Drops an item with desired quantity at the specified location
-     *
-     * @param loc
-     * @param itemId
-     * @param quantity
-     */
-    public void dropItem(Location loc, int itemId, int quantity) {
-        dropItem(loc.x, loc.y, loc.z, itemId, quantity);
+        dropItem(x, y, z, itemId, 1, 0);
     }
 
     /**
@@ -452,11 +442,47 @@ public class World {
      * @param quantity
      */
     public void dropItem(double x, double y, double z, int itemId, int quantity) {
+        dropItem(x, y, z, itemId, quantity, 0);
+    }
+
+    /**
+     * Drops an item with desired quantity at the specified location
+     *
+     * @param loc
+     * @param itemId
+     * @param quantity
+     */
+    public void dropItem(Location loc, int itemId, int quantity) {
+        dropItem(loc.x, loc.y, loc.z, itemId, quantity, 0);
+    }
+
+    /**
+     * Drops an item with damage data and desired quantity at the specified location
+     *
+     * @param loc
+     * @param itemId
+     * @param quantity
+     * @param damage
+     */
+    public void dropItem(Location loc, int itemId, int quantity, int damage) {
+        dropItem(loc.x, loc.y, loc.z, itemId, quantity, damage);
+    }
+
+    /**
+     * Drops an item with desired quantity and damage value at the specified location
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param itemId
+     * @param quantity
+     */
+    public void dropItem(double x, double y, double z, int itemId, int quantity, int damage) {
         double d1 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
         double d2 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
         double d3 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
-        OEntityItem oei = new OEntityItem(world, x + d1, y + d2, z + d3, new OItemStack(itemId, quantity, 0));
+        OEntityItem oei = new OEntityItem(world, x + d1, y + d2, z + d3, new OItemStack(itemId, quantity, damage));
         oei.c = 10;
         world.b(oei);
     }

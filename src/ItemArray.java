@@ -8,8 +8,8 @@
 public abstract class ItemArray<C extends Container<OItemStack>> {
     protected C container;
 
-    public ItemArray(C c) {
-        this.container = c;
+    public ItemArray(Object i) {
+        this.container = (C) i;
     }
 
     public int getContentsSize() {

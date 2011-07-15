@@ -40,6 +40,7 @@ public class Chest extends BaseContainerBlock<OTileEntityChest> implements Compl
             ComplexBlock cblock = getWorld().getOnlyComplexBlock(block);
             if ((cblock != null) && (cblock instanceof Chest)) {
                 Chest chest = (Chest) cblock;
+                // Compiler derps on uncasted.
                 return new DoubleChest(new OInventoryLargeChest(getName(), container, chest.container));
             }
         }

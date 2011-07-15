@@ -12,7 +12,7 @@ public class OBlockFire extends OBlock {
       this.a(true);
    }
 
-   public void f() {
+   public void h() {
       this.a(OBlock.y.bn, 5, 20);
       this.a(OBlock.ba.bn, 5, 20);
       this.a(OBlock.au.bn, 5, 20);
@@ -29,7 +29,7 @@ public class OBlockFire extends OBlock {
       this.b[var1] = var3;
    }
 
-   public OAxisAlignedBB d(OWorld var1, int var2, int var3, int var4) {
+   public OAxisAlignedBB e(OWorld var1, int var2, int var3, int var4) {
       return null;
    }
 
@@ -58,14 +58,14 @@ public class OBlockFire extends OBlock {
       if(!var6 && var1.v() && (var1.s(var2, var3, var4) || var1.s(var2 - 1, var3, var4) || var1.s(var2 + 1, var3, var4) || var1.s(var2, var3, var4 - 1) || var1.s(var2, var3, var4 + 1))) {
          var1.e(var2, var3, var4, 0);
       } else {
-         int var7 = var1.b(var2, var3, var4);
+         int var7 = var1.c(var2, var3, var4);
          if(var7 < 15) {
             var1.d(var2, var3, var4, var7 + var5.nextInt(3) / 2);
          }
 
          var1.c(var2, var3, var4, this.bn, this.c());
          if(!var6 && !this.g(var1, var2, var3, var4)) {
-            if(!var1.d(var2, var3 - 1, var4) || var7 > 3) {
+            if(!var1.e(var2, var3 - 1, var4) || var7 > 3) {
                var1.e(var2, var3, var4, 0);
             }
 
@@ -139,7 +139,7 @@ public class OBlockFire extends OBlock {
          }
 
          if(var9) {
-            OBlock.an.b(var1, var2, var3, var4, 0);
+            OBlock.an.c(var1, var2, var3, var4, 1);
          }
       }
 
@@ -152,20 +152,20 @@ public class OBlockFire extends OBlock {
 
    private int h(OWorld var1, int var2, int var3, int var4) {
       byte var5 = 0;
-      if(!var1.e(var2, var3, var4)) {
+      if(!var1.f(var2, var3, var4)) {
          return 0;
       } else {
-         int var6 = this.g(var1, var2 + 1, var3, var4, var5);
-         var6 = this.g(var1, var2 - 1, var3, var4, var6);
-         var6 = this.g(var1, var2, var3 - 1, var4, var6);
-         var6 = this.g(var1, var2, var3 + 1, var4, var6);
-         var6 = this.g(var1, var2, var3, var4 - 1, var6);
-         var6 = this.g(var1, var2, var3, var4 + 1, var6);
+         int var6 = this.f(var1, var2 + 1, var3, var4, var5);
+         var6 = this.f(var1, var2 - 1, var3, var4, var6);
+         var6 = this.f(var1, var2, var3 - 1, var4, var6);
+         var6 = this.f(var1, var2, var3 + 1, var4, var6);
+         var6 = this.f(var1, var2, var3, var4 - 1, var6);
+         var6 = this.f(var1, var2, var3, var4 + 1, var6);
          return var6;
       }
    }
 
-   public boolean m_() {
+   public boolean k_() {
       return false;
    }
 
@@ -173,24 +173,24 @@ public class OBlockFire extends OBlock {
       return this.a[var1.a(var2, var3, var4)] > 0;
    }
 
-   public int g(OWorld var1, int var2, int var3, int var4, int var5) {
+   public int f(OWorld var1, int var2, int var3, int var4, int var5) {
       int var6 = this.a[var1.a(var2, var3, var4)];
       return var6 > var5?var6:var5;
    }
 
    public boolean a(OWorld var1, int var2, int var3, int var4) {
-      return var1.d(var2, var3 - 1, var4) || this.g(var1, var2, var3, var4);
+      return var1.e(var2, var3 - 1, var4) || this.g(var1, var2, var3, var4);
    }
 
-   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
-      if(!var1.d(var2, var3 - 1, var4) && !this.g(var1, var2, var3, var4)) {
+   public void b(OWorld var1, int var2, int var3, int var4, int var5) {
+      if(!var1.e(var2, var3 - 1, var4) && !this.g(var1, var2, var3, var4)) {
          var1.e(var2, var3, var4, 0);
       }
    }
 
-   public void e(OWorld var1, int var2, int var3, int var4) {
+   public void c(OWorld var1, int var2, int var3, int var4) {
       if(var1.a(var2, var3 - 1, var4) != OBlock.aq.bn || !OBlock.bf.a_(var1, var2, var3, var4)) {
-         if(!var1.d(var2, var3 - 1, var4) && !this.g(var1, var2, var3, var4)) {
+         if(!var1.e(var2, var3 - 1, var4) && !this.g(var1, var2, var3, var4)) {
             var1.e(var2, var3, var4, 0);
          } else {
             var1.c(var2, var3, var4, this.bn, this.c());

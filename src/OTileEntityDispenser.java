@@ -13,7 +13,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
       return 9;
    }
 
-   public OItemStack c_(int var1) {
+   public OItemStack d_(int var1) {
       return this.a[var1];
    }
 
@@ -93,11 +93,11 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
             ONBTTagCompound var4 = new ONBTTagCompound();
             var4.a("Slot", (byte)var3);
             this.a[var3].a(var4);
-            var2.a(var4);
+            var2.a((ONBTBase)var4);
          }
       }
 
-      var1.a("Items", var2);
+      var1.a("Items", (ONBTBase)var2);
    }
 
    public int d() {
@@ -105,7 +105,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
    }
 
    public boolean a_(OEntityPlayer var1) {
-      return this.d.n(this.e, this.f, this.g) != this?false:var1.d((double)this.e + 0.5D, (double)this.f + 0.5D, (double)this.g + 0.5D) <= 64.0D;
+      return this.d.b(this.e, this.f, this.g) != this?false:var1.e((double)this.e + 0.5D, (double)this.f + 0.5D, (double)this.g + 0.5D) <= 64.0D;
    }
 
     @Override
@@ -120,7 +120,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
 
     @Override
     public OItemStack getContentsAt(int index) {
-        return c_(index);
+        return d_(index);
     }
 
     @Override

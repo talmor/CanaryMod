@@ -6,6 +6,7 @@ import net.minecraft.server.MinecraftServer;
 
 public class OThreadCommandReader extends Thread {
 
+   // $FF: synthetic field
    final MinecraftServer a;
 
 

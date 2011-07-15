@@ -10,10 +10,10 @@ public class OBlockNote extends OBlockContainer {
       return this.bm;
    }
 
-   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+   public void b(OWorld var1, int var2, int var3, int var4, int var5) {
       if(var5 > 0 && OBlock.m[var5].d()) {
          boolean var6 = var1.q(var2, var3, var4);
-         OTileEntityNote var7 = (OTileEntityNote)var1.n(var2, var3, var4);
+         OTileEntityNote var7 = (OTileEntityNote)var1.b(var2, var3, var4);
          if(var7.b != var6) {
             if(var6) {
                var7.a(var1, var2, var3, var4);
@@ -29,7 +29,7 @@ public class OBlockNote extends OBlockContainer {
       if(var1.B) {
          return true;
       } else {
-         OTileEntityNote var6 = (OTileEntityNote)var1.n(var2, var3, var4);
+         OTileEntityNote var6 = (OTileEntityNote)var1.b(var2, var3, var4);
          var6.a();
          var6.a(var1, var2, var3, var4);
          return true;
@@ -38,7 +38,7 @@ public class OBlockNote extends OBlockContainer {
 
    public void b(OWorld var1, int var2, int var3, int var4, OEntityPlayer var5) {
       if(!var1.B) {
-         OTileEntityNote var6 = (OTileEntityNote)var1.n(var2, var3, var4);
+         OTileEntityNote var6 = (OTileEntityNote)var1.b(var2, var3, var4);
          var6.a(var1, var2, var3, var4);
       }
    }

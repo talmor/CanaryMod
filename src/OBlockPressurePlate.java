@@ -19,7 +19,7 @@ public class OBlockPressurePlate extends OBlock {
       return 20;
    }
 
-   public OAxisAlignedBB d(OWorld var1, int var2, int var3, int var4) {
+   public OAxisAlignedBB e(OWorld var1, int var2, int var3, int var4) {
       return null;
    }
 
@@ -32,20 +32,19 @@ public class OBlockPressurePlate extends OBlock {
    }
 
    public boolean a(OWorld var1, int var2, int var3, int var4) {
-      return var1.d(var2, var3 - 1, var4);
+      return var1.e(var2, var3 - 1, var4);
    }
 
-   public void e(OWorld var1, int var2, int var3, int var4) {
-   }
+   public void c(OWorld var1, int var2, int var3, int var4) {}
 
-   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+   public void b(OWorld var1, int var2, int var3, int var4, int var5) {
       boolean var6 = false;
-      if(!var1.d(var2, var3 - 1, var4)) {
+      if(!var1.e(var2, var3 - 1, var4)) {
          var6 = true;
       }
 
       if(var6) {
-         this.b_(var1, var2, var3, var4, var1.b(var2, var3, var4));
+         this.g(var1, var2, var3, var4, var1.c(var2, var3, var4));
          var1.e(var2, var3, var4, 0);
       }
 
@@ -53,7 +52,7 @@ public class OBlockPressurePlate extends OBlock {
 
    public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
       if(!var1.B) {
-         if(var1.b(var2, var3, var4) != 0) {
+         if(var1.c(var2, var3, var4) != 0) {
             this.g(var1, var2, var3, var4);
          }
       }
@@ -61,14 +60,14 @@ public class OBlockPressurePlate extends OBlock {
 
    public void a(OWorld var1, int var2, int var3, int var4, OEntity var5) {
       if(!var1.B) {
-         if(var1.b(var2, var3, var4) != 1) {
+         if(var1.c(var2, var3, var4) != 1) {
             this.g(var1, var2, var3, var4);
          }
       }
    }
 
    private void g(OWorld var1, int var2, int var3, int var4) {
-      boolean var5 = var1.b(var2, var3, var4) == 1;
+      boolean var5 = var1.c(var2, var3, var4) == 1;
       boolean var6 = false;
       float var7 = 0.125F;
       List var8 = null;
@@ -115,7 +114,7 @@ public class OBlockPressurePlate extends OBlock {
    }
 
    public void b(OWorld var1, int var2, int var3, int var4) {
-      int var5 = var1.b(var2, var3, var4);
+      int var5 = var1.c(var2, var3, var4);
       if(var5 > 0) {
          var1.h(var2, var3, var4, this.bn);
          var1.h(var2, var3 - 1, var4, this.bn);
@@ -125,7 +124,7 @@ public class OBlockPressurePlate extends OBlock {
    }
 
    public void a(OIBlockAccess var1, int var2, int var3, int var4) {
-      boolean var5 = var1.b(var2, var3, var4) == 1;
+      boolean var5 = var1.c(var2, var3, var4) == 1;
       float var6 = 0.0625F;
       if(var5) {
          this.a(var6, 0.0F, var6, 1.0F - var6, 0.03125F, 1.0F - var6);
@@ -136,14 +135,18 @@ public class OBlockPressurePlate extends OBlock {
    }
 
    public boolean a(OIBlockAccess var1, int var2, int var3, int var4, int var5) {
-      return var1.b(var2, var3, var4) > 0;
+      return var1.c(var2, var3, var4) > 0;
    }
 
-   public boolean c(OWorld var1, int var2, int var3, int var4, int var5) {
-      return var1.b(var2, var3, var4) == 0?false:var5 == 1;
+   public boolean d(OWorld var1, int var2, int var3, int var4, int var5) {
+      return var1.c(var2, var3, var4) == 0?false:var5 == 1;
    }
 
    public boolean d() {
       return true;
+   }
+
+   public int e() {
+      return 1;
    }
 }

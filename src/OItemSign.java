@@ -4,12 +4,13 @@ public class OItemSign extends OItem {
 
    public OItemSign(int var1) {
       super(var1);
+      this.bg = 1;
    }
 
    public boolean a(OItemStack var1, OEntityPlayer var2, OWorld var3, int var4, int var5, int var6, int var7) {
       if(var7 == 0) {
          return false;
-      } else if(!var3.c(var4, var5, var6).a()) {
+      } else if(!var3.d(var4, var5, var6).a()) {
          return false;
       } else {
           // CanaryMod: Store block data clicked
@@ -51,7 +52,7 @@ public class OItemSign extends OItem {
             }
 
             --var1.a;
-            OTileEntitySign var8 = (OTileEntitySign)var3.n(var4, var5, var6);
+            OTileEntitySign var8 = (OTileEntitySign)var3.b(var4, var5, var6);
             if(var8 != null) {
                var2.a(var8);
             }

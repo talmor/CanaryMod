@@ -9,14 +9,14 @@ public class OBlockCactus extends OBlock {
    }
 
    public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
-      if(var1.e(var2, var3 + 1, var4)) {
+      if(var1.f(var2, var3 + 1, var4)) {
          int var6;
          for(var6 = 1; var1.a(var2, var3 - var6, var4) == this.bn; ++var6) {
             ;
          }
 
          if(var6 < 3) {
-            int var7 = var1.b(var2, var3, var4);
+            int var7 = var1.c(var2, var3, var4);
             if(var7 == 15) {
                var1.e(var2, var3 + 1, var4, this.bn);
                var1.c(var2, var3, var4, 0);
@@ -28,7 +28,7 @@ public class OBlockCactus extends OBlock {
 
    }
 
-   public OAxisAlignedBB d(OWorld var1, int var2, int var3, int var4) {
+   public OAxisAlignedBB e(OWorld var1, int var2, int var3, int var4) {
       float var5 = 0.0625F;
       return OAxisAlignedBB.b((double)((float)var2 + var5), (double)var3, (double)((float)var4 + var5), (double)((float)(var2 + 1) - var5), (double)((float)(var3 + 1) - var5), (double)((float)(var4 + 1) - var5));
    }
@@ -49,22 +49,22 @@ public class OBlockCactus extends OBlock {
       return !super.a(var1, var2, var3, var4)?false:this.f(var1, var2, var3, var4);
    }
 
-   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+   public void b(OWorld var1, int var2, int var3, int var4, int var5) {
       if(!this.f(var1, var2, var3, var4)) {
-         this.b_(var1, var2, var3, var4, var1.b(var2, var3, var4));
+         this.g(var1, var2, var3, var4, var1.c(var2, var3, var4));
          var1.e(var2, var3, var4, 0);
       }
 
    }
 
    public boolean f(OWorld var1, int var2, int var3, int var4) {
-      if(var1.c(var2 - 1, var3, var4).a()) {
+      if(var1.d(var2 - 1, var3, var4).a()) {
          return false;
-      } else if(var1.c(var2 + 1, var3, var4).a()) {
+      } else if(var1.d(var2 + 1, var3, var4).a()) {
          return false;
-      } else if(var1.c(var2, var3, var4 - 1).a()) {
+      } else if(var1.d(var2, var3, var4 - 1).a()) {
          return false;
-      } else if(var1.c(var2, var3, var4 + 1).a()) {
+      } else if(var1.d(var2, var3, var4 + 1).a()) {
          return false;
       } else {
          int var5 = var1.a(var2, var3 - 1, var4);

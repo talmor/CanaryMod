@@ -247,22 +247,14 @@ public class PlayerCommands {
                 caller.notify("Can't find user " + split[1] + ".");
                 return;
             }
-            if (!player.getWorld().equals(((Player) caller).getWorld()))
+            if (!(player.getWorld().getType() == ((Player) caller).getWorld().getType()))
                 if (((Player) caller).canIgnoreRestrictions()) {
                     if (caller.equals(player)) {
-                        caller.notify("You can't do that...");
+                        caller.notify("You'll turn inside out if you keep trying.");
                         return;
-                    }
-                    log.info(caller.getName() + " shifted worlds and teleported to " + player.getName());
-
-                    caller.notify("You feel the world shifting...");
+                    } else 
                     ((Player) caller).switchWorlds();
-                    caller.notify("The worlds suddenly snap back.");
-                    if (!((Player) caller).getWorld().equals(player.getWorld())) {
-                        caller.notify("The veil between worlds is still too strong.");
-                        return;
-                    }
-                } else {
+                    } else {
                     caller.notify("That player is in another world.");
                     return;
                 }
@@ -289,25 +281,13 @@ public class PlayerCommands {
                 return;
             }
 
-            if (!player.getWorld().equals(((Player) caller).getWorld()))
+            if (!(player.getWorld().getType() == ((Player) caller).getWorld().getType()))
                 if (((Player) caller).canIgnoreRestrictions()) {
                     if (caller.equals(player)) {
-                        caller.notify("You can't do that...");
-
-
+                        caller.notify("You'll turn inside out if you keep trying.");
                         return;
                     }
-
-                    log.info(caller.getName() + " caused the worlds to shift around " + player.getName());
-
-                    player.notify("You feel the world shifting...");
                     player.switchWorlds();
-
-
-                    if (!player.getWorld().equals(((Player) caller).getWorld())) {
-                        player.notify("The veil between worlds keeps you in your place.");
-                        return;
-                    }
                 } else {
                     caller.notify("That player is in another world.");
                     return;
@@ -316,7 +296,6 @@ public class PlayerCommands {
                 caller.notify("Wow look at that! You teleported yourself to yourself!");
                 return;
             }
-
             log.info(caller.getName() + " teleported " + player.getName() + " to their self.");
             player.teleportTo((Player) caller);
         }
@@ -717,16 +696,10 @@ public class PlayerCommands {
                 return;
             }
             if (toMove.getWorld().getType().getId() != 0)
-                if (toMove.canIgnoreRestrictions()) {
-                    toMove.sendMessage("§4You feel the worlds start to shift...");
-                    int derp = toMove.getWorld().getType().getId();
+                if (toMove.canIgnoreRestrictions()) 
                     toMove.switchWorlds();
-                    toMove.sendMessage("§4The worlds suddenly snap back into focus.");
-                    if (derp == toMove.getWorld().getType().getId()) {
-                        toMove.sendMessage("§4The veil is still too strong.");
-                        return;
-                    }
-                } else {
+                   
+                else {
                     toMove.sendMessage("§4The veil between the worlds keeps you bound to the Nether...");
                     return;
                 }
@@ -761,6 +734,8 @@ public class PlayerCommands {
 
             OWorldInfo info = player.getWorld().getWorld().x;
             info.a((int) player.getX(), (int) player.getY(), (int) player.getZ());
+            info = etc.getMCServer().a(-1).q();
+            info.a((int) player.getX(), (int) player.getY(), (int) player.getZ());
 
             log.info("Spawn position changed.");
             if (player == caller)
@@ -785,16 +760,9 @@ public class PlayerCommands {
                 home = etc.getDataSource().getHome(caller.getName());
 
             if (player.getWorld().getType() != World.Type.NORMAL)
-                if (player.canIgnoreRestrictions()) {
-                    player.notify("You feel the worlds start to shift...");
-                    World derp = player.getWorld();
+                if (player.canIgnoreRestrictions()) 
                     player.switchWorlds();
-                    player.notify("The worlds suddenly come back into focus.");
-                    if (derp.equals(player.getWorld())) {
-                        player.notify("The veil is still too strong.");
-                        return;
-                    }
-                } else {
+                else {
                     player.notify("The veil between the worlds keeps you in the Nether...");
                     return;
                 }
@@ -836,17 +804,10 @@ public class PlayerCommands {
                         caller.notify("Warp not found.");
                     else {
                         if (toWarp.getWorld().getType() != World.Type.NORMAL)
-                            if (toWarp.canIgnoreRestrictions()) {
-                                toWarp.notify("You feel the worlds start to shift...");
-                                World derp = toWarp.getWorld();
-                                toWarp.switchWorlds();
-                                toWarp.notify("The worlds suddenly snap back into focus...");
-                                if (derp.equals(toWarp.getWorld())) {
-                                    toWarp.notify("The veil is still too strong.");
-                                    return;
-                                }
-                            } else {
-                                toWarp.sendMessage("The veil between the worlds keeps you in the Nether...");
+                                if (toWarp.canIgnoreRestrictions())
+                                    toWarp.switchWorlds();
+                                else {
+                                toWarp.sendMessage(Colors.Rose + "The veil between the worlds keeps you in the Nether...");
                                 return;
                             }
 

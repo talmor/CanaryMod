@@ -57,8 +57,8 @@ public class OItemReed extends OItem {
 
             OBlock var8 = OBlock.m[this.a];
             if(var3.e(var4, var5, var6, this.a)) {
-               OBlock.m[this.a].d(var3, var4, var5, var6, var7);
-               OBlock.m[this.a].a(var3, var4, var5, var6, var2);
+               OBlock.m[this.a].e(var3, var4, var5, var6, var7);
+               OBlock.m[this.a].a(var3, var4, var5, var6, (OEntityLiving)var2);
                var3.a((double)((float)var4 + 0.5F), (double)((float)var5 + 0.5F), (double)((float)var6 + 0.5F), var8.by.c(), (var8.by.a() + 1.0F) / 2.0F, var8.by.b() * 0.8F);
                --var1.a;
             }

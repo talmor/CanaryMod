@@ -13,10 +13,10 @@ public class OBlockFlowing extends OBlockFluid {
    }
 
    private void i(OWorld var1, int var2, int var3, int var4) {
-      int var5 = var1.b(var2, var3, var4);
+      int var5 = var1.c(var2, var3, var4);
       var1.a(var2, var3, var4, this.bn + 1, var5);
       var1.b(var2, var3, var4, var2, var3, var4);
-      var1.g(var2, var3, var4);
+      var1.h(var2, var3, var4);
    }
 
    public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
@@ -54,9 +54,9 @@ public class OBlockFlowing extends OBlockFluid {
          }
 
          if(this.a >= 2 && this.bA == OMaterial.g) {
-            if(var1.c(var2, var3 - 1, var4).a()) {
+            if(var1.d(var2, var3 - 1, var4).a()) {
                var10 = 0;
-            } else if(var1.c(var2, var3 - 1, var4) == this.bA && var1.b(var2, var3, var4) == 0) {
+            } else if(var1.d(var2, var3 - 1, var4) == this.bA && var1.c(var2, var3, var4) == 0) {
                var10 = 0;
             }
          }
@@ -105,38 +105,38 @@ public class OBlockFlowing extends OBlockFluid {
          if(var13[0]) {
             Block blockTo = new Block(world, 0, var2 - 1, var3, var4);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-               this.g(var1, var2 - 1, var3, var4, var10);
+               this.h(var1, var2 - 1, var3, var4, var10);
          }
 
          if(var13[1]) {
             Block blockTo = new Block(world, 0, var2 + 1, var3, var4);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-               this.g(var1, var2 + 1, var3, var4, var10);
+               this.h(var1, var2 + 1, var3, var4, var10);
          }
 
          if(var13[2]) {
             Block blockTo = new Block(world, 0, var2, var3, var4 - 1);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-               this.g(var1, var2, var3, var4 - 1, var10);
+               this.h(var1, var2, var3, var4 - 1, var10);
          }
 
          if(var13[3]) {
             Block blockTo = new Block(world, 0, var2, var3, var4 + 1);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
-               this.g(var1, var2, var3, var4 + 1, var10);
+               this.h(var1, var2, var3, var4 + 1, var10);
          }
       }
 
    }
 
-   private void g(OWorld var1, int var2, int var3, int var4, int var5) {
+   private void h(OWorld var1, int var2, int var3, int var4, int var5) {
       if(this.l(var1, var2, var3, var4)) {
          int var6 = var1.a(var2, var3, var4);
          if(var6 > 0) {
             if(this.bA == OMaterial.h) {
                this.h(var1, var2, var3, var4);
             } else {
-               OBlock.m[var6].b_(var1, var2, var3, var4, var1.b(var2, var3, var4));
+               OBlock.m[var6].g(var1, var2, var3, var4, var1.c(var2, var3, var4));
             }
          }
 
@@ -168,7 +168,7 @@ public class OBlockFlowing extends OBlockFluid {
                ++var11;
             }
 
-            if(!this.k(var1, var9, var3, var11) && (var1.c(var9, var3, var11) != this.bA || var1.b(var9, var3, var11) != 0)) {
+            if(!this.k(var1, var9, var3, var11) && (var1.d(var9, var3, var11) != this.bA || var1.c(var9, var3, var11) != 0)) {
                if(!this.k(var1, var9, var3 - 1, var11)) {
                   return var5;
                }
@@ -209,7 +209,7 @@ public class OBlockFlowing extends OBlockFluid {
             ++var8;
          }
 
-         if(!this.k(var1, var6, var3, var8) && (var1.c(var6, var3, var8) != this.bA || var1.b(var6, var3, var8) != 0)) {
+         if(!this.k(var1, var6, var3, var8) && (var1.d(var6, var3, var8) != this.bA || var1.c(var6, var3, var8) != 0)) {
             if(!this.k(var1, var6, var3 - 1, var8)) {
                this.c[var5] = 0;
             } else {
@@ -273,12 +273,12 @@ public class OBlockFlowing extends OBlockFluid {
       else if (ret == PluginLoader.HookResult.ALLOW_ACTION)
          return true;
 
-      OMaterial var5 = var1.c(var2, var3, var4);
+      OMaterial var5 = var1.d(var2, var3, var4);
       return var5 == this.bA?false:(var5 == OMaterial.h?false:!this.k(var1, var2, var3, var4));
    }
 
-   public void e(OWorld var1, int var2, int var3, int var4) {
-      super.e(var1, var2, var3, var4);
+   public void c(OWorld var1, int var2, int var3, int var4) {
+      super.c(var1, var2, var3, var4);
       if(var1.a(var2, var3, var4) == this.bn) {
          var1.c(var2, var3, var4, this.bn, this.c());
       }

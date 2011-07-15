@@ -4,7 +4,7 @@ public class OTileEntityMobSpawner extends OTileEntity {
 
    public int a = -1;
    // CanaryMod: make public to allow reading/writing
-   public String h = "Pig";
+   public String i = "Pig";
    public double b;
    public double c = 0.0D;
 
@@ -14,7 +14,7 @@ public class OTileEntityMobSpawner extends OTileEntity {
    }
 
    public void a(String var1) {
-      this.h = var1;
+      this.i = var1;
    }
 
    public boolean a() {
@@ -34,17 +34,20 @@ public class OTileEntityMobSpawner extends OTileEntity {
             this.b -= 360.0D;
          }
 
-         if(this.a == -1) {
-            this.c();
-         }
+         if(!this.d.B) {
+            if(this.a == -1) {
+               this.c();
+            }
 
-         if(this.a > 0) {
-            --this.a;
-         } else {
+            if(this.a > 0) {
+               --this.a;
+               return;
+            }
+
             byte var7 = 4;
 
             for(int var8 = 0; var8 < var7; ++var8) {
-               OEntityLiving var9 = (OEntityLiving)((OEntityLiving)OEntityList.a(this.h, this.d));
+               OEntityLiving var9 = (OEntityLiving)((OEntityLiving)OEntityList.a(this.i, this.d));
                if(var9 == null) {
                   return;
                }
@@ -61,7 +64,7 @@ public class OTileEntityMobSpawner extends OTileEntity {
                   double var15 = (double)this.g + (this.d.r.nextDouble() - this.d.r.nextDouble()) * 4.0D;
                   var9.c(var11, var13, var15, this.d.r.nextFloat() * 360.0F, 0.0F);
                   if(var9.d()) {
-                     this.d.b(var9);
+                     this.d.b((OEntity)var9);
 
                      for(int var17 = 0; var17 < 20; ++var17) {
                         var1 = (double)this.e + 0.5D + ((double)this.d.r.nextFloat() - 0.5D) * 2.0D;
@@ -71,14 +74,14 @@ public class OTileEntityMobSpawner extends OTileEntity {
                         this.d.a("flame", var1, var3, var5, 0.0D, 0.0D, 0.0D);
                      }
 
-                     var9.R();
+                     var9.S();
                      this.c();
                   }
                }
             }
-
-            super.g_();
          }
+
+         super.g_();
       }
    }
 
@@ -88,13 +91,13 @@ public class OTileEntityMobSpawner extends OTileEntity {
 
    public void a(ONBTTagCompound var1) {
       super.a(var1);
-      this.h = var1.i("EntityId");
+      this.i = var1.i("EntityId");
       this.a = var1.d("Delay");
    }
 
    public void b(ONBTTagCompound var1) {
       super.b(var1);
-      var1.a("EntityId", this.h);
+      var1.a("EntityId", this.i);
       var1.a("Delay", (short)this.a);
    }
 }

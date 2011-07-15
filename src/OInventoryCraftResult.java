@@ -11,7 +11,7 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
       return 1;
    }
 
-   public OItemStack c_(int var1) {
+   public OItemStack d_(int var1) {
       return this.a[var1];
    }
 
@@ -37,8 +37,7 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
       return 64;
    }
 
-   public void i() {
-   }
+   public void i() {}
 
    public boolean a_(OEntityPlayer var1) {
       return true;
@@ -56,7 +55,7 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
 
     @Override
     public OItemStack getContentsAt(int index) {
-        return c_(index);
+        return d_(index);
     }
 
     @Override

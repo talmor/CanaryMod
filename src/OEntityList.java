@@ -9,6 +9,7 @@ public class OEntityList {
    private static Map c = new HashMap();
    private static Map d = new HashMap();
 
+
    private static void a(Class var0, String var1, int var2) {
       a.put(var1, var0);
       b.put(var0, var1);

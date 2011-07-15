@@ -8,7 +8,7 @@ public class OItemDoor extends OItem {
    public OItemDoor(int var1, OMaterial var2) {
       super(var1);
       this.a = var2;
-      this.bf = 1;
+      this.bg = 1;
    }
 
    public boolean a(OItemStack var1, OEntityPlayer var2, OWorld var3, int var4, int var5, int var6, int var7) {
@@ -56,8 +56,8 @@ public class OItemDoor extends OItem {
                var10 = 1;
             }
 
-            int var12 = (var3.d(var4 - var10, var5, var6 - var11)?1:0) + (var3.d(var4 - var10, var5 + 1, var6 - var11)?1:0);
-            int var13 = (var3.d(var4 + var10, var5, var6 + var11)?1:0) + (var3.d(var4 + var10, var5 + 1, var6 + var11)?1:0);
+            int var12 = (var3.e(var4 - var10, var5, var6 - var11)?1:0) + (var3.e(var4 - var10, var5 + 1, var6 - var11)?1:0);
+            int var13 = (var3.e(var4 + var10, var5, var6 + var11)?1:0) + (var3.e(var4 + var10, var5 + 1, var6 + var11)?1:0);
             boolean var14 = var3.a(var4 - var10, var5, var6 - var11) == var8.bn || var3.a(var4 - var10, var5 + 1, var6 - var11) == var8.bn;
             boolean var15 = var3.a(var4 + var10, var5, var6 + var11) == var8.bn || var3.a(var4 + var10, var5 + 1, var6 + var11) == var8.bn;
             boolean var16 = false;

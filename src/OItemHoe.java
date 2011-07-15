@@ -4,6 +4,7 @@ public class OItemHoe extends OItem {
 
    public OItemHoe(int var1, OEnumToolMaterial var2) {
       super(var1);
+      this.bg = 1;
       this.d(var2.a());
    }
 

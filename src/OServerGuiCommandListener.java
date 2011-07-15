@@ -5,7 +5,9 @@ import javax.swing.JTextField;
 
 class OServerGuiCommandListener implements ActionListener {
 
+   // $FF: synthetic field
    final JTextField a;
+   // $FF: synthetic field
    final OServerGUI b;
 
 

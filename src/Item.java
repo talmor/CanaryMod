@@ -42,8 +42,14 @@ public class Item {
         BedBlock(26), //
         PoweredRails(27), //
         DetectorRails(28), //
+        StickyPiston(29), //
         Web(30), //
+        TallGrass(31), //
+        DeadShrub(32), //
+        Piston(33), //
+        PistonExtended(34), //
         Cloth(35), //
+        PistonBlockFiller(36), //
         YellowFlower(37), //
         RedRose(38), //
         BrownMushroom(39), //
@@ -205,6 +211,7 @@ public class Item {
         RedstoneRepeater(356), //
         Cookie(357), //
         Map(358), //
+        Shears(359), //
         GoldRecord(2256), //
         GreenRecord(2257);
 

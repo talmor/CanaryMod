@@ -103,7 +103,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
       if(var2 < 0) {
          return false;
       } else {
-         if((this.a[var2].a -= 1) <= 0) {
+         if(--this.a[var2].a <= 0) {
             this.a[var2] = null;
          }
 
@@ -186,7 +186,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
             var3 = new ONBTTagCompound();
             var3.a("Slot", (byte)var2);
             this.a[var2].a(var3);
-            var1.a(var3);
+            var1.a((ONBTBase)var3);
          }
       }
 
@@ -195,7 +195,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
             var3 = new ONBTTagCompound();
             var3.a("Slot", (byte)(var2 + 100));
             this.b[var2].a(var3);
-            var1.a(var3);
+            var1.a((ONBTBase)var3);
          }
       }
 
@@ -227,7 +227,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
       return this.a.length + 4;
    }
 
-   public OItemStack c_(int var1) {
+   public OItemStack d_(int var1) {
       OItemStack[] var2 = this.a;
       if(var1 >= var2.length) {
          var1 -= var2.length;
@@ -246,15 +246,15 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
    }
 
    public int a(OEntity var1) {
-      OItemStack var2 = this.c_(this.c);
+      OItemStack var2 = this.d_(this.c);
       return var2 != null?var2.a(var1):1;
    }
 
    public boolean b(OBlock var1) {
-      if(var1.bA != OMaterial.e && var1.bA != OMaterial.f && var1.bA != OMaterial.u && var1.bA != OMaterial.t) {
+      if(var1.bA.i()) {
          return true;
       } else {
-         OItemStack var2 = this.c_(this.c);
+         OItemStack var2 = this.d_(this.c);
          return var2 != null?var2.b(var1):false;
       }
    }
@@ -271,7 +271,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
             int var7 = var5 - var6;
             var2 += var7;
             var3 += var5;
-            int var8 = ((OItemArmor)this.b[var4].a()).bk;
+            int var8 = ((OItemArmor)this.b[var4].a()).bl;
             var1 += var8;
          }
       }
@@ -360,7 +360,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
 
     @Override
     public OItemStack getContentsAt(int index) {
-        return c_(index);
+        return d_(index);
     }
 
     @Override

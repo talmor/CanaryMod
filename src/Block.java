@@ -40,10 +40,14 @@ public class Block {
         Bed(26), //
         PoweredRails(27), //
         DetectorRails(28), //
+        StickyPiston(29), //
         Web(30), //
         TallGrass(31), //
         DeadShrub(32), //
-        Cloth(35), // 
+        Piston(33), //
+        PistonExtended(34), //
+        Cloth(35), //
+        PistonBlockFiller(36), //
         YellowFlower(37), // 
         RedRose(38), // 
         BrownMushroom(39), // 
@@ -400,14 +404,14 @@ public class Block {
     }
 
     /**
-     * Returns the destruction status of this block.
+     * Returns the status of this block.
      * 
-     * @return 0 = Started Digging, 1 = Digging, 2 = Stopped digging, 3 = Block
-     *         broken. Note: You have to return true for onBlockDestroy for all
-     *         of these (except 2) to prevent the block from being destroyed.
-     *         Returning false just on block broken will not work. Another note
-     *         is that 0 is called often, far less than 1 but is still called.
-     *         Good for toggling something.
+     * @return The current status of the block, value depends on what hook you
+     * called.
+     *
+     * @see PluginListener#onBlockDestroy(Player, Block)
+     * @see PluginListener#onExplode(Block)
+     * @see PluginListener#onIgnite(Block, Player)
      */
     public int getStatus() {
         return status;
@@ -415,6 +419,7 @@ public class Block {
 
     /**
      * Sets the current destruction status of this block.
+     * For CanaryMod internal use only!
      * 
      * @param status
      */
@@ -585,10 +590,20 @@ public class Block {
         return hash;
     }
 
+    /**
+     * Returns whether this block is cloth
+     *
+     * @return true if this block us cloth
+     */
     public boolean isCloth() {
         return blockType == Type.Cloth;
     }
 
+    /**
+     * Get this block's {@link Cloth.Color Color} (if it is cloth)
+     * 
+     * @return the {@link Cloth.Color Color}
+     */
     public Cloth.Color getColor() {
         if (!isCloth())
             return null;

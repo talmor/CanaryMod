@@ -204,6 +204,18 @@ public class PluginLoader {
          */
         THUNDER_CHANGE,
         /**
+         * Calls {@link PluginListener#onPortalUse(Player, World) }
+         */
+        PORTAL_USE,
+        /**
+         * Calls {@link PluginListener#onTimeChange(World, long) }
+         */
+        TIME_CHANGE,
+        /**
+         * Calls {@link PluginListener#canPlayerUseCommand(Player, String) }
+         */
+        COMMAND_CHECK,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -490,6 +502,7 @@ public class PluginLoader {
                 break;
             case LIQUID_DESTROY:
             case TAME:
+    		case COMMAND_CHECK:
                 toRet = HookResult.DEFAULT_ACTION;
                 break;
             default:
@@ -633,7 +646,8 @@ public class PluginLoader {
                                     toRet = true;
                                 break;
                             case BLOCK_RIGHTCLICKED:
-                                listener.onBlockRightClicked((Player) parameters[0], (Block) parameters[1], (Item) parameters[2]);
+                                if (listener.onBlockRightClick((Player) parameters[0], (Block) parameters[1], (Item) parameters[2]))
+                                    toRet = true;
                                 break;
                             case BLOCK_PLACE:
                                 if (listener.onBlockPlace((Player) parameters[0], (Block) parameters[1], (Block) parameters[2], (Item) parameters[3]))
@@ -680,6 +694,17 @@ public class PluginLoader {
                                 if (listener.onThunderChange((World) parameters[0], (Boolean) parameters[1]))
                                     toRet = true;
                                 break;
+                            case PORTAL_USE:
+                                if (listener.onPortalUse((Player) parameters[0], (World) parameters[1]))
+                                    toRet = true;
+                                break;
+                            case TIME_CHANGE:
+                                if (listener.onTimeChange((World) parameters[0], (long)(Long) parameters[1]))
+                                    toRet = true;
+                            case COMMAND_CHECK:
+                                ret = listener.canPlayerUseCommand((Player)parameters[0], (String)parameters[1]);
+                                if(ret != HookResult.DEFAULT_ACTION)
+                                    toRet = ret;
                         }
                     } catch (UnsupportedOperationException ex) {
                     }

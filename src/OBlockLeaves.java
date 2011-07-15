@@ -22,7 +22,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
                for(int var9 = -var5; var9 <= var5; ++var9) {
                   int var10 = var1.a(var2 + var7, var3 + var8, var4 + var9);
                   if(var10 == OBlock.L.bn) {
-                     int var11 = var1.b(var2 + var7, var3 + var8, var4 + var9);
+                     int var11 = var1.c(var2 + var7, var3 + var8, var4 + var9);
                      var1.d(var2 + var7, var3 + var8, var4 + var9, var11 | 8);
                   }
                }
@@ -34,7 +34,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
 
    public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
       if(!var1.B) {
-         int var6 = var1.b(var2, var3, var4);
+         int var6 = var1.c(var2, var3, var4);
          if((var6 & 8) != 0) {
             byte var7 = 4;
             int var8 = var7 + 1;
@@ -116,7 +116,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
       World world = var1.world;
       Block block = new Block(world, world.getBlockIdAt(var2, var3, var4), var2, var3, var4);
       if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.LEAF_DECAY, block)) {
-         this.b_(var1, var2, var3, var4, var1.b(var2, var3, var4));
+         this.g(var1, var2, var3, var4, var1.c(var2, var3, var4));
          var1.e(var2, var3, var4, 0);
        }
    }
@@ -129,7 +129,17 @@ public class OBlockLeaves extends OBlockLeavesBase {
       return OBlock.z.bn;
    }
 
-   protected int b(int var1) {
+   public void a(OWorld var1, OEntityPlayer var2, int var3, int var4, int var5, int var6) {
+      if(!var1.B && var2.G() != null && var2.G().c == OItem.bc.bf) {
+         var2.a(OStatList.C[this.bn], 1);
+         this.a(var1, var3, var4, var5, new OItemStack(OBlock.L.bn, 1, var6 & 3));
+      } else {
+         super.a(var1, var2, var3, var4, var5, var6);
+      }
+
+   }
+
+   protected int a_(int var1) {
       return var1 & 3;
    }
 

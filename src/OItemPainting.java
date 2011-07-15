@@ -35,7 +35,7 @@ public class OItemPainting extends OItem {
                // CanaryMod: Painting place hook
                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) var2).getPlayer(), null, blockClicked, new Item(var1)))
                   return false;
-               var3.b(var9);
+               var3.b((OEntity)var9);
             }
 
             --var1.a;

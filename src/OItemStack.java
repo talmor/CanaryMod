@@ -21,15 +21,15 @@ public final class OItemStack {
    }
 
    public OItemStack(OItem var1) {
-      this(var1.be, 1, 0);
+      this(var1.bf, 1, 0);
    }
 
    public OItemStack(OItem var1, int var2) {
-      this(var1.be, var2, 0);
+      this(var1.bf, var2, 0);
    }
 
    public OItemStack(OItem var1, int var2, int var3) {
-      this(var1.be, var2, var3);
+      this(var1.bf, var2, var3);
    }
 
    public OItemStack(int var1, int var2, int var3) {
@@ -141,7 +141,7 @@ public final class OItemStack {
    }
 
    public void a(OEntityLiving var1, OEntityPlayer var2) {
-      boolean var3 = OItem.c[this.c].a(this, var1, var2);
+      boolean var3 = OItem.c[this.c].a(this, var1, (OEntityLiving)var2);
       if(var3) {
          var2.a(OStatList.E[this.c], 1);
       }
@@ -164,8 +164,7 @@ public final class OItemStack {
       return OItem.c[this.c].a(var1);
    }
 
-   public void a(OEntityPlayer var1) {
-   }
+   public void a(OEntityPlayer var1) {}
 
    public void a(OEntityLiving var1) {
       OItem.c[this.c].a(this, var1);

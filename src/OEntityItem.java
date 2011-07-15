@@ -14,7 +14,7 @@ public class OEntityItem extends OEntity {
       super(var1);
       this.b(0.25F, 0.25F);
       this.bi = this.bk / 2.0F;
-      this.a(var2, var4, var6);
+      this.c(var2, var4, var6);
       this.a = var8;
       this.aV = (float)(Math.random() * 360.0D);
       this.aS = (double)((float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D));
@@ -32,11 +32,10 @@ public class OEntityItem extends OEntity {
       this.bi = this.bk / 2.0F;
    }
 
-   protected void b() {
-   }
+   protected void b() {}
 
-   public void o_() {
-      super.o_();
+   public void m_() {
+      super.m_();
       if(this.c > 0) {
          --this.c;
       }
@@ -45,7 +44,7 @@ public class OEntityItem extends OEntity {
       this.aN = this.aQ;
       this.aO = this.aR;
       this.aT -= 0.03999999910593033D;
-      if(this.aL.c(OMathHelper.b(this.aP), OMathHelper.b(this.aQ), OMathHelper.b(this.aR)) == OMaterial.h) {
+      if(this.aL.d(OMathHelper.b(this.aP), OMathHelper.b(this.aQ), OMathHelper.b(this.aR)) == OMaterial.h) {
          this.aT = 0.20000000298023224D;
          this.aS = (double)((this.bv.nextFloat() - this.bv.nextFloat()) * 0.2F);
          this.aU = (double)((this.bv.nextFloat() - this.bv.nextFloat()) * 0.2F);
@@ -53,7 +52,7 @@ public class OEntityItem extends OEntity {
       }
 
       this.g(this.aP, (this.aZ.b + this.aZ.e) / 2.0D, this.aR);
-      this.c(this.aS, this.aT, this.aU);
+      this.a(this.aS, this.aT, this.aU);
       float var1 = 0.98F;
       if(this.ba) {
          var1 = 0.58800006F;
@@ -73,7 +72,7 @@ public class OEntityItem extends OEntity {
       ++this.e;
       ++this.b;
       if(this.b >= 6000) {
-         this.I();
+         this.J();
       }
 
    }
@@ -87,10 +86,10 @@ public class OEntityItem extends OEntity {
    }
 
    public boolean a(OEntity var1, int var2) {
-      this.ae();
+      this.af();
       this.f -= var2;
       if(this.f <= 0) {
-         this.I();
+         this.J();
       }
 
       return false;
@@ -118,17 +117,17 @@ public class OEntityItem extends OEntity {
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, ((OEntityPlayerMP) var1).getPlayer(), item))
                return;
             if(this.a.c == OBlock.K.bn) {
-               var1.a(OAchievementList.g);
+               var1.a((OStatBase)OAchievementList.g);
             }
 
-            if(this.a.c == OItem.aD.be) {
-               var1.a(OAchievementList.t);
+            if(this.a.c == OItem.aD.bf) {
+               var1.a((OStatBase)OAchievementList.t);
             }
 
             this.aL.a(this, "random.pop", 0.2F, ((this.bv.nextFloat() - this.bv.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             var1.b(this, var2);
             if(this.a.a <= 0) {
-               this.I();
+               this.J();
             }
          }
 

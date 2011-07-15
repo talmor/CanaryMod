@@ -101,10 +101,10 @@ public class etc {
             loadIds(itemSpawnBlacklist, properties.getString("itemspawnblacklist", ""));
             motd = properties.getString("motd", "Type /help for a list of commands.").split("@");
             playerLimit = properties.getInt("max-players", 20);
-            saveHomes = properties.getBoolean("save-homes", true);
-            whitelistEnabled = properties.getBoolean("whitelist", false);
+            saveHomes = properties.getBoolean("save-homes");
+            whitelistEnabled = properties.getBoolean("whitelist");
             whitelistMessage = properties.getString("whitelist-message", "Not on whitelist.");
-            reservelistEnabled = properties.getBoolean("reservelist", false);
+            reservelistEnabled = properties.getBoolean("reservelist");
             if (dataSourceType.equalsIgnoreCase("flatfile")) {
                 usersLoc = properties.getString("admintxtlocation", "users.txt");
                 kitsLoc = properties.getString("kitstxtlocation", "kits.txt");
@@ -476,7 +476,8 @@ public class etc {
             builder.append(string[i]);
             builder.append(seperator);
         }
-        builder.deleteCharAt(builder.length() - seperator.length()); // remove
+    	if (builder.length() > 0) //Skye's fix for OutOfBounds exception.
+    		builder.deleteCharAt(builder.length() - seperator.length()); // remove
         // the
         // extra
         // seperator

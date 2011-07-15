@@ -100,7 +100,7 @@ public class OExplosion {
 
       for(int var31 = 0; var31 < var29.size(); ++var31) {
          OEntity var32 = (OEntity)var29.get(var31);
-         double var33 = var32.e(this.b, this.c, this.d) / (double)this.f;
+         double var33 = var32.f(this.b, this.c, this.d) / (double)this.f;
          if(var33 <= 1.0D) {
             var15 = var32.aP - this.b;
             var17 = var32.aQ - this.c;
@@ -128,15 +128,15 @@ public class OExplosion {
       ArrayList var50 = new ArrayList();
       var50.addAll(this.g);
       if(this.a) {
-         for(int var48 = var50.size() - 1; var48 >= 0; --var48) {
-            OChunkPosition var43 = (OChunkPosition)var50.get(var48);
-            int var49 = var43.a;
+         for(int var49 = var50.size() - 1; var49 >= 0; --var49) {
+            OChunkPosition var43 = (OChunkPosition)var50.get(var49);
+            int var48 = var43.a;
             int var44 = var43.b;
             int var45 = var43.c;
-            int var46 = this.i.a(var49, var44, var45);
-            int var47 = this.i.a(var49, var44 - 1, var45);
+            int var46 = this.i.a(var48, var44, var45);
+            int var47 = this.i.a(var48, var44 - 1, var45);
             if(var46 == 0 && OBlock.o[var47] && this.h.nextInt(3) == 0) {
-               this.i.e(var49, var44, var45, OBlock.as.bn);
+               this.i.e(var48, var44, var45, OBlock.as.bn);
             }
          }
       }
@@ -175,9 +175,9 @@ public class OExplosion {
          }
 
          if(var8 > 0) {
-            OBlock.m[var8].a(this.i, var5, var6, var7, this.i.b(var5, var6, var7), 0.3F);
+            OBlock.m[var8].a(this.i, var5, var6, var7, this.i.c(var5, var6, var7), 0.3F);
             this.i.e(var5, var6, var7, 0);
-            OBlock.m[var8].c(this.i, var5, var6, var7);
+            OBlock.m[var8].d(this.i, var5, var6, var7);
          }
       }
 

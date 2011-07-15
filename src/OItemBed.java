@@ -39,7 +39,7 @@ public class OItemBed extends OItem {
          if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) var2).getPlayer(), blockClicked, new Block(var3.world, OBlock.T.bn, var4, var5, var6), new Item(var1)))
             return false;
 
-         if(var3.e(var4, var5, var6) && var3.e(var4 + var10, var5, var6 + var11) && var3.d(var4, var5 - 1, var6) && var3.d(var4 + var10, var5 - 1, var6 + var11)) {
+         if(var3.f(var4, var5, var6) && var3.f(var4 + var10, var5, var6 + var11) && var3.e(var4, var5 - 1, var6) && var3.e(var4 + var10, var5 - 1, var6 + var11)) {
             var3.b(var4, var5, var6, var8.bn, var9);
             var3.b(var4 + var10, var5, var6 + var11, var8.bn, var9 + 8);
             --var1.a;

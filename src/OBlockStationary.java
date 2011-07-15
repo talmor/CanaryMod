@@ -12,8 +12,8 @@ public class OBlockStationary extends OBlockFluid {
 
    }
 
-   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
-      super.a(var1, var2, var3, var4, var5);
+   public void b(OWorld var1, int var2, int var3, int var4, int var5) {
+      super.b(var1, var2, var3, var4, var5);
       if(var1.a(var2, var3, var4) == this.bn) {
          this.i(var1, var2, var3, var4);
       }
@@ -21,7 +21,7 @@ public class OBlockStationary extends OBlockFluid {
    }
 
    private void i(OWorld var1, int var2, int var3, int var4) {
-      int var5 = var1.b(var2, var3, var4);
+      int var5 = var1.c(var2, var3, var4);
       var1.o = true;
       var1.a(var2, var3, var4, this.bn - 1, var5);
       var1.b(var2, var3, var4, var2, var3, var4);
@@ -58,6 +58,6 @@ public class OBlockStationary extends OBlockFluid {
    }
 
    private boolean j(OWorld var1, int var2, int var3, int var4) {
-      return var1.c(var2, var3, var4).e();
+      return var1.d(var2, var3, var4).e();
    }
 }

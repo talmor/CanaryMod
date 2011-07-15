@@ -7,6 +7,7 @@ public class OItemMinecart extends OItem {
 
    public OItemMinecart(int var1, int var2) {
       super(var1);
+      this.bg = 1;
       this.a = var2;
    }
 
@@ -20,7 +21,7 @@ public class OItemMinecart extends OItem {
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, block, block, new Item(var1)))
                return false;
 
-            var3.b(new OEntityMinecart(var3, (double)((float)var4 + 0.5F), (double)((float)var5 + 0.5F), (double)((float)var6 + 0.5F), this.a));
+            var3.b((OEntity)(new OEntityMinecart(var3, (double)((float)var4 + 0.5F), (double)((float)var5 + 0.5F), (double)((float)var6 + 0.5F), this.a)));
          }
 
          --var1.a;

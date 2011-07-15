@@ -10,6 +10,7 @@ public class OTileEntity {
    public int e;
    public int f;
    public int g;
+   protected boolean h;
 
 
    private static void a(Class var0, String var1) {
@@ -41,8 +42,7 @@ public class OTileEntity {
       }
    }
 
-   public void g_() {
-   }
+   public void g_() {}
 
    public static OTileEntity c(ONBTTagCompound var0) {
       OTileEntity var1 = null;
@@ -67,6 +67,10 @@ public class OTileEntity {
       return var1;
    }
 
+   public int e() {
+      return this.d.c(this.e, this.f, this.g);
+   }
+
    public void i() {
       if(this.d != null) {
          this.d.b(this.e, this.f, this.g, this);
@@ -74,8 +78,20 @@ public class OTileEntity {
 
    }
 
-   public OPacket e() {
+   public OPacket f() {
       return null;
+   }
+
+   public boolean g() {
+      return this.h;
+   }
+
+   public void h() {
+      this.h = true;
+   }
+
+   public void j() {
+      this.h = false;
    }
 
    static {
@@ -86,5 +102,6 @@ public class OTileEntity {
       a(OTileEntitySign.class, "Sign");
       a(OTileEntityMobSpawner.class, "MobSpawner");
       a(OTileEntityNote.class, "Music");
+      a(OTileEntityPiston.class, "Piston");
    }
 }

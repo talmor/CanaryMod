@@ -7,7 +7,7 @@ public class OBlockPortal extends OBlockBreakable {
       super(var1, var2, OMaterial.y, false);
    }
 
-   public OAxisAlignedBB d(OWorld var1, int var2, int var3, int var4) {
+   public OAxisAlignedBB e(OWorld var1, int var2, int var3, int var4) {
       return null;
    }
 
@@ -84,7 +84,7 @@ public class OBlockPortal extends OBlockBreakable {
       }
    }
 
-   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+   public void b(OWorld var1, int var2, int var3, int var4, int var5) {
       byte var6 = 0;
       byte var7 = 1;
       if(var1.a(var2 - 1, var3, var4) == this.bn || var1.a(var2 + 1, var3, var4) == this.bn) {
@@ -128,7 +128,7 @@ public class OBlockPortal extends OBlockBreakable {
 
    public void a(OWorld var1, int var2, int var3, int var4, OEntity var5) {
       if(var5.aK == null && var5.aJ == null) {
-         var5.O();
+         var5.P();
       }
 
    }

@@ -20,7 +20,7 @@ public class OItemBlock extends OItem {
       Block blockClicked = new Block(var3.world, blockClickedId, var4, var5, var6);
 
 
-       if(var3.a(var4, var5, var6) == OBlock.aT.bn) {
+      if(var3.a(var4, var5, var6) == OBlock.aT.bn) {
          var7 = 0;
       } else {
          if(var7 == 0) {
@@ -62,7 +62,7 @@ public class OItemBlock extends OItem {
       // CanaryMod Store all the old settings 'externally' in case someone changes
       // blockPlaced.
       int oldMaterial = var3.a(var4, var5, var6);
-      int oldData = var3.b(var4, var5, var6);
+      int oldData = var3.c(var4, var5, var6);
 
       if(var5 == 127 && OBlock.m[this.a].bA.a()) {
          return false;
@@ -81,8 +81,8 @@ public class OItemBlock extends OItem {
                var3.b(var4, var5, var6, oldMaterial);
                var3.d(var4, var5, var6, oldData);
             } else {
-               OBlock.m[this.a].d(var3, var4, var5, var6, var7);
-               OBlock.m[this.a].a(var3, var4, var5, var6, var2);
+               OBlock.m[this.a].e(var3, var4, var5, var6, var7);
+               OBlock.m[this.a].a(var3, var4, var5, var6, (OEntityLiving)var2);
                var3.a((double)((float)var4 + 0.5F), (double)((float)var5 + 0.5F), (double)((float)var6 + 0.5F), var8.by.c(), (var8.by.a() + 1.0F) / 2.0F, var8.by.b() * 0.8F);
                --var1.a;
          }
@@ -94,6 +94,6 @@ public class OItemBlock extends OItem {
    }
 
    public String a() {
-      return OBlock.m[this.a].h();
+      return OBlock.m[this.a].l();
    }
 }

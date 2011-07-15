@@ -53,7 +53,7 @@ public class MobSpawner implements ComplexBlock {
      * @param spawn
      */
     public void setSpawn(String spawn) {
-        spawner.h = spawn;
+        spawner.i = spawn;
         update();
     }
 
@@ -63,7 +63,7 @@ public class MobSpawner implements ComplexBlock {
      * @return
      */
     public String getSpawn() {
-        return spawner.h;
+        return spawner.i;
     }
 
     /**

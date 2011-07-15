@@ -408,6 +408,6 @@ public class BaseEntity {
      * Destroys this entity
      */
     public void destroy() {
-        entity.I();
+        entity.J();
     }
 }

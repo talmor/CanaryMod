@@ -1,4 +1,4 @@
-public class PlayerInventory extends ItemArray<OInventoryPlayer> implements Inventory {
+public class PlayerInventory extends ItemArray implements Inventory {
     private final OEntityPlayerMP user;
 
     public PlayerInventory(Player player) {
@@ -54,7 +54,7 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> implements Inve
 
     @Override
     public void update() {
-        user.o_();
+        user.m_();
     }
 
     /**

@@ -171,7 +171,7 @@ public class PluginListener {
      * @return false if you want the action to go through
      * 
      * @deprecated use onBlockRightClick to get the information
-     * @see #onBlockRightClicked(Player, Block, Item)
+     * @see #onBlockRightClick(Player, Block, Item)
      * @see #onBlockPlace(Player, Block, Block, Item)
      * @see #onItemUse(Player, Block, Block, Item)
      */
@@ -182,6 +182,7 @@ public class PluginListener {
 
     /**
      * Called when a person left clicks a block.
+     * Block status: 0 = Started Digging, 2 = Stopped digging.
      * 
      * @param player
      * @param block
@@ -243,7 +244,7 @@ public class PluginListener {
      * Called when either a lava block or a lighter tryes to light something on
      * fire. block status depends on the light source: 1 = lava. 2 = lighter
      * (flint + steel). 3 = spread (dynamic spreading of fire). 4 = fire
-     * destroying a block.
+     * destroying a block. 5 = lightning
      *
      * @param block
      *            block that the fire wants to spawn in.
@@ -481,13 +482,30 @@ public class PluginListener {
      * Called when someone presses right click aimed at a block. You can
      * intercept this to add your own right click actions to different item
      * types (see itemInHand)
-     * 
+     *
+     * @deprecated Use {@link #onBlockRightClick(Player, Block, Item) } instead.
      * @param player
      * @param blockClicked
      * @param itemInHand
      */
+    @Deprecated
     public void onBlockRightClicked(Player player, Block blockClicked, Item itemInHand) {
 
+    }
+
+    /**
+     * Called when someone presses right click aimed at a block. You can
+     * intercept this to add your own right click actions to different item
+     * types (see itemInHand)
+     *
+     * @param player
+     * @param blockClicked
+     * @param itemInHand
+     * @return true if you wish to cancel the click
+     */
+    public boolean onBlockRightClick(Player player, Block blockClicked, Item itemInHand) {
+        onBlockRightClicked(player, blockClicked, itemInHand);
+        return false;
     }
 
     /**
@@ -656,4 +674,43 @@ public class PluginListener {
             return onThunderChange(newValue);
         return false;
     }
+    
+    /**
+     * Called when a player uses a portal
+     * @param player
+     * @param from The world the player wants to leave
+     * @return true to prevent the player from using the portal
+     */
+    public boolean onPortalUse(Player player, World from)
+    {
+        return false;
+    }
+    
+    /**
+      * Called when the time changes
+      *
+      * @param world
+      *            The {@link World} the time changes in
+      * @param newValue
+      *            The new time value
+      * @return true to prevent the time from changing
+      */
+     public boolean onTimeChange(World world, long newValue)
+     {
+         return false;
+     }
+     
+     
+      
+     /**
+      * Called when a player tries to use a command.
+      * @param player
+      *            Player who wants to use the command.
+      * @param wolf
+      * @return Whether the player is allowed (ALLOW_ACTION),
+      *            prohibited (PREVENT_ACTION), or when another plugin should decide (DEFAULT_ACTION)
+      */
+     public PluginLoader.HookResult canPlayerUseCommand(Player player, String command) {
+         return PluginLoader.HookResult.DEFAULT_ACTION;
+     }
 }

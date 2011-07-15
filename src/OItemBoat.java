@@ -4,6 +4,7 @@ public class OItemBoat extends OItem {
 
    public OItemBoat(int var1) {
       super(var1);
+      this.bg = 1;
    }
 
    public OItemStack a(OItemStack var1, OWorld var2, OEntityPlayer var3) {
@@ -42,7 +43,7 @@ public class OItemBoat extends OItem {
                if (var3 instanceof OEntityPlayerMP && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) var3).getPlayer(), blockPlaced, blockClicked, new Item(var1)))
                   return var1;
 
-               var2.b(new OEntityBoat(var2, (double)((float)var25 + 0.5F), (double)((float)var26 + 1.0F), (double)((float)var27 + 0.5F)));
+               var2.b((OEntity)(new OEntityBoat(var2, (double)((float)var25 + 0.5F), (double)((float)var26 + 1.0F), (double)((float)var27 + 0.5F))));
             }
 
             --var1.a;

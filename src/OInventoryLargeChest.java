@@ -21,8 +21,8 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
       return this.a;
    }
 
-   public OItemStack c_(int var1) {
-      return var1 >= this.b.a()?this.c.c_(var1 - this.b.a()):this.b.c_(var1);
+   public OItemStack d_(int var1) {
+      return var1 >= this.b.a()?this.c.d_(var1 - this.b.a()):this.b.d_(var1);
    }
 
    public OItemStack a(int var1, int var2) {
@@ -71,7 +71,7 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
 
     @Override
     public OItemStack getContentsAt(int index) {
-        return c_(index);
+        return d_(index);
     }
 
     @Override

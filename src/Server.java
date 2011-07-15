@@ -401,7 +401,7 @@ public class Server {
      */
     @Deprecated
     public int getBlockData(int x, int y, int z) {
-        return server.a(0).b(x, y, z);
+        return server.a(0).c(x, y, z);
     }
 
     /**
@@ -544,7 +544,7 @@ public class Server {
      */
     @Deprecated
     public ComplexBlock getOnlyComplexBlock(int x, int y, int z) {
-        OTileEntity localav = server.a(0).n(x, y, z);
+        OTileEntity localav = server.a(0).b(x, y, z);
         if (localav != null)
             if (localav instanceof OTileEntityChest)
                 return new Chest((OTileEntityChest) localav);

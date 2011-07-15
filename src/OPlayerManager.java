@@ -159,10 +159,12 @@ public class OPlayerManager {
       return this.f * 16 - 16;
    }
 
+   // $FF: synthetic method
    static OPlayerHash a(OPlayerManager var0) {
       return var0.b;
    }
 
+   // $FF: synthetic method
    static List b(OPlayerManager var0) {
       return var0.c;
    }

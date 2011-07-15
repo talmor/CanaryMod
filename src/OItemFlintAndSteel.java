@@ -4,6 +4,7 @@ public class OItemFlintAndSteel extends OItem {
 
    public OItemFlintAndSteel(int var1) {
       super(var1);
+      this.bg = 1;
       this.d(64);
    }
 

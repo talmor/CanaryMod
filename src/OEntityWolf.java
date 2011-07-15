@@ -15,6 +15,7 @@ public class OEntityWolf extends OEntityAnimal {
 
    public OEntityWolf(OWorld var1) {
       super(var1);
+      this.R = "/mob/wolf.png";
       this.b(0.8F, 0.8F);
       this.aE = 1.1F;
       this.ab = 8;
@@ -55,7 +56,7 @@ public class OEntityWolf extends OEntityAnimal {
 
    }
 
-   protected boolean l_() {
+   protected boolean h_() {
       return !this.A();
    }
 
@@ -81,24 +82,24 @@ public class OEntityWolf extends OEntityAnimal {
 
    protected void c_() {
       super.c_();
-      if(!this.e && !this.B() && this.A() && this.aK == null) {
+      if(!this.e && !this.C() && this.A() && this.aK == null) {
          OEntityPlayer var3 = this.aL.a(this.x());
          if(var3 != null) {
             float var2 = var3.f(this);
             if(var2 > 5.0F) {
                this.c(var3, var2);
             }
-         } else if(!this.ac()) {
+         } else if(!this.ad()) {
             this.b(true);
          }
-      } else if(this.d == null && !this.B() && !this.A() && this.aL.r.nextInt(100) == 0) {
+      } else if(this.d == null && !this.C() && !this.A() && this.aL.r.nextInt(100) == 0) {
          List var1 = this.aL.a(OEntitySheep.class, OAxisAlignedBB.b(this.aP, this.aQ, this.aR, this.aP + 1.0D, this.aQ + 1.0D, this.aR + 1.0D).b(16.0D, 4.0D, 16.0D));
          if(!var1.isEmpty()) {
             this.c((OEntity)var1.get(this.aL.r.nextInt(var1.size())));
          }
       }
 
-      if(this.ac()) {
+      if(this.ad()) {
          this.b(false);
       }
 
@@ -108,16 +109,16 @@ public class OEntityWolf extends OEntityAnimal {
 
    }
 
-   public void u() {
-      super.u();
+   public void v() {
+      super.v();
       this.a = false;
-      if(this.U() && !this.B() && !this.z()) {
-         OEntity var1 = this.V();
+      if(this.V() && !this.C() && !this.z()) {
+         OEntity var1 = this.W();
          if(var1 instanceof OEntityPlayer) {
             OEntityPlayer var2 = (OEntityPlayer)var1;
             OItemStack var3 = var2.i.b();
             if(var3 != null) {
-               if(!this.A() && var3.c == OItem.aV.be) {
+               if(!this.A() && var3.c == OItem.aV.bf) {
                   this.a = true;
                } else if(this.A() && OItem.c[var3.c] instanceof OItemFood) {
                   this.a = ((OItemFood)OItem.c[var3.c]).l();
@@ -126,7 +127,7 @@ public class OEntityWolf extends OEntityAnimal {
          }
       }
 
-      if(!this.Y && this.f && !this.g && !this.B() && this.ba) {
+      if(!this.Y && this.f && !this.g && !this.C() && this.ba) {
          this.g = true;
          this.h = 0.0F;
          this.i = 0.0F;
@@ -135,8 +136,8 @@ public class OEntityWolf extends OEntityAnimal {
 
    }
 
-   public void o_() {
-      super.o_();
+   public void m_() {
+      super.m_();
       this.c = this.b;
       if(this.a) {
          this.b += (1.0F - this.b) * 0.4F;
@@ -148,7 +149,7 @@ public class OEntityWolf extends OEntityAnimal {
          this.aF = 10;
       }
 
-      if(this.ab()) {
+      if(this.ac()) {
          this.f = true;
          this.g = false;
          this.h = 0.0F;
@@ -181,12 +182,12 @@ public class OEntityWolf extends OEntityAnimal {
 
    }
 
-   public float s() {
+   public float t() {
       return this.bk * 0.8F;
    }
 
-   protected int v() {
-      return this.y()?20:super.v();
+   protected int u() {
+      return this.y()?20:super.u();
    }
 
    private void c(OEntity var1, float var2) {
@@ -198,7 +199,7 @@ public class OEntityWolf extends OEntityAnimal {
 
          for(int var7 = 0; var7 <= 4; ++var7) {
             for(int var8 = 0; var8 <= 4; ++var8) {
-               if((var7 < 1 || var8 < 1 || var7 > 3 || var8 > 3) && this.aL.d(var4 + var7, var6 - 1, var5 + var8) && !this.aL.d(var4 + var7, var6, var5 + var8) && !this.aL.d(var4 + var7, var6 + 1, var5 + var8)) {
+               if((var7 < 1 || var8 < 1 || var7 > 3 || var8 > 3) && this.aL.e(var4 + var7, var6 - 1, var5 + var8) && !this.aL.e(var4 + var7, var6, var5 + var8) && !this.aL.e(var4 + var7, var6 + 1, var5 + var8)) {
                   this.c((double)((float)(var4 + var7) + 0.5F), (double)var6, (double)((float)(var5 + var8) + 0.5F), this.aV, this.aW);
                   return;
                }
@@ -289,7 +290,7 @@ public class OEntityWolf extends OEntityAnimal {
    public boolean a(OEntityPlayer var1) {
       OItemStack var2 = var1.i.b();
       if(!this.A()) {
-         if(var2 != null && var2.c == OItem.aV.be && !this.z()) {
+         if(var2 != null && var2.c == OItem.aV.bf && !this.z()) {
             --var2.a;
             if(var2.a <= 0) {
                var1.i.a(var1.i.c, (OItemStack)null);

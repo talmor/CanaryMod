@@ -15,7 +15,7 @@ public class OItemSeeds extends OItem {
          return false;
       } else {
          int var8 = var3.a(var4, var5, var6);
-         if(var8 == OBlock.aB.bn && var3.e(var4, var5 + 1, var6)) {
+         if(var8 == OBlock.aB.bn && var3.f(var4, var5 + 1, var6)) {
             // CanaryMod: Seeds
             Block blockClicked = new Block(var3.world, var8, var4, var5, var6);
             blockClicked.setFaceClicked(Block.Face.fromId(var7));

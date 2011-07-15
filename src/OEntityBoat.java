@@ -31,8 +31,7 @@ public class OEntityBoat extends OEntity {
       return false;
    }
 
-   protected void b() {
-   }
+   protected void b() {}
 
    public OAxisAlignedBB a_(OEntity var1) {
       return var1.aZ;
@@ -48,7 +47,7 @@ public class OEntityBoat extends OEntity {
 
    public OEntityBoat(OWorld var1, double var2, double var4, double var6) {
       this(var1);
-      this.a(var2, var4 + (double)this.bi, var6);
+      this.c(var2, var4 + (double)this.bi, var6);
       this.aS = 0.0D;
       this.aT = 0.0D;
       this.aU = 0.0D;
@@ -73,10 +72,10 @@ public class OEntityBoat extends OEntity {
          this.c = -this.c;
          this.b = 10;
          this.a += var2 * 10;
-         this.ae();
+         this.af();
          if(this.a > 40) {
             if(this.aJ != null) {
-               this.aJ.b(this);
+               this.aJ.b((OEntity)this);
             }
 
             int var3;
@@ -85,10 +84,10 @@ public class OEntityBoat extends OEntity {
             }
 
             for(var3 = 0; var3 < 2; ++var3) {
-               this.a(OItem.B.be, 1, 0.0F);
+               this.a(OItem.B.bf, 1, 0.0F);
             }
 
-            this.I();
+            this.J();
          }
 
          return true;
@@ -97,12 +96,12 @@ public class OEntityBoat extends OEntity {
       }
    }
 
-   public boolean n_() {
+   public boolean l_() {
       return !this.bh;
    }
 
-   public void o_() {
-      super.o_();
+   public void m_() {
+      super.m_();
       // CanaryMod: Update of the boat
       manager.callHook(PluginLoader.Hook.VEHICLE_UPDATE, boat);
 
@@ -154,13 +153,13 @@ public class OEntityBoat extends OEntity {
             this.aV = (float)((double)this.aV + var16 / (double)this.d);
             this.aW = (float)((double)this.aW + (this.i - (double)this.aW) / (double)this.d);
             --this.d;
-            this.a(var10, var12, var14);
+            this.c(var10, var12, var14);
             this.c(this.aV, this.aW);
          } else {
             var10 = this.aP + this.aS;
             var12 = this.aQ + this.aT;
             var14 = this.aR + this.aU;
-            this.a(var10, var12, var14);
+            this.c(var10, var12, var14);
             if(this.ba) {
                this.aS *= 0.5D;
                this.aT *= 0.5D;
@@ -212,7 +211,7 @@ public class OEntityBoat extends OEntity {
             this.aU *= 0.5D;
          }
 
-         this.c(this.aS, this.aT, this.aU);
+         this.a(this.aS, this.aT, this.aU);
          var12 = Math.sqrt(this.aS * this.aS + this.aU * this.aU);
          if(var12 > 0.15D) {
             var14 = Math.cos((double)this.aV * 3.141592653589793D / 180.0D);
@@ -237,7 +236,7 @@ public class OEntityBoat extends OEntity {
 
          if(this.bb && var12 > 0.15D) {
             if(!this.aL.B) {
-               this.I();
+               this.J();
 
                int var27;
                for(var27 = 0; var27 < 3; ++var27) {
@@ -245,7 +244,7 @@ public class OEntityBoat extends OEntity {
                }
 
                for(var27 = 0; var27 < 2; ++var27) {
-                  this.a(OItem.B.be, 1, 0.0F);
+                  this.a(OItem.B.bf, 1, 0.0F);
                }
             }
          } else {
@@ -258,7 +257,7 @@ public class OEntityBoat extends OEntity {
          var14 = (double)this.aV;
          var16 = this.aM - this.aP;
          double var28 = this.aO - this.aR;
-         if(var16 * var16 + var28 * var28 > 0.0010D) {
+         if(var16 * var16 + var28 * var28 > 0.001D) {
             var14 = (double)((float)(Math.atan2(var28, var16) * 180.0D / 3.141592653589793D));
          }
 
@@ -287,7 +286,7 @@ public class OEntityBoat extends OEntity {
          if (aP != prevX || aQ != prevY || aR != prevZ)
             manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, boat, (int) aP, (int) aQ, (int) aR);
 
-         List var32 = this.aL.b(this, this.aZ.b(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+         List var32 = this.aL.b((OEntity)this, this.aZ.b(0.20000000298023224D, 0.0D, 0.20000000298023224D));
          int var33;
          if(var32 != null && var32.size() > 0) {
             for(var33 = 0; var33 < var32.size(); ++var33) {
@@ -318,15 +317,13 @@ public class OEntityBoat extends OEntity {
       if(this.aJ != null) {
          double var1 = Math.cos((double)this.aV * 3.141592653589793D / 180.0D) * 0.4D;
          double var3 = Math.sin((double)this.aV * 3.141592653589793D / 180.0D) * 0.4D;
-         this.aJ.a(this.aP + var1, this.aQ + this.m() + this.aJ.H(), this.aR + var3);
+         this.aJ.c(this.aP + var1, this.aQ + this.m() + this.aJ.I(), this.aR + var3);
       }
    }
 
-   protected void b(ONBTTagCompound var1) {
-   }
+   protected void b(ONBTTagCompound var1) {}
 
-   protected void a(ONBTTagCompound var1) {
-   }
+   protected void a(ONBTTagCompound var1) {}
 
    public boolean a(OEntityPlayer var1) {
       // CanaryMod: Entering the boat
@@ -336,7 +333,7 @@ public class OEntityBoat extends OEntity {
          return true;
       } else {
          if(!this.aL.B) {
-            var1.b(this);
+            var1.b((OEntity)this);
          }
 
          return true;

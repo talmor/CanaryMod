@@ -83,14 +83,17 @@ public class ONetworkListenThread {
 
    }
 
+   // $FF: synthetic method
    static ServerSocket a(ONetworkListenThread var0) {
       return var0.d;
    }
 
+   // $FF: synthetic method
    static int b(ONetworkListenThread var0) {
       return var0.f++;
    }
 
+   // $FF: synthetic method
    static void a(ONetworkListenThread var0, ONetLoginHandler var1) {
       var0.a(var1);
    }

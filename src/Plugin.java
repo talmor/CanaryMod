@@ -1,11 +1,12 @@
+
 /**
  * Plugin.java - Extend this to create your own plugins.
  * 
  * @author James
  */
-public abstract class Plugin {
-
-    private String  name    = "";
+public abstract class Plugin
+{
+    private String name = "";
     private boolean enabled = true;
     private boolean usesListeners;
 
@@ -24,7 +25,8 @@ public abstract class Plugin {
      * 
      * @return
      */
-    public boolean isEnabled() {
+    public boolean isEnabled()
+    {
         return enabled;
     }
 
@@ -33,7 +35,8 @@ public abstract class Plugin {
      * 
      * @return
      */
-    public boolean toggleEnabled() {
+    public boolean toggleEnabled()
+    {
         enabled = !enabled;
         return enabled;
     }
@@ -43,7 +46,8 @@ public abstract class Plugin {
      * 
      * @param name
      */
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
@@ -52,13 +56,32 @@ public abstract class Plugin {
      * 
      * @return name
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * Plugin is loaded and may now register hooks
      */
-    public void initialize() {
+    public void initialize()
+    {
     }
+
+    /**
+     * Returns the default PropertiesFile for this plugin.
+     */
+    public final PropertiesFile getPropertiesFile()
+    {
+        return new PropertiesFile("plugins/" + name + "/" + name + ".properties");
+    }
+    /**
+     * Returns a PropertiesFile with the specified name for this plugin.
+     * @param filename The filename without ".properties". 
+     */
+    public final PropertiesFile getPropertiesFile(String filename)
+    {
+        return new PropertiesFile("plugins/" + name + "/" + filename + ".properties");
+    }
+
 }
