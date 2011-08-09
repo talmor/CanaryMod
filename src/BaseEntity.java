@@ -253,7 +253,7 @@ public class BaseEntity {
     }
 
     /**
-     * Get the current NoDamageTicks for this entity
+     * Get the current NoDamageTicks for this entity.
      * 
      * This gets lowered every game tick, until its smaller than half the
      * BaseNoDamageTicks it only registers any damage more than
@@ -266,7 +266,7 @@ public class BaseEntity {
     }
 
     /**
-     * Set the current NoDamageTicks for this entity
+     * Set the current NoDamageTicks for this entity.
      * 
      * This gets lowered every game tick, until its smaller than half the
      * BaseNoDamageTicks it only registers any damage more than
@@ -382,6 +382,7 @@ public class BaseEntity {
      */
     public void setMotionX(double motion) {
         entity.aS = motion;
+        entity.be = true;
     }
 
     /**
@@ -392,6 +393,7 @@ public class BaseEntity {
      */
     public void setMotionY(double motion) {
         entity.aT = motion;
+        entity.be = true;
     }
 
     /**
@@ -402,6 +404,7 @@ public class BaseEntity {
      */
     public void setMotionZ(double motion) {
         entity.aU = motion;
+        entity.be = true;
     }
 
     /**
@@ -409,5 +412,14 @@ public class BaseEntity {
      */
     public void destroy() {
         entity.J();
+    }
+
+    /**
+     * Returns this mob's name
+     *
+     * @return name
+     */
+    public String getName() {
+        return OEntityList.b(entity);
     }
 }
