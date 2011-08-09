@@ -71,6 +71,7 @@ public class Sign implements ComplexBlock {
     @Override
     public void update() {
         sign.i();
+        getWorld().getWorld().h(getX(), getY(), getZ());
     }
 
     /**

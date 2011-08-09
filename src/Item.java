@@ -108,6 +108,7 @@ public class Item {
         CakeBlock(92), //
         RedstoneRepeaterOff(93), //
         RedstoneRepeaterOn(94), //
+        TrapDoor(96), //
         IronSpade(256), //
         IronPickaxe(257), //
         IronAxe(258), //

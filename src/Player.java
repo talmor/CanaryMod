@@ -154,6 +154,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                 String str = command.substring(2);
                 log.info(getName() + " issued server command: " + str);
                 etc.getMCServer().a(str, getEntity().a);
+                return;
             }
 
             // Remove '/' before checking.

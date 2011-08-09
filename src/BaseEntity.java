@@ -253,7 +253,7 @@ public class BaseEntity {
     }
 
     /**
-     * Get the current NoDamageTicks for this entity
+     * Get the current NoDamageTicks for this entity.
      * 
      * This gets lowered every game tick, until its smaller than half the
      * BaseNoDamageTicks it only registers any damage more than
@@ -266,7 +266,7 @@ public class BaseEntity {
     }
 
     /**
-     * Set the current NoDamageTicks for this entity
+     * Set the current NoDamageTicks for this entity.
      * 
      * This gets lowered every game tick, until its smaller than half the
      * BaseNoDamageTicks it only registers any damage more than
@@ -409,5 +409,14 @@ public class BaseEntity {
      */
     public void destroy() {
         entity.J();
+    }
+
+    /**
+     * Returns this mob's name
+     *
+     * @return name
+     */
+    public String getName() {
+        return OEntityList.b(entity);
     }
 }

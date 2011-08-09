@@ -64,15 +64,6 @@ public class Mob extends LivingEntity {
     }
 
     /**
-     * Returns this mob's name
-     * 
-     * @return name
-     */
-    public String getName() {
-        return OEntityList.b(entity);
-    }
-
-    /**
      * Drops this mob's loot. Automatically called if health is set to 0.
      */
     public void dropLoot() {

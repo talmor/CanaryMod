@@ -111,11 +111,9 @@ public class OEntityItem extends OEntity {
    public void b(OEntityPlayer var1) {
       if(!this.aL.B) {
          int var2 = this.a.a;
-         if(this.c == 0 && var1.i.a(this.a)) {
-            // CanaryMod: allow item pickups
-            Item item = new Item(a.c, var2);
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, ((OEntityPlayerMP) var1).getPlayer(), item))
-               return;
+         // CanaryMod: allow item pickups
+         Item item = new Item(a.c, var2);
+         if(this.c == 0 && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, ((OEntityPlayerMP) var1).getPlayer(), item) && var1.i.a(this.a)) {
             if(this.a.c == OBlock.K.bn) {
                var1.a((OStatBase)OAchievementList.g);
             }
