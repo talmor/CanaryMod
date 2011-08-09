@@ -1,3 +1,4 @@
+
 /**
  * PluginListener.java - Extend this and register it to listen to specific
  * hooks.
@@ -5,12 +6,10 @@
  * @author Maine
  */
 public class PluginListener {
-
     /**
      * Priority - Used for priority for plugin listeners
      */
     public enum Priority {
-
         /**
          * Highly critical for hooks that absolutely must occur before any
          * others. Use carefully.
@@ -373,7 +372,6 @@ public class PluginListener {
      *            the vehicle placed
      */
     public void onVehicleCreate(BaseVehicle vehicle) {
-
     }
 
     /**
@@ -396,7 +394,6 @@ public class PluginListener {
      *            the vehicle
      */
     public void onVehicleUpdate(BaseVehicle vehicle) {
-
     }
 
     /**
@@ -418,7 +415,6 @@ public class PluginListener {
      *            the vehicle
      */
     public void onVehicleDestroyed(BaseVehicle vehicle) {
-
     }
 
     /**
@@ -430,7 +426,6 @@ public class PluginListener {
      *            the player
      */
     public void onVehicleEnter(BaseVehicle vehicle, HumanEntity player) {
-
     }
 
     /**
@@ -446,7 +441,6 @@ public class PluginListener {
      *            coordinate z
      */
     public void onVehiclePositionChange(BaseVehicle vehicle, int x, int y, int z) {
-
     }
 
     /**
@@ -490,7 +484,6 @@ public class PluginListener {
      */
     @Deprecated
     public void onBlockRightClicked(Player player, Block blockClicked, Item itemInHand) {
-
     }
 
     /**
@@ -674,43 +667,87 @@ public class PluginListener {
             return onThunderChange(newValue);
         return false;
     }
-    
+
     /**
      * Called when a player uses a portal
      * @param player
      * @param from The world the player wants to leave
      * @return true to prevent the player from using the portal
      */
-    public boolean onPortalUse(Player player, World from)
-    {
+    public boolean onPortalUse(Player player, World from) {
         return false;
     }
-    
+
     /**
-      * Called when the time changes
-      *
-      * @param world
-      *            The {@link World} the time changes in
-      * @param newValue
-      *            The new time value
-      * @return true to prevent the time from changing
-      */
-     public boolean onTimeChange(World world, long newValue)
-     {
-         return false;
-     }
-     
-     
-      
-     /**
-      * Called when a player tries to use a command.
-      * @param player
-      *            Player who wants to use the command.
-      * @param wolf
-      * @return Whether the player is allowed (ALLOW_ACTION),
-      *            prohibited (PREVENT_ACTION), or when another plugin should decide (DEFAULT_ACTION)
-      */
-     public PluginLoader.HookResult canPlayerUseCommand(Player player, String command) {
-         return PluginLoader.HookResult.DEFAULT_ACTION;
-     }
+     * Called when the time changes
+     *
+     * @param world
+     *            The {@link World} the time changes in
+     * @param newValue
+     *            The new time value
+     * @return true to prevent the time from changing
+     */
+    public boolean onTimeChange(World world, long newValue) {
+        return false;
+    }
+
+    /**
+     * Called when a player tries to use a command.
+     * @param player
+     *            Player who wants to use the command.
+     * @param wolf
+     * @return Whether the player is allowed (ALLOW_ACTION),
+     *            prohibited (PREVENT_ACTION), or when another plugin should decide (DEFAULT_ACTION)
+     */
+    public PluginLoader.HookResult canPlayerUseCommand(Player player, String command) {
+        return PluginLoader.HookResult.DEFAULT_ACTION;
+    }
+
+    /**
+     * Called before chunk is unloaded
+     * @param chunk
+     */
+    public void onChunkUnload(Chunk chunk) {
+    }
+
+    /**
+     * Called after a chunk was loaded
+     * @param chunk
+     */
+    public void onChunkLoaded(Chunk chunk) {
+    }
+
+    /**
+     * Called when a chunk is generated.
+     * Tips:
+     * Return a byte[32768] if you want to generate a new chunk.
+     * The index of the block is: (x * 16 + z) * 128 + y where 0<=x<16, 0<=z<16 and 0<=y<128
+     * Use world.getRandomSeed() or (x * 0x4f9939f508L + z * 0x1ef1565bd5L) as seed for your Random.
+     * @param x
+     * @param z
+     * @param world
+     * @return
+     *      null if you want the default world generator to create the chunk.
+     */
+    public byte[] onChunkCreate(int x, int z, World world) {
+        return null;
+    }
+
+    /**
+     * Called when a spawnpoint is generated.
+     * If you don't implement this when overriding onChunkCreate, this could cause an OutOfMemoryError.
+     * @param world
+     * @return The location of the spawnpoint. The values are rounded to integers, elevation and pitch are ignored.
+     */
+    public Location onSpawnpointCreate(World world) {
+        return null;
+    }
+
+    /**
+     * Called after a chunk was generated
+     * @param chunk
+     */
+    public void onChunkCreated(Chunk chunk) {
+    }
+
 }
