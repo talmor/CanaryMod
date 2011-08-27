@@ -42,13 +42,13 @@ public class FlatFileSource extends DataSource {
                 writer.write("#Moderator39:mods:1:0:/unban\r\n");
                 writer.write("#BobTheBuilder:vip:0:d\r\n");
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while creating " + location, e);
+                log.log(Level.SEVERE, String.format("Exception while creating %s", location), e);
             } finally {
                 try {
                     if (writer != null)
                         writer.close();
                 } catch (IOException e) {
-                    log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
+                    log.log(Level.SEVERE, String.format("Exception while closing writer for %s", location), e);
                 }
             }
         }
@@ -59,13 +59,13 @@ public class FlatFileSource extends DataSource {
                 writer = new FileWriter(location);
                 writer.write("#Whitelist. Add your users here\r\n");
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while creating " + location, e);
+                log.log(Level.SEVERE, String.format("Exception while creating %s", location), e);
             } finally {
                 try {
                     if (writer != null)
                         writer.close();
                 } catch (IOException e) {
-                    log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
+                    log.log(Level.SEVERE, String.format("Exception while closing writer for %s", location), e);
                 }
             }
         }
@@ -92,13 +92,13 @@ public class FlatFileSource extends DataSource {
                 writer.write("vip:a::default\r\n");
                 writer.write("default:f:/help,/sethome,/home,/spawn,/me,/msg,/kit,/playerlist,/warp,/motd,/compass,/tell,/m,/who:default\r\n");
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while creating " + location, e);
+                log.log(Level.SEVERE, String.format("Exception while creating %s", location), e);
             } finally {
                 try {
                     if (writer != null)
                         writer.close();
                 } catch (IOException e) {
-                    log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
+                    log.log(Level.SEVERE, String.format("Exception while closing writer for %s", location), e);
                 }
             }
         }
@@ -107,12 +107,18 @@ public class FlatFileSource extends DataSource {
             groups = new ArrayList<Group>();
             try {
                 Scanner scanner = new Scanner(new File(location));
+                int linenum = 0;
                 while (scanner.hasNextLine()) {
+                    linenum++;
                     String line = scanner.nextLine();
                     if (line.startsWith("#") || line.equals("") || line.startsWith("﻿"))
                         continue;
 
                     String[] split = line.split(":");
+                    if(split.length<3){
+                        log.log(Level.SEVERE,String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
+                        continue;
+                    }
                     Group group = new Group();
                     group.Name = split[0];
                     group.Prefix = split[1];
@@ -138,7 +144,7 @@ public class FlatFileSource extends DataSource {
                 }
                 scanner.close();
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while reading " + location + " (Are you sure you formatted it correctly?)", e);
+                log.log(Level.SEVERE, String.format("Exception while reading %s (Are you sure you formatted it correctly?)", location), e);
             }
         }
     }
@@ -153,12 +159,12 @@ public class FlatFileSource extends DataSource {
                 writer = new FileWriter(location);
                 writer.write("#Add your kits here. Example entry below (When adding your entry DO NOT include #!)\r\n");
                 writer.write("#miningbasics:1,2,3,4:6000\r\n");
-                writer.write("#The formats are (Find out more about groups in " + etc.getInstance().getUsersLocation() + ":\r\n");
+                writer.write(String.format("#The formats are (Find out more about groups in %s:\r\n", etc.getInstance().getUsersLocation()));
                 writer.write("#NAME:IDs:DELAY\r\n");
                 writer.write("#NAME:IDs:DELAY:GROUP\r\n");
                 writer.write("#6000 for delay is roughly 5 minutes.\r\n");
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while creating " + location, e);
+                log.log(Level.SEVERE, String.format("Exception while creating %s", location), e);
             } finally {
                 try {
                     if (writer != null)
@@ -172,14 +178,26 @@ public class FlatFileSource extends DataSource {
             kits = new ArrayList<Kit>();
             try {
                 Scanner scanner = new Scanner(new File(location));
+                int linenum = 0;
                 while (scanner.hasNextLine()) {
+                    linenum++;
                     String line = scanner.nextLine();
                     if (line.startsWith("#") || line.equals(""))
                         continue;
                     String[] split = line.split(":");
+                    if(split.length<4){
+                        log.log(Level.SEVERE,String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
+                        continue;
+                    }
                     String name = split[0];
                     String[] ids = split[1].split(",");
-                    int delay = Integer.parseInt(split[2]);
+                    int delay;
+                    try{
+                        delay = Integer.parseInt(split[2]);
+                    } catch(Exception exc){
+                        log.log(Level.SEVERE,String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
+                        continue;
+                    }
                     String group = "";
                     if (split.length == 4)
                         group = split[3];
@@ -191,7 +209,12 @@ public class FlatFileSource extends DataSource {
                         int amount = 1;
                         if (str.contains(" ")) {
                             id = str.split(" ")[0];
+                            try{
                             amount = Integer.parseInt(str.split(" ")[1]);
+                            } catch(Exception exc){
+								log.log(Level.SEVERE,String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
+                                continue;
+                            }
                         } else
                             id = str;
                         kit.IDs.put(id, amount);
@@ -202,7 +225,7 @@ public class FlatFileSource extends DataSource {
                 }
                 scanner.close();
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while reading " + location, e);
+                log.log(Level.SEVERE, String.format("Exception while reading %s", location), e);
             }
         }
     }
@@ -244,7 +267,7 @@ public class FlatFileSource extends DataSource {
                     }
                     scanner.close();
                 } catch (Exception e) {
-                    log.log(Level.SEVERE, "Exception while reading " + location, e);
+                    log.log(Level.SEVERE, String.format("Exception while reading %s", location), e);
                 }
         }
     }
@@ -294,7 +317,7 @@ public class FlatFileSource extends DataSource {
                     }
                     scanner.close();
                 } catch (Exception e) {
-                    log.log(Level.SEVERE, "Exception while reading " + location, e);
+                    log.log(Level.SEVERE, String.format("Exception while reading %s", location), e);
                 }
         }
     }
@@ -545,13 +568,13 @@ public class FlatFileSource extends DataSource {
     			writer.write("goldrecord:2256\r\n");
     			writer.write("greenrecord:2257\r\n");
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while creating " + location, e);
+                log.log(Level.SEVERE, String.format("Exception while creating %s", location), e);
             } finally {
                 if (writer != null)
                     try {
                         writer.close();
                     } catch (IOException e) {
-                        log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
+                        log.log(Level.SEVERE, String.format("Exception while closing writer for %s", location), e);
                     }
             }
         }
@@ -561,20 +584,33 @@ public class FlatFileSource extends DataSource {
             items = new HashMap<String, Integer>();
             try {
                 Scanner scanner = new Scanner(new File(location));
+                int linenum = 0;
                 while (scanner.hasNextLine()) {
+                    linenum++;
                     String line = scanner.nextLine();
                     if (line.startsWith("#"))
                         continue;
                     if (line.equals(""))
                         continue;
                     String[] split = line.split(":");
-                    String name = split[0];
-
-                    items.put(name, Integer.parseInt(split[1]));
+					
+                    if(split.length<2){
+                        log.log(Level.SEVERE,String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
+                        continue;
+                    }
+					String name = split[0];
+                    int id;
+                    try {
+                        id = Integer.parseInt(split[1]);
+                    } catch(Exception exc){
+                        log.log(Level.SEVERE,String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
+                        continue;
+                }
+                    items.put(name, id);
                 }
                 scanner.close();
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while reading " + location + " (Are you sure you formatted it correctly?)", e);
+                log.log(Level.SEVERE, String.format("Exception while reading %s (Are you sure you formatted it correctly?)", location), e);
             }
         }
     }
@@ -660,7 +696,7 @@ public class FlatFileSource extends DataSource {
             bw.newLine();
             bw.close();
         } catch (Exception ex) {
-            log.log(Level.SEVERE, "Exception while writing new user to " + loc, ex);
+            log.log(Level.SEVERE, String.format("Exception while writing new user to %s", loc), ex);
         }
     }
 
@@ -702,7 +738,7 @@ public class FlatFileSource extends DataSource {
             writer.write(toWrite.toString());
             writer.close();
         } catch (Exception ex) {
-            log.log(Level.SEVERE, "Exception while editing user in " + loc, ex);
+            log.log(Level.SEVERE, String.format("Exception while editing user in %s", loc), ex);
         }
     }
 
@@ -722,7 +758,7 @@ public class FlatFileSource extends DataSource {
             }
             scanner.close();
         } catch (Exception e) {
-            log.log(Level.SEVERE, "Exception while reading " + location + " (Are you sure you formatted it correctly?)", e);
+            log.log(Level.SEVERE, String.format("Exception while reading %s (Are you sure you formatted it correctly?)", location), e);
         }
         return false;
     }
@@ -734,7 +770,9 @@ public class FlatFileSource extends DataSource {
 
         try {
             Scanner scanner = new Scanner(new File(location));
+            int linenum = 0;
             while (scanner.hasNextLine()) {
+                linenum++;
                 String line = scanner.nextLine();
                 if (line.startsWith("#") || line.equals("") || line.startsWith("﻿"))
                     continue;
@@ -742,6 +780,10 @@ public class FlatFileSource extends DataSource {
                 if (!split[0].equalsIgnoreCase(name))
                     continue;
 
+                if(split.length<3){
+                    log.log(Level.SEVERE,String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
+                    continue;
+                }
                 player.setGroups(split[1].split(","));
 
                 if (split.length >= 3)
@@ -761,7 +803,7 @@ public class FlatFileSource extends DataSource {
             }
             scanner.close();
         } catch (Exception e) {
-            log.log(Level.SEVERE, "Exception while reading " + location + " (Are you sure you formatted it correctly?)", e);
+            log.log(Level.SEVERE, String.format("Exception while reading %s (Are you sure you formatted it correctly?)", location), e);
         }
         return player;
     }
@@ -817,7 +859,7 @@ public class FlatFileSource extends DataSource {
                 homes.add(home);
             }
         } catch (Exception e2) {
-            log.log(Level.SEVERE, "Exception while writing new user home to " + homeLoc, e2);
+            log.log(Level.SEVERE, String.format("Exception while writing new user home to %s", homeLoc), e2);
         }
     }
 
@@ -867,7 +909,7 @@ public class FlatFileSource extends DataSource {
                 writer.close();
             }
         } catch (Exception e1) {
-            log.log(Level.SEVERE, "Exception while editing user home in " + homeLoc, e1);
+            log.log(Level.SEVERE, String.format("Exception while editing user home in %s", homeLoc), e1);
         } finally {
             try {
                 if (writer != null)
@@ -906,7 +948,7 @@ public class FlatFileSource extends DataSource {
                 warps.add(warp);
             }
         } catch (Exception e2) {
-            log.log(Level.SEVERE, "Exception while writing new warp to " + warpLoc, e2);
+            log.log(Level.SEVERE, String.format("Exception while writing new warp to %s", warpLoc), e2);
         }
     }
 
@@ -956,7 +998,7 @@ public class FlatFileSource extends DataSource {
             writer.write(toWrite.toString());
             writer.close();
         } catch (Exception e1) {
-            log.log(Level.SEVERE, "Exception while editing warp in " + warpLoc, e1);
+            log.log(Level.SEVERE, String.format("Exception while editing warp in %s", warpLoc), e1);
         } finally {
             try {
                 if (writer != null)
@@ -984,7 +1026,7 @@ public class FlatFileSource extends DataSource {
             writer.write(toWrite.toString());
             writer.close();
         } catch (Exception e1) {
-            log.log(Level.SEVERE, "Exception while delete warp from " + warpLoc, e1);
+            log.log(Level.SEVERE, String.format("Exception while deleting warp from %s", warpLoc), e1);
         } finally {
             try {
                 if (writer != null)
@@ -1011,7 +1053,7 @@ public class FlatFileSource extends DataSource {
             bw.newLine();
             bw.append(name);
         } catch (Exception e2) {
-            log.log(Level.SEVERE, "Exception while writing new user to " + location, e2);
+            log.log(Level.SEVERE, String.format("Exception while writing new user to %s", location), e2);
         } finally {
             try {
                 if (bw != null)
@@ -1043,7 +1085,7 @@ public class FlatFileSource extends DataSource {
             writer = new FileWriter(location);
             writer.write(toSave.toString());
         } catch (Exception e1) {
-            log.log(Level.SEVERE, "Exception while removing player '" + name + "' from " + location, e1);
+            log.log(Level.SEVERE, String.format("Exception while removing player '%s' from %s", name, location), e1);
         } finally {
             try {
                 if (writer != null)
@@ -1070,7 +1112,7 @@ public class FlatFileSource extends DataSource {
             }
             scanner.close();
         } catch (Exception e) {
-            log.log(Level.SEVERE, "Exception while reading " + location, e);
+            log.log(Level.SEVERE, String.format("Exception while reading %s", location), e);
         }
         return false;
     }
@@ -1098,7 +1140,7 @@ public class FlatFileSource extends DataSource {
             }
             scanner.close();
         } catch (Exception e) {
-            log.log(Level.SEVERE, "Exception while reading " + location, e);
+            log.log(Level.SEVERE, String.format("Exception while reading %s", location), e);
         }
         return false;
     }
@@ -1114,7 +1156,7 @@ public class FlatFileSource extends DataSource {
             bw.newLine();
             bw.append(name);
         } catch (Exception e2) {
-            log.log(Level.SEVERE, "Exception while writing new user to " + location, e2);
+            log.log(Level.SEVERE, String.format("Exception while writing new user to %s", location), e2);
         } finally {
             try {
                 if (bw != null)
@@ -1146,7 +1188,7 @@ public class FlatFileSource extends DataSource {
             writer = new FileWriter(location);
             writer.write(toSave.toString());
         } catch (Exception e1) {
-            log.log(Level.SEVERE, "Exception while removing player '" + name + "' from " + location, e1);
+            log.log(Level.SEVERE, String.format("Exception while removing player '%s' from %s", name, location), e1);
         } finally {
             try {
                 if (writer != null)
