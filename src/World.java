@@ -16,7 +16,6 @@ public class World {
     public enum Type {
         NETHER(-1),
         NORMAL(0);
-
         private int id;
         private static Map<Integer, Type> map;
 
@@ -547,9 +546,10 @@ public class World {
      *
      * @param block
      *            the Block to check
+     * @return chunk
      */
-    public void loadChunk(Block block) {
-        loadChunk(block.getX(), block.getY(), block.getZ());
+    public Chunk loadChunk(Block block) {
+        return loadChunk(block.getX(), block.getY(), block.getZ());
     }
 
     /**
@@ -562,9 +562,10 @@ public class World {
      *            a block y-coordinate
      * @param z
      *            a block z-coordinate
+     * @return chunk
      */
-    public void loadChunk(int x, int y, int z) {
-        loadChunk(x >> 4, z >> 4);
+    public Chunk loadChunk(int x, int y, int z) {
+        return loadChunk(x >> 4, z >> 4);
     }
 
     /**
@@ -575,9 +576,56 @@ public class World {
      *            a chunk x-coordinate
      * @param z
      *            a chunk z-coordinate
+     * @return chunk
      */
-    public void loadChunk(int x, int z) {
-        world.C.c(x, z);
+    public Chunk loadChunk(int x, int z) {
+        return world.C.c(x, z).chunk;
+    }
+
+    /**
+     * Gets the chunk containing the given block. If the chunk is not loaded,
+     * the result will be null.
+     *
+     * @param block
+     *            the Block to check
+     * @return chunk
+     */
+    public Chunk getChunk(Block block) {
+        return getChunk(block.getX(), block.getY(), block.getZ());
+    }
+
+    /**
+     * Gets the chunk containing the given block coordinates. If the chunk is not loaded,
+     * the result will be null.
+     *
+     * @param x
+     *            a block x-coordinate
+     * @param y
+     *            a block y-coordinate
+     * @param z
+     *            a block z-coordinate
+     * @return chunk
+     */
+    public Chunk getChunk(int x, int y, int z) {
+        return getChunk(x >> 4, z >> 4);
+    }
+
+    /**
+     * Gets the chunk containing the given chunk coordinates. If the chunk is not loaded,
+     * the result will be null.
+     *
+     * @param x
+     *            a chunk x-coordinate
+     * @param z
+     *            a chunk z-coordinate
+     * @return chunk
+     */
+    public Chunk getChunk(int x, int z) {
+        if (world.C.a(x, z)) {
+            return world.C.b(x, z).chunk;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -726,6 +774,24 @@ public class World {
         return hash;
     }
 
-
+    /**
+     * Creates an explosion with the specified power at the given location.
+     * @param exploder The entity causing the explosion.
+     * @param x
+     * @param y
+     * @param z
+     * @param power The power of the explosion. TNT has a power of 4.
+     */
+    public void explode(BaseEntity exploder, double x, double y, double z, float power) {
+        world.a(exploder.entity, x, y, z, power);
+    }
+    
+    /**
+     * Gets the random seed of the world.
+     * @return seed of the world
+     */
+    public long getRandomSeed() {
+        return world.l();
+    }
 
 }

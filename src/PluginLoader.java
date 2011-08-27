@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,12 +18,10 @@ import net.minecraft.server.MinecraftServer;
  * @author James
  */
 public class PluginLoader {
-
     /**
      * Hook - Used for adding a listener to listen on specific hooks
      */
     public enum Hook {
-
         /**
          * Calls {@link PluginListener#onLoginChecks(java.lang.String) }
          */
@@ -208,6 +207,26 @@ public class PluginLoader {
          */
         PORTAL_USE,
         /**
+         * Calls {@link PluginListener#onChunkCreate(int, int, World) }
+         */
+        CHUNK_CREATE,
+        /**
+         * Calls {@link PluginListener#onSpawnpointCreate(World) }
+         */
+        SPAWNPOINT_CREATE,
+        /**
+         * Calls {@link PluginListener#onChunkCreated(Chunk chunk) }
+         */
+        CHUNK_CREATED,
+        /**
+         * Calls {@link PluginListener#onChunkLoaded(Chunk chunk) }
+         */
+        CHUNK_LOADED,
+        /**
+         * Calls {@link PluginListener#onChunkUnload(Chunk chunk) }
+         */
+        CHUNK_UNLOAD,
+        /**
          * Calls {@link PluginListener#onTimeChange(World, long) }
          */
         TIME_CHANGE,
@@ -286,15 +305,15 @@ public class PluginLoader {
         LIGHTNING
     }
 
-    private static final Logger                  log             = Logger.getLogger("Minecraft");
-    private static final Object                  lock            = new Object();
-    private List<Plugin>                         plugins         = new ArrayList<Plugin>();
-    private List<List<PluginRegisteredListener>> listeners       = new ArrayList<List<PluginRegisteredListener>>();
-    private HashMap<String, PluginInterface>     customListeners = new HashMap<String, PluginInterface>();
-    private Server                               server;
-    private PropertiesFile                       properties;
-
-    private volatile boolean                     loaded          = false;
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final Object lock = new Object();
+    private List<Plugin> plugins = new ArrayList<Plugin>();
+    private List<List<PluginRegisteredListener>> listeners = new ArrayList<List<PluginRegisteredListener>>();
+    private HashMap<String, PluginInterface> customListeners = new HashMap<String, PluginInterface>();
+    private Server server;
+    private PropertiesFile properties;
+    private volatile boolean loaded = false;
+    private volatile boolean loadedpreload = false;
 
     /**
      * Creates a plugin loader
@@ -328,6 +347,23 @@ public class PluginLoader {
     }
 
     /**
+     * Loads the plugins that shall be loaded before generating the spawn area.
+     */
+    public void loadPreloadPlugins() {
+        if (loadedpreload)
+            return;
+        log.info("CanaryMod: Loading preload plugins...");
+        String[] classes = properties.getString("preloadplugins", "").split(",");
+        for (String sclass : classes) {
+            if (sclass.equals(""))
+                continue;
+            loadPlugin(sclass.trim());
+        }
+        log.info("CanaryMod: Loaded " + plugins.size() + " plugins.");
+        loadedpreload = true;
+    }
+
+    /**
      * Loads the specified plugin
      * 
      * @param fileName
@@ -335,8 +371,9 @@ public class PluginLoader {
      * @return if the operation was successful
      */
     public Boolean loadPlugin(String fileName) {
-        if (getPlugin(fileName) != null)
+        if (getPlugin(fileName) != null) {
             return false; // Already exists.
+        }
         return load(fileName);
     }
 
@@ -376,7 +413,7 @@ public class PluginLoader {
             }
             URLClassLoader child = null;
             try {
-                child = new MyClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+                child = new MyClassLoader(new URL[]{file.toURI().toURL()}, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
                 log.log(Level.SEVERE, "Exception while loading class", ex);
                 return false;
@@ -502,15 +539,19 @@ public class PluginLoader {
                 break;
             case LIQUID_DESTROY:
             case TAME:
-    		case COMMAND_CHECK:
+            case COMMAND_CHECK:
                 toRet = HookResult.DEFAULT_ACTION;
+                break;
+            case CHUNK_CREATE:
+            case SPAWNPOINT_CREATE:
+                toRet = null;
                 break;
             default:
                 toRet = false;
                 break;
         }
 
-        if (!loaded)
+        if (!(loaded || loadedpreload))
             return toRet;
 
         synchronized (lock) {
@@ -593,8 +634,8 @@ public class PluginLoader {
                                 break;
                             case IGNITE:
                                 if (listener.onIgnite((Block) parameters[0], (parameters[1] == null ? null : (Player) parameters[1])))
-                                        toRet = true;
-                               break;
+                                    toRet = true;
+                                break;
                             case EXPLODE:
                                 if (listener.onExplode((Block) parameters[0]))
                                     toRet = true;
@@ -616,7 +657,7 @@ public class PluginLoader {
                                 break;
                             case BLOCK_PHYSICS:
                                 if (listener.onBlockPhysics((Block) parameters[0], (Boolean) parameters[1]))
-                                        toRet = true;
+                                    toRet = true;
                                 break;
                             case VEHICLE_CREATE:
                                 listener.onVehicleCreate((BaseVehicle) parameters[0]);
@@ -654,7 +695,7 @@ public class PluginLoader {
                                     toRet = true;
                                 break;
                             case LIQUID_DESTROY:
-                                HookResult ret = listener.onLiquidDestroy((HookResult) toRet, (Integer) parameters[0], (Block) parameters [1]);
+                                HookResult ret = listener.onLiquidDestroy((HookResult) toRet, (Integer) parameters[0], (Block) parameters[1]);
                                 if (ret != HookResult.DEFAULT_ACTION && (HookResult) toRet == HookResult.DEFAULT_ACTION)
                                     toRet = ret;
                                 break;
@@ -699,12 +740,33 @@ public class PluginLoader {
                                     toRet = true;
                                 break;
                             case TIME_CHANGE:
-                                if (listener.onTimeChange((World) parameters[0], (long)(Long) parameters[1]))
+                                if (listener.onTimeChange((World) parameters[0], (long) (Long) parameters[1]))
                                     toRet = true;
                             case COMMAND_CHECK:
-                                ret = listener.canPlayerUseCommand((Player)parameters[0], (String)parameters[1]);
-                                if(ret != HookResult.DEFAULT_ACTION)
+                                ret = listener.canPlayerUseCommand((Player) parameters[0], (String) parameters[1]);
+                                if (ret != HookResult.DEFAULT_ACTION)
                                     toRet = ret;
+                            case CHUNK_CREATE:
+                                byte[] chunk = listener.onChunkCreate((Integer) parameters[0], (Integer) parameters[1], (World) parameters[2]);
+                                if (chunk != null) {
+                                    toRet = chunk;
+                                }
+                                break;
+                            case SPAWNPOINT_CREATE:
+                                Location point = listener.onSpawnpointCreate((World) parameters[0]);
+                                if (point != null) {
+                                    toRet = point;
+                                }
+                                break;
+                            case CHUNK_CREATED:
+                                listener.onChunkCreated((Chunk) parameters[0]);
+                                break;
+                            case CHUNK_LOADED:
+                                listener.onChunkLoaded((Chunk) parameters[0]);
+                                break;
+                            case CHUNK_UNLOAD:
+                                listener.onChunkUnload((Chunk) parameters[0]);
+                                break;
                         }
                     } catch (UnsupportedOperationException ex) {
                     }
@@ -831,4 +893,5 @@ public class PluginLoader {
     public boolean isLoaded() {
         return loaded;
     }
+
 }

@@ -382,6 +382,7 @@ public class BaseEntity {
      */
     public void setMotionX(double motion) {
         entity.aS = motion;
+        entity.be = true;
     }
 
     /**
@@ -392,6 +393,7 @@ public class BaseEntity {
      */
     public void setMotionY(double motion) {
         entity.aT = motion;
+        entity.be = true;
     }
 
     /**
@@ -402,6 +404,7 @@ public class BaseEntity {
      */
     public void setMotionZ(double motion) {
         entity.aU = motion;
+        entity.be = true;
     }
 
     /**
