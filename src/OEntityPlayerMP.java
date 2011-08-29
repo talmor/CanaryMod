@@ -162,40 +162,36 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
       }
 
       if(this.E) {
-           if(this.b.d.a("allow-nether", true)) {
-              //CanaryMod: onPortalUse hook
-              if(!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.PORTAL_USE, player, player.getWorld()))
-              {
-                 if(this.k != this.j) {
+            if(this.b.d.a("allow-nether", true)) {
+                if(this.k != this.j) {
                     this.y();
-                 }
- 
-                 if(this.aK != null) {
+                }
+                if(this.aK != null) {
                     this.b(this.aK);
-                 } else {
+                } else {
                     this.F += 0.0125F;
                     if(this.F >= 1.0F) {
-                       this.F = 1.0F;
-                       this.D = 10;
-                       this.b.f.f(this);
+                        this.F = 1.0F;
+                        this.D = 10;
+                        //CanaryMod: onPortalUse hook
+                        if(!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.PORTAL_USE, player, player.getWorld())){
+                            this.b.f.f(this);
+                        }
                     }
-                 }
- 
-                 this.E = false;
-              }
-              else
-              {
-                 this.E = false;
-              }
-           }
+                }
+                this.E = false;
+            }
+            else
+            {
+                this.E = false;
+            }
         } else {
            if(this.F > 0.0F) {
             this.F -= 0.05F;
-         }
-
-         if(this.F < 0.0F) {
+        }
+        if(this.F < 0.0F) {
             this.F = 0.0F;
-         }
+        }
       }
 
       if(this.D > 0) {
