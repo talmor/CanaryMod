@@ -406,6 +406,8 @@ public class World {
                 return new MobSpawner((OTileEntityMobSpawner) localav);
             else if (localav instanceof OTileEntityDispenser)
                 return new Dispenser((OTileEntityDispenser) localav);
+            else if (localav instanceof OTileEntityNote)
+                return new NoteBlock((OTileEntityNote) localav);
         return null;
     }
 
