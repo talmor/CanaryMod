@@ -3,7 +3,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class OEntityWolf extends OEntityAnimal {
-
    private boolean a = false;
    private float b;
    private float c;
@@ -11,7 +10,6 @@ public class OEntityWolf extends OEntityAnimal {
    private boolean g;
    private float h;
    private float i;
-
 
    public OEntityWolf(OWorld var1) {
       super(var1);
@@ -297,8 +295,13 @@ public class OEntityWolf extends OEntityAnimal {
             }
 
             if(!this.aL.B) {
-               PluginLoader.HookResult res = (PluginLoader.HookResult) manager.callHook(PluginLoader.Hook.TAME, var1, new Mob(this));
-               if(this.bv.nextInt(3) == 0 && res == PluginLoader.HookResult.DEFAULT_ACTION || res == PluginLoader.HookResult.ALLOW_ACTION) {
+               // CanaryMod hook: onTame
+               // randomize the tame result. if its 0 - tame success.
+               int tameResult = this.bv.nextInt(3);
+               // Call hook
+               PluginLoader.HookResult res = (PluginLoader.HookResult)manager.callHook(PluginLoader.Hook.TAME, manager.getServer().getPlayer(var1.r), new Mob(this), tameResult == 0);
+               // if taming succeeded normally (tameResult == 0) or plugin hook result is allow (force taming)
+               if(tameResult == 0 && res == PluginLoader.HookResult.DEFAULT_ACTION || res == PluginLoader.HookResult.ALLOW_ACTION) {
                   this.d(true);
                   this.a((OPathEntity)null);
                   this.b(true);
@@ -410,4 +413,5 @@ public class OEntityWolf extends OEntityAnimal {
       }
 
    }
+
 }

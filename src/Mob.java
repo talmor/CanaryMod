@@ -1,3 +1,4 @@
+
 /**
  * Mob.java - Interface for mobs
  * 
@@ -64,6 +65,15 @@ public class Mob extends LivingEntity {
     }
 
     /**
+     * Returns this mob's name
+     * 
+     * @return name
+     */
+    public String getName() {
+        return OEntityList.b(entity);
+    }
+
+    /**
      * Drops this mob's loot. Automatically called if health is set to 0.
      */
     public void dropLoot() {
@@ -100,4 +110,5 @@ public class Mob extends LivingEntity {
         OEntity c = OEntityList.a(mob, etc.getMCServer().a(0));
         return c instanceof OIMob || c instanceof OIAnimals;
     }
+
 }

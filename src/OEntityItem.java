@@ -1,15 +1,15 @@
 
-
 public class OEntityItem extends OEntity {
-
    public OItemStack a;
    private int e;
    public int b = 0;
    public int c;
    private int f = 5;
    public float d = (float)(Math.random() * 3.141592653589793D * 2.0D);
+   // CanaryMod Start
+   ItemEntity item = new ItemEntity(this);
 
-
+   // CanaryMod End
    public OEntityItem(OWorld var1, double var2, double var4, double var6, OItemStack var8) {
       super(var1);
       this.b(0.25F, 0.25F);
@@ -32,7 +32,8 @@ public class OEntityItem extends OEntity {
       this.bi = this.bk / 2.0F;
    }
 
-   protected void b() {}
+   protected void b() {
+   }
 
    public void m_() {
       super.m_();
@@ -72,7 +73,11 @@ public class OEntityItem extends OEntity {
       ++this.e;
       ++this.b;
       if(this.b >= 6000) {
-         this.J();
+         if(!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.ENTITY_DESPAWN, item)) {
+            this.J();
+         } else {
+            this.b = 0;
+         }
       }
 
    }
@@ -111,24 +116,62 @@ public class OEntityItem extends OEntity {
    public void b(OEntityPlayer var1) {
       if(!this.aL.B) {
          int var2 = this.a.a;
-         // CanaryMod: allow item pickups
-         Item item = new Item(a.c, var2);
-         if(this.c == 0 && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, ((OEntityPlayerMP) var1).getPlayer(), item) && var1.i.a(this.a)) {
-            if(this.a.c == OBlock.K.bn) {
-               var1.a((OStatBase)OAchievementList.g);
+         if(this.c == 0) {
+            //Clone player inventory because we might need to restore it if onItemPickUp hook is cancelled.
+            //we have to clone it because the function that checks if we can pick up items also picks them up...
+            OItemStack[] inventoryClone = new OItemStack[var1.i.a.length];
+            for(int i = 0; i < inventoryClone.length; i += 1) {
+               if(var1.i.a[i] != null) {
+                  inventoryClone[i] = var1.i.a[i].j();
+                  inventoryClone[i].b = var1.i.a[i].b;
+               } else {
+                  inventoryClone[i] = null;
+               }
             }
+            //pick up items if possible
+            if(var1.i.a(this.a)) {
+               int quantityAfterPickup = this.a.a;
+               //if managed to take something
+               if(quantityAfterPickup < var2) {
+                  // CanaryMod: allow item pickups
+                  // for the hook, we need to pass how many items the player actually took.
+                  this.a.a = var2 - quantityAfterPickup;
+                  boolean result = (Boolean)etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, ((OEntityPlayerMP)var1).getPlayer(), item);
+                  this.a.a = quantityAfterPickup;
+                  // if item pick up cancelled
+                  if(result) {
+                     // restore the inventory to the previous state
+                     for(int i = 0; i < inventoryClone.length; i += 1) {
+                        if(inventoryClone[i] != null) {
+                           if(var1.i.a[i] == null) {
+                              var1.i.a[i] = inventoryClone[i];
+                           } else {
+                              var1.i.a[i].setFromStack(inventoryClone[i]);
+                           }
+                        } else {
+                           var1.i.a[i] = null;
+                        }
+                     }
+                     return;
+                  }
+                  if(this.a.c == OBlock.K.bn) {
+                     var1.a((OStatBase)OAchievementList.g);
+                  }
 
-            if(this.a.c == OItem.aD.bf) {
-               var1.a((OStatBase)OAchievementList.t);
-            }
+                  if(this.a.c == OItem.aD.bf) {
+                     var1.a((OStatBase)OAchievementList.t);
+                  }
 
-            this.aL.a(this, "random.pop", 0.2F, ((this.bv.nextFloat() - this.bv.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-            var1.b(this, var2);
-            if(this.a.a <= 0) {
-               this.J();
+                  this.aL.a(this, "random.pop", 0.2F, ((this.bv.nextFloat() - this.bv.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                  var1.b(this, var2);
+                  if(this.a.a <= 0) {
+                     this.J();
+                  }
+               }
             }
          }
 
       }
    }
+
 }

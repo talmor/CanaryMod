@@ -3,7 +3,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public abstract class OEntityPlayer extends OEntityLiving {
-
    public OInventoryPlayer i = new OInventoryPlayer(this);
    public OContainer j;
    public OContainer k;
@@ -37,7 +36,6 @@ public abstract class OEntityPlayer extends OEntityLiving {
    @SuppressWarnings("FieldNameHidesFieldInSuperclass")
    HumanEntity entity = new HumanEntity(this);
    // CanaryMod end
-
 
    public OEntityPlayer(OWorld var1) {
       super(var1);
@@ -163,7 +161,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
       // monster-spawn=true/false (nice notchup!)
       PluginLoader.HookResult autoHeal = etc.getInstance().autoHeal();
       if(this.aL.q == 0 && autoHeal == PluginLoader.HookResult.DEFAULT_ACTION || autoHeal == PluginLoader.HookResult.ALLOW_ACTION) {
-         if (this.ab < 20 && this.bw % 20 * 12 == 0)
+         if(this.ab < 20 && this.bw % 20 * 12 == 0)
             this.b(1);
       }
 
@@ -268,10 +266,15 @@ public abstract class OEntityPlayer extends OEntityLiving {
             var3.aU += Math.sin((double)var5) * (double)var4;
          }
 
-         if (!(Boolean) manager.callHook(PluginLoader.Hook.ITEM_DROP, ((OEntityPlayerMP) this).getPlayer(), new Item(var1))){
+         if(!(Boolean)manager.callHook(PluginLoader.Hook.ITEM_DROP, ((OEntityPlayerMP)this).getPlayer(), var3.item)) {
+            Item droppedItem = var3.item.getItem();
+            if(droppedItem.getAmount() < 0) {
+               droppedItem.setAmount(1);
+               droppedItem.update();
+            }
             this.a(var3);
             this.a(OStatList.v, 1);
-         // return the item to the inventory.
+            // return the item to the inventory.
          } else
             i.a(var1);
       }
@@ -330,11 +333,14 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
    }
 
-   public void a(OIInventory var1) {}
+   public void a(OIInventory var1) {
+   }
 
-   public void b(int var1, int var2, int var3) {}
+   public void b(int var1, int var2, int var3) {
+   }
 
-   public void b(OEntity var1, int var2) {}
+   public void b(OEntity var1, int var2) {
+   }
 
    public float t() {
       return 0.12F;
@@ -424,11 +430,14 @@ public abstract class OEntityPlayer extends OEntityLiving {
       super.c(var1);
    }
 
-   public void a(OTileEntityFurnace var1) {}
+   public void a(OTileEntityFurnace var1) {
+   }
 
-   public void a(OTileEntityDispenser var1) {}
+   public void a(OTileEntityDispenser var1) {
+   }
 
-   public void a(OTileEntitySign var1) {}
+   public void a(OTileEntitySign var1) {
+   }
 
    public void c(OEntity var1) {
       if(!var1.a(this)) {
@@ -489,7 +498,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
    }
 
-   public void a(OItemStack var1) {}
+   public void a(OItemStack var1) {
+   }
 
    public void J() {
       super.J();
@@ -531,17 +541,17 @@ public abstract class OEntityPlayer extends OEntityLiving {
          float var6 = 0.5F;
          float var7 = 0.5F;
          switch(var5) {
-         case 0:
-            var7 = 0.9F;
-            break;
-         case 1:
-            var6 = 0.1F;
-            break;
-         case 2:
-            var7 = 0.1F;
-            break;
-         case 3:
-            var6 = 0.9F;
+            case 0:
+               var7 = 0.9F;
+               break;
+            case 1:
+               var6 = 0.1F;
+               break;
+            case 2:
+               var7 = 0.1F;
+               break;
+            case 3:
+               var6 = 0.9F;
          }
 
          this.e(var5);
@@ -565,17 +575,17 @@ public abstract class OEntityPlayer extends OEntityLiving {
       this.B = 0.0F;
       this.C = 0.0F;
       switch(var1) {
-      case 0:
-         this.C = -1.8F;
-         break;
-      case 1:
-         this.B = 1.8F;
-         break;
-      case 2:
-         this.C = 1.8F;
-         break;
-      case 3:
-         this.B = -1.8F;
+         case 0:
+            this.C = -1.8F;
+            break;
+         case 1:
+            this.B = 1.8F;
+            break;
+         case 2:
+            this.C = 1.8F;
+            break;
+         case 3:
+            this.B = -1.8F;
       }
 
    }
@@ -638,7 +648,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
       return this.z && this.a >= 100;
    }
 
-   public void a(String var1) {}
+   public void a(String var1) {
+   }
 
    public OChunkCoordinates N() {
       return this.b;
@@ -657,7 +668,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
       this.a(var1, 1);
    }
 
-   public void a(OStatBase var1, int var2) {}
+   public void a(OStatBase var1, int var2) {
+   }
 
    protected void O() {
       super.O();
@@ -747,4 +759,5 @@ public abstract class OEntityPlayer extends OEntityLiving {
          this.E = true;
       }
    }
+
 }

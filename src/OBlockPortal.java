@@ -2,7 +2,6 @@
 import java.util.Random;
 
 public class OBlockPortal extends OBlockBreakable {
-
    public OBlockPortal(int var1, int var2) {
       super(var1, var2, OMaterial.y, false);
    }
@@ -70,17 +69,26 @@ public class OBlockPortal extends OBlockBreakable {
                }
             }
          }
-
-         var1.o = true;
-
-         for(var7 = 0; var7 < 2; ++var7) {
-            for(var8 = 0; var8 < 3; ++var8) {
-               var1.e(var2 + var5 * var7, var3 + var8, var4 + var6 * var7, OBlock.bf.bn);
+         Block[][] portalBlocks = new Block[3][2];
+         for(var8 = 0; var8 < 3; ++var8) {
+            for(var7 = 0; var7 < 2; ++var7) {
+               portalBlocks[var8][var7] = new Block(var1.world, Block.Type.Portal.getType(), var2 + var5 * var7, var3 + 2 - var8, var4 + var6 * var7);
             }
          }
+         // CanaryMod hook onPortalCreate
+         if(!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.PORTAL_CREATE, (Object)portalBlocks)) {
+            var1.o = true;
 
-         var1.o = false;
-         return true;
+            for(var7 = 0; var7 < 2; ++var7) {
+               for(var8 = 0; var8 < 3; ++var8) {
+                  var1.e(var2 + var5 * var7, var3 + var8, var4 + var6 * var7, OBlock.bf.bn);
+               }
+            }
+
+            var1.o = false;
+            return true;
+         }
+         return false;
       }
    }
 
@@ -92,8 +100,8 @@ public class OBlockPortal extends OBlockBreakable {
          var7 = 0;
       }
 
-      if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(var1.world, bn, var2, var3, var4), false))
-          return;
+      if((Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(var1.world, bn, var2, var3, var4), false))
+         return;
 
       int var8;
       for(var8 = var3; var1.a(var2, var8 - 1, var4) == this.bn; --var8) {
@@ -132,4 +140,5 @@ public class OBlockPortal extends OBlockBreakable {
       }
 
    }
+
 }

@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,19 +15,19 @@ import net.minecraft.server.MinecraftServer;
  */
 public class Player extends HumanEntity implements MessageReceiver {
 
-    private static final Logger log                = Logger.getLogger("Minecraft");
-    private int                 id                 = -1;
-    private String              prefix             = "";
-    private String[]            commands           = new String[] { "" };
-    private ArrayList<String>   groups             = new ArrayList<String>();
-    private String[]            ips                = new String[] { "" };
-    private boolean             ignoreRestrictions = false;
-    private boolean             admin              = false;
-    private boolean             canModifyWorld     = false;
-    private boolean             muted              = false;
-    private PlayerInventory     inventory;
-    private List<String>        onlyOneUseKits     = new ArrayList<String>();
-    private Pattern             badChatPattern     = Pattern.compile("[^ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[\\\\\\]^_'abcdefghijklmnopqrstuvwxyz{|}~\u2302\u00C7\u00FC\u00E9\u00E2\u00E4\u00E0\u00E5\u00E7\u00EA\u00EB\u00E8\u00EF\u00EE\u00EC\u00C4\u00C5\u00C9\u00E6\u00C6\u00F4\u00F6\u00F2\u00FB\u00F9\u00FF\u00D6\u00DC\u00F8\u00A3\u00D8\u00D7\u0192\u00E1\u00ED\u00F3\u00FA\u00F1\u00D1\u00AA\u00BA\u00BF\u00AE\u00AC\u00BD\u00BC\u00A1\u00AB\u00BB]");
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private int id = -1;
+    private String prefix = "";
+    private String[] commands = new String[]{""};
+    private ArrayList<String> groups = new ArrayList<String>();
+    private String[] ips = new String[]{""};
+    private boolean ignoreRestrictions = false;
+    private boolean admin = false;
+    private boolean canModifyWorld = false;
+    private boolean muted = false;
+    private PlayerInventory inventory;
+    private List<String> onlyOneUseKits = new ArrayList<String>();
+    private Pattern badChatPattern = Pattern.compile("[^ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[\\\\\\]^_'abcdefghijklmnopqrstuvwxyz{|}~\u2302\u00C7\u00FC\u00E9\u00E2\u00E4\u00E0\u00E5\u00E7\u00EA\u00EB\u00E8\u00EF\u00EE\u00EC\u00C4\u00C5\u00C9\u00E6\u00C6\u00F4\u00F6\u00F2\u00FB\u00F9\u00FF\u00D6\u00DC\u00F8\u00A3\u00D8\u00D7\u0192\u00E1\u00ED\u00F3\u00FA\u00F1\u00D1\u00AA\u00BA\u00BF\u00AE\u00AC\u00BD\u00BC\u00A1\u00AB\u00BB]");
 
     /**
      * Creates an empty player. Add the player by calling {@link #setUser(es)}
@@ -119,7 +120,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                 sendMessage(Colors.Rose + "You are currently muted.");
                 return;
             }
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[] { this, message }))
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{this, message}))
                 return;
 
             String chat = "<" + getColor() + getName() + Colors.White + "> " + message;
@@ -222,24 +223,24 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @param command
      * @return
      */
-    public boolean canUseCommand(String command){
-         PluginLoader.HookResult res = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.COMMAND_CHECK, this, command);
-         if(res == PluginLoader.HookResult.DEFAULT_ACTION)
-             return canUseCommandByDefault(command);//If someone wants to use false instead, this can be done with low priority plugin.
-         if(res == PluginLoader.HookResult.ALLOW_ACTION)
-             return true;
-         return false;
-     }
- 
-     /**
-      * Returns true if this player can use the specified command
-      * This method ignores permission management plugins and shouldn't be used by other plugins.
-      * 
-      * @param command
-      * @return
-      */
-      
-     public boolean canUseCommandByDefault(String command) {
+    public boolean canUseCommand(String command) {
+        PluginLoader.HookResult res = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.COMMAND_CHECK, this, command);
+        if (res == PluginLoader.HookResult.DEFAULT_ACTION)
+            return canUseCommandByDefault(command);//If someone wants to use false instead, this can be done with low priority plugin.
+        if (res == PluginLoader.HookResult.ALLOW_ACTION)
+            return true;
+        return false;
+    }
+
+    /**
+     * Returns true if this player can use the specified command
+     * This method ignores permission management plugins and shouldn't be used by other plugins.
+     * 
+     * @param command
+     * @return
+     */
+
+    public boolean canUseCommandByDefault(String command) {
         for (String str : commands)
             if (str.equalsIgnoreCase(command))
                 return true;
@@ -676,14 +677,14 @@ public class Player extends HumanEntity implements MessageReceiver {
     public int getItemInHand() {
         return getEntity().a.getItemInHand();
     }
-    
+
     /**
      *  Returns the item stack in the player's hand.
      * @return Item
      */
     public Item getItemStackInHand() {
         OItemStack result = getEntity().i.b();
-        if (result != null){
+        if (result != null) {
             return new Item(result, getEntity().i.c);
         }
         return null;
@@ -744,7 +745,7 @@ public class Player extends HumanEntity implements MessageReceiver {
             ent.b(ent.aK);
 
         // Canary: We don't want a portal created
-        mcServer.f.f(ent,false);
+        mcServer.f.f(ent, false);
     }
 
     @Override
@@ -799,4 +800,5 @@ public class Player extends HumanEntity implements MessageReceiver {
         hash = 71 * hash + id;
         return hash;
     }
+
 }

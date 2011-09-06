@@ -219,10 +219,42 @@ public class PluginListener {
      *            player who dropped the item
      * @param item
      *            item that was dropped
+     * @deprecated Use onItemDrop(Player, ItemEntity) instead.
+     * 			   You can still get the Item via ItemEntity.getItem()
      * @return true if you don't want the dropped item to be spawned in the
      *         world
      */
     public boolean onItemDrop(Player player, Item item) {
+        return false;
+    }
+
+    /**
+     * Called when a player drops an item.
+     * 
+     * @param player
+     *            player who dropped the item
+     * @param item
+     *            item that was dropped
+     * @return true if you don't want the dropped item to be spawned in the
+     *         world
+     */
+    public boolean onItemDrop(Player player, ItemEntity item) {
+        onItemDrop(player, item.getItem());
+        return false;
+    }
+
+    /**
+     * Called when a player picks up an item.
+     * 
+     * @param player
+     *            player who picked up the item
+     * @param item
+     *            item that was picked up
+     * @deprecated Use onItemPickUp(Player, ItemEntity) instead.
+     * 			   You can still get the Item via ItemEntity.getItem()
+     * @return true if you want to leave the item where it was
+     */
+    public boolean onItemPickUp(Player player, Item item) {
         return false;
     }
 
@@ -235,7 +267,8 @@ public class PluginListener {
      *            item that was picked up
      * @return true if you want to leave the item where it was
      */
-    public boolean onItemPickUp(Player player, Item item) {
+    public boolean onItemPickUp(Player player, ItemEntity item) {
+        onItemPickUp(player, item.getItem());
         return false;
     }
 
@@ -350,6 +383,30 @@ public class PluginListener {
     }
 
     /**
+     * Called whenever a piston is extended
+     * 
+     * @param block
+     * 			  the piston's block
+     * @param isSticky
+     * 			  true if the piston is sticky
+     * @return false if you want the piston to attempt expanding
+     */
+    public boolean onPistonExtend(Block block, boolean isSticky) {
+        return false;
+    }
+
+    /**
+     * Called whenever a piston is retracted
+     * 
+     * @param block
+     * 			  the piston's block
+     * @return false if you want the piston to attempt retracting the attached block.
+     */
+    public boolean onPistonRetract(Block block, boolean isSticky) {
+        return false;
+    }
+
+    /**
      * Called when the game is checking the physics for a certain block. This
      * method is called frequently whenever a nearby block is changed, or if the
      * block has just been placed. Currently the only supported blocks are sand,
@@ -455,7 +512,7 @@ public class PluginListener {
      *            the item being used (in hand)
      * @return true to prevent using the item.
      */
-    public boolean onItemUse(Player player, Block blockPlaced, Block blockClicked, Item item) {
+    public boolean onItemUse(Player player, Block blockPlaced, Block blockClicked, Item itemInHand) {
         return false;
     }
 
@@ -589,15 +646,17 @@ public class PluginListener {
     }
 
     /**
-     * Called when a wolf is being tamed
+     * Called when a player attempt to tame a wolf
      * @param player
      *            Player who is tries to tame the wolf
      * @param wolf
      *            Wolf being tamed
+     * @param shouldSucceed
+     * 			  True if the taming should have succeeded normally
      * @return Whether the taming should succeed (ALLOW_ACTION),
      *            fail (PREVENT_ACTION), or do random as always (DEFAULT_ACTION)
      */
-    public PluginLoader.HookResult onTame(Player player, Mob wolf) {
+    public PluginLoader.HookResult onTame(Player player, Mob wolf, boolean shouldSucceed) {
         return PluginLoader.HookResult.DEFAULT_ACTION;
     }
 
@@ -748,6 +807,44 @@ public class PluginListener {
      * @param chunk
      */
     public void onChunkCreated(Chunk chunk) {
+    }
+
+    /**
+     * Called when a portal is created.
+     * @param blocks
+     * 			Array of portal blocks that were created.
+     * @return true if to prevent the creation of the portal
+     */
+    public boolean onPortalCreate(Block[][] blocks) {
+        return false;
+    }
+
+    /**
+     * Called when a portal is destroyed.
+     * @param blocks
+     * 			Array of portal blocks that were created.
+     * @return true if to prevent destruction of the portal
+     */
+    public boolean onPortalDestroy(Block[][] blocks) {
+        return false;
+    }
+
+    /**
+     * Called when a player respawns
+     * @param player
+     * 			Player that respawns
+     */
+    public void onPlayerRespawn(Player player) {
+    }
+
+    /**
+     * Called when an entity despawns
+     * @param entity
+     * 			The entity that despawns
+     * @return true if to prevent despawning
+     */
+    public boolean onEntityDespawn(BaseEntity entity) {
+        return false;
     }
 
 }

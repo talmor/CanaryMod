@@ -1,3 +1,4 @@
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,12 +8,10 @@ import java.util.Map;
  * @author James
  */
 public class Item {
-
     /**
      * Type - Used to identify items
      */
     public enum Type {
-
         Air(0), //
         Stone(1), //
         Grass(2), //
@@ -108,7 +107,6 @@ public class Item {
         CakeBlock(92), //
         RedstoneRepeaterOff(93), //
         RedstoneRepeaterOn(94), //
-        TrapDoor(96), //
         IronSpade(256), //
         IronPickaxe(257), //
         IronAxe(258), //
@@ -215,8 +213,7 @@ public class Item {
         Shears(359), //
         GoldRecord(2256), //
         GreenRecord(2257);
-
-        private int                       id;
+        private int id;
         private static Map<Integer, Type> map;
 
         private Type(int id) {
@@ -238,9 +235,11 @@ public class Item {
         public static Type fromId(final int id) {
             return map.get(id);
         }
+
     }
 
-    private int itemId   = 1, amount = 1, slot = -1, damage = 0;
+    private int itemId = 1, amount = 1, slot = -1, damage = 0;
+    private OItemStack itemStack = null;
     public Type itemType = Type.fromId(itemId);
 
     /**
@@ -324,6 +323,7 @@ public class Item {
         amount = itemStack.a;
         damage = itemStack.h();
         itemType = Type.fromId(itemId);
+        this.itemStack = itemStack;
     }
 
     /**
@@ -335,6 +335,14 @@ public class Item {
     public Item(OItemStack itemStack, int slot) {
         this(itemStack);
         this.slot = slot;
+    }
+
+    public void update() {
+        if (this.itemStack != null) {
+            this.itemStack.c = itemId;
+            this.itemStack.a = amount;
+            this.itemStack.b(damage);
+        }
     }
 
     /**
@@ -354,6 +362,7 @@ public class Item {
     public void setItemId(int itemId) {
         this.itemId = itemId;
         itemType = Type.fromId(itemId);
+        update();
     }
 
     /**
@@ -372,6 +381,7 @@ public class Item {
      */
     public void setAmount(int amount) {
         this.amount = amount;
+        update();
     }
 
     /**
@@ -420,6 +430,7 @@ public class Item {
      */
     public void setDamage(int damage) {
         this.damage = damage;
+        update();
     }
 
     /**
@@ -487,6 +498,7 @@ public class Item {
     public void setType(Type itemType) {
         this.itemType = itemType;
         itemId = itemType.getId();
+        update();
     }
 
     public boolean isCloth() {
@@ -501,6 +513,11 @@ public class Item {
     }
 
     public OItemStack getBaseItem() {
-        return new OItemStack(itemId, amount, damage);
+        if (this.itemStack == null) {
+            return new OItemStack(itemId, amount, damage);
+        } else {
+            return this.itemStack;
+        }
     }
+
 }
