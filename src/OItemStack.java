@@ -1,10 +1,14 @@
 
 
 public final class OItemStack {
-
+	
+   // stack size
    public int a;
+   // animations
    public int b;
+   // item id
    public int c;
+   // damage
    private int d;
 
 
@@ -37,6 +41,14 @@ public final class OItemStack {
       this.c = var1;
       this.a = var2;
       this.d = var3;
+   }
+   
+   public void setFromStack(OItemStack itemStack)
+   {
+	   this.a = itemStack.a;
+	   this.b = itemStack.b;
+	   this.c = itemStack.c;
+	   this.d = itemStack.h();
    }
 
    public OItemStack(ONBTTagCompound var1) {

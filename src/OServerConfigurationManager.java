@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 public class OServerConfigurationManager {
-
    public static Logger a = Logger.getLogger("Minecraft");
    public List b = new ArrayList();
    private MinecraftServer c;
@@ -30,14 +29,13 @@ public class OServerConfigurationManager {
    private OIPlayerFileData n;
    private boolean o;
 
-
    public OServerConfigurationManager(MinecraftServer var1) {
       // CanaryMod: initialize
       etc.setServer(var1);
       etc.getInstance().loadData();
       a.info("Note: your current classpath is: " + System.getProperty("java.class.path", "*UNKNOWN*"));
-      if (!etc.getInstance().getTainted())
-         a.info("Canary Build: " + etc.getInstance().getVersion());
+      if(!etc.getInstance().getTainted())
+         a.info("Canary Crow Build 3.1.9: " + etc.getInstance().getVersion());
       else
          a.info("CanaryMod Build Information: " + etc.getInstance().getVersionStr());
 
@@ -98,8 +96,8 @@ public class OServerConfigurationManager {
       this.a(var1.s).a(var1);
       // CanaryMod: Handle login (send MOTD and call hook)
       String[] motd = etc.getInstance().getMotd();
-      if (!(motd.length == 1 && motd[0].equals("")))
-         for (String str : motd)
+      if(!(motd.length == 1 && motd[0].equals("")))
+         for(String str : motd)
             var1.a.b(new OPacket3Chat(str));
       etc.getLoader().callHook(PluginLoader.Hook.LOGIN, var1.getPlayer());
    }
@@ -117,7 +115,7 @@ public class OServerConfigurationManager {
 
    public OEntityPlayerMP a(ONetLoginHandler var1, String var2) {
       // TODO: add reasons, expire tempbans
-      if (!etc.getLoader().isLoaded())
+      if(!etc.getLoader().isLoaded())
          var1.a("The server is not finished loading yet!");
       // CanaryMod: whole section below is modified to handle whitelists etc
       OEntityPlayerMP temp = new OEntityPlayerMP(c, c.a(0), var2, new OItemInWorldManager(c.a(0)));
@@ -139,16 +137,16 @@ public class OServerConfigurationManager {
          } else if(this.b.size() >= this.e && (!etc.getInstance().isReservelistEnabled() || !etc.getDataSource().isUserOnReserveList(var2))) {
             var1.a("The server is full!");
             return null;
-         } else if (!player.getIps()[0].equals("")) {
+         } else if(!player.getIps()[0].equals("")) {
             boolean kick = true;
-            for (int i = 0; i < player.getIps().length; i++)
-               if (!player.getIps()[i].equals("") && var3.equals(player.getIps()[i]))
+            for(int i = 0; i < player.getIps().length; i++)
+               if(!player.getIps()[i].equals("") && var3.equals(player.getIps()[i]))
                   kick = false;
-            if (kick) {
+            if(kick) {
                var1.a("IP doesn't match specified IP.");
                return null;
             }
-        } else {
+         } else {
             for(int var4 = 0; var4 < this.b.size(); ++var4) {
                OEntityPlayerMP var5 = (OEntityPlayerMP)this.b.get(var4);
                if(var5.r.equalsIgnoreCase(var2)) {
@@ -160,9 +158,9 @@ public class OServerConfigurationManager {
 
       // CanaryMod: user passed basic login check, inform plugins.
       Object obj = etc.getLoader().callHook(PluginLoader.Hook.LOGINCHECK, var2);
-      if (obj instanceof String) {
-         String result = (String) obj;
-         if (result != null && !result.equals("")) {
+      if(obj instanceof String) {
+         String result = (String)obj;
+         if(result != null && !result.equals("")) {
             var1.a(result);
             return null;
          }
@@ -249,7 +247,8 @@ public class OServerConfigurationManager {
          var1.c(var5, var1.aQ, var7, var1.aV, var1.aW);
          var4.a(var1, false);
          var4.C.a = true;
-         if (createPortal) (new OTeleporter()).a(var4, var1);
+         if(createPortal)
+            (new OTeleporter()).a(var4, var1);
          var4.C.a = false;
       }
 
@@ -259,12 +258,11 @@ public class OServerConfigurationManager {
       this.a(var1, var4);
       this.g(var1);
    }
-   
+
    // Canary: Create a portal on default calls
    public void f(OEntityPlayerMP var1) {
-       this.f(var1,true);
+      this.f(var1, true);
    }
-
 
    public void b() {
       for(int var1 = 0; var1 < this.d.length; ++var1) {
@@ -551,7 +549,8 @@ public class OServerConfigurationManager {
 
    }
 
-   public void a(int var1, int var2, int var3, OTileEntity var4) {}
+   public void a(int var1, int var2, int var3, OTileEntity var4) {
+   }
 
    public void k(String var1) {
       this.i.add(var1);
@@ -592,8 +591,8 @@ public class OServerConfigurationManager {
    public String getBans() {
       StringBuilder builder = new StringBuilder();
       int l = 0;
-      for (Object o : f) {
-         if (l > 0)
+      for(Object o : f) {
+         if(l > 0)
             builder.append(", ");
          builder.append(o);
          l++;
@@ -609,8 +608,8 @@ public class OServerConfigurationManager {
    public String getIpBans() {
       StringBuilder builder = new StringBuilder();
       int l = 0;
-      for (Object o : g) {
-         if (l > 0)
+      for(Object o : g) {
+         if(l > 0)
             builder.append(", ");
          builder.append(o);
          l++;

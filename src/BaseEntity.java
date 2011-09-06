@@ -1,3 +1,4 @@
+
 /**
  * BaseEntity.java - Class for accessing things that all entities share - W, X,
  * Y, health.
@@ -221,6 +222,19 @@ public class BaseEntity {
     }
 
     /**
+     * Returns whether or not this entity is an item entity
+     * 
+     * @return true if item entity
+     */
+    public boolean isItem() {
+        return entity instanceof OEntityItem;
+    }
+
+    public static boolean isItem(OEntity entity) {
+        return entity instanceof OEntityItem;
+    }
+
+    /**
      * Returns the player for this entity
      * 
      * @return player
@@ -422,4 +436,5 @@ public class BaseEntity {
     public String getName() {
         return OEntityList.b(entity);
     }
+
 }

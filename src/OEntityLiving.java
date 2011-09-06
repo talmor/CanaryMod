@@ -1,7 +1,7 @@
+
 import java.util.List;
 
 public abstract class OEntityLiving extends OEntity {
-
    public int H = 20;
    public float I;
    public float J;
@@ -57,9 +57,8 @@ public abstract class OEntityLiving extends OEntity {
    protected int aF = 0;
    // CanaryMod Start
    @SuppressWarnings("FieldNameHidesFieldInSuperclass")
-   LivingEntity      entity = new LivingEntity(this);
+   LivingEntity entity = new LivingEntity(this);
    // CanaryMod end
-
 
    public OEntityLiving(OWorld var1) {
       super(var1);
@@ -71,7 +70,8 @@ public abstract class OEntityLiving extends OEntity {
       this.bs = 0.5F;
    }
 
-   protected void b() {}
+   protected void b() {
+   }
 
    public boolean e(OEntity var1) {
       return this.aL.a(OVec3D.b(this.aP, this.aQ + (double)this.t(), this.aR), OVec3D.b(var1.aP, var1.aQ + (double)var1.t(), var1.aR)) == null;
@@ -111,7 +111,7 @@ public abstract class OEntityLiving extends OEntity {
 
       if(this.T() && this.K()) {
          // CanaryMod Damage hook: Suffocation
-         if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.SUFFOCATION, null, entity, 1))
+         if(!(Boolean)manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.SUFFOCATION, null, entity, 1))
             this.a((OEntity)null, 1);
       }
 
@@ -133,7 +133,7 @@ public abstract class OEntityLiving extends OEntity {
             }
 
             // CanaryMod Damage hook: Drowning
-            if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.WATER, null, entity, 2))
+            if(!(Boolean)manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.WATER, null, entity, 2))
                this.a((OEntity)null, 2);
          }
 
@@ -310,10 +310,10 @@ public abstract class OEntityLiving extends OEntity {
             this.ao = 1.5F;
 
             // CanaryMod damage entities.
-            LivingEntity attacker = (var1 != null && var1 instanceof OEntityLiving) ? new LivingEntity((OEntityLiving) var1) : null;
+            LivingEntity attacker = (var1 != null && var1 instanceof OEntityLiving)?new LivingEntity((OEntityLiving)var1):null;
 
             // CanaryMod attack by entity, but it might not do damage!
-            if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.ATTACK, attacker, entity, var2))
+            if(attacker != null && (Boolean)manager.callHook(PluginLoader.Hook.ATTACK, attacker, entity, var2))
                return false;
 
             boolean var3 = true;
@@ -323,7 +323,7 @@ public abstract class OEntityLiving extends OEntity {
                }
 
                // CanaryMod: partial damage
-               if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, entity, var2 - ax))
+               if(attacker != null && (Boolean)manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, entity, var2 - ax))
                   return false;
 
                this.c(var2 - this.ax);
@@ -331,7 +331,7 @@ public abstract class OEntityLiving extends OEntity {
                var3 = false;
             } else {
                // CanaryMod: full damage
-               if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, entity, var2))
+               if(attacker != null && (Boolean)manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, entity, var2))
                   return false;
 
                this.ax = var2;
@@ -448,7 +448,7 @@ public abstract class OEntityLiving extends OEntity {
       int var2 = (int)Math.ceil((double)(var1 - 3.0F));
       if(var2 > 0) {
          // CanaryMod Damage hook: Falling
-         if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FALL, null, entity, var2))
+         if(!(Boolean)manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FALL, null, entity, var2))
             this.a((OEntity)null, var2);
 
          int var3 = this.aL.a(OMathHelper.b(this.aP), OMathHelper.b(this.aQ - 0.20000000298023224D - (double)this.bi), OMathHelper.b(this.aR));
@@ -682,14 +682,22 @@ public abstract class OEntityLiving extends OEntity {
          double var6 = var1.aR - this.aR;
          double var8 = var2 * var2 + var4 * var4 + var6 * var6;
          if(var8 > 16384.0D) {
-            this.J();
+            // CanaryMod hook onEntityDespawn
+            if(!(Boolean)OEntityLiving.manager.callHook(PluginLoader.Hook.ENTITY_DESPAWN, this.entity)) {
+               this.J();
+            }
          }
 
          if(this.ay > 600 && this.bv.nextInt(800) == 0) {
             if(var8 < 1024.0D) {
                this.ay = 0;
             } else {
-               this.J();
+               // CanaryMod hook onEntityDespawn
+               if(!(Boolean)OEntityLiving.manager.callHook(PluginLoader.Hook.ENTITY_DESPAWN, this.entity)) {
+                  this.J();
+               } else {
+                  this.ay = 0;
+               }
             }
          }
       }
@@ -786,7 +794,8 @@ public abstract class OEntityLiving extends OEntity {
       return var1 + var4;
    }
 
-   public void X() {}
+   public void X() {
+   }
 
    public boolean d() {
       return this.aL.a(this.aZ) && this.aL.a((OEntity)this, this.aZ).size() == 0 && !this.aL.c(this.aZ);
@@ -829,4 +838,5 @@ public abstract class OEntityLiving extends OEntity {
    public boolean L() {
       return false;
    }
+
 }

@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -23,46 +24,42 @@ import net.minecraft.server.MinecraftServer;
  * @author James
  */
 public class etc {
-
-    private static final Logger           log                 = Logger.getLogger("Minecraft");
-    private static final etc              instance            = new etc();
-    private static MinecraftServer        server;
-    private String                        usersLoc            = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
-    private String                        whitelistLoc        = "whitelist.txt", reservelistLoc = "reservelist.txt";
-    private String                        whitelistMessage    = "Not on whitelist.";
-
-    private Set<Integer>                  allowedItems        = new HashSet<Integer>();
-    private Set<Integer>                  disallowedItems     = new HashSet<Integer>();
-    private Set<Integer>                  itemSpawnBlacklist  = new HashSet<Integer>();
-
-    private String[]                      motd                = null;
-    private boolean                       saveHomes           = true;
-    private boolean                       whitelistEnabled    = false;
-    private boolean                       reservelistEnabled  = false;
-    private int                           playerLimit         = 20;
-    private int                           spawnProtectionSize = 16;
-    private LinkedHashMap<String, String> commands            = new LinkedHashMap<String, String>();
-    private String                        dataSourceType;
-    private DataSource                    dataSource;
-    private PropertiesFile                properties;
-    private PluginLoader                  loader;
-    private boolean                       logging             = false;
-    private boolean                       enableHealth        = true;
-    private PluginLoader.HookResult       autoHeal            = PluginLoader.HookResult.DEFAULT_ACTION;
-    private boolean                       showUnknownCommand  = true;
-    private String                        versionStr;
-    private boolean                       tainted             = true;
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final etc instance = new etc();
+    private static MinecraftServer server;
+    private String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
+    private String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
+    private String whitelistMessage = "Not on whitelist.";
+    private Set<Integer> allowedItems = new HashSet<Integer>();
+    private Set<Integer> disallowedItems = new HashSet<Integer>();
+    private Set<Integer> itemSpawnBlacklist = new HashSet<Integer>();
+    private String[] motd = null;
+    private boolean saveHomes = true;
+    private boolean whitelistEnabled = false;
+    private boolean reservelistEnabled = false;
+    private int playerLimit = 20;
+    private int spawnProtectionSize = 16;
+    private LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
+    private String dataSourceType;
+    private DataSource dataSource;
+    private PropertiesFile properties;
+    private PluginLoader loader;
+    private boolean logging = false;
+    private boolean enableHealth = true;
+    private PluginLoader.HookResult autoHeal = PluginLoader.HookResult.DEFAULT_ACTION;
+    private boolean showUnknownCommand = true;
+    private String versionStr;
+    private boolean tainted = true;
     // Version, DO NOT CHANGE (is loaded from file version.txt)!
-    private int                           version             = 1;
-    private String                        username, password, db;
-    private String[]                      animals             = new String[] {};
-    private String[]                      monsters            = new String[] {};
-    private String[]                      waterAnimals        = new String[] {};
-    private int                           mobSpawnRate        = 100;
-    private boolean                       spawnWolves         = true;
-
-    private boolean                       mobReload           = false;
-    private List<OSpawnListEntry>         animalsList, monsterList, waterAnimalsList;
+    private int version = 1;
+    private String username, password, db;
+    private String[] animals = new String[]{};
+    private String[] monsters = new String[]{};
+    private String[] waterAnimals = new String[]{};
+    private int mobSpawnRate = 100;
+    private boolean spawnWolves = true;
+    private boolean mobReload = false;
+    private List<OSpawnListEntry> animalsList, monsterList, waterAnimalsList;
 
     private etc() {
         load();
@@ -101,10 +98,10 @@ public class etc {
             loadIds(itemSpawnBlacklist, properties.getString("itemspawnblacklist", ""));
             motd = properties.getString("motd", "Type /help for a list of commands.").split("@");
             playerLimit = properties.getInt("max-players", 20);
-            saveHomes = properties.getBoolean("save-homes");
-            whitelistEnabled = properties.getBoolean("whitelist");
+            saveHomes = properties.getBoolean("save-homes", true);
+            whitelistEnabled = properties.getBoolean("whitelist", false);
             whitelistMessage = properties.getString("whitelist-message", "Not on whitelist.");
-            reservelistEnabled = properties.getBoolean("reservelist");
+            reservelistEnabled = properties.getBoolean("reservelist", false);
             if (dataSourceType.equalsIgnoreCase("flatfile")) {
                 usersLoc = properties.getString("admintxtlocation", "users.txt");
                 kitsLoc = properties.getString("kitstxtlocation", "kits.txt");
@@ -127,19 +124,19 @@ public class etc {
 
             animals = properties.getString("natural-animals", "Sheep,Pig,Chicken,Cow").split(",");
             if (animals.length == 1 && (animals[0].equals(" ") || animals[0].equals("")))
-                animals = new String[] {};
-            validateMobGroup(animals, "natural-animals", new String[] { "Sheep", "Pig", "Chicken", "Cow", "Wolf" });
+                animals = new String[]{};
+            validateMobGroup(animals, "natural-animals", new String[]{"Sheep", "Pig", "Chicken", "Cow", "Wolf"});
             spawnWolves = properties.getBoolean("spawn-wolves", true);
 
             monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper,Slime").split(",");
             if (monsters.length == 1 && (monsters[0].equals(" ") || monsters[0].equals("")))
-                monsters = new String[] {};
-            validateMobGroup(monsters, "natural-monsters", new String[] { "PigZombie", "Ghast", "Slime", "Giant", "Spider", "Zombie", "Skeleton", "Creeper" });
+                monsters = new String[]{};
+            validateMobGroup(monsters, "natural-monsters", new String[]{"PigZombie", "Ghast", "Slime", "Giant", "Spider", "Zombie", "Skeleton", "Creeper"});
 
             waterAnimals = properties.getString("natural-wateranimals", "Squid").split(",");
             if (waterAnimals.length == 1 && (waterAnimals[0].equals(" ") || waterAnimals[0].equals("")))
-                waterAnimals = new String[] {};
-            validateMobGroup(waterAnimals, "natural-wateranimals", new String[] { "Squid" });
+                waterAnimals = new String[]{};
+            validateMobGroup(waterAnimals, "natural-wateranimals", new String[]{"Squid"});
 
             mobReload = true;
 
@@ -183,7 +180,7 @@ public class etc {
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
             // Just in case...
-            motd = new String[] { "Type /help for a list of commands." };
+            motd = new String[]{"Type /help for a list of commands."};
         }
     }
 
@@ -376,20 +373,20 @@ public class etc {
      * that they appear in server log.
      */
     private MessageReceiver serverConsole = new MessageReceiver() {
-                                              @Override
-                                              public String getName() {
-                                                  return "<Server>";
-                                              }
+        @Override
+        public String getName() {
+            return "<Server>";
+        }
 
-                                              @Override
-                                              public void notify(String message) {
-                                                  // Strip the colors.
-                                                  message = message.replaceAll("\\u00A7[a-f0-9]", "");
-                                                  if (message != null)
-                                                      log.info(message);
-                                              }
+        @Override
+        public void notify(String message) {
+            // Strip the colors.
+            message = message.replaceAll("\\u00A7[a-f0-9]", "");
+            if (message != null)
+                log.info(message);
+        }
 
-                                          };
+    };
 
     /**
      * Parses a console command
@@ -402,7 +399,7 @@ public class etc {
         if (getMCServer() == null)
             setServer(server);
         String[] split = command.split(" ");
-        if ((Boolean) getLoader().callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[] { split }))
+        if ((Boolean) getLoader().callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[]{split}))
             return true;
         if (split.length == 0)
             return false;
@@ -476,8 +473,8 @@ public class etc {
             builder.append(string[i]);
             builder.append(seperator);
         }
-    	if (builder.length() > 0) //Skye's fix for OutOfBounds exception.
-    		builder.deleteCharAt(builder.length() - seperator.length()); // remove
+        if (builder.length() > 0) //Skye's fix for OutOfBounds exception.
+            builder.deleteCharAt(builder.length() - seperator.length()); // remove
         // the
         // extra
         // seperator
@@ -1031,7 +1028,8 @@ public class etc {
     }
 
     private static void validateMobGroup(String[] mobs, String groupname, String[] allowed) {
-        lb1: for (String i : mobs) {
+        lb1:
+        for (String i : mobs) {
             for (String al : allowed)
                 if (al.equals(i))
                     continue lb1;

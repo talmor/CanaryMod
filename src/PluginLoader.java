@@ -75,11 +75,11 @@ public class PluginLoader {
          */
         ARM_SWING,
         /**
-         * Calls {@link PluginListener#onItemDrop(Player, Item) }
+         * Calls {@link PluginListener#onItemDrop(Player, ItemEntity) }
          */
         ITEM_DROP,
         /**
-         * Calls {@link PluginListener#onItemDrop(Player, Item) }
+         * Calls {@link PluginListener#onItemPickUp(Player, ItemEntity) }
          */
         ITEM_PICK_UP,
         /**
@@ -118,6 +118,14 @@ public class PluginLoader {
          * Calls {@link PluginListener#onRedstoneChange(Block, int, int) }
          */
         REDSTONE_CHANGE,
+        /**
+         * Calls {@link PluginListener#onPistonExtend(Block, Boolean) }
+         */
+        PISTON_EXTEND,
+        /**
+         * Calls {@link PluginListener#onPistonRetract(Block, Boolean) }
+         */
+        PISTON_RETRACT,
         /**
          * Calls {@link PluginListener#onBlockPhysics(Block, boolean) }
          */
@@ -234,6 +242,22 @@ public class PluginLoader {
          * Calls {@link PluginListener#canPlayerUseCommand(Player, String) }
          */
         COMMAND_CHECK,
+        /**
+         * Class {@link PluginListener#onPortalCreate(Block[][]) }
+         */
+        PORTAL_CREATE,
+        /**
+         * Class {@link PluginListener#onPortalDestroy(Block[][]) }
+         */
+        PORTAL_DESTROY,
+        /**
+         * Class {@link PluginListener#onPlayerRespawn(Player) }
+         */
+        PLAYER_RESPAWN,
+        /**
+         * Class {@link PluginListener#onEntityDespawn(BaseEntity) }
+         */
+        ENTITY_DESPAWN,
         /**
          * Unused.
          */
@@ -613,11 +637,11 @@ public class PluginLoader {
                                 listener.onArmSwing((Player) parameters[0]);
                                 break;
                             case ITEM_DROP:
-                                if (listener.onItemDrop((Player) parameters[0], (Item) parameters[1]))
+                                if (listener.onItemDrop((Player) parameters[0], (ItemEntity) parameters[1]))
                                     toRet = true;
                                 break;
                             case ITEM_PICK_UP:
-                                if (listener.onItemPickUp((Player) parameters[0], (Item) parameters[1]))
+                                if (listener.onItemPickUp((Player) parameters[0], (ItemEntity) parameters[1]))
                                     toRet = true;
                                 break;
                             case TELEPORT:
@@ -654,6 +678,12 @@ public class PluginLoader {
                                 break;
                             case REDSTONE_CHANGE:
                                 toRet = listener.onRedstoneChange((Block) parameters[0], (Integer) parameters[1], (Integer) toRet);
+                                break;
+                            case PISTON_EXTEND:
+                                toRet = listener.onPistonExtend((Block) parameters[0], (((Block) parameters[0]).getType() == Block.Type.StickyPiston.getType()));
+                                break;
+                            case PISTON_RETRACT:
+                                toRet = listener.onPistonRetract((Block) parameters[0], (((Block) parameters[0]).getType() == Block.Type.StickyPiston.getType()));
                                 break;
                             case BLOCK_PHYSICS:
                                 if (listener.onBlockPhysics((Block) parameters[0], (Boolean) parameters[1]))
@@ -719,7 +749,7 @@ public class PluginLoader {
                                     toRet = true;
                                 break;
                             case TAME:
-                                ret = listener.onTame((Player) parameters[0], (Mob) parameters[1]);
+                                ret = listener.onTame((Player) parameters[0], (Mob) parameters[1], (Boolean) parameters[2]);
                                 if (ret != HookResult.DEFAULT_ACTION && (HookResult) toRet == HookResult.DEFAULT_ACTION)
                                     toRet = ret;
                                 break;
@@ -742,10 +772,12 @@ public class PluginLoader {
                             case TIME_CHANGE:
                                 if (listener.onTimeChange((World) parameters[0], (long) (Long) parameters[1]))
                                     toRet = true;
+                                break;
                             case COMMAND_CHECK:
                                 ret = listener.canPlayerUseCommand((Player) parameters[0], (String) parameters[1]);
                                 if (ret != HookResult.DEFAULT_ACTION)
                                     toRet = ret;
+                                break;
                             case CHUNK_CREATE:
                                 byte[] chunk = listener.onChunkCreate((Integer) parameters[0], (Integer) parameters[1], (World) parameters[2]);
                                 if (chunk != null) {
@@ -766,6 +798,18 @@ public class PluginLoader {
                                 break;
                             case CHUNK_UNLOAD:
                                 listener.onChunkUnload((Chunk) parameters[0]);
+                                break;
+                            case PORTAL_CREATE:
+                                toRet = listener.onPortalCreate((Block[][]) parameters[0]);
+                                break;
+                            case PORTAL_DESTROY:
+                                toRet = listener.onPortalDestroy((Block[][]) parameters[0]);
+                                break;
+                            case PLAYER_RESPAWN:
+                                listener.onPlayerRespawn((Player) parameters[0]);
+                                break;
+                            case ENTITY_DESPAWN:
+                                toRet = listener.onEntityDespawn((BaseEntity) parameters[0]);
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
