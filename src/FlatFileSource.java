@@ -780,7 +780,7 @@ public class FlatFileSource extends DataSource {
                 if (!split[0].equalsIgnoreCase(name))
                     continue;
 
-                if(split.length<3){
+                if(split.length<2){
                     log.log(Level.SEVERE,String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
                     continue;
                 }
