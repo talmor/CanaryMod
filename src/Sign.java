@@ -72,6 +72,12 @@ public class Sign implements ComplexBlock {
     public void update() {
         sign.i();
         getWorld().getWorld().h(getX(), getY(), getZ());
+        sign.a(true);
+        for (Player player : etc.getServer().getPlayerList())
+        {
+           player.getUser().a.a(new OPacket130UpdateSign(sign.e, sign.f, sign.g, sign.a));
+        }
+        sign.a(false);
     }
 
     /**
