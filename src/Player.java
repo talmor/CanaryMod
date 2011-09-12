@@ -734,7 +734,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * Switch to the other dimension at the according position.
      */
     public void switchWorlds() {
-        MinecraftServer mcServer = etc.getMCServer();
+        OMinecraftServer mcServer = etc.getMCServer();
         OEntityPlayerMP ent = getEntity();
 
         // Nether is not allowed, so shush

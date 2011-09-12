@@ -2,8 +2,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.server.MinecraftServer;
-
 /**
  * Server.java - Interface to server stuff
  * Crow build 3.1.9
@@ -15,14 +13,14 @@ import net.minecraft.server.MinecraftServer;
  */
 public class Server {
 
-    private MinecraftServer server;
+    private OMinecraftServer server;
 
     /**
      * Creates a server
      * 
      * @param server
      */
-    public Server(MinecraftServer server) {
+    public Server(OMinecraftServer server) {
         this.server = server;
     }
 
@@ -88,7 +86,7 @@ public class Server {
      *            time till it expires (6000 roughly equals 5 minutes)
      */
     public void setTimer(String uniqueString, int time) {
-        MinecraftServer.b.put(uniqueString, time);
+        OMinecraftServer.b.put(uniqueString, time);
     }
 
     /**
@@ -99,7 +97,7 @@ public class Server {
      * @return false if timer has expired
      */
     public boolean isTimerExpired(String uniqueString) {
-        return MinecraftServer.b.containsKey(uniqueString);
+        return OMinecraftServer.b.containsKey(uniqueString);
     }
 
     /**
@@ -161,7 +159,7 @@ public class Server {
      * 
      * @return
      */
-    public MinecraftServer getMCServer() {
+    public OMinecraftServer getMCServer() {
         return server;
     }
 

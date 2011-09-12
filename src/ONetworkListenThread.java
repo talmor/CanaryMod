@@ -5,7 +5,6 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.minecraft.server.MinecraftServer;
 
 public class ONetworkListenThread {
 
@@ -16,10 +15,10 @@ public class ONetworkListenThread {
    private int f = 0;
    private ArrayList g = new ArrayList();
    private ArrayList h = new ArrayList();
-   public MinecraftServer c;
+   public OMinecraftServer c;
 
 
-   public ONetworkListenThread(MinecraftServer var1, InetAddress var2, int var3) {
+   public ONetworkListenThread(OMinecraftServer var1, InetAddress var2, int var3) {
         try {
             this.c = var1;
             this.d = new ServerSocket(var3, 0, var2);

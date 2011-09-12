@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
-import net.minecraft.server.MinecraftServer;
 
 public class PlayerCommands {
 
@@ -196,12 +195,12 @@ public class PlayerCommands {
                         caller.notify("That kit does not exist.");
                     else if (((Player) caller).getOnlyOneUseKits().contains(kit.Name))
                         caller.notify("You can only get this kit once per login.");
-                    else if (MinecraftServer.b.containsKey(caller.getName() + " " + kit.Name))
+                    else if (OMinecraftServer.b.containsKey(caller.getName() + " " + kit.Name))
                         caller.notify("You can't get this kit again for a while.");
                     else {
                         if (!((Player) caller).canIgnoreRestrictions())
                             if (kit.Delay >= 0)
-                                MinecraftServer.b.put(caller.getName() + " " + kit.Name, kit.Delay);
+                                OMinecraftServer.b.put(caller.getName() + " " + kit.Name, kit.Delay);
                             else
                                 ((Player) caller).getOnlyOneUseKits().add(kit.Name);
 

@@ -8,7 +8,7 @@ import net.minecraft.server.MinecraftServer;
 public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
    public ONetServerHandler a;
-   public MinecraftServer b;
+   public OMinecraftServer b;
    public OItemInWorldManager c;
    public double d;
    public double e;
@@ -23,7 +23,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
    private Player player;
 
 
-   public OEntityPlayerMP(MinecraftServer var1, OWorld var2, String var3, OItemInWorldManager var4) {
+   public OEntityPlayerMP(OMinecraftServer var1, OWorld var2, String var3, OItemInWorldManager var4) {
       super(var2);
       var4.a = this;
       this.c = var4;

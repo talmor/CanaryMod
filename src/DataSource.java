@@ -22,7 +22,7 @@ public abstract class DataSource {
     protected List<Warp>           warps  = new ArrayList<Warp>();
     protected List<Ban>            bans   = new ArrayList<Ban>();
     protected Map<String, Integer> items  = new HashMap<String, Integer>();
-    protected MinecraftServer      server;
+    protected OMinecraftServer      server;
     protected final Object         groupLock = new Object(), kitLock = new Object(), banLock = new Object();
     protected final Object         homeLock  = new Object(), warpLock = new Object(), itemLock = new Object();
 

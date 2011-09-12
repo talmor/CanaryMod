@@ -10,7 +10,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
    public static Logger a = Logger.getLogger("Minecraft");
    public ONetworkManager b;
    public boolean c = false;
-   private MinecraftServer d;
+   private OMinecraftServer d;
    private OEntityPlayerMP e;
    private int f;
    private int g;
@@ -22,7 +22,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
    private boolean m = true;
    private Map n = new HashMap();
 
-   public ONetServerHandler(MinecraftServer var1, ONetworkManager var2, OEntityPlayerMP var3) {
+   public ONetServerHandler(OMinecraftServer var1, ONetworkManager var2, OEntityPlayerMP var3) {
       this.d = var1;
       this.b = var2;
       var2.a((ONetHandler)this);

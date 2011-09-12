@@ -345,7 +345,7 @@ public class PluginLoader {
      * @param server
      *            server to use
      */
-    public PluginLoader(MinecraftServer server) {
+    public PluginLoader(OMinecraftServer server) {
         properties = new PropertiesFile("server.properties");
         this.server = new Server(server);
 

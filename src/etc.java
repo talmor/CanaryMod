@@ -26,7 +26,7 @@ import net.minecraft.server.MinecraftServer;
 public class etc {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final etc instance = new etc();
-    private static MinecraftServer server;
+    private static OMinecraftServer server;
     private String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
     private String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
     private String whitelistMessage = "Not on whitelist.";
@@ -214,7 +214,7 @@ public class etc {
      * 
      * @param s
      */
-    public static void setServer(MinecraftServer s) {
+    public static void setServer(OMinecraftServer s) {
         server = s;
     }
 
@@ -223,7 +223,7 @@ public class etc {
      * 
      * @return
      */
-    public static MinecraftServer getMCServer() {
+    public static OMinecraftServer getMCServer() {
         return server;
     }
 
@@ -395,7 +395,7 @@ public class etc {
      * @param server
      * @return
      */
-    public boolean parseConsoleCommand(String command, MinecraftServer server) {
+    public boolean parseConsoleCommand(String command, OMinecraftServer server) {
         if (getMCServer() == null)
             setServer(server);
         String[] split = command.split(" ");

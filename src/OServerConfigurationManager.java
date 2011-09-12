@@ -15,7 +15,7 @@ import net.minecraft.server.MinecraftServer;
 public class OServerConfigurationManager {
    public static Logger a = Logger.getLogger("Minecraft");
    public List b = new ArrayList();
-   private MinecraftServer c;
+   private OMinecraftServer c;
    private OPlayerManager[] d = new OPlayerManager[2];
    private int e;
    private Set f = new HashSet();
@@ -29,7 +29,7 @@ public class OServerConfigurationManager {
    private OIPlayerFileData n;
    private boolean o;
 
-   public OServerConfigurationManager(MinecraftServer var1) {
+   public OServerConfigurationManager(OMinecraftServer var1) {
       // CanaryMod: initialize
       etc.setServer(var1);
       etc.getInstance().loadData();

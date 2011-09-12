@@ -1,3 +1,4 @@
+rule net.minecraft.server.MinecraftServer OMinecraftServer
 rule a OPacket7UseEntity
 rule aa OStepSoundStone
 rule ab ONoiseGeneratorPerlin
