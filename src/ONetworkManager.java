@@ -98,8 +98,9 @@ public class ONetworkManager
         e[localOPacket.b()] += localOPacket.a() + 1;
         i1 = true;
       }
-
+	//Begin CanaryMod Chunk Packet fix.
       if ((i1) || ((this.y-- <= 0) && (!this.o.isEmpty()) && ((this.n.isEmpty()) || (((OPacket)this.n.get(0)).j > ((OPacket)this.o.get(0)).j))))
+      //End CanaryMod Chunk Packet fix.
       {
         synchronized (this.g) {
           localOPacket = (OPacket)this.o.remove(0);
