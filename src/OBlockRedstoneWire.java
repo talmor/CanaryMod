@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -11,12 +10,12 @@ public class OBlockRedstoneWire extends OBlock {
 
 
    public OBlockRedstoneWire(int var1, int var2) {
-      super(var1, var2, OMaterial.o);
+      super(var1, var2, OMaterial.p);
       this.a(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
    }
 
    public int a(int var1, int var2) {
-      return this.bm;
+      return this.bz;
    }
 
    public OAxisAlignedBB e(OWorld var1, int var2, int var3, int var4) {
@@ -31,7 +30,7 @@ public class OBlockRedstoneWire extends OBlock {
       return false;
    }
 
-   public boolean a(OWorld var1, int var2, int var3, int var4) {
+   public boolean c(OWorld var1, int var2, int var3, int var4) {
       return var1.e(var2, var3 - 1, var4);
    }
 
@@ -42,7 +41,7 @@ public class OBlockRedstoneWire extends OBlock {
 
       for(int var6 = 0; var6 < var5.size(); ++var6) {
          OChunkPosition var7 = (OChunkPosition)var5.get(var6);
-         var1.h(var7.a, var7.b, var7.c, this.bn);
+         var1.h(var7.a, var7.b, var7.c, this.bA);
       }
 
    }
@@ -98,15 +97,11 @@ public class OBlockRedstoneWire extends OBlock {
          }
       }
 
-      // CanaryMod: Allow redstone wire current changes
-      if (var8 != var9)
-         var9 = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), var8, var9);
-
       if(var8 != var9) {
-         var1.o = true;
+         var1.t = true;
          var1.c(var2, var3, var4, var9);
          var1.b(var2, var3, var4, var2, var3, var4);
-         var1.o = false;
+         var1.t = false;
 
          for(var11 = 0; var11 < 4; ++var11) {
             var12 = var2;
@@ -168,23 +163,23 @@ public class OBlockRedstoneWire extends OBlock {
    }
 
    private void h(OWorld var1, int var2, int var3, int var4) {
-      if(var1.a(var2, var3, var4) == this.bn) {
-         var1.h(var2, var3, var4, this.bn);
-         var1.h(var2 - 1, var3, var4, this.bn);
-         var1.h(var2 + 1, var3, var4, this.bn);
-         var1.h(var2, var3, var4 - 1, this.bn);
-         var1.h(var2, var3, var4 + 1, this.bn);
-         var1.h(var2, var3 - 1, var4, this.bn);
-         var1.h(var2, var3 + 1, var4, this.bn);
+      if(var1.a(var2, var3, var4) == this.bA) {
+         var1.h(var2, var3, var4, this.bA);
+         var1.h(var2 - 1, var3, var4, this.bA);
+         var1.h(var2 + 1, var3, var4, this.bA);
+         var1.h(var2, var3, var4 - 1, this.bA);
+         var1.h(var2, var3, var4 + 1, this.bA);
+         var1.h(var2, var3 - 1, var4, this.bA);
+         var1.h(var2, var3 + 1, var4, this.bA);
       }
    }
 
-   public void c(OWorld var1, int var2, int var3, int var4) {
-      super.c(var1, var2, var3, var4);
-      if(!var1.B) {
+   public void a(OWorld var1, int var2, int var3, int var4) {
+      super.a(var1, var2, var3, var4);
+      if(!var1.I) {
          this.g(var1, var2, var3, var4);
-         var1.h(var2, var3 + 1, var4, this.bn);
-         var1.h(var2, var3 - 1, var4, this.bn);
+         var1.h(var2, var3 + 1, var4, this.bA);
+         var1.h(var2, var3 - 1, var4, this.bA);
          this.h(var1, var2 - 1, var3, var4);
          this.h(var1, var2 + 1, var3, var4);
          this.h(var1, var2, var3, var4 - 1);
@@ -216,11 +211,11 @@ public class OBlockRedstoneWire extends OBlock {
       }
    }
 
-   public void b(OWorld var1, int var2, int var3, int var4) {
-      super.b(var1, var2, var3, var4);
-      if(!var1.B) {
-         var1.h(var2, var3 + 1, var4, this.bn);
-         var1.h(var2, var3 - 1, var4, this.bn);
+   public void d(OWorld var1, int var2, int var3, int var4) {
+      super.d(var1, var2, var3, var4);
+      if(!var1.I) {
+         var1.h(var2, var3 + 1, var4, this.bA);
+         var1.h(var2, var3 - 1, var4, this.bA);
          this.g(var1, var2, var3, var4);
          this.h(var1, var2 - 1, var3, var4);
          this.h(var1, var2 + 1, var3, var4);
@@ -254,7 +249,7 @@ public class OBlockRedstoneWire extends OBlock {
    }
 
    private int f(OWorld var1, int var2, int var3, int var4, int var5) {
-      if(var1.a(var2, var3, var4) != this.bn) {
+      if(var1.a(var2, var3, var4) != this.bA) {
          return var5;
       } else {
          int var6 = var1.c(var2, var3, var4);
@@ -262,10 +257,10 @@ public class OBlockRedstoneWire extends OBlock {
       }
    }
 
-   public void b(OWorld var1, int var2, int var3, int var4, int var5) {
-      if(!var1.B) {
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
+      if(!var1.I) {
          int var6 = var1.c(var2, var3, var4);
-         boolean var7 = this.a(var1, var2, var3, var4);
+         boolean var7 = this.c(var1, var2, var3, var4);
          if(!var7) {
             this.g(var1, var2, var3, var4, var6);
             var1.e(var2, var3, var4, 0);
@@ -273,17 +268,16 @@ public class OBlockRedstoneWire extends OBlock {
             this.g(var1, var2, var3, var4);
          }
 
-         super.b(var1, var2, var3, var4, var5);
+         super.a(var1, var2, var3, var4, var5);
       }
    }
 
    public int a(int var1, Random var2) {
-      return OItem.aA.bf;
+      return OItem.aA.bo;
    }
 
    public boolean d(OWorld var1, int var2, int var3, int var4, int var5) {
-      // CanaryMod: forced casting to OIBlockAccess
-      return !this.a?false:this.a((OIBlockAccess) var1, var2, var3, var4, var5);
+      return !this.a?false:this.a((OIBlockAccess)var1, var2, var3, var4, var5);
    }
 
    public boolean a(OIBlockAccess var1, int var2, int var3, int var4, int var5) {
@@ -326,17 +320,17 @@ public class OBlockRedstoneWire extends OBlock {
 
    public static boolean c(OIBlockAccess var0, int var1, int var2, int var3, int var4) {
       int var5 = var0.a(var1, var2, var3);
-      if(var5 == OBlock.aw.bn) {
+      if(var5 == OBlock.aw.bA) {
          return true;
       } else if(var5 == 0) {
          return false;
       } else if(OBlock.m[var5].d()) {
          return true;
-      } else if(var5 != OBlock.bi.bn && var5 != OBlock.bj.bn) {
+      } else if(var5 != OBlock.bi.bA && var5 != OBlock.bj.bA) {
          return false;
       } else {
          int var6 = var0.c(var1, var2, var3);
-         return var4 == OModelBed.b[var6 & 3];
+         return var4 == OModelBed.e[var6 & 3];
       }
    }
 }

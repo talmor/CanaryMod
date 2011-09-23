@@ -64,7 +64,7 @@ public class World {
      * @return the dimension type
      */
     public Type getType() {
-        return Type.fromId(world.t.g);
+        return Type.fromId(world.y.g);
     }
 
     /**
@@ -73,7 +73,7 @@ public class World {
      * @return time server time
      */
     public long getTime() {
-        return world.m();
+        return world.l();
     }
 
     /**
@@ -121,7 +121,7 @@ public class World {
      */
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
-        for (Object o : world.b)
+        for (Object o : world.h)
             if (o instanceof OEntityMob || o instanceof OEntityGhast)
                 toRet.add(new Mob((OEntityLiving) o));
         return toRet;
@@ -134,7 +134,7 @@ public class World {
      */
     public List<Mob> getAnimalList() {
         List<Mob> toRet = new ArrayList<Mob>();
-        for (Object o : world.b)
+        for (Object o : world.h)
             if (o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
         return toRet;
@@ -147,7 +147,7 @@ public class World {
      */
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
-        for (Object o : world.b)
+        for (Object o : world.h)
             if (o instanceof OEntityMinecart)
                 toRet.add(((OEntityMinecart) o).cart);
         return toRet;
@@ -160,7 +160,7 @@ public class World {
      */
     public List<Boat> getBoatList() {
         List<Boat> toRet = new ArrayList<Boat>();
-        for (Object o : world.b)
+        for (Object o : world.h)
             if (o instanceof OEntityBoat)
                 toRet.add(((OEntityBoat) o).boat);
         return toRet;
@@ -173,7 +173,7 @@ public class World {
      */
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
-        for (Object o : world.b)
+        for (Object o : world.h)
             if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
             else if (o instanceof OEntityMinecart)
@@ -193,7 +193,7 @@ public class World {
      */
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
-        for (Object o : world.b)
+        for (Object o : world.h)
             if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
             else if (o instanceof OEntityPlayerMP)
@@ -208,7 +208,7 @@ public class World {
      */
     public List<BaseVehicle> getVehicleEntityList() {
         List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
-        for (Object o : world.b)
+        for (Object o : world.h)
             if (o instanceof OEntityMinecart)
                 toRet.add(((OEntityMinecart) o).cart);
             else if (o instanceof OEntityBoat)
@@ -223,7 +223,7 @@ public class World {
      */
     public Location getSpawnLocation() {
         // More structure ftw
-        OWorldInfo info = world.x;
+        OWorldInfo info = world.C;
         Location spawn = new Location();
         spawn.x = info.c() + 0.5D;
         spawn.y = world.f(info.c(), info.e()) + 1.5D;
@@ -479,9 +479,9 @@ public class World {
      * @param quantity
      */
     public void dropItem(double x, double y, double z, int itemId, int quantity, int damage) {
-        double d1 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d2 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d3 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d1 = world.w.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d2 = world.w.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d3 = world.w.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
         OEntityItem oei = new OEntityItem(world, x + d1, y + d2, z + d3, new OItemStack(itemId, quantity, damage));
         oei.c = 10;
@@ -539,7 +539,7 @@ public class World {
      * @return true if the chunk is loaded
      */
     public boolean isChunkLoaded(int x, int y, int z) {
-        return world.C.a(x >> 4, z >> 4);
+        return world.M.a(x >> 4, z >> 4);
     }
 
     /**
@@ -581,7 +581,7 @@ public class World {
      * @return chunk
      */
     public Chunk loadChunk(int x, int z) {
-        return world.C.c(x, z).chunk;
+        return world.M.c(x, z).chunk;
     }
 
     /**
@@ -623,8 +623,8 @@ public class World {
      * @return chunk
      */
     public Chunk getChunk(int x, int z) {
-        if (world.C.a(x, z)) {
-            return world.C.b(x, z).chunk;
+        if (world.M.a(x, z)) {
+            return world.M.b(x, z).chunk;
         } else {
             return null;
         }
@@ -689,13 +689,13 @@ public class World {
     public void setThundering(boolean thundering) {
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.THUNDER_CHANGE, this, thundering))
             return;
-        world.x.a(thundering);
+        world.C.a(thundering);
 
         // Thanks to Bukkit for figuring out these numbers
         if (thundering) {
-            setThunderTime(world.r.nextInt(12000) + 3600);
+            setThunderTime(world.w.nextInt(12000) + 3600);
         } else {
-            setThunderTime(world.r.nextInt(168000) + 12000);
+            setThunderTime(world.w.nextInt(168000) + 12000);
         }
     }
 
@@ -704,7 +704,7 @@ public class World {
      * @param ticks ticks of thunder
      */
     public void setThunderTime(int ticks) {
-        world.x.b(ticks);
+        world.C.b(ticks);
     }
 
     /**
@@ -714,13 +714,13 @@ public class World {
     public void setRaining(boolean raining) {
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.WEATHER_CHANGE, this, raining))
             return;
-        world.x.b(raining);
+        world.C.b(raining);
 
         // Thanks to Bukkit for figuring out these numbers
         if (raining) {
-            setRainTime(world.r.nextInt(12000) + 3600);
+            setRainTime(world.w.nextInt(12000) + 3600);
         } else {
-            setRainTime(world.r.nextInt(168000) + 12000);
+            setRainTime(world.w.nextInt(168000) + 12000);
         }
     }
 
@@ -729,7 +729,7 @@ public class World {
      * @param ticks ticks of rain
      */
     public void setRainTime(int ticks) {
-        world.x.c(ticks);
+        world.C.c(ticks);
     }
 
     /**
@@ -737,7 +737,7 @@ public class World {
      * @return whether it's thundering
      */
     public boolean isThundering() {
-        return world.x.j();
+        return world.C.j();
     }
 
     /**
@@ -745,7 +745,7 @@ public class World {
      * @return the thunder ticks
      */
     public int getThunderTime() {
-        return world.x.k();
+        return world.C.k();
     }
 
     /**
@@ -753,7 +753,7 @@ public class World {
      * @return whether it's raining
      */
     public boolean isRaining() {
-        return world.x.l();
+        return world.C.l();
     }
 
     /**
@@ -761,7 +761,7 @@ public class World {
      * @return the rain ticks
      */
     public int getRainTime() {
-        return world.x.m();
+        return world.C.m();
     }
 
     @Override

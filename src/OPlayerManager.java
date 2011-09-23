@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.server.MinecraftServer;
@@ -15,6 +14,7 @@ public class OPlayerManager {
 
 
    public OPlayerManager(MinecraftServer var1, int var2, int var3) {
+      super();
       if(var3 > 15) {
          throw new IllegalArgumentException("Too big view radius!");
       } else if(var3 < 3) {
@@ -60,10 +60,10 @@ public class OPlayerManager {
    }
 
    public void a(OEntityPlayerMP var1) {
-      int var2 = (int)var1.aP >> 4;
-      int var3 = (int)var1.aR >> 4;
-      var1.d = var1.aP;
-      var1.e = var1.aR;
+      int var2 = (int)var1.bf >> 4;
+      int var3 = (int)var1.bh >> 4;
+      var1.d = var1.bf;
+      var1.e = var1.bh;
       int var4 = 0;
       int var5 = this.f;
       int var6 = 0;
@@ -117,10 +117,10 @@ public class OPlayerManager {
    }
 
    public void c(OEntityPlayerMP var1) {
-      int var2 = (int)var1.aP >> 4;
-      int var3 = (int)var1.aR >> 4;
-      double var4 = var1.d - var1.aP;
-      double var6 = var1.e - var1.aR;
+      int var2 = (int)var1.bf >> 4;
+      int var3 = (int)var1.bh >> 4;
+      double var4 = var1.d - var1.bf;
+      double var6 = var1.e - var1.bh;
       double var8 = var4 * var4 + var6 * var6;
       if(var8 >= 64.0D) {
          int var10 = (int)var1.d >> 4;
@@ -128,12 +128,12 @@ public class OPlayerManager {
          int var12 = var2 - var10;
          int var13 = var3 - var11;
          if(var12 != 0 || var13 != 0) {
-            //CanaryMod speed up teleporting.
-            if (var12 > f || var12 < -f || var13 > f || var13 < -f) {
-               b(var1);
-               a(var1);
-               return;
-            }
+             //CanaryMod speed up teleporting.
+             if (var12 > f || var12 < -f || var13 > f || var13 < -f) {
+                b(var1);
+                a(var1);
+                return;
+             }
             for(int var14 = var2 - this.f; var14 <= var2 + this.f; ++var14) {
                for(int var15 = var3 - this.f; var15 <= var3 + this.f; ++var15) {
                   if(!this.a(var14, var15, var10, var11)) {
@@ -149,8 +149,8 @@ public class OPlayerManager {
                }
             }
 
-            var1.d = var1.aP;
-            var1.e = var1.aR;
+            var1.d = var1.bf;
+            var1.e = var1.bh;
          }
       }
    }
@@ -168,8 +168,8 @@ public class OPlayerManager {
    static List b(OPlayerManager var0) {
       return var0.c;
    }
-
-   // CanaryMod: bring back old "send packet to chunk" method from alpha
+   
+// CanaryMod: bring back old "send packet to chunk" method from alpha
    public void sendPacketToChunk(OPacket packetToSend, int globalx, int globaly, int globalz) {
       // Get chunk coordinates
       int chunkx = globalx >> 4;

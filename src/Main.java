@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -14,13 +15,13 @@ import java.util.zip.CheckedInputStream;
 
 public class Main {
 
-    public static final long   minecraft_server                   = 0xac9f03e8L;
+    public static final long   minecraft_server                   = 0xdf1a7221L;
 
-    public static final long   minecraft_servero                  = 0x1b1f1375L;
+    public static final long   minecraft_servero                  = 0x959392fbL;
 
     public static final long   mysql                              = 0xb2e59524L;
     public static final long   jarjar                             = 0x0de915d3L;
-    public static final long   rules                              = 0x860141e8L;
+    public static final long   rules                              = 0x571a0abeL;
 
     public static final Logger log                                = Logger.getLogger("Minecraft");
 
@@ -33,6 +34,7 @@ public class Main {
                 log("-----------------------------");
                 System.exit(0);
             }
+            log.info("CHECKING CRC FOR JARJAR!");
             checkCRC32("jarjar.jar", jarjar);
             checkCRC32("rules.rules", rules);
 
@@ -78,6 +80,7 @@ public class Main {
     }
 
     public static void checkCRC32(String fileName, long crc) throws IOException {
+    	log.info("OK!!! ETC = " + etc.class);
         if (etc.getInstance().getTainted())
             return;
 

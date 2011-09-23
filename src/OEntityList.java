@@ -1,4 +1,3 @@
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +8,10 @@ public class OEntityList {
    private static Map c = new HashMap();
    private static Map d = new HashMap();
 
+
+   public OEntityList() {
+      super();
+   }
 
    private static void a(Class var0, String var1, int var2) {
       a.put(var1, var0);
@@ -36,7 +39,6 @@ public class OEntityList {
       OEntity var2 = null;
 
       try {
-         // CanaryMod: fix jarjar
          Class var3 = (Class)a.get(var0.i("id"));
          if(var3 != null) {
             var2 = (OEntity)var3.getConstructor(new Class[]{OWorld.class}).newInstance(new Object[]{var1});
@@ -48,7 +50,6 @@ public class OEntityList {
       if(var2 != null) {
          var2.e(var0);
       } else {
-         // CanaryMod: fix jarjar
          System.out.println("Skipping Entity with id " + var0.i("id"));
       }
 
@@ -62,16 +63,17 @@ public class OEntityList {
    public static String b(OEntity var0) {
       return (String)b.get(var0.getClass());
    }
-
+   
    // CanaryMod: Let us do a name->class lookup for mob spawning
    public static Class<?> getEntity(String name) {
        return (Class<?>) a.get(name);
    }
 
    static {
+      a(OEntityItem.class, "Item", 1);
+      a(OEntityXPOrb.class, "XPOrb", 2);
       a(OEntityArrow.class, "Arrow", 10);
       a(OEntitySnowball.class, "Snowball", 11);
-      a(OEntityItem.class, "Item", 1);
       a(OEntityPainting.class, "Painting", 9);
       a(OEntityLiving.class, "Mob", 48);
       a(OEntityMob.class, "Monster", 49);
@@ -83,6 +85,9 @@ public class OEntityList {
       a(OEntitySlime.class, "Slime", 55);
       a(OEntityGhast.class, "Ghast", 56);
       a(OEntityPigZombie.class, "PigZombie", 57);
+      a(OEntityEnderman.class, "Enderman", 58);
+      a(OEntityCaveSpider.class, "CaveSpider", 59);
+      a(OEntitySilverfish.class, "Silverfish", 60);
       a(OEntityPig.class, "Pig", 90);
       a(OEntitySheep.class, "Sheep", 91);
       a(OEntityCow.class, "Cow", 92);

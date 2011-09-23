@@ -42,7 +42,7 @@ public class Chunk {
      * @return true if chunk is loaded
      */
     public boolean isLoaded() {
-        return chunk.c;
+        return chunk.e;
     }
 
     /**
@@ -50,7 +50,7 @@ public class Chunk {
      * @return world
      */
     public World getWorld() {
-        return chunk.d.world;
+        return chunk.f.world;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Chunk {
      * @return x
      */
     public int getX() {
-        return chunk.j;
+        return chunk.l;
     }
 
     /**
@@ -66,7 +66,7 @@ public class Chunk {
      * @return z
      */
     public int getZ() {
-        return chunk.k;
+        return chunk.m;
     }
 
     /**

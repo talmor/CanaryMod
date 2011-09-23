@@ -24,7 +24,7 @@ public class Digging extends OItemInWorldManager {
      */
     public Digging(OWorldServer world, OEntityPlayerMP player) {
         this(world);
-        a = player;
+        b = player;
     }
 
     // Drop block break lag fix here.
@@ -39,7 +39,7 @@ public class Digging extends OItemInWorldManager {
     @Override
     public boolean c(int x, int y, int z) {
         // Block block = etc.getServer().getBlockAt(x, y, z);
-        Block block = ((OEntityPlayerMP) a).getPlayer().getWorld().getBlockAt(x, y, z); //
+        Block block = ((OEntityPlayerMP) b).getPlayer().getWorld().getBlockAt(x, y, z); //
         if (block.getType() == Block.Type.Obsidian.getType()) {
             boolean removeAll = true;
             ArrayList<Player> updatedPlayers = new ArrayList<Player>();
@@ -71,7 +71,7 @@ public class Digging extends OItemInWorldManager {
                 return true;
             }
         }
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, ((OEntityPlayerMP) a).getPlayer(), block))
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, ((OEntityPlayerMP) b).getPlayer(), block))
             return true;
         return super.c(x, y, z);
     }

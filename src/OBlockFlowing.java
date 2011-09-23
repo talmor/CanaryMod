@@ -1,4 +1,3 @@
-
 import java.util.Random;
 
 public class OBlockFlowing extends OBlockFluid {
@@ -14,19 +13,19 @@ public class OBlockFlowing extends OBlockFluid {
 
    private void i(OWorld var1, int var2, int var3, int var4) {
       int var5 = var1.c(var2, var3, var4);
-      var1.a(var2, var3, var4, this.bn + 1, var5);
+      var1.a(var2, var3, var4, this.bA + 1, var5);
       var1.b(var2, var3, var4, var2, var3, var4);
       var1.h(var2, var3, var4);
    }
 
    public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
-      // CanaryMod: Store originating block
-      World world = var1.world;
-      Block blockFrom = new Block(world, bn, var2, var3, var4);
-
+	  // CanaryMod: Store originating block
+	  World world = var1.world;
+	  Block blockFrom = new Block(world, bA, var2, var3, var4);
+	  
       int var6 = this.g(var1, var2, var3, var4);
       byte var7 = 1;
-      if(this.bA == OMaterial.h && !var1.t.d) {
+      if(this.bN == OMaterial.h && !var1.y.d) {
          var7 = 2;
       }
 
@@ -53,15 +52,15 @@ public class OBlockFlowing extends OBlockFluid {
             }
          }
 
-         if(this.a >= 2 && this.bA == OMaterial.g) {
+         if(this.a >= 2 && this.bN == OMaterial.g) {
             if(var1.d(var2, var3 - 1, var4).a()) {
                var10 = 0;
-            } else if(var1.d(var2, var3 - 1, var4) == this.bA && var1.c(var2, var3, var4) == 0) {
+            } else if(var1.d(var2, var3 - 1, var4) == this.bN && var1.c(var2, var3, var4) == 0) {
                var10 = 0;
             }
          }
 
-         if(this.bA == OMaterial.h && var6 < 8 && var10 < 8 && var10 > var6 && var5.nextInt(4) != 0) {
+         if(this.bN == OMaterial.h && var6 < 8 && var10 < 8 && var10 > var6 && var5.nextInt(4) != 0) {
             var10 = var6;
             var8 = false;
          }
@@ -72,8 +71,8 @@ public class OBlockFlowing extends OBlockFluid {
                var1.e(var2, var3, var4, 0);
             } else {
                var1.c(var2, var3, var4, var10);
-               var1.c(var2, var3, var4, this.bn, this.c());
-               var1.h(var2, var3, var4, this.bn);
+               var1.c(var2, var3, var4, this.bA, this.c());
+               var1.h(var2, var3, var4, this.bA);
             }
          } else if(var8) {
             this.i(var1, var2, var3, var4);
@@ -83,14 +82,15 @@ public class OBlockFlowing extends OBlockFluid {
       }
 
       if(this.l(var1, var2, var3 - 1, var4)) {
-         // CanaryMod: downwards flow.
+    	 // CanaryMod: downwards flow.
          Block blockTo = new Block(world, 0, var2, var3 - 1, var4);
-         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))
+         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo)) {
             if(var6 >= 8) {
-               var1.b(var2, var3 - 1, var4, this.bn, var6);
+               var1.b(var2, var3 - 1, var4, this.bA, var6);
             } else {
-               var1.b(var2, var3 - 1, var4, this.bn, var6 + 8);
+               var1.b(var2, var3 - 1, var4, this.bA, var6 + 8);
             }
+         }
       } else if(var6 >= 0 && (var6 == 0 || this.k(var1, var2, var3 - 1, var4))) {
          boolean[] var13 = this.j(var1, var2, var3, var4);
          var10 = var6 + var7;
@@ -101,6 +101,7 @@ public class OBlockFlowing extends OBlockFluid {
          if(var10 >= 8) {
             return;
          }
+
          // CanaryMod: sidewards flow.
          if(var13[0]) {
             Block blockTo = new Block(world, 0, var2 - 1, var3, var4);
@@ -133,14 +134,14 @@ public class OBlockFlowing extends OBlockFluid {
       if(this.l(var1, var2, var3, var4)) {
          int var6 = var1.a(var2, var3, var4);
          if(var6 > 0) {
-            if(this.bA == OMaterial.h) {
+            if(this.bN == OMaterial.h) {
                this.h(var1, var2, var3, var4);
             } else {
                OBlock.m[var6].g(var1, var2, var3, var4, var1.c(var2, var3, var4));
             }
          }
 
-         var1.b(var2, var3, var4, this.bn, var5);
+         var1.b(var2, var3, var4, this.bA, var5);
       }
 
    }
@@ -168,7 +169,7 @@ public class OBlockFlowing extends OBlockFluid {
                ++var11;
             }
 
-            if(!this.k(var1, var9, var3, var11) && (var1.d(var9, var3, var11) != this.bA || var1.c(var9, var3, var11) != 0)) {
+            if(!this.k(var1, var9, var3, var11) && (var1.d(var9, var3, var11) != this.bN || var1.c(var9, var3, var11) != 0)) {
                if(!this.k(var1, var9, var3 - 1, var11)) {
                   return var5;
                }
@@ -209,7 +210,7 @@ public class OBlockFlowing extends OBlockFluid {
             ++var8;
          }
 
-         if(!this.k(var1, var6, var3, var8) && (var1.d(var6, var3, var8) != this.bA || var1.c(var6, var3, var8) != 0)) {
+         if(!this.k(var1, var6, var3, var8) && (var1.d(var6, var3, var8) != this.bN || var1.c(var6, var3, var8) != 0)) {
             if(!this.k(var1, var6, var3 - 1, var8)) {
                this.c[var5] = 0;
             } else {
@@ -235,11 +236,11 @@ public class OBlockFlowing extends OBlockFluid {
 
    private boolean k(OWorld var1, int var2, int var3, int var4) {
       int var5 = var1.a(var2, var3, var4);
-      if(var5 != OBlock.aF.bn && var5 != OBlock.aM.bn && var5 != OBlock.aE.bn && var5 != OBlock.aG.bn && var5 != OBlock.aY.bn) {
+      if(var5 != OBlock.aF.bA && var5 != OBlock.aM.bA && var5 != OBlock.aE.bA && var5 != OBlock.aG.bA && var5 != OBlock.aY.bA) {
          if(var5 == 0) {
             return false;
          } else {
-            OMaterial var6 = OBlock.m[var5].bA;
+            OMaterial var6 = OBlock.m[var5].bN;
             return var6.c();
          }
       } else {
@@ -267,20 +268,20 @@ public class OBlockFlowing extends OBlockFluid {
    private boolean l(OWorld var1, int var2, int var3, int var4) {
       // CanaryMod: See if this liquid can destroy this block.
       Block block = new Block(var1.world, var1.a(var2, var3, var4), var2, var3, var4);
-      PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, bn, block);
+      PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, bA, block);
       if (ret == PluginLoader.HookResult.PREVENT_ACTION)
          return false;
       else if (ret == PluginLoader.HookResult.ALLOW_ACTION)
          return true;
-
+      
       OMaterial var5 = var1.d(var2, var3, var4);
-      return var5 == this.bA?false:(var5 == OMaterial.h?false:!this.k(var1, var2, var3, var4));
+      return var5 == this.bN?false:(var5 == OMaterial.h?false:!this.k(var1, var2, var3, var4));
    }
 
-   public void c(OWorld var1, int var2, int var3, int var4) {
-      super.c(var1, var2, var3, var4);
-      if(var1.a(var2, var3, var4) == this.bn) {
-         var1.c(var2, var3, var4, this.bn, this.c());
+   public void a(OWorld var1, int var2, int var3, int var4) {
+      super.a(var1, var2, var3, var4);
+      if(var1.a(var2, var3, var4) == this.bA) {
+         var1.c(var2, var3, var4, this.bA, this.c());
       }
 
    }

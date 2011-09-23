@@ -1,9 +1,8 @@
 
-
 public class OBlockLever extends OBlock {
 
    protected OBlockLever(int var1, int var2) {
-      super(var1, var2, OMaterial.o);
+      super(var1, var2, OMaterial.p);
    }
 
    public OAxisAlignedBB e(OWorld var1, int var2, int var3, int var4) {
@@ -18,11 +17,11 @@ public class OBlockLever extends OBlock {
       return false;
    }
 
-   public boolean a(OWorld var1, int var2, int var3, int var4, int var5) {
+   public boolean b(OWorld var1, int var2, int var3, int var4, int var5) {
       return var5 == 1 && var1.e(var2, var3 - 1, var4)?true:(var5 == 2 && var1.e(var2, var3, var4 + 1)?true:(var5 == 3 && var1.e(var2, var3, var4 - 1)?true:(var5 == 4 && var1.e(var2 + 1, var3, var4)?true:var5 == 5 && var1.e(var2 - 1, var3, var4))));
    }
 
-   public boolean a(OWorld var1, int var2, int var3, int var4) {
+   public boolean c(OWorld var1, int var2, int var3, int var4) {
       return var1.e(var2 - 1, var3, var4)?true:(var1.e(var2 + 1, var3, var4)?true:(var1.e(var2, var3, var4 - 1)?true:(var1.e(var2, var3, var4 + 1)?true:var1.e(var2, var3 - 1, var4))));
    }
 
@@ -32,7 +31,7 @@ public class OBlockLever extends OBlock {
       var6 &= 7;
       var6 = -1;
       if(var5 == 1 && var1.e(var2, var3 - 1, var4)) {
-         var6 = 5 + var1.r.nextInt(2);
+         var6 = 5 + var1.w.nextInt(2);
       }
 
       if(var5 == 2 && var1.e(var2, var3, var4 + 1)) {
@@ -59,7 +58,7 @@ public class OBlockLever extends OBlock {
       }
    }
 
-   public void b(OWorld var1, int var2, int var3, int var4, int var5) {
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
       if(this.g(var1, var2, var3, var4)) {
          int var6 = var1.c(var2, var3, var4) & 7;
          boolean var7 = false;
@@ -96,7 +95,7 @@ public class OBlockLever extends OBlock {
    }
 
    private boolean g(OWorld var1, int var2, int var3, int var4) {
-      if(!this.a(var1, var2, var3, var4)) {
+      if(!this.c(var1, var2, var3, var4)) {
          this.g(var1, var2, var3, var4, var1.c(var2, var3, var4));
          var1.e(var2, var3, var4, 0);
          return false;
@@ -128,58 +127,51 @@ public class OBlockLever extends OBlock {
    }
 
    public boolean a(OWorld var1, int var2, int var3, int var4, OEntityPlayer var5) {
-      if(var1.B) {
+      if(var1.I) {
          return true;
       } else {
          int var6 = var1.c(var2, var3, var4);
          int var7 = var6 & 7;
          int var8 = 8 - (var6 & 8);
-         // CanaryMod: Allow the lever to change the current
-         // first 3 bits are for postion 4th bit is for power. (on / off)
-         int old = (var8 != 8) ? 1 : 0;
-         int current = (var8 == 8) ? 1 : 0;
-         current = ((Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), old, current)).intValue();
-         var8 = (current > 0) ? 8 : 0;
-
          var1.c(var2, var3, var4, var7 + var8);
          var1.b(var2, var3, var4, var2, var3, var4);
          var1.a((double)var2 + 0.5D, (double)var3 + 0.5D, (double)var4 + 0.5D, "random.click", 0.3F, var8 > 0?0.6F:0.5F);
-         var1.h(var2, var3, var4, this.bn);
+         var1.h(var2, var3, var4, this.bA);
          if(var7 == 1) {
-            var1.h(var2 - 1, var3, var4, this.bn);
+            var1.h(var2 - 1, var3, var4, this.bA);
          } else if(var7 == 2) {
-            var1.h(var2 + 1, var3, var4, this.bn);
+            var1.h(var2 + 1, var3, var4, this.bA);
          } else if(var7 == 3) {
-            var1.h(var2, var3, var4 - 1, this.bn);
+            var1.h(var2, var3, var4 - 1, this.bA);
          } else if(var7 == 4) {
-            var1.h(var2, var3, var4 + 1, this.bn);
+            var1.h(var2, var3, var4 + 1, this.bA);
          } else {
-            var1.h(var2, var3 - 1, var4, this.bn);
+            var1.h(var2, var3 - 1, var4, this.bA);
          }
 
          return true;
       }
    }
 
-   public void b(OWorld var1, int var2, int var3, int var4) {
+   public void d(OWorld var1, int var2, int var3, int var4) {
       int var5 = var1.c(var2, var3, var4);
       if((var5 & 8) > 0) {
-         var1.h(var2, var3, var4, this.bn);
+         var1.h(var2, var3, var4, this.bA);
          int var6 = var5 & 7;
          if(var6 == 1) {
-            var1.h(var2 - 1, var3, var4, this.bn);
+            var1.h(var2 - 1, var3, var4, this.bA);
          } else if(var6 == 2) {
-            var1.h(var2 + 1, var3, var4, this.bn);
+            var1.h(var2 + 1, var3, var4, this.bA);
          } else if(var6 == 3) {
-            var1.h(var2, var3, var4 - 1, this.bn);
+            var1.h(var2, var3, var4 - 1, this.bA);
          } else if(var6 == 4) {
-            var1.h(var2, var3, var4 + 1, this.bn);
+            var1.h(var2, var3, var4 + 1, this.bA);
          } else {
-            var1.h(var2, var3 - 1, var4, this.bn);
+            var1.h(var2, var3 - 1, var4, this.bA);
          }
       }
 
-      super.b(var1, var2, var3, var4);
+      super.d(var1, var2, var3, var4);
    }
 
    public boolean a(OIBlockAccess var1, int var2, int var3, int var4, int var5) {

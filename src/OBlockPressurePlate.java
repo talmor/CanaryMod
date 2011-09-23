@@ -1,4 +1,3 @@
-
 import java.util.List;
 import java.util.Random;
 
@@ -31,15 +30,15 @@ public class OBlockPressurePlate extends OBlock {
       return false;
    }
 
-   public boolean a(OWorld var1, int var2, int var3, int var4) {
-      return var1.e(var2, var3 - 1, var4);
+   public boolean c(OWorld var1, int var2, int var3, int var4) {
+      return var1.e(var2, var3 - 1, var4) || var1.a(var2, var3 - 1, var4) == OBlock.ba.bA;
    }
 
-   public void c(OWorld var1, int var2, int var3, int var4) {}
+   public void a(OWorld var1, int var2, int var3, int var4) {}
 
-   public void b(OWorld var1, int var2, int var3, int var4, int var5) {
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
       boolean var6 = false;
-      if(!var1.e(var2, var3 - 1, var4)) {
+      if(!var1.e(var2, var3 - 1, var4) && var1.a(var2, var3 - 1, var4) != OBlock.ba.bA) {
          var6 = true;
       }
 
@@ -51,7 +50,7 @@ public class OBlockPressurePlate extends OBlock {
    }
 
    public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
-      if(!var1.B) {
+      if(!var1.I) {
          if(var1.c(var2, var3, var4) != 0) {
             this.g(var1, var2, var3, var4);
          }
@@ -59,7 +58,7 @@ public class OBlockPressurePlate extends OBlock {
    }
 
    public void a(OWorld var1, int var2, int var3, int var4, OEntity var5) {
-      if(!var1.B) {
+      if(!var1.I) {
          if(var1.c(var2, var3, var4) != 1) {
             this.g(var1, var2, var3, var4);
          }
@@ -87,40 +86,36 @@ public class OBlockPressurePlate extends OBlock {
          var6 = true;
       }
 
-      // CanaryMod: Allow pressure plate interaction to power redstone
-      if (var6 != var5)
-          var6 = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), var5?1:0, var6?1:0) > 0;
-
       if(var6 && !var5) {
          var1.c(var2, var3, var4, 1);
-         var1.h(var2, var3, var4, this.bn);
-         var1.h(var2, var3 - 1, var4, this.bn);
+         var1.h(var2, var3, var4, this.bA);
+         var1.h(var2, var3 - 1, var4, this.bA);
          var1.b(var2, var3, var4, var2, var3, var4);
          var1.a((double)var2 + 0.5D, (double)var3 + 0.1D, (double)var4 + 0.5D, "random.click", 0.3F, 0.6F);
       }
 
       if(!var6 && var5) {
          var1.c(var2, var3, var4, 0);
-         var1.h(var2, var3, var4, this.bn);
-         var1.h(var2, var3 - 1, var4, this.bn);
+         var1.h(var2, var3, var4, this.bA);
+         var1.h(var2, var3 - 1, var4, this.bA);
          var1.b(var2, var3, var4, var2, var3, var4);
          var1.a((double)var2 + 0.5D, (double)var3 + 0.1D, (double)var4 + 0.5D, "random.click", 0.3F, 0.5F);
       }
 
       if(var6) {
-         var1.c(var2, var3, var4, this.bn, this.c());
+         var1.c(var2, var3, var4, this.bA, this.c());
       }
 
    }
 
-   public void b(OWorld var1, int var2, int var3, int var4) {
+   public void d(OWorld var1, int var2, int var3, int var4) {
       int var5 = var1.c(var2, var3, var4);
       if(var5 > 0) {
-         var1.h(var2, var3, var4, this.bn);
-         var1.h(var2, var3 - 1, var4, this.bn);
+         var1.h(var2, var3, var4, this.bA);
+         var1.h(var2, var3 - 1, var4, this.bA);
       }
 
-      super.b(var1, var2, var3, var4);
+      super.d(var1, var2, var3, var4);
    }
 
    public void a(OIBlockAccess var1, int var2, int var3, int var4) {

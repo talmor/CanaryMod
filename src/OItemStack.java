@@ -1,7 +1,6 @@
 
-
 public final class OItemStack {
-	
+
    // stack size
    public int a;
    // animations
@@ -17,26 +16,27 @@ public final class OItemStack {
    }
 
    public OItemStack(OBlock var1, int var2) {
-      this(var1.bn, var2, 0);
+      this(var1.bA, var2, 0);
    }
 
    public OItemStack(OBlock var1, int var2, int var3) {
-      this(var1.bn, var2, var3);
+      this(var1.bA, var2, var3);
    }
 
    public OItemStack(OItem var1) {
-      this(var1.bf, 1, 0);
+      this(var1.bo, 1, 0);
    }
 
    public OItemStack(OItem var1, int var2) {
-      this(var1.bf, var2, 0);
+      this(var1.bo, var2, 0);
    }
 
    public OItemStack(OItem var1, int var2, int var3) {
-      this(var1.bf, var2, var3);
+      this(var1.bo, var2, var3);
    }
 
    public OItemStack(int var1, int var2, int var3) {
+      super();
       this.a = 0;
       this.c = var1;
       this.a = var2;
@@ -45,15 +45,21 @@ public final class OItemStack {
    
    public void setFromStack(OItemStack itemStack)
    {
-	   this.a = itemStack.a;
-	   this.b = itemStack.b;
-	   this.c = itemStack.c;
-	   this.d = itemStack.h();
+      this.a = itemStack.a;
+      this.b = itemStack.b;
+      this.c = itemStack.c;
+      this.d = itemStack.h();
+   }
+   
+   public static OItemStack a(ONBTTagCompound var0) {
+      OItemStack var1 = new OItemStack();
+      var1.c(var0);
+      return var1.a() != null?var1:null;
    }
 
-   public OItemStack(ONBTTagCompound var1) {
+   private OItemStack() {
+      super();
       this.a = 0;
-      this.b(var1);
    }
 
    public OItemStack a(int var1) {
@@ -82,7 +88,11 @@ public final class OItemStack {
       return this.a().a(this, var1, var2);
    }
 
-   public ONBTTagCompound a(ONBTTagCompound var1) {
+   public OItemStack b(OWorld var1, OEntityPlayer var2) {
+      return this.a().b(this, var1, var2);
+   }
+
+   public ONBTTagCompound b(ONBTTagCompound var1) {
       // CanaryMod: fix jarjar
       var1.a("id", (short)this.c);
       var1.a("Count", (byte)this.a);
@@ -90,7 +100,7 @@ public final class OItemStack {
       return var1;
    }
 
-   public void b(ONBTTagCompound var1) {
+   public void c(ONBTTagCompound var1) {
       // CanaryMod: fix jarjar
       this.c = var1.d("id");
       this.a = var1.c("Count");
@@ -198,13 +208,17 @@ public final class OItemStack {
       return this.c == var1.c && this.d == var1.d;
    }
 
+   public String k() {
+      return OItem.c[this.c].a(this);
+   }
+
    public static OItemStack b(OItemStack var0) {
       return var0 == null?null:var0.j();
    }
 
    public String toString() {
       // CanaryMod: fix jarjar
-      return this.a + "x" + OItem.c[this.c].a() + "@" + this.d;
+      return this.a + "x" + OItem.c[this.c].b() + "@" + this.d;
    }
 
    public void a(OWorld var1, OEntity var2, int var3, boolean var4) {
@@ -215,12 +229,24 @@ public final class OItemStack {
       OItem.c[this.c].a(this, var1, var2, var3, var4);
    }
 
-   public void b(OWorld var1, OEntityPlayer var2) {
+   public void c(OWorld var1, OEntityPlayer var2) {
       var2.a(OStatList.D[this.c], this.a);
-      OItem.c[this.c].c(this, var1, var2);
+      OItem.c[this.c].d(this, var1, var2);
    }
 
    public boolean c(OItemStack var1) {
       return this.c == var1.c && this.a == var1.a && this.d == var1.d;
+   }
+
+   public int l() {
+      return this.a().c(this);
+   }
+
+   public OEnumAction m() {
+      return this.a().b(this);
+   }
+
+   public void a(OWorld var1, OEntityPlayer var2, int var3) {
+      this.a().a(this, var1, var2, var3);
    }
 }

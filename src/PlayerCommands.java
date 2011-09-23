@@ -732,9 +732,9 @@ public class PlayerCommands {
                 return;
             }
 
-            OWorldInfo info = player.getWorld().getWorld().x;
+            OWorldInfo info = player.getWorld().getWorld().C;
             info.a((int) player.getX(), (int) player.getY(), (int) player.getZ());
-            info = etc.getMCServer().a(-1).q();
+            info = etc.getMCServer().a(-1).p();
             info.a((int) player.getX(), (int) player.getY(), (int) player.getZ());
 
             log.info("Spawn position changed.");
@@ -907,6 +907,54 @@ public class PlayerCommands {
         }
     };
     @Command
+    public static final BaseCommand mode = new BaseCommand("- Changes your gamemode"){
+    	
+        @Override
+        void execute(MessageReceiver caller, String[] split) {
+            if (!(caller instanceof Player))
+                return;
+            //if (!((Player)caller).isAdmin())
+            	//return;
+            if(split.length != 2) {
+            	Player player = etc.getServer().matchPlayer(split[2]);
+            	if (player == null) {
+            		caller.notify("Can't find user " + split[2] + ".");
+            		return;
+            	} else {
+            		try {
+            			int mode = Integer.parseInt(split[1]);
+            			mode = OWorldSettings.a(mode);
+            			if(player.getCreativeMode() != mode) {
+            				caller.notify("§eSetting " + player.getName() + " to game mode " + mode);
+            				player.setCreativeMode(mode);
+            				player.getEntity().a.b((OPacket)(new OPacket70Bed(3, mode)));
+            			} else {
+            				caller.notify(player.getName() + " already has game mode " + mode);
+            			}
+            		} catch (NumberFormatException var11) {
+            			caller.notify("There\'s no game mode with id " + split[1]);
+            		}
+            	}
+            } else {
+                if (caller instanceof Player)
+        		try {
+        			Player player = ((Player)caller);
+        			int mode = Integer.parseInt(split[1]);
+        			mode = OWorldSettings.a(mode);
+        			if(player.getCreativeMode() != mode) {
+        				player.notify("§eSetting your to game mode " + mode);
+        				player.setCreativeMode(mode);
+        				player.getEntity().a.b((OPacket)(new OPacket70Bed(3, mode)));
+        			} else {
+        				caller.notify("Your game mode is already " + mode);
+        			}
+        		} catch (NumberFormatException var11) {
+        			caller.notify("There\'s no game mode with id " + split[1]);
+        		}
+            }
+    	}
+    };
+    @Command
     public static final BaseCommand getpos = new BaseCommand("- Displays your current position.") {
 
         @Override
@@ -944,8 +992,7 @@ public class PlayerCommands {
 
         @Override
         void execute(MessageReceiver caller, String[] parameters) {
-            for (String line : etc.getInstance().getMotd())
-                caller.notify(Colors.White + line);
+            etc.getInstance().getMotd(caller);
         }
     };
     @Command

@@ -1,19 +1,20 @@
-
-import java.util.Arrays;
 import java.util.Random;
 
-public class OTileEntityDispenser extends OTileEntity implements OIInventory, Container<OItemStack> {
+public class OTileEntityDispenser extends OTileEntity implements OIInventory {
 
    private OItemStack[] a = new OItemStack[9];
    private Random b = new Random();
-   private String name = "Trap";
 
+
+   public OTileEntityDispenser() {
+      super();
+   }
 
    public int a() {
       return 9;
    }
 
-   public OItemStack d_(int var1) {
+   public OItemStack b_(int var1) {
       return this.a[var1];
    }
 
@@ -23,7 +24,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
          if(this.a[var1].a <= var2) {
             var3 = this.a[var1];
             this.a[var1] = null;
-            this.i();
+            this.k();
             return var3;
          } else {
             var3 = this.a[var1].a(var2);
@@ -31,7 +32,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
                this.a[var1] = null;
             }
 
-            this.i();
+            this.k();
             return var3;
          }
       } else {
@@ -62,11 +63,11 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
          var2.a = this.d();
       }
 
-      this.i();
+      this.k();
    }
 
    public String c() {
-      return name;
+      return "Trap";
    }
 
    public void a(ONBTTagCompound var1) {
@@ -78,7 +79,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
          ONBTTagCompound var4 = (ONBTTagCompound)var2.a(var3);
          int var5 = var4.c("Slot") & 255;
          if(var5 >= 0 && var5 < this.a.length) {
-            this.a[var5] = new OItemStack(var4);
+            this.a[var5] = OItemStack.a(var4);
          }
       }
 
@@ -92,7 +93,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
          if(this.a[var3] != null) {
             ONBTTagCompound var4 = new ONBTTagCompound();
             var4.a("Slot", (byte)var3);
-            this.a[var3].a(var4);
+            this.a[var3].b(var4);
             var2.a((ONBTBase)var4);
          }
       }
@@ -104,42 +105,11 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
       return 64;
    }
 
-   public boolean a_(OEntityPlayer var1) {
-      return this.d.b(this.e, this.f, this.g) != this?false:var1.e((double)this.e + 0.5D, (double)this.f + 0.5D, (double)this.g + 0.5D) <= 64.0D;
+   public boolean a(OEntityPlayer var1) {
+      return this.i.b(this.j, this.k, this.l) != this?false:var1.e((double)this.j + 0.5D, (double)this.k + 0.5D, (double)this.l + 0.5D) <= 64.0D;
    }
 
-    @Override
-    public OItemStack[] getContents() {
-        return Arrays.copyOf(a, getContentsSize());
-    }
+   public void e() {}
 
-    @Override
-    public void setContents(OItemStack[] values) {
-        a = Arrays.copyOf(values, getContentsSize());
-    }
-
-    @Override
-    public OItemStack getContentsAt(int index) {
-        return d_(index);
-    }
-
-    @Override
-    public void setContentsAt(int index, OItemStack value) {
-        a(index, value);
-    }
-
-    @Override
-    public int getContentsSize() {
-        return a();
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String value) {
-        name = value;
-    }
+   public void t_() {}
 }

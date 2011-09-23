@@ -12,17 +12,17 @@ class NoteBlock implements ComplexBlock {
 
     @Override
     public int getX() {
-        return note.e;
+        return note.j;
     }
 
     @Override
     public int getY() {
-        return note.f;
+        return note.k;
     }
 
     @Override
     public int getZ() {
-        return note.g;
+        return note.l;
     }
 
     @Override
@@ -37,7 +37,7 @@ class NoteBlock implements ComplexBlock {
 
     @Override
     public World getWorld() {
-        return note.d.world;
+        return note.i.world;
     }
 
     /**
