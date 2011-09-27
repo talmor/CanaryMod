@@ -1,12 +1,17 @@
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import net.minecraft.server.MinecraftServer;
 
+/**
+ * PlayerCommands.java - Class for handling player's commands
+ *
+ * @author 14mRh4X0r
+ */
 public class PlayerCommands {
 
     private static final Logger log = Logger.getLogger("Minecraft");
@@ -116,8 +121,9 @@ public class PlayerCommands {
                 else
                     try {
                         int count = 0;
+                        Pattern p = Pattern.compile(etc.combineSplit(1, split, " "));
                         for (String command : availableCommands) {
-                            if (command.matches(etc.combineSplit(1, split, " "))) {
+                            if (p.matcher(command).find()) {
                                 caller.notify(command);
                                 count += 1;
                             }
