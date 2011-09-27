@@ -1,5 +1,4 @@
 
-
 public class OInventoryLargeChest implements OIInventory, Container<OItemStack> {
 
    private String a;
@@ -8,7 +7,16 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
 
 
    public OInventoryLargeChest(String var1, OIInventory var2, OIInventory var3) {
+      super();
       this.a = var1;
+      if(var2 == null) {
+         var2 = var3;
+      }
+
+      if(var3 == null) {
+         var3 = var2;
+      }
+
       this.b = var2;
       this.c = var3;
    }
@@ -21,8 +29,8 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
       return this.a;
    }
 
-   public OItemStack d_(int var1) {
-      return var1 >= this.b.a()?this.c.d_(var1 - this.b.a()):this.b.d_(var1);
+   public OItemStack b_(int var1) {
+      return var1 >= this.b.a()?this.c.b_(var1 - this.b.a()):this.b.b_(var1);
    }
 
    public OItemStack a(int var1, int var2) {
@@ -42,67 +50,79 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
       return this.b.d();
    }
 
-   public void i() {
-      this.b.i();
-      this.c.i();
+   public void k() {
+      this.b.k();
+      this.c.k();
    }
 
-   public boolean a_(OEntityPlayer var1) {
-      return this.b.a_(var1) && this.c.a_(var1);
+   public boolean a(OEntityPlayer var1) {
+      return this.b.a(var1) && this.c.a(var1);
    }
 
-    @Override
-    public OItemStack[] getContents() {
-        int size = getContentsSize();
-        OItemStack[] result = new OItemStack[size];
+   public void e() {
+      this.b.e();
+      this.c.e();
+   }
 
-        for (int i = 0; i < size; i++)
-            result[i] = getContentsAt(i);
-        return result;
-    }
+   public void t_() {
+      this.b.t_();
+      this.c.t_();
+   }
+   
+  
+   @Override
+   public OItemStack[] getContents() {
+       int size = getContentsSize();
+       OItemStack[] result = new OItemStack[size];
 
-    @Override
-    public void setContents(OItemStack[] values) {
-        int size = getContentsSize();
+       for (int i = 0; i < size; i++)
+           result[i] = getContentsAt(i);
+       return result;
+   }
 
-        for (int i = 0; i < size; i++)
-            setContentsAt(i, values[i]);
-    }
+   @Override
+   public void setContents(OItemStack[] values) {
+       int size = getContentsSize();
 
-    @Override
-    public OItemStack getContentsAt(int index) {
-        return d_(index);
-    }
+       for (int i = 0; i < size; i++)
+           setContentsAt(i, values[i]);
+   }
 
-    @Override
-    public void setContentsAt(int index, OItemStack value) {
-        a(index, value);
-    }
+   @Override
+   public OItemStack getContentsAt(int index) {
+       return b_(index);
+   }
 
-    @Override
-    public int getContentsSize() {
-        return a();
-    }
+   @Override
+   public void setContentsAt(int index, OItemStack value) {
+       a(index, value);
+   }
 
-    @Override
-    public String getName() {
-        return a;
-    }
+   @Override
+   public int getContentsSize() {
+       return a();
+   }
 
-    @Override
-    public void setName(String value) {
-        a = value;
-    }
+   @Override
+   public String getName() {
+       return a;
+   }
 
-    public Block getChestBlock() {
-        if (b instanceof OTileEntityChest) {
-            OTileEntityChest block = (OTileEntityChest) b;
-            return block.d.world.getBlockAt(block.e, block.f, block.g);
-        }
-        if (c instanceof OTileEntityChest) {
-            OTileEntityChest block = (OTileEntityChest) c;
-            return block.d.world.getBlockAt(block.e, block.f, block.g);
-        }
-        return null;
-    }
+   @Override
+   public void setName(String value) {
+       a = value;
+   }
+
+   public Block getChestBlock() {
+       if (b instanceof OTileEntityChest) {
+           OTileEntityChest block = (OTileEntityChest) b;
+           return block.i.world.getBlockAt(block.j, block.k, block.l);
+       }
+       if (c instanceof OTileEntityChest) {
+           OTileEntityChest block = (OTileEntityChest) c;
+           return block.i.world.getBlockAt(block.j, block.k, block.l);
+       }
+       return null;
+   }
+
 }

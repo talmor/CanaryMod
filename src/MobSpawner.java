@@ -19,17 +19,17 @@ public class MobSpawner implements ComplexBlock {
 
     @Override
     public int getX() {
-        return spawner.e;
+        return spawner.j;
     }
 
     @Override
     public int getY() {
-        return spawner.f;
+        return spawner.k;
     }
 
     @Override
     public int getZ() {
-        return spawner.g;
+        return spawner.l;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MobSpawner implements ComplexBlock {
 
     @Override
     public World getWorld() {
-        return spawner.d.world;
+        return spawner.i.world;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class MobSpawner implements ComplexBlock {
      * @param spawn
      */
     public void setSpawn(String spawn) {
-        spawner.i = spawn;
+        spawner.d = spawn;
         update();
     }
 
@@ -63,7 +63,7 @@ public class MobSpawner implements ComplexBlock {
      * @return
      */
     public String getSpawn() {
-        return spawner.i;
+        return spawner.d;
     }
 
     /**

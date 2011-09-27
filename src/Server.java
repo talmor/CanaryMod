@@ -110,7 +110,7 @@ public class Server {
      */
     @Deprecated
     public long getTime() {
-        return server.a(0).m();
+        return server.a(0).l();
     }
 
     /**
@@ -176,7 +176,7 @@ public class Server {
         name = name.toLowerCase();
 
         for (OEntityPlayerMP player : (List<OEntityPlayerMP>) server.f.b) {
-            String playerName = player.r;
+            String playerName = player.u;
 
             if (playerName.toLowerCase().equals(name)) {
                 // Perfect match found
@@ -236,7 +236,7 @@ public class Server {
     @Deprecated
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
-        for (Object o : server.a(0).b)
+        for (Object o : server.a(0).h)
             if (o instanceof OEntityMob || o instanceof OEntityGhast)
                 toRet.add(new Mob((OEntityLiving) o));
         return toRet;
@@ -251,7 +251,7 @@ public class Server {
     @Deprecated
     public List<Mob> getAnimalList() {
         List<Mob> toRet = new ArrayList<Mob>();
-        for (Object o : server.a(0).b)
+        for (Object o : server.a(0).h)
             if (o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
         return toRet;
@@ -266,7 +266,7 @@ public class Server {
     @Deprecated
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
-        for (Object o : server.a(0).b)
+        for (Object o : server.a(0).h)
             if (o instanceof OEntityMinecart)
                 toRet.add(((OEntityMinecart) o).cart);
         return toRet;
@@ -281,7 +281,7 @@ public class Server {
     @Deprecated
     public List<Boat> getBoatList() {
         List<Boat> toRet = new ArrayList<Boat>();
-        for (Object o : server.a(0).b)
+        for (Object o : server.a(0).h)
             if (o instanceof OEntityBoat)
                 toRet.add(((OEntityBoat) o).boat);
         return toRet;
@@ -296,7 +296,7 @@ public class Server {
     @Deprecated
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
-        for (Object o : server.a(0).b)
+        for (Object o : server.a(0).h)
             if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
             else if (o instanceof OEntityMinecart)
@@ -318,7 +318,7 @@ public class Server {
     @Deprecated
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
-        for (Object o : server.a(0).b)
+        for (Object o : server.a(0).h)
             if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal)
                 toRet.add(new Mob((OEntityLiving) o));
             else if (o instanceof OEntityPlayerMP)
@@ -335,7 +335,7 @@ public class Server {
     @Deprecated
     public List<BaseVehicle> getVehicleEntityList() {
         List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
-        for (Object o : server.a(0).b)
+        for (Object o : server.a(0).h)
             if (o instanceof OEntityMinecart)
                 toRet.add(((OEntityMinecart) o).cart);
             else if (o instanceof OEntityBoat)
@@ -352,7 +352,7 @@ public class Server {
     @Deprecated
     public Location getSpawnLocation() {
         // More structure ftw
-        OWorldInfo info = server.a(0).x;
+        OWorldInfo info = server.a(0).C;
         Location spawn = new Location();
         spawn.x = info.c() + 0.5D;
         spawn.y = getMCServer().a(0).f(info.c(), info.e());
@@ -614,9 +614,9 @@ public class Server {
     @Deprecated
     public void dropItem(double x, double y, double z, int itemId, int quantity) {
         OWorldServer ows = server.a(0);
-        double d1 = ows.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d2 = ows.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d3 = ows.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d1 = ows.w.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d2 = ows.w.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d3 = ows.w.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
         OEntityItem oei = new OEntityItem(ows, x + d1, y + d2, z + d3, new OItemStack(itemId, quantity, 0));
         oei.c = 10;
@@ -713,7 +713,7 @@ public class Server {
      */
     @Deprecated
     public boolean isChunkLoaded(int x, int y, int z) {
-        return server.a(0).C.a(x >> 4, z >> 4);
+        return server.a(0).M.a(x >> 4, z >> 4);
     }
 
     /**
@@ -758,7 +758,7 @@ public class Server {
      */
     @Deprecated
     public void loadChunk(int x, int z) {
-        server.a(0).C.c(x, z);
+        server.a(0).M.c(x, z);
     }
 
     /**
@@ -834,13 +834,13 @@ public class Server {
             return;
 
         OWorldServer ows = server.a(0);
-        ows.x.a(thundering);
+        ows.C.a(thundering);
 
         // Thanks to Bukkit for figuring out these numbers
         if (thundering)
-            setThunderTime(ows.r.nextInt(12000) + 3600);
+            setThunderTime(ows.w.nextInt(12000) + 3600);
         else
-            setThunderTime(ows.r.nextInt(168000) + 12000);
+            setThunderTime(ows.w.nextInt(168000) + 12000);
     }
 
     /**
@@ -851,7 +851,7 @@ public class Server {
      */
     @Deprecated
     public void setThunderTime(int ticks) {
-        server.a(0).x.b(ticks);
+        server.a(0).C.b(ticks);
     }
 
     /**
@@ -866,13 +866,13 @@ public class Server {
             return;
 
         OWorldServer ows = server.a(0);
-        ows.x.b(raining);
+        ows.C.b(raining);
 
         // Thanks to Bukkit for figuring out these numbers
         if (raining)
-            setRainTime(ows.r.nextInt(12000) + 3600);
+            setRainTime(ows.w.nextInt(12000) + 3600);
         else
-            setRainTime(ows.r.nextInt(168000) + 12000);
+            setRainTime(ows.w.nextInt(168000) + 12000);
     }
 
     /**
@@ -883,7 +883,7 @@ public class Server {
      */
     @Deprecated
     public void setRainTime(int ticks) {
-        server.a(0).x.c(ticks);
+        server.a(0).C.c(ticks);
     }
 
     /**
@@ -894,7 +894,7 @@ public class Server {
      */
     @Deprecated
     public boolean isThundering() {
-        return server.a(0).x.j();
+        return server.a(0).C.j();
     }
 
     /**
@@ -905,7 +905,7 @@ public class Server {
      */
     @Deprecated
     public int getThunderTime() {
-        return server.a(0).x.k();
+        return server.a(0).C.k();
     }
 
     /**
@@ -916,7 +916,7 @@ public class Server {
      */
     @Deprecated
     public boolean isRaining() {
-        return server.a(0).x.l();
+        return server.a(0).C.l();
     }
 
     /**
@@ -927,7 +927,7 @@ public class Server {
      */
     @Deprecated
     public int getRainTime() {
-        return server.a(0).x.m();
+        return server.a(0).C.m();
     }
 
     /**

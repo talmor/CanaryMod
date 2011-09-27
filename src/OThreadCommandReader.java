@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +10,7 @@ public class OThreadCommandReader extends Thread {
 
 
    public OThreadCommandReader(MinecraftServer var1) {
+      super();
       this.a = var1;
    }
 
@@ -19,11 +19,11 @@ public class OThreadCommandReader extends Thread {
       String var2 = null;
 
       try {
-         while(!this.a.g && (var2 = var1.readLine()) != null) {
-            // CanaryMod: run through our parser first.
-            if (!etc.getInstance().parseConsoleCommand(var2, a))
-               this.a.a(var2, this.a);
-         }
+          while(!this.a.g && (var2 = var1.readLine()) != null) {
+              // CanaryMod: run through our parser first.
+              if (!etc.getInstance().parseConsoleCommand(var2, a))
+                 this.a.a(var2, this.a);
+           }
       } catch (IOException var4) {
          var4.printStackTrace();
       }

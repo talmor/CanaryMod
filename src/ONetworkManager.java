@@ -2,7 +2,6 @@ import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketException;
@@ -10,206 +9,278 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ONetworkManager
-{
-  public static final Object a = new Object();
-  public static int b;
-  public static int c;
-  private Object g = new Object();
-  private Socket h;
-  private final SocketAddress i;
-  private DataInputStream j;
-  private DataOutputStream k;
-  private boolean l = true;
+public class ONetworkManager {
 
-  private List m = Collections.synchronizedList(new ArrayList());
-  private List n = Collections.synchronizedList(new ArrayList());
-  private List o = Collections.synchronizedList(new ArrayList());
-  private ONetHandler p;
-  private boolean q = false;
-  private Thread r;
-  private Thread s;
-  private boolean t = false;
-  private String u = "";
-  private Object[] v;
-  private int w = 0;
-  private int x = 0;
+   public static final Object a = new Object();
+   public static int b;
+   public static int c;
+   private Object g = new Object();
+   private Socket h;
+   private final SocketAddress i;
+   private DataInputStream j;
+   private DataOutputStream k;
+   private boolean l = true;
+   private List m = Collections.synchronizedList(new ArrayList());
+   private List n = Collections.synchronizedList(new ArrayList());
+   private List o = Collections.synchronizedList(new ArrayList());
+   private ONetHandler p;
+   private boolean q = false;
+   private Thread r;
+   private Thread s;
+   private boolean t = false;
+   private String u = "";
+   private Object[] v;
+   private int w = 0;
+   private int x = 0;
+   public static int[] d = new int[256];
+   public static int[] e = new int[256];
+   public int f = 0;
+   private int y = 50;
 
-  public static int[] d = new int[256];
-  public static int[] e = new int[256];
 
-  public int f = 0;
+   public ONetworkManager(Socket var1, String var2, ONetHandler var3) throws IOException {
+      super();
+      this.h = var1;
+      this.i = var1.getRemoteSocketAddress();
+      this.p = var3;
 
-  private int y = 50;
-
-  public ONetworkManager(Socket paramSocket, String paramString, ONetHandler paramONetHandler) throws IOException
-  {
-    this.h = paramSocket;
-    this.i = paramSocket.getRemoteSocketAddress();
-    this.p = paramONetHandler;
-    try {
-      paramSocket.setSoTimeout(30000);
-      paramSocket.setTrafficClass(24);
-    }
-    catch (SocketException localSocketException)
-    {
-      System.err.println(localSocketException.getMessage());
-    }
-
-    this.j = new DataInputStream(paramSocket.getInputStream());
-    this.k = new DataOutputStream(new BufferedOutputStream(paramSocket.getOutputStream(), 5120));
-
-    this.s = new ONetworkReaderThread(this, paramString + " read thread");
-
-    this.r = new ONetworkWriterThread(this, paramString + " write thread");
-
-    this.s.start();
-    this.r.start();
-  }
-
-  public void a(ONetHandler paramONetHandler) {
-    this.p = paramONetHandler;
-  }
-
-  public void a(OPacket paramOPacket) {
-    if (this.q) return;
-    synchronized (this.g) {
-      this.x += paramOPacket.a() + 1;
-      if (paramOPacket.k)
-        this.o.add(paramOPacket);
-      else
-        this.n.add(paramOPacket);
-    }
-  }
-
-  private boolean f()
-  {
-    boolean i1 = false;
-    try
-    {
-      OPacket localOPacket;
-      if ((!this.n.isEmpty()) && ((this.f == 0) || (System.currentTimeMillis() - ((OPacket)this.n.get(0)).j >= this.f)))
-      {
-        synchronized (this.g) {
-          localOPacket = (OPacket)this.n.remove(0);
-          this.x -= localOPacket.a() + 1;
-        }
-        OPacket.a(localOPacket, this.k);
-        e[localOPacket.b()] += localOPacket.a() + 1;
-        i1 = true;
+      try {
+         var1.setSoTimeout(30000);
+         var1.setTrafficClass(24);
+      } catch (SocketException var5) {
+         System.err.println(var5.getMessage());
       }
-	//Begin CanaryMod Chunk Packet fix.
-      if ((i1) || ((this.y-- <= 0) && (!this.o.isEmpty()) && ((this.n.isEmpty()) || (((OPacket)this.n.get(0)).j > ((OPacket)this.o.get(0)).j))))
-      //End CanaryMod Chunk Packet fix.
-      {
-        synchronized (this.g) {
-          localOPacket = (OPacket)this.o.remove(0);
-          this.x -= localOPacket.a() + 1;
-        }
-        OPacket.a(localOPacket, this.k);
-        e[localOPacket.b()] += localOPacket.a() + 1;
-        this.y = 0;
-        i1 = true;
+
+      this.j = new DataInputStream(var1.getInputStream());
+      this.k = new DataOutputStream(new BufferedOutputStream(var1.getOutputStream(), 5120));
+      this.s = new ONetworkReaderThread(this, var2 + " read thread");
+      this.r = new ONetworkWriterThread(this, var2 + " write thread");
+      this.s.start();
+      this.r.start();
+   }
+
+   public void a(ONetHandler var1) {
+      this.p = var1;
+   }
+
+   public void a(OPacket var1) {
+      if(!this.q) {
+         Object var2 = this.g;
+         synchronized(this.g) {
+            this.x += var1.a() + 1;
+            if(var1.k) {
+               this.o.add(var1);
+            } else {
+               this.n.add(var1);
+            }
+
+         }
       }
-    } catch (Exception localException) {
-      if (!this.t) a(localException);
-      return false;
-    }
-    return i1;
-  }
+   }
 
-  public void a() {
-    this.s.interrupt();
-    this.r.interrupt();
-  }
+   private boolean g() {
+      boolean var1 = false;
 
-  private boolean g() {
-    boolean i1 = false;
-    try {
-      OPacket localOPacket = OPacket.a(this.j, this.p.c());
+      try {
+         Object var2;
+         OPacket var3;
+         int var10001;
+         int[] var10000;
+         if(!this.n.isEmpty() && (this.f == 0 || System.currentTimeMillis() - ((OPacket)this.n.get(0)).j >= (long)this.f)) {
+            var2 = this.g;
+            synchronized(this.g) {
+               var3 = (OPacket)this.n.remove(0);
+               this.x -= var3.a() + 1;
+            }
 
-      if (localOPacket != null) {
-        d[localOPacket.b()] += localOPacket.a() + 1;
-        this.m.add(localOPacket);
-        i1 = true; } else {
-        a("disconnect.endOfStream", new Object[0]);
+            OPacket.a(var3, this.k);
+            var10000 = e;
+            var10001 = var3.b();
+            var10000[var10001] += var3.a() + 1;
+            var1 = true;
+         }
+
+         if(this.y-- <= 0 && !this.o.isEmpty() && (this.f == 0 || System.currentTimeMillis() - ((OPacket)this.o.get(0)).j >= (long)this.f)) {
+            var2 = this.g;
+            synchronized(this.g) {
+               var3 = (OPacket)this.o.remove(0);
+               this.x -= var3.a() + 1;
+            }
+
+            OPacket.a(var3, this.k);
+            var10000 = e;
+            var10001 = var3.b();
+            var10000[var10001] += var3.a() + 1;
+            this.y = 0;
+            var1 = true;
+         }
+
+         return var1;
+      } catch (Exception var8) {
+         if(!this.t) {
+            this.a(var8);
+         }
+
+         return false;
       }
-    } catch (Exception localException) {
-      if (!this.t) a(localException);
-      return false;
-    }
-    return i1;
-  }
+   }
 
-  private void a(Exception paramException) {
-    paramException.printStackTrace();
-    a("disconnect.genericReason", new Object[] { "Internal exception: " + paramException.toString() });
-  }
+   public void a() {
+      this.s.interrupt();
+      this.r.interrupt();
+   }
 
-  public void a(String paramString, Object[] paramArrayOfObject) {
-    if (!this.l) return;
-    this.t = true;
-    this.u = paramString;
-    this.v = paramArrayOfObject;
+   private boolean h() {
+      boolean var1 = false;
 
-    new ONetworkMasterThread(this).start();
+      try {
+         OPacket var2 = OPacket.a(this.j, this.p.c());
+         if(var2 != null) {
+            int[] var10000 = d;
+            int var10001 = var2.b();
+            var10000[var10001] += var2.a() + 1;
+            this.m.add(var2);
+            var1 = true;
+         } else {
+            this.a("disconnect.endOfStream", new Object[0]);
+         }
 
-    this.l = false;
-    try {
-      this.j.close();
-      this.j = null;
-    } catch (Throwable localThrowable1) {
-    }
-    try {
-      this.k.close();
-      this.k = null;
-    } catch (Throwable localThrowable2) {
-    }
-    try {
-      this.h.close();
-      this.h = null;
-    } catch (Throwable localThrowable3) {
-    }
-  }
+         return var1;
+      } catch (Exception var3) {
+         if(!this.t) {
+            this.a(var3);
+         }
 
-  public void b() {
-    if (this.x > 1048576) {
-      a("disconnect.overflow", new Object[0]);
-    }
-    if (this.m.isEmpty()) {
-      if (this.w++ == 1200)
-        a("disconnect.timeout", new Object[0]);
-    }
-    else {
-      this.w = 0;
-    }
+         return false;
+      }
+   }
 
-    int i1 = 100;
-    while ((!this.m.isEmpty()) && (i1-- >= 0)) {
-      OPacket localOPacket = (OPacket)this.m.remove(0);
-      localOPacket.a(this.p);
-    }
+   private void a(Exception var1) {
+      var1.printStackTrace();
+      this.a("disconnect.genericReason", new Object[]{"Internal exception: " + var1.toString()});
+   }
 
-    a();
+   public void a(String var1, Object ... var2) {
+      if(this.l) {
+         this.t = true;
+         this.u = var1;
+         this.v = var2;
+         (new ONetworkMasterThread(this)).start();
+         this.l = false;
 
-    if ((this.t) && (this.m.isEmpty()))
-      this.p.a(this.u, this.v);
-  }
+         try {
+            this.j.close();
+            this.j = null;
+         } catch (Throwable var6) {
+            ;
+         }
 
-  public SocketAddress c()
-  {
-    return this.i;
-  }
+         try {
+            this.k.close();
+            this.k = null;
+         } catch (Throwable var5) {
+            ;
+         }
 
-  public void d() {
-    a();
-    this.q = true;
-    this.s.interrupt();
-    new OThreadMonitorConnection(this).start();
-  }
+         try {
+            this.h.close();
+            this.h = null;
+         } catch (Throwable var4) {
+            ;
+         }
 
-  public int e()
-  {
-    return this.o.size();
-  }
+      }
+   }
+
+   public void b() {
+      if(this.x > 1048576) {
+         this.a("disconnect.overflow", new Object[0]);
+      }
+
+      if(this.m.isEmpty()) {
+         if(this.w++ == 1200) {
+            this.a("disconnect.timeout", new Object[0]);
+         }
+      } else {
+         this.w = 0;
+      }
+
+      int var1 = 1000;
+
+      while(!this.m.isEmpty() && var1-- >= 0) {
+         OPacket var2 = (OPacket)this.m.remove(0);
+         var2.a(this.p);
+      }
+
+      this.a();
+      if(this.t && this.m.isEmpty()) {
+         this.p.a(this.u, this.v);
+      }
+
+   }
+
+   public SocketAddress c() {
+      return this.i;
+   }
+
+   public void d() {
+      this.a();
+      this.q = true;
+      this.s.interrupt();
+      (new OThreadMonitorConnection(this)).start();
+   }
+
+   public int e() {
+      return this.o.size();
+   }
+
+   public Socket f() {
+      return this.h;
+   }
+
+   // $FF: synthetic method
+   static boolean a(ONetworkManager var0) {
+      return var0.l;
+   }
+
+   // $FF: synthetic method
+   static boolean b(ONetworkManager var0) {
+      return var0.q;
+   }
+
+   // $FF: synthetic method
+   static boolean c(ONetworkManager var0) {
+      return var0.h();
+   }
+
+   // $FF: synthetic method
+   static boolean d(ONetworkManager var0) {
+      return var0.g();
+   }
+
+   // $FF: synthetic method
+   static DataOutputStream e(ONetworkManager var0) {
+      return var0.k;
+   }
+
+   // $FF: synthetic method
+   static boolean f(ONetworkManager var0) {
+      return var0.t;
+   }
+
+   // $FF: synthetic method
+   static void a(ONetworkManager var0, Exception var1) {
+      var0.a(var1);
+   }
+
+   // $FF: synthetic method
+   static Thread g(ONetworkManager var0) {
+      return var0.s;
+   }
+
+   // $FF: synthetic method
+   static Thread h(ONetworkManager var0) {
+      return var0.r;
+   }
+
 }

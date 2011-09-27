@@ -45,17 +45,17 @@ public class Sign implements ComplexBlock {
 
     @Override
     public int getX() {
-        return sign.e;
+        return sign.j;
     }
 
     @Override
     public int getY() {
-        return sign.f;
+        return sign.k;
     }
 
     @Override
     public int getZ() {
-        return sign.g;
+        return sign.l;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class Sign implements ComplexBlock {
 
     @Override
     public World getWorld() {
-        return sign.d.world;
+        return sign.i.world;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class Sign implements ComplexBlock {
         sign.a(true);
         for (Player player : etc.getServer().getPlayerList())
         {
-           player.getUser().a.a(new OPacket130UpdateSign(sign.e, sign.f, sign.g, sign.a));
+           player.getUser().a.a(new OPacket130UpdateSign(sign.j, sign.k, sign.l, sign.a));
         }
         sign.a(false);
     }

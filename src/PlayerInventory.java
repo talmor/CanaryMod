@@ -2,7 +2,7 @@ public class PlayerInventory extends ItemArray implements Inventory {
     private final OEntityPlayerMP user;
 
     public PlayerInventory(Player player) {
-        super(player.getUser().i);
+        super(player.getUser().j);
         user = player.getUser();
     }
 

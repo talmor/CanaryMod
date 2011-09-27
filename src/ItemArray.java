@@ -8,7 +8,8 @@
 public abstract class ItemArray<C extends Container<OItemStack>> {
     protected C container;
 
-    public ItemArray(Object i) {
+    @SuppressWarnings("unchecked")
+	public ItemArray(Object i) {
         this.container = (C) i;
     }
 

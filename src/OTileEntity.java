@@ -1,17 +1,22 @@
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class OTileEntity {
 
    private static Map a = new HashMap();
-   private static Map b = new HashMap();
-   public OWorld d;
-   public int e;
-   public int f;
-   public int g;
-   protected boolean h;
+   public static Map b = new HashMap();
+   public OWorld i;
+   public int j;
+   public int k;
+   public int l;
+   protected boolean m;
+   public int n = -1;
+   public OBlock o;
 
+
+   public OTileEntity() {
+      super();
+   }
 
    private static void a(Class var0, String var1) {
       if(b.containsKey(var1)) {
@@ -21,12 +26,12 @@ public class OTileEntity {
          b.put(var0, var1);
       }
    }
-
+   
    public void a(ONBTTagCompound var1) {
       // CanaryMod: fix jarjar
-      this.e = var1.e("x");
-      this.f = var1.e("y");
-      this.g = var1.e("z");
+      this.j = var1.e("x");
+      this.k = var1.e("y");
+      this.l = var1.e("z");
    }
 
    public void b(ONBTTagCompound var1) {
@@ -36,19 +41,18 @@ public class OTileEntity {
       } else {
          // CanaryMod: fix jarjar
          var1.a("id", var2);
-         var1.a("x", this.e);
-         var1.a("y", this.f);
-         var1.a("z", this.g);
+         var1.a("x", this.j);
+         var1.a("y", this.k);
+         var1.a("z", this.l);
       }
    }
 
-   public void g_() {}
+   public void h_() {}
 
    public static OTileEntity c(ONBTTagCompound var0) {
       OTileEntity var1 = null;
 
       try {
-         // CanaryMod: fix jarjar
          Class var2 = (Class)a.get(var0.i("id"));
          if(var2 != null) {
             var1 = (OTileEntity)var2.newInstance();
@@ -60,38 +64,49 @@ public class OTileEntity {
       if(var1 != null) {
          var1.a(var0);
       } else {
-         // CanaryMod: fix jarjar
          System.out.println("Skipping TileEntity with id " + var0.i("id"));
       }
 
       return var1;
    }
 
-   public int e() {
-      return this.d.c(this.e, this.f, this.g);
+   public int j() {
+      if(this.n == -1) {
+         this.n = this.i.c(this.j, this.k, this.l);
+      }
+
+      return this.n;
    }
 
-   public void i() {
-      if(this.d != null) {
-         this.d.b(this.e, this.f, this.g, this);
+   public void k() {
+      if(this.i != null) {
+         this.n = this.i.c(this.j, this.k, this.l);
+         this.i.b(this.j, this.k, this.l, this);
       }
 
    }
 
-   public OPacket f() {
+   public OPacket l() {
       return null;
    }
 
-   public boolean g() {
-      return this.h;
+   public boolean m() {
+      return this.m;
    }
 
-   public void h() {
-      this.h = true;
+   public void i() {
+      this.m = true;
    }
 
-   public void j() {
-      this.h = false;
+   public void n() {
+      this.m = false;
+   }
+
+   public void b(int var1, int var2) {}
+
+   public void g() {
+      this.o = null;
+      this.n = -1;
    }
 
    static {

@@ -1,10 +1,9 @@
-
 import java.util.Random;
 
 public class OBlockButton extends OBlock {
 
    protected OBlockButton(int var1, int var2) {
-      super(var1, var2, OMaterial.o);
+      super(var1, var2, OMaterial.p);
       this.a(true);
    }
 
@@ -24,11 +23,11 @@ public class OBlockButton extends OBlock {
       return false;
    }
 
-   public boolean a(OWorld var1, int var2, int var3, int var4, int var5) {
+   public boolean b(OWorld var1, int var2, int var3, int var4, int var5) {
       return var5 == 2 && var1.e(var2, var3, var4 + 1)?true:(var5 == 3 && var1.e(var2, var3, var4 - 1)?true:(var5 == 4 && var1.e(var2 + 1, var3, var4)?true:var5 == 5 && var1.e(var2 - 1, var3, var4)));
    }
 
-   public boolean a(OWorld var1, int var2, int var3, int var4) {
+   public boolean c(OWorld var1, int var2, int var3, int var4) {
       return var1.e(var2 - 1, var3, var4)?true:(var1.e(var2 + 1, var3, var4)?true:(var1.e(var2, var3, var4 - 1)?true:var1.e(var2, var3, var4 + 1)));
    }
 
@@ -55,7 +54,7 @@ public class OBlockButton extends OBlock {
       return var1.e(var2 - 1, var3, var4)?1:(var1.e(var2 + 1, var3, var4)?2:(var1.e(var2, var3, var4 - 1)?3:(var1.e(var2, var3, var4 + 1)?4:1)));
    }
 
-   public void b(OWorld var1, int var2, int var3, int var4, int var5) {
+   public void a(OWorld var1, int var2, int var3, int var4, int var5) {
       if(this.h(var1, var2, var3, var4)) {
          int var6 = var1.c(var2, var3, var4) & 7;
          boolean var7 = false;
@@ -84,7 +83,7 @@ public class OBlockButton extends OBlock {
    }
 
    private boolean h(OWorld var1, int var2, int var3, int var4) {
-      if(!this.a(var1, var2, var3, var4)) {
+      if(!this.c(var1, var2, var3, var4)) {
          this.g(var1, var2, var3, var4, var1.c(var2, var3, var4));
          var1.e(var2, var3, var4, 0);
          return false;
@@ -127,54 +126,47 @@ public class OBlockButton extends OBlock {
       int var8 = 8 - (var6 & 8);
       if(var8 == 0) {
          return true;
-      }
-
-      // CanaryMod: Allow button to provide power
-      int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), 0, 1);
-      if (change == 0)
-          return true;
-      
-      else {
+      } else {
          var1.c(var2, var3, var4, var7 + var8);
          var1.b(var2, var3, var4, var2, var3, var4);
          var1.a((double)var2 + 0.5D, (double)var3 + 0.5D, (double)var4 + 0.5D, "random.click", 0.3F, 0.6F);
-         var1.h(var2, var3, var4, this.bn);
+         var1.h(var2, var3, var4, this.bA);
          if(var7 == 1) {
-            var1.h(var2 - 1, var3, var4, this.bn);
+            var1.h(var2 - 1, var3, var4, this.bA);
          } else if(var7 == 2) {
-            var1.h(var2 + 1, var3, var4, this.bn);
+            var1.h(var2 + 1, var3, var4, this.bA);
          } else if(var7 == 3) {
-            var1.h(var2, var3, var4 - 1, this.bn);
+            var1.h(var2, var3, var4 - 1, this.bA);
          } else if(var7 == 4) {
-            var1.h(var2, var3, var4 + 1, this.bn);
+            var1.h(var2, var3, var4 + 1, this.bA);
          } else {
-            var1.h(var2, var3 - 1, var4, this.bn);
+            var1.h(var2, var3 - 1, var4, this.bA);
          }
 
-         var1.c(var2, var3, var4, this.bn, this.c());
+         var1.c(var2, var3, var4, this.bA, this.c());
          return true;
       }
    }
 
-   public void b(OWorld var1, int var2, int var3, int var4) {
+   public void d(OWorld var1, int var2, int var3, int var4) {
       int var5 = var1.c(var2, var3, var4);
       if((var5 & 8) > 0) {
-         var1.h(var2, var3, var4, this.bn);
+         var1.h(var2, var3, var4, this.bA);
          int var6 = var5 & 7;
          if(var6 == 1) {
-            var1.h(var2 - 1, var3, var4, this.bn);
+            var1.h(var2 - 1, var3, var4, this.bA);
          } else if(var6 == 2) {
-            var1.h(var2 + 1, var3, var4, this.bn);
+            var1.h(var2 + 1, var3, var4, this.bA);
          } else if(var6 == 3) {
-            var1.h(var2, var3, var4 - 1, this.bn);
+            var1.h(var2, var3, var4 - 1, this.bA);
          } else if(var6 == 4) {
-            var1.h(var2, var3, var4 + 1, this.bn);
+            var1.h(var2, var3, var4 + 1, this.bA);
          } else {
-            var1.h(var2, var3 - 1, var4, this.bn);
+            var1.h(var2, var3 - 1, var4, this.bA);
          }
       }
 
-      super.b(var1, var2, var3, var4);
+      super.d(var1, var2, var3, var4);
    }
 
    public boolean a(OIBlockAccess var1, int var2, int var3, int var4, int var5) {
@@ -196,28 +188,22 @@ public class OBlockButton extends OBlock {
    }
 
    public void a(OWorld var1, int var2, int var3, int var4, Random var5) {
-      if(!var1.B) {
+      if(!var1.I) {
          int var6 = var1.c(var2, var3, var4);
          if((var6 & 8) != 0) {
-             
-            // CanaryMod: Allow button to provide power
-            int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(var1.world, bn, var2, var3, var4), 1, 0);
-            if (change > 0)
-               return;
-
             var1.c(var2, var3, var4, var6 & 7);
-            var1.h(var2, var3, var4, this.bn);
+            var1.h(var2, var3, var4, this.bA);
             int var7 = var6 & 7;
             if(var7 == 1) {
-               var1.h(var2 - 1, var3, var4, this.bn);
+               var1.h(var2 - 1, var3, var4, this.bA);
             } else if(var7 == 2) {
-               var1.h(var2 + 1, var3, var4, this.bn);
+               var1.h(var2 + 1, var3, var4, this.bA);
             } else if(var7 == 3) {
-               var1.h(var2, var3, var4 - 1, this.bn);
+               var1.h(var2, var3, var4 - 1, this.bA);
             } else if(var7 == 4) {
-               var1.h(var2, var3, var4 + 1, this.bn);
+               var1.h(var2, var3, var4 + 1, this.bA);
             } else {
-               var1.h(var2, var3 - 1, var4, this.bn);
+               var1.h(var2, var3 - 1, var4, this.bA);
             }
 
             var1.a((double)var2 + 0.5D, (double)var3 + 0.5D, (double)var4 + 0.5D, "random.click", 0.3F, 0.5F);

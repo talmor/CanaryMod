@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
@@ -6,6 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.DelayQueue;
 import java.util.logging.Level;
+
 import net.minecraft.server.MinecraftServer;
 
 public class OEntityTracker {
@@ -20,6 +20,7 @@ public class OEntityTracker {
 
 
    public OEntityTracker(MinecraftServer var1, int var2) {
+      super();
       this.c = var1;
       this.e = var2;
       this.d = var1.f.a();
@@ -56,13 +57,15 @@ public class OEntityTracker {
       } else if(var1 instanceof OEntitySquid) {
          this.a(var1, 160, 3, true);
       } else if(var1 instanceof OIAnimals) {
-         this.a(var1, 160, 3);
+         this.a(var1, 160, 3, true);
       } else if(var1 instanceof OEntityTNTPrimed) {
          this.a(var1, 160, 10, true);
       } else if(var1 instanceof OEntityFallingSand) {
          this.a(var1, 160, 20, true);
       } else if(var1 instanceof OEntityPainting) {
          this.a(var1, 160, Integer.MAX_VALUE, false);
+      } else if(var1 instanceof OEntityXPOrb) {
+         this.a(var1, 160, 20, true);
       }
 
    }
@@ -76,13 +79,13 @@ public class OEntityTracker {
          var2 = this.d;
       }
 
-      if(this.b.b(var1.aG)) {
+      if(this.b.b(var1.aW)) {
          throw new IllegalStateException("Entity is already tracked!");
       } else {
          OEntityTrackerEntry var5 = new OEntityTrackerEntry(var1, var2, var3, var4);
          this.a.add(var5);
-         this.b.a(var1.aG, var5);
-         var5.b(this.c.a(this.e).d);
+         this.b.a(var1.aW, var5);
+         var5.b(this.c.a(this.e).i);
       }
    }
 
@@ -97,7 +100,7 @@ public class OEntityTracker {
          }
       }
 
-      OEntityTrackerEntry var5 = (OEntityTrackerEntry)this.b.d(var1.aG);
+      OEntityTrackerEntry var5 = (OEntityTrackerEntry)this.b.d(var1.aW);
       if(var5 != null) {
          this.a.remove(var5);
          var5.a();
@@ -106,28 +109,30 @@ public class OEntityTracker {
    }
 
    public void a() {
-       try {
-           ArrayList var1 = new ArrayList();
-           Iterator var2 = this.a.iterator();
-
-           while (var2.hasNext()) {
-               OEntityTrackerEntry var3 = (OEntityTrackerEntry) var2.next();
-               var3.a(this.c.a(this.e).d);
-               if (var3.m && var3.a instanceof OEntityPlayerMP)
-                   var1.add((OEntityPlayerMP) var3.a);
-           }
-
-           for (int var6 = 0; var6 < var1.size(); ++var6) {
-               OEntityPlayerMP var7 = (OEntityPlayerMP) var1.get(var6);
-               Iterator var4 = this.a.iterator();
-
-               while (var4.hasNext()) {
-                   OEntityTrackerEntry var5 = (OEntityTrackerEntry) var4.next();
-                   if (var5.a != var7)
-                       var5.b(var7);
-               }
-           }
-       } catch (ConcurrentModificationException ex) {
+	   try {
+		   ArrayList var1 = new ArrayList();
+		   Iterator var2 = this.a.iterator();
+		   
+		   while(var2.hasNext()) {
+			   OEntityTrackerEntry var3 = (OEntityTrackerEntry)var2.next();
+			   var3.a(this.c.a(this.e).i);
+			   if(var3.m && var3.a instanceof OEntityPlayerMP) {
+				   var1.add((OEntityPlayerMP)var3.a);
+			   }
+		   }
+		   
+		   for(int var6 = 0; var6 < var1.size(); ++var6) {
+			   OEntityPlayerMP var7 = (OEntityPlayerMP)var1.get(var6);
+			   Iterator var4 = this.a.iterator();
+			   
+			   while(var4.hasNext()) {
+				   OEntityTrackerEntry var5 = (OEntityTrackerEntry)var4.next();
+				   if(var5.a != var7) {
+					   var5.b(var7);
+				   }
+			   }
+		   }
+      } catch (ConcurrentModificationException ex) {
           // people seem to get this exception often, lets just catch so it
           // doesn't crash the server.
           MinecraftServer.a.log(Level.WARNING, "CanaryMod WARNING: ConcurrentModificationException in OEntityTracker:", ex);
@@ -136,9 +141,8 @@ public class OEntityTracker {
        for (DelayedTask task = delayQueue.poll(); task != null; task = delayQueue.poll())
           // should we catch exceptions here?
           task.run();
-
    }
-
+   
    // CanaryMod: Allow adding of tasks to the queue
 
    public static void add(Runnable task, long delayMillis) {
@@ -153,7 +157,7 @@ public class OEntityTracker {
    }
 
    public void a(OEntity var1, OPacket var2) {
-      OEntityTrackerEntry var3 = (OEntityTrackerEntry)this.b.a(var1.aG);
+      OEntityTrackerEntry var3 = (OEntityTrackerEntry)this.b.a(var1.aW);
       if(var3 != null) {
          var3.a(var2);
       }
@@ -161,7 +165,7 @@ public class OEntityTracker {
    }
 
    public void b(OEntity var1, OPacket var2) {
-      OEntityTrackerEntry var3 = (OEntityTrackerEntry)this.b.a(var1.aG);
+      OEntityTrackerEntry var3 = (OEntityTrackerEntry)this.b.a(var1.aW);
       if(var3 != null) {
          var3.b(var2);
       }

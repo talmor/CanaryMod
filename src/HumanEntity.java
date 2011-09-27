@@ -34,11 +34,11 @@ public class HumanEntity extends LivingEntity {
      * @return
      */
     public String getName() {
-        return getEntity().r;
+        return getEntity().u;
     }
 
     @Override
     public World getWorld() {
-        return etc.getMCServer().a(getEntity().s).world;
+        return etc.getMCServer().a(getEntity().n).world;
     }
 }

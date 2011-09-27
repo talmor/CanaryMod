@@ -1,5 +1,4 @@
 
-
 public class OItemPainting extends OItem {
 
    public OItemPainting(int var1) {
@@ -10,7 +9,7 @@ public class OItemPainting extends OItem {
       // CanaryMod: store clicked block data
       Block blockClicked = new Block(var3.world, var3.world.getBlockIdAt(var4, var5, var6), var4, var5, var6);
       blockClicked.setFaceClicked(Block.Face.fromId(var7));
-
+      
       if(var7 == 0) {
          return false;
       } else if(var7 == 1) {
@@ -29,19 +28,23 @@ public class OItemPainting extends OItem {
             var8 = 3;
          }
 
-         OEntityPainting var9 = new OEntityPainting(var3, var4, var5, var6, var8);
-         if(var9.h()) {
-            if(!var3.B) {
-               // CanaryMod: Painting place hook
-               if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) var2).getPlayer(), null, blockClicked, new Item(var1)))
-                  return false;
-               var3.b((OEntity)var9);
+         if(!var2.c(var4, var5, var6)) {
+            return false;
+         } else {
+            OEntityPainting var9 = new OEntityPainting(var3, var4, var5, var6, var8);
+            if(var9.i()) {
+               if(!var3.I) {
+                  // CanaryMod: Painting place hook
+                  if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) var2).getPlayer(), null, blockClicked, new Item(var1)))
+                     return false;
+                  var3.b((OEntity)var9);
+               }
+
+               --var1.a;
             }
 
-            --var1.a;
+            return true;
          }
-
-         return true;
       }
    }
 }

@@ -1,8 +1,9 @@
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
@@ -17,20 +18,25 @@ public class ONetworkListenThread {
    private ArrayList g = new ArrayList();
    private ArrayList h = new ArrayList();
    public MinecraftServer c;
+   private HashMap i = new HashMap();
 
 
-   public ONetworkListenThread(MinecraftServer var1, InetAddress var2, int var3) {
-        try {
-            this.c = var1;
-            this.d = new ServerSocket(var3, 0, var2);
-            this.d.setPerformancePreferences(0, 2, 1);
-            this.b = true;
-            this.e = new ONetworkAcceptThread(this, "Listen thread", var1);
-            this.e.start();
-        } catch (IOException ex) {
-            a.log(Level.SEVERE, "Could not listen on socket, CanaryMod will now exit", ex);
-            System.exit(1);
-        }
+   public ONetworkListenThread(MinecraftServer var1, InetAddress var2, int var3) throws IOException {
+      super();
+      this.c = var1;
+      this.d = new ServerSocket(var3, 0, var2);
+      this.d.setPerformancePreferences(0, 2, 1);
+      this.b = true;
+      this.e = new ONetworkAcceptThread(this, "Listen thread", var1);
+      this.e.start();
+   }
+
+   public void a(Socket var1) {
+      InetAddress var2 = var1.getInetAddress();
+      HashMap var3 = this.i;
+      synchronized(this.i) {
+         this.i.remove(var2);
+      }
    }
 
    public void a(ONetServerHandler var1) {
@@ -89,7 +95,12 @@ public class ONetworkListenThread {
    }
 
    // $FF: synthetic method
-   static int b(ONetworkListenThread var0) {
+   static HashMap b(ONetworkListenThread var0) {
+      return var0.i;
+   }
+
+   // $FF: synthetic method
+   static int c(ONetworkListenThread var0) {
       return var0.f++;
    }
 

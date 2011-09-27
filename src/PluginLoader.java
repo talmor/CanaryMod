@@ -259,6 +259,18 @@ public class PluginLoader {
          */
         ENTITY_DESPAWN,
         /**
+         * Class {@link PluginListener#onEndermanPickup(Enderman, Block) }
+         */
+        ENDERMAN_PICKUP,
+        /**
+         * Class {@link PluginListener#onEndermanDrop(Enderman, Block) }
+         */
+        ENDERMAN_DROP,
+        /**
+         * Class {@link PluginListener#onCowMilk(Player, Mob) }
+         */
+        COW_MILK,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -810,6 +822,15 @@ public class PluginLoader {
                                 break;
                             case ENTITY_DESPAWN:
                                 toRet = listener.onEntityDespawn((BaseEntity) parameters[0]);
+                                break;
+                            case ENDERMAN_PICKUP:
+                                toRet = listener.onEndermanPickup((Enderman) parameters[0], (Block) parameters[1]);
+                                break;
+                            case ENDERMAN_DROP:
+                                toRet = listener.onEndermanDrop((Enderman) parameters[0], (Block) parameters[1]);
+                                break;
+                            case COW_MILK:
+                                toRet = listener.onCowMilk((Player) parameters[0], (Mob) parameters[1]);
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {

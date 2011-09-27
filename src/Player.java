@@ -28,6 +28,7 @@ public class Player extends HumanEntity implements MessageReceiver {
     private PlayerInventory inventory;
     private List<String> onlyOneUseKits = new ArrayList<String>();
     private Pattern badChatPattern = Pattern.compile("[^ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[\\\\\\]^_'abcdefghijklmnopqrstuvwxyz{|}~\u2302\u00C7\u00FC\u00E9\u00E2\u00E4\u00E0\u00E5\u00E7\u00EA\u00EB\u00E8\u00EF\u00EE\u00EC\u00C4\u00C5\u00C9\u00E6\u00C6\u00F4\u00F6\u00F2\u00FB\u00F9\u00FF\u00D6\u00DC\u00F8\u00A3\u00D8\u00D7\u0192\u00E1\u00ED\u00F3\u00FA\u00F1\u00D1\u00AA\u00BA\u00BF\u00AE\u00AC\u00BD\u00BC\u00A1\u00AB\u00BB]");
+    public static ArrayList<Player> modes = new ArrayList<Player>();
 
     /**
      * Creates an empty player. Add the player by calling {@link #setUser(es)}
@@ -632,8 +633,8 @@ public class Player extends HumanEntity implements MessageReceiver {
         OEntityPlayerMP player = getEntity();
 
         // If player is in vehicle - eject them before they are teleported.
-        if (player.aK != null)
-            player.b(player.aK);
+        if (player.bb != null)
+            player.a(player.bb);
         player.a.a(x, y, z, rotation, pitch);
     }
 
@@ -683,9 +684,9 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return Item
      */
     public Item getItemStackInHand() {
-        OItemStack result = getEntity().i.b();
+        OItemStack result = getEntity().j.b();
         if (result != null) {
-            return new Item(result, getEntity().i.c);
+            return new Item(result, getEntity().j.c);
         }
         return null;
     }
@@ -705,7 +706,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return true if sneaking
      */
     public boolean getSneaking() {
-        return getEntity().ah();
+        return getEntity().at();
     }
 
     /**
@@ -715,7 +716,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      *            true if sneaking
      */
     public void setSneaking(boolean sneaking) {
-        getEntity().e(sneaking);
+        getEntity().f(sneaking);
         OPacket19EntityAction sneakUpdate = new OPacket19EntityAction();
         sneakUpdate.a = getId();
         sneakUpdate.b = sneaking ? 1 : 2;
@@ -741,8 +742,8 @@ public class Player extends HumanEntity implements MessageReceiver {
         if (!mcServer.d.a("allow-nether", true))
             return;
         // Dismount first or get buggy
-        if (ent.aK != null)
-            ent.b(ent.aK);
+        if (ent.ba != null)
+            ent.c(ent.ba);
 
         // Canary: We don't want a portal created
         mcServer.f.f(ent, false);
@@ -801,4 +802,22 @@ public class Player extends HumanEntity implements MessageReceiver {
         return hash;
     }
 
+    public void setCreativeMode(int i) {
+    	getEntity().c.a(i);
+    }
+    
+    public int getCreativeMode() {
+    	int i = 0;
+    	if(getEntity().c.a() != 0)
+    		i = getEntity().c.a();
+    	return i;
+    }
+    
+    public boolean getMode(Player player){
+    	if(modes.contains(player)){
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
 }

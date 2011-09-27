@@ -19,6 +19,7 @@ public class OExplosion {
 
 
    public OExplosion(OWorld var1, OEntity var2, double var3, double var5, double var7, float var9) {
+      super();
       this.i = var1;
       this.e = var2;
       this.f = var9;
@@ -40,7 +41,7 @@ public class OExplosion {
       // CanaryMod: call explode hook.
       if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EXPLODE, block))
          return;
-
+      
       float var1 = this.f;
       byte var2 = 16;
 
@@ -61,7 +62,7 @@ public class OExplosion {
                   var6 /= var12;
                   var8 /= var12;
                   var10 /= var12;
-                  float var14 = this.f * (0.7F + this.i.r.nextFloat() * 0.6F);
+                  float var14 = this.f * (0.7F + this.i.w.nextFloat() * 0.6F);
                   var15 = this.b;
                   var17 = this.c;
                   var19 = this.d;
@@ -102,25 +103,25 @@ public class OExplosion {
          OEntity var32 = (OEntity)var29.get(var31);
          double var33 = var32.f(this.b, this.c, this.d) / (double)this.f;
          if(var33 <= 1.0D) {
-            var15 = var32.aP - this.b;
-            var17 = var32.aQ - this.c;
-            var19 = var32.aR - this.d;
+            var15 = var32.bf - this.b;
+            var17 = var32.bg - this.c;
+            var19 = var32.bh - this.d;
             double var35 = (double)OMathHelper.a(var15 * var15 + var17 * var17 + var19 * var19);
             var15 /= var35;
             var17 /= var35;
             var19 /= var35;
-            double var37 = (double)this.i.a(var30, var32.aZ);
+            double var37 = (double)this.i.a(var30, var32.bp);
             double var39 = (1.0D - var33) * var37;
             
             // CanaryMod Damage hook: Explosions
             int damage = (int) ((var39 * var39 + var39) / 2.0D * 8.0D * f + 1.0D);
             PluginLoader.DamageType dmgType = (e instanceof OEntityCreeper) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, dmgType, null, var32.entity, damage))
-               var32.a(this.e, (int)((var39 * var39 + var39) / 2.0D * 8.0D * (double)this.f + 1.0D));
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, dmgType, null, var32.entity, damage))  
+               var32.a(ODamageSource.k, (int)((var39 * var39 + var39) / 2.0D * 8.0D * (double)this.f + 1.0D));
             
-            var32.aS += var15 * var39;
-            var32.aT += var17 * var39;
-            var32.aU += var19 * var39;
+            var32.bi += var15 * var39;
+            var32.bj += var17 * var39;
+            var32.bk += var19 * var39;
          }
       }
 
@@ -136,7 +137,7 @@ public class OExplosion {
             int var46 = this.i.a(var48, var44, var45);
             int var47 = this.i.a(var48, var44 - 1, var45);
             if(var46 == 0 && OBlock.o[var47] && this.h.nextInt(3) == 0) {
-               this.i.e(var48, var44, var45, OBlock.as.bn);
+               this.i.e(var48, var44, var45, OBlock.as.bA);
             }
          }
       }
@@ -144,7 +145,8 @@ public class OExplosion {
    }
 
    public void a(boolean var1) {
-      this.i.a(this.b, this.c, this.d, "random.explode", 4.0F, (1.0F + (this.i.r.nextFloat() - this.i.r.nextFloat()) * 0.2F) * 0.7F);
+      this.i.a(this.b, this.c, this.d, "random.explode", 4.0F, (1.0F + (this.i.w.nextFloat() - this.i.w.nextFloat()) * 0.2F) * 0.7F);
+      this.i.a("hugeexplosion", this.b, this.c, this.d, 0.0D, 0.0D, 0.0D);
       ArrayList var2 = new ArrayList();
       var2.addAll(this.g);
 
@@ -155,9 +157,9 @@ public class OExplosion {
          int var7 = var4.c;
          int var8 = this.i.a(var5, var6, var7);
          if(var1) {
-            double var9 = (double)((float)var5 + this.i.r.nextFloat());
-            double var11 = (double)((float)var6 + this.i.r.nextFloat());
-            double var13 = (double)((float)var7 + this.i.r.nextFloat());
+            double var9 = (double)((float)var5 + this.i.w.nextFloat());
+            double var11 = (double)((float)var6 + this.i.w.nextFloat());
+            double var13 = (double)((float)var7 + this.i.w.nextFloat());
             double var15 = var9 - this.b;
             double var17 = var11 - this.c;
             double var19 = var13 - this.d;
@@ -166,7 +168,7 @@ public class OExplosion {
             var17 /= var21;
             var19 /= var21;
             double var23 = 0.5D / (var21 / (double)this.f + 0.1D);
-            var23 *= (double)(this.i.r.nextFloat() * this.i.r.nextFloat() + 0.3F);
+            var23 *= (double)(this.i.w.nextFloat() * this.i.w.nextFloat() + 0.3F);
             var15 *= var23;
             var17 *= var23;
             var19 *= var23;
@@ -177,7 +179,7 @@ public class OExplosion {
          if(var8 > 0) {
             OBlock.m[var8].a(this.i, var5, var6, var7, this.i.c(var5, var6, var7), 0.3F);
             this.i.e(var5, var6, var7, 0);
-            OBlock.m[var8].d(this.i, var5, var6, var7);
+            OBlock.m[var8].a_(this.i, var5, var6, var7);
          }
       }
 

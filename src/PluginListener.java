@@ -846,5 +846,42 @@ public class PluginListener {
     public boolean onEntityDespawn(BaseEntity entity) {
         return false;
     }
+    
+    /**
+     * Called when an enderman picks up a block
+     * @param entity
+     *          The enderman that picks up the block
+     * @param block
+     *          The block the enderman picks up
+     * @return true if to prevent the enderman from pickup up the block
+     */
+    public boolean onEndermanPickup(Enderman entity, Block block){
+        return false;
+    }
+    
+    /**
+     * Called when an enderman drops a block
+     * @param entity
+     *          The enderman that drops the block
+     * @param block
+     *          The block the enderman drops
+     * @return true if to prevent the enderman from dropping the block
+     */
+    public boolean onEndermanDrop(Enderman entity, Block block){
+        return false;
+    }
+    
+    /**
+     * Called when a player milks a cow
+     * @param player
+     *          The milking player
+     * @param cow
+     *          The milked cow
+     * @return true if to prevent the player from milking the cow
+     */
+    public boolean onCowMilk(Player player, Mob cow)
+    {
+       return false;
+    }
 
 }
