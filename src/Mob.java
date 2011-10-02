@@ -110,5 +110,19 @@ public class Mob extends LivingEntity {
         OEntity c = OEntityList.a(mob, etc.getMCServer().a(0));
         return c instanceof OIMob || c instanceof OIAnimals;
     }
+    
+    /**
+    * Returns Mob location
+    */
+    public Location getLocation() {
+        Location loc = new Location();
+        loc.x = getX();
+        loc.y = getY();
+        loc.z = getZ();
+        loc.rotX = getRotation();
+        loc.rotY = getPitch();
+        loc.dimension = getWorld().getType().getId();
+        return loc;
+    }
 
 }
