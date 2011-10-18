@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.concurrent.DelayQueue;
 import java.util.logging.Level;
 
-import net.minecraft.server.MinecraftServer;
 
 public class OEntityTracker {
     // CanaryMod: New fields to store the runnables in.
@@ -66,7 +65,8 @@ public class OEntityTracker {
         } else if (var1 instanceof OEntityXPOrb) {
             this.a(var1, 160, 20, true);
         }
-
+        // CanaryMod ML:
+        ModLoaderMp.HandleEntityTrackers(this, var1);
     }
 
     public void a(OEntity var1, int var2, int var3) {

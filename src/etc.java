@@ -18,7 +18,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.minecraft.server.MinecraftServer;
 
 /**
  * etc.java - My catch-all class for a bunch of shit. If there's something you

@@ -3,7 +3,6 @@ import java.net.Socket;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.logging.Logger;
-import net.minecraft.server.MinecraftServer;
 
 public class ONetLoginHandler extends ONetHandler {
 
@@ -116,6 +115,7 @@ public class ONetLoginHandler extends ONetHandler {
             }
 
             var2.o();
+            ModLoaderMp.HandleAllLogins(var2);
         }
 
         this.c = true;

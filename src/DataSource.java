@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.minecraft.server.MinecraftServer;
 
 /**
  * DataSource.java - Abstract class for implementing new data sources.

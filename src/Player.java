@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.minecraft.server.MinecraftServer;
 
 /**
  * Player.java - Interface for eo so mods don't have to update often.
@@ -161,6 +160,12 @@ public class Player extends HumanEntity implements MessageReceiver {
                 String str = command.substring(2);
                 log.info(getName() + " issued server command: " + str);
                 etc.getMCServer().a(str, getEntity().a);
+                return;
+            }
+
+            // Check Modloader commands
+            if(ModLoaderMp.HandleCommand(cmd.substring(1), getName(), log, this.isAdmin())) {
+                log.info("ModLoaderMP : " + getName() + " issued command: " + cmd.substring(1));
                 return;
             }
 

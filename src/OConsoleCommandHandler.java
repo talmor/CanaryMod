@@ -1,7 +1,6 @@
 import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
-import net.minecraft.server.MinecraftServer;
 
 public class OConsoleCommandHandler {
 

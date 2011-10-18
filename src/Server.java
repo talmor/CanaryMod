@@ -2,7 +2,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.server.MinecraftServer;
 
 /**
  * Server.java - Interface to server stuff

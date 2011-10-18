@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.minecraft.server.MinecraftServer;
 
 /**
  * PluginLoader.java - Used to load plugins, toggle them, etc.

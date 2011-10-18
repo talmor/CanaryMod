@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.logging.Logger;
-import net.minecraft.server.MinecraftServer;
 
 public class ONetServerHandler extends ONetHandler implements OICommandListener {
 
