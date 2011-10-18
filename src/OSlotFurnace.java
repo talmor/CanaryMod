@@ -23,10 +23,7 @@ public class OSlotFurnace extends OSlot {
          this.e.a(OAchievementList.p, 1);
       }
 
-      // CanaryMod - taken from furnace modloader - if active
-      if (etc.getInstance().isModLoaderMPEnabled()) {
-          ModLoader.TakenFromFurnace(this.e, itemstack);
-      }
+      ModLoader.TakenFromFurnace(this.e, itemstack);
       super.a(itemstack);
    }
 }

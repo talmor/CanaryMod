@@ -171,8 +171,8 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
             return 0;
         } else {
             int var2 = var1.a().bo;
-            // CanaryMod modloader addfuel if enabled
-            return var2 < 256 && OBlock.m[var2].bN == OMaterial.d ? 300 : (var2 == OItem.B.bo ? 100 : (var2 == OItem.k.bo ? 1600 : (var2 == OItem.aw.bo ? 20000 : (var2 == OBlock.z.bA ? 100 : etc.getInstance().isModLoaderMPEnabled() ? ModLoader.AddAllFuel(var2):0))));
+            // CanaryMod ML
+            return var2 < 256 && OBlock.m[var2].bN == OMaterial.d ? 300 : (var2 == OItem.B.bo ? 100 : (var2 == OItem.k.bo ? 1600 : (var2 == OItem.aw.bo ? 20000 : (var2 == OBlock.z.bA ? 100 : ModLoader.AddAllFuel(var2)))));
         }
     }
 

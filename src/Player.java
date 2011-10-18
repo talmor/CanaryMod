@@ -163,12 +163,10 @@ public class Player extends HumanEntity implements MessageReceiver {
                 return;
             }
 
-            // Check Modloader commands - if enabled
-            if (etc.getInstance().isModLoaderMPEnabled()) {
-                if(ModLoaderMp.HandleCommand(cmd.substring(1), getName(), log, this.isAdmin())) {
-                    log.info("ModLoaderMP : " + getName() + " issued command: " + cmd.substring(1));
-                    return;
-                }
+            // Check Modloader commands
+            if(ModLoaderMp.HandleCommand(cmd.substring(1), getName(), log, this.isAdmin())) {
+                log.info("ModLoaderMP : " + getName() + " issued command: " + cmd.substring(1));
+                return;
             }
 
             // Remove '/' before checking.

@@ -35,10 +35,7 @@ public class OSlotCrafting extends OSlot {
          this.f.a(OAchievementList.r, 1);
       }
 
-      // CanaryMod - Modloader, call crafting if enabled
-      if (etc.getInstance().isModLoaderMPEnabled()) {
-          ModLoader.TakenFromCrafting(this.f, itemstack);
-      }
+      ModLoader.TakenFromCrafting(this.f, itemstack);
 
       for(int i = 0; i < this.e.a(); ++i) {
          OItemStack itemstack1 = this.e.b_(i);

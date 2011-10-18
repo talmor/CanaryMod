@@ -76,9 +76,6 @@ public class etc {
     private int                           playerList_ticks            = 500;
     private boolean                       playerList_colors           = true;
     private boolean                       playerList_enabled          = true;
-    // Modloader options
-    private boolean                       modloaderMP_enabled         = false;
-    private boolean                       modForge_enabled            = false;
 
     private etc() {
         load();
@@ -152,8 +149,6 @@ public class etc {
             enableHealth = properties.getBoolean("enable-health", true);
             enableExperience = properties.getBoolean("enable-experience", true);
             deathMessages = properties.getBoolean("death-message", true);
-            modloaderMP_enabled = properties.getBoolean("enable-modloader",false);
-            modForge_enabled = properties.getBoolean("enable-modforge",false);
 
             animals = properties.getString("natural-animals", "Sheep,Pig,Chicken,Cow").split(",");
             if (animals.length == 1 && (animals[0].equals(" ") || animals[0].equals("")))
@@ -407,23 +402,6 @@ public class etc {
         return enableExperience;
     }
 
-    /**
-     * Return true if we want modloaderMP enabled.
-     * 
-     */
-    public boolean isModLoaderMPEnabled() {
-        return this.modloaderMP_enabled;
-    }
-    
-    /**
-     * Returns true if we want modForge enabled.
-     * note: we need mod loader active as well
-     * 
-     */
-    public boolean isForgeEnabled() {
-        return modForge_enabled && modloaderMP_enabled;
-    }
-    
     /**
      * Returns the status of auto-heal.
      * 
