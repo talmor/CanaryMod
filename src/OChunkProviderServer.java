@@ -148,8 +148,10 @@ public class OChunkProviderServer implements OIChunkProvider {
             var4.p = true;
             if (this.d != null) {
                 this.d.a(var1, var2, var3);
-                // CanaryMOD ML: Populate chunks
-                ModLoader.PopulateChunk(this.d, var2 << 4, var3 << 4, this.h);
+                // CanaryMod: Populate chunk with modloader if enabled
+                if (etc.getInstance().isModLoaderMPEnabled()) {
+                    ModLoader.PopulateChunk(this.d, var2 << 4, var3 << 4, this.h);
+                }
                 var4.f();
             }
         }

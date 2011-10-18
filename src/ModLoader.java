@@ -1000,18 +1000,19 @@ public final class ModLoader {
    public static void Init(MinecraftServer minecraftserver) {
       instance = minecraftserver;
 
-      try {
-         String nosuchmethodexception1 = ModLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-         nosuchmethodexception1 = nosuchmethodexception1.substring(0, nosuchmethodexception1.lastIndexOf(47));
-         cfgdir = new File(nosuchmethodexception1, "/config/");
-         cfgfile = new File(nosuchmethodexception1, "/config/ModLoader.cfg");
-         logfile = new File(nosuchmethodexception1, "ModLoader.txt");
-         modDir = new File(nosuchmethodexception1, "/mods/");
-      } catch (URISyntaxException var6) {
+      //try {
+         //String nosuchmethodexception1 = ModLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+         //nosuchmethodexception1 = nosuchmethodexception1.substring(0, nosuchmethodexception1.lastIndexOf(47));
+         cfgdir = new File( "config/");
+         cfgfile = new File( "config/ModLoader.cfg");
+         logfile = new File( "ModLoader.txt");
+         modDir = new File( "mods/");
+      /*} catch (URISyntaxException var6) {
          getLogger().throwing("ModLoader", "Init", var6);
          ThrowException("ModLoader", var6);
          return;
       }
+      */
 
       try {
          try {

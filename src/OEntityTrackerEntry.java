@@ -213,7 +213,8 @@ public class OEntityTrackerEntry {
    }
 
    private OPacket b() {
-      EntityTrackerEntry2 entitytrackerentry2 = ModLoaderMp.HandleEntityTrackerEntries(this.a);
+      // CanaryMod: Modloader entitytracking if enabled
+      EntityTrackerEntry2 entitytrackerentry2 = etc.getInstance().isModLoaderMPEnabled() ? ModLoaderMp.HandleEntityTrackerEntries(this.a):null;
       if(entitytrackerentry2 != null) {
          try {
             if(this.a instanceof ISpawnable) {

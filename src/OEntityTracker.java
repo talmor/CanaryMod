@@ -65,8 +65,10 @@ public class OEntityTracker {
         } else if (var1 instanceof OEntityXPOrb) {
             this.a(var1, 160, 20, true);
         }
-        // CanaryMod ML:
-        ModLoaderMp.HandleEntityTrackers(this, var1);
+        // CanaryMod : Call Modloader if Enabled
+        if (etc.getInstance().isModLoaderMPEnabled()) {
+            ModLoaderMp.HandleEntityTrackers(this, var1);
+        }
     }
 
     public void a(OEntity var1, int var2, int var3) {

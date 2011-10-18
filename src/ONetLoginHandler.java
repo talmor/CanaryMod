@@ -115,7 +115,10 @@ public class ONetLoginHandler extends ONetHandler {
             }
 
             var2.o();
-            ModLoaderMp.HandleAllLogins(var2);
+            // CanaryMod - Modloader HandleLogins
+            if (etc.getInstance().isModLoaderMPEnabled()) {
+                ModLoaderMp.HandleAllLogins(var2);
+            }
         }
 
         this.c = true;

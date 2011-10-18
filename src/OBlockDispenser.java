@@ -90,7 +90,8 @@ public class OBlockDispenser extends OBlockContainer {
          if(itemstack == null) {
             world.e(1001, i, j, k, 0);
          } else {
-            boolean flag = ModLoader.DispenseEntity(world, d, d1, d2, i1, j1, itemstack);
+            // CanaryMod: call modloader hook if enabled
+            boolean flag = etc.getInstance().isModLoaderMPEnabled() ? ModLoader.DispenseEntity(world, d, d1, d2, i1, j1, itemstack):false;
             if(!flag) {
                if(itemstack.c == OItem.j.bo) {
                   OEntityArrow entityitem = new OEntityArrow(world, d, d1, d2);
